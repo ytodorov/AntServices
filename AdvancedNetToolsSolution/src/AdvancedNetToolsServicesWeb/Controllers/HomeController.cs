@@ -12,6 +12,7 @@ using System.Net;
 using System.Security.Cryptography;
 using System.Net.Sockets;
 using System.Diagnostics;
+using System.Threading;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -70,15 +71,16 @@ namespace AdvancedNetToolsServicesWeb.Controllers
 
 
                 string path = abp + "\\nmap.exe";
-                string args2 = "-sn 8.8.8.8";
+                string args2 = "-Pn 8.8.8.8";
                 Process p = new Process();
                 p.StartInfo.FileName = path;
                 p.StartInfo.Arguments = args2;
                 p.StartInfo.RedirectStandardOutput = true;
                 p.StartInfo.UseShellExecute = false;
                 p.Start();
-             
-                p.WaitForExit(3000);
+
+                Thread.Sleep(10000);
+                
                 string result = p.StandardOutput.ReadToEnd();
                 return result;
             }
