@@ -63,20 +63,30 @@ namespace AdvancedNetToolsServicesWeb.Controllers
 
         public string Nmap()
         {
-            var abp = Startup.ApplicationBasePath;
-            //C:\Projects\AdvancedNetToolsServicesRepo\AdvancedNetToolsSolution\src\AdvancedNetToolsServicesWeb\nmap.exe
+            try
+            {
+                var abp = Startup.ApplicationBasePath;
+                //C:\Projects\AdvancedNetToolsServicesRepo\AdvancedNetToolsSolution\src\AdvancedNetToolsServicesWeb\nmap.exe
 
 
-            string path = abp + "\\nmap.exe";
-            string args2 = "-sn 8.8.8.8";
-            Process p = new Process();
-            p.StartInfo.FileName = path;
-            p.StartInfo.Arguments = args2;
-            p.StartInfo.RedirectStandardOutput = true;
-            p.StartInfo.UseShellExecute = false;
-            p.Start();
-            string result = p.StandardOutput.ReadToEnd();
-            return result;
+                string path = abp + "\\nmap.exe";
+                string args2 = "-sn 8.8.8.8";
+                Process p = new Process();
+                p.StartInfo.FileName = path;
+                p.StartInfo.Arguments = args2;
+                p.StartInfo.RedirectStandardOutput = true;
+                p.StartInfo.UseShellExecute = false;
+                p.Start();
+             
+                p.WaitForExit(3000);
+                string result = p.StandardOutput.ReadToEnd();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                string json = JsonConvert.SerializeObject(ex, Formatting.Indented);
+                return json;
+            }
         }
         public string Ports(string ip = "8.8.8.8")
         {
