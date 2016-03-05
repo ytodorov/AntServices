@@ -71,7 +71,7 @@ namespace AdvancedNetToolsServicesWeb.Controllers
 
 
                 string path = abp + "\\nmap.exe";
-                string args2 = "-Pn 8.8.8.8";
+                string args2 = "-sn 8.8.8.8";
                 Process p = new Process();
                 p.StartInfo.FileName = path;
                 p.StartInfo.Arguments = args2;
