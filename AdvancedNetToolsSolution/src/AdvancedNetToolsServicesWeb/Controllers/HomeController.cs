@@ -76,13 +76,15 @@ namespace AdvancedNetToolsServicesWeb.Controllers
                 p.StartInfo.FileName = path;
                 p.StartInfo.Arguments = args2;
                 p.StartInfo.RedirectStandardOutput = true;
+                p.StartInfo.RedirectStandardError = true;
                 p.StartInfo.UseShellExecute = false;
                 p.Start();
 
-                Thread.Sleep(10000);
+                //Thread.Sleep(10000);
                 
                 string result = p.StandardOutput.ReadToEnd();
-                return result;
+                string error = p.StandardError.ReadToEnd();
+                return result + "ГРЕШКИ" + error;
             }
             catch (Exception ex)
             {
