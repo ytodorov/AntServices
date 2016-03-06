@@ -62,6 +62,13 @@ namespace AdvancedNetToolsServicesWeb.Controllers
             }
         }
 
+        public string Tcp()
+        {
+            TcpClient client = new TcpClient();
+            client.Connect("8.8.8.8", 53);
+            return client.Connected.ToString();
+        }
+
         public string Nmap()
         {
             try
@@ -71,7 +78,7 @@ namespace AdvancedNetToolsServicesWeb.Controllers
 
 
                 string path = abp + "\\nmap.exe";
-                string args2 = "-Pn -sn --unprivileged 8.8.8.8";
+                string args2 = "-Pn -sn -PE/PP/PM --unprivileged 8.8.8.8";
                 Process p = new Process();
                 p.StartInfo.FileName = path;
                 p.StartInfo.Arguments = args2;

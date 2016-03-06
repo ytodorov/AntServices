@@ -12,18 +12,9 @@ namespace ConsoleApplication1
     {
         static void Main(string[] args)
         {
-            string path = @"C:\Program Files (x86)\Nmap\nmap.exe";
-            string args2 = "-sn 8.8.8.8";
-            Process p = new Process();
-            p.StartInfo.FileName = path;
-            p.StartInfo.Arguments = args2;
-            p.StartInfo.RedirectStandardOutput = true;
-            p.StartInfo.UseShellExecute = false;
-            p.Start();
-            Console.WriteLine(p.StandardOutput.ReadToEnd());
-           
-            //var st = Process.Start(path, args);
-
+            TcpClient client = new TcpClient();
+            client.Connect("8.8.8.8", 53);
+            
         }
     }
 }
