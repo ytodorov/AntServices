@@ -77,8 +77,8 @@ namespace AdvancedNetToolsServicesWeb.Controllers
                 //C:\Projects\AdvancedNetToolsServicesRepo\AdvancedNetToolsSolution\src\AdvancedNetToolsServicesWeb\nmap.exe
 
 
-                string path = abp + "\\nmap.exe";
-                string args2 = "-Pn -sn -PE/PP/PM --unprivileged 8.8.8.8";
+                string path = abp + "\\psping.exe";
+                string args2 = "8.8.8.8 -t -n 4";
                 Process p = new Process();
                 p.StartInfo.FileName = path;
                 p.StartInfo.Arguments = args2;
@@ -88,7 +88,8 @@ namespace AdvancedNetToolsServicesWeb.Controllers
                 p.Start();
 
                 //Thread.Sleep(10000);
-                
+
+                //string result = "";
                 string result = p.StandardOutput.ReadToEnd();
                 string error = p.StandardError.ReadToEnd();
                 return result + "ГРЕШКИ" + error;
