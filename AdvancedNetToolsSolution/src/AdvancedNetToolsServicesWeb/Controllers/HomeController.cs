@@ -78,7 +78,7 @@ namespace AdvancedNetToolsServicesWeb.Controllers
 
 
                 string path = abp + "\\psping.exe";
-                string args2 = "-i 0 -n 10 8.8.8.8:53";
+                string args2 = " -i 0 -n 10 8.8.8.8:53";
                 Process p = new Process();
                 p.StartInfo.FileName = path;
                 p.StartInfo.Arguments = args2;
@@ -100,6 +100,39 @@ namespace AdvancedNetToolsServicesWeb.Controllers
                 return json;
             }
         }
+
+        public string Whois()
+        {
+            try
+            {
+                var abp = Startup.ApplicationBasePath;
+                //C:\Projects\AdvancedNetToolsServicesRepo\AdvancedNetToolsSolution\src\AdvancedNetToolsServicesWeb\nmap.exe
+
+
+                string path = abp + "\\whois.exe";
+                string args2 = " 8.8.8.8";
+                Process p = new Process();
+                p.StartInfo.FileName = path;
+                p.StartInfo.Arguments = args2;
+                p.StartInfo.RedirectStandardOutput = true;
+                p.StartInfo.RedirectStandardError = true;
+                p.StartInfo.UseShellExecute = false;
+                p.Start();
+
+                //Thread.Sleep(10000);
+
+                //string result = "";
+                string result = p.StandardOutput.ReadToEnd();
+                string error = p.StandardError.ReadToEnd();
+                return result + "ГРЕШКИ" + error;
+            }
+            catch (Exception ex)
+            {
+                string json = JsonConvert.SerializeObject(ex, Formatting.Indented);
+                return json;
+            }
+        }
+
         public string Ports(string ip = "8.8.8.8")
         {
             try
