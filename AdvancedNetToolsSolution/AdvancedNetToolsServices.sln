@@ -12,12 +12,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AdvancedNetToolsServicesWeb", "src\AdvancedNetToolsServicesWeb\AdvancedNetToolsServicesWeb.xproj", "{87588E95-233A-4F09-BC37-E5493B5EFACB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApplication1", "ConsoleApplication1\ConsoleApplication1.csproj", "{B2D23D12-D939-4418-A5FF-D94881BDA6DC}"
-EndProject
-Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "AntAzureCloudService", "AntAzureCloudService\AntAzureCloudService.ccproj", "{AEE8FA21-53AF-44E1-B357-180DCE48A11B}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AntWebRole", "AntWebRole\AntWebRole.csproj", "{B4402639-A014-4B11-BFDA-8C18DF232287}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,18 +22,6 @@ Global
 		{87588E95-233A-4F09-BC37-E5493B5EFACB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{87588E95-233A-4F09-BC37-E5493B5EFACB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{87588E95-233A-4F09-BC37-E5493B5EFACB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B2D23D12-D939-4418-A5FF-D94881BDA6DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B2D23D12-D939-4418-A5FF-D94881BDA6DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B2D23D12-D939-4418-A5FF-D94881BDA6DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B2D23D12-D939-4418-A5FF-D94881BDA6DC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AEE8FA21-53AF-44E1-B357-180DCE48A11B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AEE8FA21-53AF-44E1-B357-180DCE48A11B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AEE8FA21-53AF-44E1-B357-180DCE48A11B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AEE8FA21-53AF-44E1-B357-180DCE48A11B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B4402639-A014-4B11-BFDA-8C18DF232287}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B4402639-A014-4B11-BFDA-8C18DF232287}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B4402639-A014-4B11-BFDA-8C18DF232287}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B4402639-A014-4B11-BFDA-8C18DF232287}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
