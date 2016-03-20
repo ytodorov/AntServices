@@ -13,13 +13,14 @@ namespace SmartAdminMvc.Controllers
         // GET: home/index
         public ActionResult Index()
         {
-            using (HttpClient client = new HttpClient())
-            {
-                string url = "http://antnortheu.cloudapp.net/home/getclientip";
-                var res = client.GetStringAsync(url).Result;
-                return View(model:res);
-               
-            }            
+            return View(model: Request.UserHostAddress);
+            //using (HttpClient client = new HttpClient())
+            //{
+            //    string url = "http://antnortheu.cloudapp.net/home/getclientip";
+            //    var res = client.GetStringAsync(url).Result;
+            //    return View(model:res);
+
+            //}            
         }
 
     }
