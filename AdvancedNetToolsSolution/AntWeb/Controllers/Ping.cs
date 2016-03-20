@@ -21,6 +21,10 @@ namespace SmartAdminMvc.Controllers
                 return View(model: res);
             }
         }
+        public ActionResult Read()
+        {
+            return null;
 
+        }
     }
 }

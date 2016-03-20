@@ -1,36 +1,163 @@
 ﻿@model string
 
+			<!-- MAIN CONTENT -->
+<div id="content">
+       
+    <!-- end row -->
+    <!--
+        The ID "widget-grid" will start to initialize all widgets below
+        You do not need to use widgets if you dont want to. Simply remove
+        the <section></section> and you can use wells or panels instead
+        -->
+    <!-- widget grid -->
+    <section id="widget-grid" class="">
+
+        <!-- row -->
+        <div class="row">
+
+            <!-- NEW WIDGET START -->
+            <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+                <!-- Widget ID (each widget will need unique ID)-->
+                <div class="jarviswidget no-padding well" id="wid-id-0">
+                    <!-- widget options:
+                        usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+
+                        data-widget-colorbutton="false"
+                        data-widget-editbutton="false"
+                        data-widget-togglebutton="false"
+                        data-widget-deletebutton="false"
+                        data-widget-fullscreenbutton="false"
+                        data-widget-custombutton="false"
+                        data-widget-collapsed="true"
+                        data-widget-sortable="false"
+
+                    -->
+                    <header>
+                        <span class="widget-icon"> <i class="fa fa-comments"></i> </span>
+                        <h2>Widget Title </h2>
+
+                    </header>
+
+                    <!-- widget div-->
+                    <div>
+
+                        <!-- widget edit box -->
+                        <div class="jarviswidget-editbox">
+                            <!-- This area used as dropdown edit box -->
+                            <input class="form-control" type="text">
+                        </div>
+                        <!-- end widget edit box -->
+                        <!-- widget content -->
+                        <div class="widget-body">
+
+                            <form role="form">
+
+                                <div class="form-group">
+                                    <label class="control-label" for="ip">IP or URL:</label>
+                                    <div>
+                                        <input class="k-textbox form-control" id="ip" placeholder="Enter IP or URL" type="text">
+                                    </div>
+                                </div>
+
+
+                                <footer>
+                                    <button type="submit" class="k-button">
+                                        Ping
+                                    </button>
+                                </footer>
+                            </form>
+
+                            <div id="example">
+                                <div id="grid"></div>
+
+                            </div>
+
+                        </div>
+                        <!-- end widget content -->
+
+                    </div>
+                    <!-- end widget div -->
+
+                </div>
+                <!-- end widget -->
+
+            </article>
+            <!-- WIDGET END -->
+
+        </div>
+
+        <!-- end row -->
+        <!-- row -->
+
+        <div class="row">
+
+            <!-- a blank row to get started -->
+            <div class="col-sm-12">
+                <!-- your contents here -->
+            </div>
+
+        </div>
+
+        <!-- end row -->
+
+    </section>
+    <!-- end widget grid -->
+
+</div>
+<!-- END MAIN CONTENT -->
 
 
 <!-- START ROW -->
 
-<div class="row">
-
-    <!-- NEW COL START -->
-    <article class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 
 
-        <form role="form">
-
-            <div class="form-group">
-                <label class="control-label">IP or URL:</label>
-                <div>
-                    <input class="k-textbox form-control" placeholder="Enter IP or URL" type="text">
-                </div>
-            </div>
+@section pagespecific {
+<script>
+    $(document).ready(function () {
 
 
-            <footer>
-                <button type="submit" class="k-button">
-                    Ping
-                </button>
-            </footer>
-        </form>
-
-
-    </article>
-    <!-- END COL -->
-    <!-- NEW COL START -->
-    <!-- END COL -->
-
-</div>
+                    $("#grid").kendoGrid({
+                        dataSource: {
+                            type: "odata",
+                            transport: {
+                                read: "/Ping/Read"
+                            },
+                            schema: {
+                                model: {
+                                    fields: {
+                                        OrderID: { type: "number" },
+                                        Freight: { type: "number" },
+                                        ShipName: { type: "string" },
+                                        OrderDate: { type: "date" },
+                                        ShipCity: { type: "string" }
+                                    }
+                                }
+                            },
+                            pageSize: 20,
+                            serverPaging: true,
+                            serverFiltering: true,
+                            serverSorting: true
+                        },
+                        sortable: true,
+                        columns: [{
+                            field: "OrderID",
+                            filterable: false
+                        },
+                            "Freight",
+                            {
+                                field: "OrderDate",
+                                title: "Order Date",
+                                format: "{0:MM/dd/yyyy}"
+                            }, {
+                                field: "ShipName",
+                                title: "Ship Name"
+                            }, {
+                                field: "ShipCity",
+                                title: "Ship City"
+                            }
+                        ]
+                    });
+                });
+</script>
+}
