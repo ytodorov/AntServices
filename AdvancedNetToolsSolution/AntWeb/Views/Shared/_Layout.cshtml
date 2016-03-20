@@ -34,6 +34,21 @@
     <link rel="apple-touch-startup-image" href="~/content/img/splash/ipad-landscape.png" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape)">
     <link rel="apple-touch-startup-image" href="~/content/img/splash/ipad-portrait.png" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait)">
     <link rel="apple-touch-startup-image" href="~/content/img/splash/iphone.png" media="screen and (max-device-width: 320px)">
+
+    <link rel="stylesheet" href="http://kendo.cdn.telerik.com/2016.1.226/styles/kendo.common.min.css">
+    <link rel="stylesheet" href="http://kendo.cdn.telerik.com/2016.1.226/styles/kendo.metro.min.css">
+
+    <style>
+        input[type=text]
+        {
+            width: 100%;
+        }
+    </style>
+
+
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="http://kendo.cdn.telerik.com/2016.1.226/js/jszip.min.js"></script>
+    <script src="http://kendo.cdn.telerik.com/2016.1.226/js/kendo.all.min.js"></script>
 </head>
 <body class="@ViewBag.PageClass @Settings.CurrentTheme fixed-header fixed-page-footer">
     @{ Html.RenderPartial("_Header", RenderSection("topright", false)); }
@@ -42,7 +57,7 @@
         @{ Html.RenderPartial("_Ribbon"); }
         @RenderBody()
     </div>
-  
+
         @{Html.RenderPartial("_Footer"); }
             @{Html.RenderPartialIf("_Tiles", Settings.EnableTiles); }
 
