@@ -1049,6 +1049,7 @@
     <Content Include="Views\Ping\Index.cshtml" />
     <Content Include="Views\Traceroute\Index.cshtml" />
     <Content Include="Views\Whois\Index.cshtml" />
+    <Content Include="Views\MyIp\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1082,6 +1083,7 @@
     <Compile Include="Controllers\ForumController.cs" />
     <Compile Include="Controllers\GraphsController.cs" />
     <Compile Include="Controllers\FeaturesController.cs" />
+    <Compile Include="Controllers\MyIpController.cs" />
     <Compile Include="Controllers\WhoisController.cs" />
     <Compile Include="Controllers\TracerouteController.cs" />
     <Compile Include="Controllers\Ping.cs" />

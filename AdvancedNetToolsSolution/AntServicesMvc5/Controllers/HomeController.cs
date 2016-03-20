@@ -31,6 +31,13 @@ namespace AntServicesMvc5.Controllers
             return View();
         }
 
+        public string GetClientIp()
+        {
+            Response.ContentType = "text/plain; charset=utf-8";
+            var result = Request.UserHostAddress;
+            return result;
+        }
+
         public string Exec(string program, string args)
         {
             Response.ContentType = "text/plain; charset=utf-8";
