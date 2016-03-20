@@ -1,18 +1,25 @@
 ﻿#region Using
 
+using System.Net.Http;
 using System.Web.Mvc;
 
 #endregion
 
 namespace SmartAdminMvc.Controllers
 {
-    
+
     public class PingController : Controller
     {
         // GET: home/index
         public ActionResult Index()
         {
-            return View();
+            using (HttpClient client = new HttpClient())
+            {
+                string url = "http://antnortheu.cloudapp.net/home/exec?program=psping&args=8.8.8.8%20-q%20-i%200%20-n%2010";
+                var res = client.GetStringAsync(url).Result;
+
+                return View(model: res);
+            }
         }
 
     }

@@ -18,11 +18,17 @@
         -->
 
         <ul>
-            <li class="@Html.RouteIf("home", "active")">
-                <a href="home" title="Home"><i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">Home</span></a>
+            <li class="@Html.RouteIf("Home", "active")">
+                <a href="Home" title="Home"><i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">Home</span></a>
             </li>
-            <li class="@Html.RouteIf("ping", "active")">
-                <a href="ping" title="Ping"><i class="fa fa-lg fa-fw fa-bar-chart-o"></i> <span class="menu-item-parent">Ping</span></a>
+            <li class="@Html.RouteIf("Ping", "active")">
+                <a href="Ping" title="Ping"><i class="fa fa-lg fa-fw fa-bar-chart-o"></i> <span class="menu-item-parent">Ping</span></a>
+            </li>
+            <li class="@Html.RouteIf("Traceroute", "active")">
+                <a href="Traceroute" title="Traceroute"><i class="fa fa-lg fa-fw fa-bar-chart-o"></i> <span class="menu-item-parent">Traceroute</span></a>
+            </li>
+            <li class="@Html.RouteIf("Whois", "active")">
+                <a href="Whois" title="Whois"><i class="fa fa-lg fa-fw fa-bar-chart-o"></i> <span class="menu-item-parent">Whois</span></a>
             </li>
             @*<li class="top-menu-invisible @Html.RouteIf(" intel", "active" )">
                     <a href="#"><i class="fa fa-lg fa-fw fa-cube txt-color-blue"></i> <span class="menu-item-parent">SmartAdmin Intel</span></a>

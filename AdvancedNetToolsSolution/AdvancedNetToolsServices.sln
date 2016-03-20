@@ -14,7 +14,7 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AdvancedNetToolsServicesWeb
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AntServicesMvc5", "AntServicesMvc5\AntServicesMvc5.csproj", "{27641129-62D6-4FC8-86E6-733AB2C85D2B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartAdminMvc", "AntWeb\SmartAdminMvc.csproj", "{24CA74F5-6AF8-4C67-AC79-3E648ECBEA68}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AntWeb", "AntWeb\AntWeb.csproj", "{24CA74F5-6AF8-4C67-AC79-3E648ECBEA68}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
