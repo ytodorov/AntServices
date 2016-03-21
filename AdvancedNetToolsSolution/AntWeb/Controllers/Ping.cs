@@ -1,6 +1,13 @@
 ﻿#region Using
 
+using Kendo.Mvc.Extensions;
+using Kendo.Mvc.UI;
+using SmartAdminMvc.Infrastructure;
+using SmartAdminMvc.Models;
+using System;
+using System.Collections.Generic;
 using System.Net.Http;
+using System.Net.NetworkInformation;
 using System.Web.Mvc;
 
 #endregion
@@ -8,7 +15,7 @@ using System.Web.Mvc;
 namespace SmartAdminMvc.Controllers
 {
 
-    public class PingController : Controller
+    public class PingController : BaseController
     {
         // GET: home/index
         public ActionResult Index()
@@ -19,12 +26,24 @@ namespace SmartAdminMvc.Controllers
                 var res = client.GetStringAsync(url).Result;
 
                 return View(model: res);
+
+                
             }
         }
-        public ActionResult Read()
+        public ActionResult Read([DataSourceRequest] DataSourceRequest request)
         {
-            return null;
+            using (HttpClient client = new HttpClient())
+            {
+                var encodedArgs = Uri.EscapeDataString(" 8.8.8.8 --delay 10ms -v1");
+                string url = "http://antnortheu.cloudapp.net/home/exec?program=nping&args=" + encodedArgs;
+                var res = client.GetStringAsync(url).Result;
 
+                var summary = PingReplyParser.ParseSummary(res);
+                List<PingReplySummaryViewModel> list = new List<PingReplySummaryViewModel>() { summary, summary, summary };
+
+                var dsResult = Json(list.ToDataSourceResult(request));
+                return dsResult;
+            }
         }
     }
 }

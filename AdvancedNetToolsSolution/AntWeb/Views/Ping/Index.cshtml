@@ -1,8 +1,8 @@
 ﻿@model string
 
-			<!-- MAIN CONTENT -->
+<!-- MAIN CONTENT -->
 <div id="content">
-       
+
     <!-- end row -->
     <!--
         The ID "widget-grid" will start to initialize all widgets below
@@ -106,58 +106,42 @@
 
 </div>
 <!-- END MAIN CONTENT -->
-
-
 <!-- START ROW -->
 
 
 
 @section pagespecific {
-<script>
-    $(document).ready(function () {
+    <script>
+        $(document).ready(function () {
 
 
-                    $("#grid").kendoGrid({
-                        dataSource: {
-                            type: "odata",
-                            transport: {
-                                read: "/Ping/Read"
-                            },
-                            schema: {
-                                model: {
-                                    fields: {
-                                        OrderID: { type: "number" },
-                                        Freight: { type: "number" },
-                                        ShipName: { type: "string" },
-                                        OrderDate: { type: "date" },
-                                        ShipCity: { type: "string" }
-                                    }
-                                }
-                            },
-                            pageSize: 20,
-                            serverPaging: true,
-                            serverFiltering: true,
-                            serverSorting: true
-                        },
-                        sortable: true,
-                        columns: [{
-                            field: "OrderID",
-                            filterable: false
-                        },
-                            "Freight",
-                            {
-                                field: "OrderDate",
-                                title: "Order Date",
-                                format: "{0:MM/dd/yyyy}"
-                            }, {
-                                field: "ShipName",
-                                title: "Ship Name"
-                            }, {
-                                field: "ShipCity",
-                                title: "Ship City"
+            $("#grid").kendoGrid({
+                dataSource: {
+                    transport: {
+                        read: "/Ping/Read"
+                    },
+                    schema: {
+                        data: "Data",
+                        model: {
+                            fields: {
+                                MaxRtt: { type: "number" },
+                                MinRtt: { type: "number" },
+                                AvgRtt: { type: "number" },
                             }
-                        ]
-                    });
-                });
-</script>
+                        }
+                    },
+                    pageSize: 20,
+                },
+                sortable: true,
+                columns: [{
+                    field: "MaxRtt"
+                }
+                , {
+                    field: "MinRtt"
+                },
+                { field: "AvgRtt" }
+                ]
+            });
+        });
+    </script>
 }
