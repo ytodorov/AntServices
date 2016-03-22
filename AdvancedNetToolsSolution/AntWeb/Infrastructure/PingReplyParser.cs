@@ -11,6 +11,11 @@ namespace SmartAdminMvc.Infrastructure
     {
         public static PingReplySummaryViewModel ParseSummary(string summary)
         {
+            /*Max rtt: 4.000ms | Min rtt: 3.000ms | Avg rtt: 3.599ms
+              Raw packets sent: 5 (210B) | Rcvd: 5 (230B) | Lost: 0 (0.00%)
+              Tx time: 0.15100s | Tx bytes/s: 1390.73 | Tx pkts/s: 33.11
+              Rx time: 0.15400s | Rx bytes/s: 1493.51 | Rx pkts/s: 32.47*/
+
             PingReplySummaryViewModel result = new PingReplySummaryViewModel();
 
             var lines = summary.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
@@ -35,6 +40,54 @@ namespace SmartAdminMvc.Infrastructure
                 result.MaxRtt = maxRtt;
                 result.MinRtt = minRtt;
                 result.AvgRtt = avgRtt;
+            }
+
+            var thirdLine = lines.First(s => s.StartsWith("Tx", StringComparison.InvariantCultureIgnoreCase));
+            
+            if (!string.IsNullOrEmpty(thirdLine))
+            {
+                var timesAndEmptyStrings = thirdLine.Replace("Tx pkts/s:", string.Empty)
+                    .Replace("Tx time:", string.Empty)
+                    .Replace("Tx bytes/s:", string.Empty)
+                    .Replace("|", string.Empty)
+                    .Replace("s", string.Empty);
+
+
+                var times = timesAndEmptyStrings.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+
+                double txTime = double.Parse(times[0], CultureInfo.InvariantCulture);
+                double txBytesPerSecond = double.Parse(times[1], CultureInfo.InvariantCulture);
+                double txPacketsPerSecond = double.Parse(times[2], CultureInfo.InvariantCulture);
+
+                result.TxTimeInSeconds = txTime;
+                result.TxBytesPerSecond = txBytesPerSecond;
+                result.TxPacketsPerSecond = txPacketsPerSecond;
+
+
+            }
+
+            var fourthLine = lines.First(s => s.StartsWith("Rx", StringComparison.InvariantCultureIgnoreCase));
+
+            if (!string.IsNullOrEmpty(fourthLine))
+            {
+                var timesAndEmptyStrings = fourthLine.Replace("Rx pkts/s:", string.Empty)
+                    .Replace("Rx time:", string.Empty)
+                    .Replace("Rx bytes/s:", string.Empty)
+                    .Replace("|", string.Empty)
+                    .Replace("s", string.Empty);
+
+
+                var times = timesAndEmptyStrings.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+
+                double rxTime = double.Parse(times[0], CultureInfo.InvariantCulture);
+                double rxBytesPerSecond = double.Parse(times[1], CultureInfo.InvariantCulture);
+                double rxPacketsPerSecond = double.Parse(times[2], CultureInfo.InvariantCulture);
+
+                result.RxTimeInSeconds = rxTime;
+                result.RxBytesPerSecond = rxBytesPerSecond;
+                result.RxPacketsPerSecond = rxPacketsPerSecond;
+
+
             }
             return result;               
 

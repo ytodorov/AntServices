@@ -1092,7 +1092,7 @@
     <Compile Include="Controllers\MyIpController.cs" />
     <Compile Include="Controllers\WhoisController.cs" />
     <Compile Include="Controllers\TracerouteController.cs" />
-    <Compile Include="Controllers\Ping.cs" />
+    <Compile Include="Controllers\PingController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IconsController.cs" />
     <Compile Include="Controllers\IntelController.cs" />

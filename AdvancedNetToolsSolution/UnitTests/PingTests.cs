@@ -43,7 +43,46 @@ namespace UnitTests
 
 
                 }
-                
+
+                var thirdLine = lines.First(s => s.StartsWith("Tx", StringComparison.InvariantCultureIgnoreCase));
+
+                if (!string.IsNullOrEmpty(thirdLine))
+                {
+                    var timesAndEmptyStrings = thirdLine.Replace("Tx pkts/s:", string.Empty)
+                        .Replace("Tx time:", string.Empty)
+                        .Replace("Tx bytes/s:", string.Empty)
+                        .Replace("|", string.Empty)
+                        .Replace("s", string.Empty);
+
+
+                    var times = timesAndEmptyStrings.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+
+                    double txTime = double.Parse(times[0], CultureInfo.InvariantCulture);
+                    double txBytes = double.Parse(times[1], CultureInfo.InvariantCulture);
+                    double txPAckets = double.Parse(times[2], CultureInfo.InvariantCulture);
+
+
+                }
+                var fourthLine = lines.First(s => s.StartsWith("Rx", StringComparison.InvariantCultureIgnoreCase));
+
+                if (!string.IsNullOrEmpty(fourthLine))
+                {
+                    var timesAndEmptyStrings = fourthLine.Replace("Rx pkts/s:", string.Empty)
+                        .Replace("Rx time:", string.Empty)
+                        .Replace("Rx bytes/s:", string.Empty)
+                        .Replace("|", string.Empty)
+                        .Replace("s", string.Empty);
+
+
+                    var times = timesAndEmptyStrings.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+
+                    double rxTime = double.Parse(times[0], CultureInfo.InvariantCulture);
+                    double rxBytesPerSecond = double.Parse(times[1], CultureInfo.InvariantCulture);
+                    double rxPacketsPerSecond = double.Parse(times[2], CultureInfo.InvariantCulture);
+
+
+
+                }
 
             }
         }

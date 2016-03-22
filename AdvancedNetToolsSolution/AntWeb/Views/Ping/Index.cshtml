@@ -127,19 +127,29 @@
                                 MaxRtt: { type: "number" },
                                 MinRtt: { type: "number" },
                                 AvgRtt: { type: "number" },
+
+                                TxTimeInSeconds: { type: "number" },
+                                TxBytesPerSecond: { type: "number" },
+                                TxPacketsPerSecond: { type: "number" },
+
+                                RxTimeInSeconds: { type: "number" },
+                                RxBytesPerSecond: { type: "number" },
+                                RxPacketsPerSecond: { type: "number" }
                             }
                         }
                     },
                     pageSize: 20,
                 },
                 sortable: true,
-                columns: [{
-                    field: "MaxRtt"
-                }
-                , {
-                    field: "MinRtt"
-                },
-                { field: "AvgRtt" }
+                columns: [{ field: "MaxRtt" },
+                          { field: "MinRtt" },
+                          { field: "AvgRtt" },
+                          { field: "TxTimeInSeconds" },
+                          { field: "TxBytesPerSecond" },
+                          { field: "TxPacketsPerSecond" },
+                          { field: "RxTimeInSeconds" },
+                          { field: "RxBytesPerSecond" },
+                          { field: "RxPacketsPerSecond" }
                 ]
             });
         });

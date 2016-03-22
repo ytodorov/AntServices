@@ -29,13 +29,13 @@ namespace SmartAdminMvc.Models
 
         public double PercentageLost { get; set; }
 
-        public double TxTime { get; set; }
+        public double TxTimeInSeconds { get; set; }
 
         public double TxBytesPerSecond { get; set; }
 
         public double TxPacketsPerSecond { get; set; }
 
-        public double RxTime { get; set; }
+        public double RxTimeInSeconds { get; set; }
 
         public double RxBytesPerSecond { get; set; }
 
