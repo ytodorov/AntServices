@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.NetworkInformation;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 
 #endregion
@@ -27,23 +28,39 @@ namespace SmartAdminMvc.Controllers
 
                 return View(model: res);
 
-                
+
             }
         }
         public ActionResult Read([DataSourceRequest] DataSourceRequest request)
         {
-            using (HttpClient client = new HttpClient())
+            List<PingReplySummaryViewModel> list = new List<PingReplySummaryViewModel>();
+            List<Task<string>> tasks = new List<Task<string>>();
+            for (int i = 0; i < 5; i++)
             {
-                var encodedArgs = Uri.EscapeDataString(" 8.8.8.8 --delay 10ms -v1");
-                string url = "http://antnortheu.cloudapp.net/home/exec?program=nping&args=" + encodedArgs;
-                var res = client.GetStringAsync(url).Result;
+                using (HttpClient client = new HttpClient())
+                {
+                    var encodedArgs = Uri.EscapeDataString(" 8.8.8.8 --delay 10ms -v1");
+                    string url = "http://antnortheu.cloudapp.net/home/exec?program=nping&args=" + encodedArgs;
+                    Task<string> task = client.GetStringAsync(url);
+                    var summary = PingReplyParser.ParseSummary(task.Result);
+                    list.Add(summary);
+                    tasks.Add(task);
 
-                var summary = PingReplyParser.ParseSummary(res);
-                List<PingReplySummaryViewModel> list = new List<PingReplySummaryViewModel>() { summary, summary, summary };
-
-                var dsResult = Json(list.ToDataSourceResult(request));
-                return dsResult;
+                }
             }
+
+            //Task.WaitAll(tasks.ToArray());
+
+            //for (int i = 0; i < tasks.Count; i++)
+            //{
+            //    var summary = PingReplyParser.ParseSummary(tasks[i].Result);
+            //    list.Add(summary);
+            //}
+
+
+            var dsResult = Json(list.ToDataSourceResult(request));
+            return dsResult;
+
         }
     }
 }
