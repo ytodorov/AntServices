@@ -1,4 +1,26 @@
-﻿<!-- MAIN CONTENT -->
-<div id="content">
-    <iframe src="https://www.google.com/maps/d/embed?mid=zM2uqako3ipc.kqOGsydsQSSA&hl=en_US" width="640" height="480"></iframe>
-</div>
+﻿<div id="map" style="width:100px;height: 200px">tet</div>
+
+
+@section pagespecific {
+
+    <script>
+        $(window).ready(function test() {
+            var myLatLng = { lat: 53.3239919, lng: -6.5258807 };
+
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 4,
+                center: myLatLng
+            });
+
+            var marker = new google.maps.Marker({
+                position: myLatLng,
+                map: map,
+                title: 'Hello World!'
+            });
+
+            $("#map").width("100%");
+
+
+        });
+    </script>
+}
