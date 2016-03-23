@@ -1,0 +1,34 @@
+﻿
+<input type="button" id="btnDownload" class="k-button" value="Download" />
+<input type="number" id="tbDownloadLength" />
+<input type="text" id="tbDownloadResult" class="k-textbox" />
+
+@section pagespecific {
+    <script>
+        $(document).ready(function () {
+            $("#tbDownloadLength").kendoNumericTextBox({
+               
+            });
+
+            $("#btnDownload").click(function btnDownloadClick() {
+                var numerictextbox = $("#tbDownloadLength").data("kendoNumericTextBox");
+                //debugger;
+                var marker = new Date().getTime();
+
+                var downloadLength = numerictextbox.value();
+                $.ajax({
+                    AcceptEncoding: "text/plain",
+                    url: "/speedtest/download?bytes=" + downloadLength + "&marker=" + marker,
+                    cache: false
+                })
+                  .done(function (html) {
+                      debugger;
+                      var performanceLastRequest = performance.getEntriesByName(location.origin + this.url);
+                      var timeInMilliseconds = performanceLastRequest[0].responseEnd - performanceLastRequest[0].responseStart;
+                      $("#tbDownloadResult").val(timeInMilliseconds);
+                  });
+            })
+        });
+
+    </script>
+}
