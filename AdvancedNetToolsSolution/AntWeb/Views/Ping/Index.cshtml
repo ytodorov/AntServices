@@ -1,54 +1,34 @@
 ﻿@model string
 
-<!-- MAIN CONTENT -->
 <div id="content">
 
-    <!-- end row -->
-    <!--
-        The ID "widget-grid" will start to initialize all widgets below
-        You do not need to use widgets if you dont want to. Simply remove
-        the <section></section> and you can use wells or panels instead
-        -->
-    <!-- widget grid -->
+
     <section id="widget-grid" class="">
 
-        <!-- row -->
+
         <div class="row">
 
-            <!-- NEW WIDGET START -->
+
             <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
-                <!-- Widget ID (each widget will need unique ID)-->
+
                 <div class="jarviswidget no-padding well" id="wid-id-0">
-                    <!-- widget options:
-                        usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
 
-                        data-widget-colorbutton="false"
-                        data-widget-editbutton="false"
-                        data-widget-togglebutton="false"
-                        data-widget-deletebutton="false"
-                        data-widget-fullscreenbutton="false"
-                        data-widget-custombutton="false"
-                        data-widget-collapsed="true"
-                        data-widget-sortable="false"
-
-                    -->
                     <header>
                         <span class="widget-icon"> <i class="fa fa-comments"></i> </span>
                         <h2>Widget Title </h2>
 
                     </header>
 
-                    <!-- widget div-->
+
                     <div>
 
-                        <!-- widget edit box -->
+
                         <div class="jarviswidget-editbox">
-                            <!-- This area used as dropdown edit box -->
+
                             <input class="form-control" type="text">
                         </div>
-                        <!-- end widget edit box -->
-                        <!-- widget content -->
+
                         <div class="widget-body">
 
                             <form role="form">
@@ -56,9 +36,36 @@
                                 <div class="form-group">
                                     <label class="control-label" for="ip">IP or URL:</label>
                                     <div>
-                                        <input class="k-textbox form-control" id="ip" placeholder="Enter IP or URL" type="text">
+                                        <input class="k-textbox" id="ip" placeholder="Enter IP or URL" type="text">
                                     </div>
                                 </div>
+
+                                <div class="form-group">
+                                    <label class="control-label" for="ip">Packets Count:</label>
+                                    <div>
+                                        <input id="tbPacketsCount" placeholder="Enter packets count" type="number" value="4">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="ip">Time to Live:</label>
+                                    <div>
+                                        <input id="tbTTL" placeholder="Enter TTL" type="number" value="64">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label" for="ip">Packet size in bytes:</label>
+                                    <div>
+                                        <input id="tbMTU" placeholder="Enter MTU" type="number">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div>
+                                        <input type="checkbox" id="cbDontFragment" class="k-checkbox" checked="checked">
+                                        <label class="k-checkbox-label" for="cbDontFragment">Don't Fragment</label>
+                                    </div>
+                                </div>
+
 
 
                                 <footer>
@@ -74,48 +81,49 @@
                             </div>
 
                         </div>
-                        <!-- end widget content -->
+
 
                     </div>
-                    <!-- end widget div -->
+
 
                 </div>
-                <!-- end widget -->
+
 
             </article>
-            <!-- WIDGET END -->
+
 
         </div>
 
-        <!-- end row -->
-        <!-- row -->
+
 
         <div class="row">
 
-            <!-- a blank row to get started -->
+
             <div class="col-sm-12">
-                <!-- your contents here -->
+
             </div>
 
         </div>
 
-        <!-- end row -->
+
 
     </section>
-    <!-- end widget grid -->
+
 
 </div>
-<!-- END MAIN CONTENT -->
-<!-- START ROW -->
-
 
 
 @section pagespecific {
     <script>
         $(document).ready(function () {
 
+            $("#tbPacketsCount").kendoNumericTextBox({ format: "n0" });
+            $("#tbTTL").kendoNumericTextBox({ format: "n0" });
+            $("#tbMTU").kendoNumericTextBox({ format: "n0" });
+
 
             $("#grid").kendoGrid({
+                autoBind: false,
                 dataSource: {
                     transport: {
                         read: "/Ping/Read"

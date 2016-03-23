@@ -35,27 +35,32 @@ namespace SmartAdminMvc.Controllers
         {
             List<PingReplySummaryViewModel> list = new List<PingReplySummaryViewModel>();
             List<Task<string>> tasks = new List<Task<string>>();
-            for (int i = 0; i < 5; i++)
+            List<HttpClient> clients = new List<HttpClient>();
+
+            //using (HttpClient client = new HttpClient())
             {
-                using (HttpClient client = new HttpClient())
+                for (int i = 0; i < 5; i++)
                 {
+                    HttpClient client = new HttpClient();
+                    clients.Add(client);
                     var encodedArgs = Uri.EscapeDataString(" 8.8.8.8 --delay 10ms -v1");
                     string url = "http://antnortheu.cloudapp.net/home/exec?program=nping&args=" + encodedArgs;
                     Task<string> task = client.GetStringAsync(url);
-                    var summary = PingReplyParser.ParseSummary(task.Result);
-                    list.Add(summary);
+                    //var summary = PingReplyParser.ParseSummary(task.Result);
+                    //list.Add(summary);
                     tasks.Add(task);
+                }
 
+
+                Task.WaitAll(tasks.ToArray());
+
+                for (int i = 0; i < tasks.Count; i++)
+                {
+                    var summary = PingReplyParser.ParseSummary(tasks[i].Result);
+                    list.Add(summary);
+                    clients[i].Dispose();
                 }
             }
-
-            //Task.WaitAll(tasks.ToArray());
-
-            //for (int i = 0; i < tasks.Count; i++)
-            //{
-            //    var summary = PingReplyParser.ParseSummary(tasks[i].Result);
-            //    list.Add(summary);
-            //}
 
 
             var dsResult = Json(list.ToDataSourceResult(request));
