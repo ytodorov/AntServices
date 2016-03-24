@@ -41,22 +41,31 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="control-label" for="ip">Packets Count:</label>
+                                    <label class="control-label" for="tbPacketsCount">Packets Count:</label>
                                     <div>
-                                        <input id="tbPacketsCount" placeholder="Enter packets count" type="number" value="4">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label" for="ip">Time to Live:</label>
-                                    <div>
-                                        <input id="tbTTL" placeholder="Enter TTL" type="number" value="64">
+                                        <input id="tbPacketsCount" placeholder="Enter packets count" type="number" value="4" min="1" max="10">
                                     </div>
                                 </div>
 
+
                                 <div class="form-group">
-                                    <label class="control-label" for="ip">Packet size in bytes:</label>
+                                    <label class="control-label" for="tbPacketsSize">Packet size in bytes:</label>
                                     <div>
-                                        <input id="tbMTU" placeholder="Enter MTU" type="number">
+                                        <input id="tbPacketsSize" placeholder="Enter MTU" type="number" min="1" max="65000">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="tbDelayBetweenPings">Delay between pings (milliseconds):</label>
+                                    <div>
+                                        <input id="tbDelayBetweenPings" placeholder="Enter delay between pings" type="number" min="1" max="1000">
+                                    </div>
+                                </div>
+
+                                
+                                <div class="form-group">
+                                    <label class="control-label" for="tbTTL">Time to Live:</label>
+                                    <div>
+                                        <input id="tbTTL" placeholder="Enter TTL" type="number" value="64" min="1" max="128">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -69,9 +78,7 @@
 
 
                                 <footer>
-                                    <button type="submit" class="k-button">
-                                        Ping
-                                    </button>
+                                    <input type="button" class="k-button" id="btnPing" value="Ping"/>
                                 </footer>
                             </form>
 
@@ -119,8 +126,15 @@
 
             $("#tbPacketsCount").kendoNumericTextBox({ format: "n0" });
             $("#tbTTL").kendoNumericTextBox({ format: "n0" });
-            $("#tbMTU").kendoNumericTextBox({ format: "n0" });
+            $("#tbPacketsSize").kendoNumericTextBox({ format: "n0", min: 1, max: 65000 });
+            $("#tbDelayBetweenPings").kendoNumericTextBox({ format: "n0", min: 1, max: 1000 });
+            $("#btnPing").click(function btnPingClick() {
+                $('#grid').data('kendoGrid').dataSource.read();
+                 
+                $('#grid').show();
+            });
 
+            $('#grid').hide();
 
             $("#grid").kendoGrid({
                 autoBind: false,
@@ -131,9 +145,13 @@
                         parameterMap: function (data, type) {
                             if (type == "read") {
                                 debugger;
-                                // send take as "$top" and skip as "$skip"
                                 return {
-                                    ip: $("#ip").val()
+                                    ip: $("#ip").val(),
+                                    packetsCount: $("#tbPacketsCount").val(),
+                                    packetsSize: $("#tbPacketsSize").val(),
+                                    delayBetweenPings: $("#tbDelayBetweenPings").val(),
+                                    ttl: $("#tbTTL").val(),
+                                    df: $('#cbDontFragment').is(':checked')
                                 }
                             }
                         }

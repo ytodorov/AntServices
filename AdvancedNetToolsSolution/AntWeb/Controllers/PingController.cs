@@ -39,11 +39,11 @@ namespace SmartAdminMvc.Controllers
 
             //using (HttpClient client = new HttpClient())
             {
-                for (int i = 0; i < 5; i++)
+                for (int i = 0; i < 1; i++)
                 {
                     HttpClient client = new HttpClient();
                     clients.Add(client);
-                    var encodedArgs = Uri.EscapeDataString(" 8.8.8.8 --delay 10ms -v1");
+                    var encodedArgs = Uri.EscapeDataString($" {prvm.Ip} --delay {prvm.DelayBetweenPings}ms -v1");
                     string url = "http://antnortheu.cloudapp.net/home/exec?program=nping&args=" + encodedArgs;
                     Task<string> task = client.GetStringAsync(url);
                     //var summary = PingReplyParser.ParseSummary(task.Result);

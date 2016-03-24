@@ -1,5 +1,6 @@
 ﻿#region Using
 
+using System;
 using System.Net.Http;
 using System.Web.Mvc;
 
@@ -15,19 +16,13 @@ namespace SmartAdminMvc.Controllers
         {
             using (HttpClient client = new HttpClient())
             {
-                string url = "http://antnortheu.cloudapp.net/home/getclientip";
+                var encodedArgs = Uri.EscapeDataString($" -sn --traceroute www.yahoo.com");
+                string url = "http://antnortheu.cloudapp.net/home/exec?program=nmap&args=" + encodedArgs;
                 var res = client.GetStringAsync(url).Result;
-
-               
-            }
-
-            using (HttpClient client = new HttpClient())
-            {                
-                string url = "http://antnortheu.cloudapp.net/home/exec?program=tracert&args=8.8.8.8%20-q%20-i%200%20-n%2010";
-                var res = client.GetStringAsync(url).Result;
-
                 return View(model: res);
             }
+
+           
         }
 
     }

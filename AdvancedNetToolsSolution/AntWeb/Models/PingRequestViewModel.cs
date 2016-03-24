@@ -13,6 +13,9 @@ namespace SmartAdminMvc.Models
 
         public int PacketsSize { get; set; }
 
+        public int DelayBetweenPings { get; set; }
+
+
         public int Ttl { get; set; }
 
         public bool Df { get; set; }
