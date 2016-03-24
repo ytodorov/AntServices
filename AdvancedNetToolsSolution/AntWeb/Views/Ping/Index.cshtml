@@ -126,7 +126,17 @@
                 autoBind: false,
                 dataSource: {
                     transport: {
-                        read: "/Ping/Read"
+                        read: { url: "/Ping/Read" },
+
+                        parameterMap: function (data, type) {
+                            if (type == "read") {
+                                debugger;
+                                // send take as "$top" and skip as "$skip"
+                                return {
+                                    ip: $("#ip").val()
+                                }
+                            }
+                        }
                     },
                     schema: {
                         data: "Data",

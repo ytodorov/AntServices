@@ -1107,6 +1107,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\PingReplySummaryViewModel.cs" />
     <Compile Include="Models\PingReplyViewModel.cs" />
+    <Compile Include="Models\PingRequestViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

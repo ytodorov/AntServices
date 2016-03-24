@@ -31,7 +31,7 @@ namespace SmartAdminMvc.Controllers
 
             }
         }
-        public ActionResult Read([DataSourceRequest] DataSourceRequest request)
+        public ActionResult Read([DataSourceRequest] DataSourceRequest request, PingRequestViewModel prvm)
         {
             List<PingReplySummaryViewModel> list = new List<PingReplySummaryViewModel>();
             List<Task<string>> tasks = new List<Task<string>>();
