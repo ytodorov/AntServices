@@ -1,10 +1,22 @@
 ﻿
 <input type="button" id="btnDownload" class="k-button" value="Download" />
+<input type="button" id="btnUpload" class="k-button" value="Upload" />
+
 <input type="number" id="tbDownloadLength" />
 <input type="text" id="tbDownloadResult" class="k-textbox" />
 
 @section pagespecific {
     <script>
+        function CreateRandomString(char) {
+            var text = "";
+            var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+            for (var i = 0; i < char; i++)
+                text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+            return text;
+        }
+
         $(document).ready(function () {
             $("#tbDownloadLength").kendoNumericTextBox({
                
@@ -12,7 +24,7 @@
 
             $("#btnDownload").click(function btnDownloadClick() {
                 var numerictextbox = $("#tbDownloadLength").data("kendoNumericTextBox");
-                //debugger;
+                // use markes so performance.getEntriesByName is unique
                 var marker = new Date().getTime();
 
                 var downloadLength = numerictextbox.value();
@@ -22,12 +34,39 @@
                     cache: false
                 })
                   .done(function (html) {
-                      debugger;
                       var performanceLastRequest = performance.getEntriesByName(location.origin + this.url);
                       var timeInMilliseconds = performanceLastRequest[0].responseEnd - performanceLastRequest[0].responseStart;
                       $("#tbDownloadResult").val(timeInMilliseconds);
                   });
+            });
+
+
+
+            $("#btnUpload").click(function btnUploadClick() {
+                var numerictextbox = $("#tbDownloadLength").data("kendoNumericTextBox");
+
+                // use markes so performance.getEntriesByName is unique
+                var marker = new Date().getTime();            
+
+                var downloadLength = numerictextbox.value();
+
+                var uploadString = CreateRandomString(downloadLength);
+                $.ajax({
+                    method: "POST",
+                    AcceptEncoding: "text/plain",
+                    url: "/speedtest/upload?marker=" + marker,
+                    data: {uploadString: uploadString},
+                    cache: false
+                })
+                  .done(function (html) {
+                      //debugger;
+                      
+                      var performanceLastRequest = performance.getEntriesByName(location.origin + this.url);
+                      var timeInMilliseconds = performanceLastRequest[0].responseStart - performanceLastRequest[0].requestStart;
+                      $("#tbDownloadResult").val(timeInMilliseconds);
+                  });
             })
+
         });
 
     </script>

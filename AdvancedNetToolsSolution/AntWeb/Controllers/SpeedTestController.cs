@@ -39,6 +39,13 @@ namespace SmartAdminMvc.Controllers
             return s;
         }
 
+        [HttpPost]
+        public string Upload(string uploadString)
+        {
+            Response.ContentType = "text/plain; charset=utf-8";
+            return string.Empty;
+        }
+
 
     }
 }

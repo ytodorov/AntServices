@@ -1183,7 +1183,7 @@ body.smart-style-2 {
 }
 
 .smart-style-3 #logo-group span#activity,.smart-style-3 .btn-header>:first-child>a {
-    background-color: #DD7C37;
+    /*background-color: #DD7C37;
     background-image: -moz-linear-gradient(top,#dd7c37,#b9662b);
     background-image: -webkit-gradient(linear,0 0,0 100%,from(#b9662b),to(#b9662b));
     background-image: -webkit-linear-gradient(top,#dd7c37,#b9662b);
@@ -1191,11 +1191,11 @@ body.smart-style-2 {
     background-image: linear-gradient(to bottom,#dd7c37,#b9662b);
     color: #fff !important;
     border: 1px solid #f09d61;
-    text-shadow: #985813 0 -1px;
+    text-shadow: #985813 0 -1px;*/
 }
 
 .smart-style-3 #logo-group span#activity:active,.smart-style-3 #logo-group span#activity:hover,.smart-style-3 .btn-header>:first-child>a:active,.smart-style-3 .btn-header>:first-child>a:hover {
-    -webkit-box-shadow: inset 1px 1px 0 #985813,inset -1px -1px 0 #985813;
+    /*-webkit-box-shadow: inset 1px 1px 0 #985813,inset -1px -1px 0 #985813;
     -moz-box-shadow: inset 1px 1px 0 #985813,inset -1px -1px 0 #985813;
     box-shadow: inset 1px 1px 0 #985813,inset -1px -1px 0 #985813;
     background-color: #dd7a35;
@@ -1203,12 +1203,12 @@ body.smart-style-2 {
     background-image: -webkit-gradient(linear,0 0,0 100%,from(#dd7a35),to(#984a13));
     background-image: -webkit-linear-gradient(top,#dd7a35,#984a13);
     background-image: -o-linear-gradient(top,#dd7a35,#984a13);
-    background-image: linear-gradient(to bottom,#dd7a35,#984a13);
+    background-image: linear-gradient(to bottom,#dd7a35,#984a13);*/
 }
 
 .smart-style-3 .header-dropdown-list>li>.dropdown-toggle,.smart-style-3 .project-context>:first-child,.smart-style-3 .project-selector {
-    color: #fff;
-    text-shadow: #985813 0 -1px;
+    /*color: #fff;
+    text-shadow: #985813 0 -1px;*/
 }
 
 .smart-style-3 nav ul li a,.smart-style-3 nav ul li.open>a,.smart-style-3 nav ul li.open>a b {

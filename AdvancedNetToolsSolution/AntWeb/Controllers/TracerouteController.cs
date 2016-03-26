@@ -16,7 +16,7 @@ namespace SmartAdminMvc.Controllers
         {
             using (HttpClient client = new HttpClient())
             {
-                var encodedArgs = Uri.EscapeDataString($" -sn --traceroute www.yahoo.com");
+                var encodedArgs = Uri.EscapeDataString($"--traceroute 92.247.12.80 -sn -n -T5");
                 string url = "http://antnortheu.cloudapp.net/home/exec?program=nmap&args=" + encodedArgs;
                 var res = client.GetStringAsync(url).Result;
                 return View(model: res);

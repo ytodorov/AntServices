@@ -144,7 +144,6 @@
 
                         parameterMap: function (data, type) {
                             if (type == "read") {
-                                debugger;
                                 return {
                                     ip: $("#ip").val(),
                                     packetsCount: $("#tbPacketsCount").val(),
@@ -179,13 +178,14 @@
                 sortable: true,
                 columns: [{ field: "MaxRtt" },
                           { field: "MinRtt" },
-                          { field: "AvgRtt" },
-                          { field: "TxTimeInSeconds" },
-                          { field: "TxBytesPerSecond" },
-                          { field: "TxPacketsPerSecond" },
-                          { field: "RxTimeInSeconds" },
-                          { field: "RxBytesPerSecond" },
-                          { field: "RxPacketsPerSecond" }
+                          { field: "AvgRtt" }
+                          //,
+                          //{ field: "TxTimeInSeconds" },
+                          //{ field: "TxBytesPerSecond" },
+                          //{ field: "TxPacketsPerSecond" },
+                          //{ field: "RxTimeInSeconds" },
+                          //{ field: "RxBytesPerSecond" },
+                          //{ field: "RxPacketsPerSecond" }
                 ]
             });
         });
