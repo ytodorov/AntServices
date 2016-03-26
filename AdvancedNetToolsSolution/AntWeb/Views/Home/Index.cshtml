@@ -1,4 +1,4 @@
-﻿<div id="map" style="width:100px;height: 200px">tet</div>
+﻿<div id="map" style="width:100px;height: 300px"></div>
 
 
 @section pagespecific {
@@ -6,16 +6,34 @@
     <script>
         $(window).ready(function test() {
             var myLatLng = { lat: 53.349443, lng: -6.260082 };
+            var sofiaLatLng = { lat: 42.6975, lng: 23.3242 };
 
             var map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 4,
+                zoom: 2,
                 center: myLatLng
             });
 
             var marker = new google.maps.Marker({
                 position: myLatLng,
                 map: map,
-                title: 'Hello World!'
+                title: 'Dublin'
+            });
+
+            var marker = new google.maps.Marker({
+                position: sofiaLatLng,
+                map: map,
+                title: 'Sofia'
+            });
+
+            var line = new google.maps.Polyline({
+                path: [
+                   myLatLng,
+                    sofiaLatLng
+                ],
+                strokeColor: "#FF0000",
+                strokeOpacity: 1.0,
+                strokeWeight: 1,
+                map: map
             });
 
             $("#map").width("100%");
