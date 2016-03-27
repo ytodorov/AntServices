@@ -33,9 +33,12 @@ namespace SmartAdminMvc.Infrastructure
 
                 var times = timesAndEmptyStrings.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
 
-                double maxRtt = double.Parse(times[0], CultureInfo.InvariantCulture);
-                double minRtt = double.Parse(times[1], CultureInfo.InvariantCulture);
-                double avgRtt = double.Parse(times[2], CultureInfo.InvariantCulture);
+                double maxRtt;
+                double.TryParse(times[0], NumberStyles.Any, CultureInfo.InvariantCulture, out maxRtt);
+                double minRtt;
+                double.TryParse(times[1], NumberStyles.Any, CultureInfo.InvariantCulture, out minRtt);
+                double avgRtt;
+                double.TryParse(times[2], NumberStyles.Any, CultureInfo.InvariantCulture, out avgRtt);
 
                 result.MaxRtt = maxRtt;
                 result.MinRtt = minRtt;
