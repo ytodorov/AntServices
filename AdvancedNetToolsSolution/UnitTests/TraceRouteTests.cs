@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SmartAdminMvc.Infrastructure;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -18,6 +19,8 @@ namespace UnitTests
                 var encodedArgs = Uri.EscapeDataString($"--traceroute 92.247.12.80 -sn -T5");
                 string url = "http://antnortheu.cloudapp.net/home/exec?program=nmap&args=" + encodedArgs;
                 var res = client.GetStringAsync(url).Result;
+
+                TraceRouteParser.ParseSummary(res);
             }
         }
     }

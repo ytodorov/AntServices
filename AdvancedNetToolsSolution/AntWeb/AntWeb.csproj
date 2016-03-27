@@ -1104,10 +1104,12 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\PingReplyParser.cs" />
+    <Compile Include="Infrastructure\TraceRouteParser.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\PingReplySummaryViewModel.cs" />
     <Compile Include="Models\PingReplyViewModel.cs" />
     <Compile Include="Models\PingRequestViewModel.cs" />
+    <Compile Include="Models\TraceRouteReplyViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
