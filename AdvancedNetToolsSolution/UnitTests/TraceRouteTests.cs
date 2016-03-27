@@ -21,6 +21,8 @@ namespace UnitTests
                 var res = client.GetStringAsync(url).Result;
 
                 TraceRouteParser.ParseSummary(res);
+                // some test
+                int aTest = 123;
             }
         }
     }
