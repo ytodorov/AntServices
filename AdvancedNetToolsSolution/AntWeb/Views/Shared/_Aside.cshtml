@@ -19,15 +19,18 @@
 
         <ul>
             <li class="@Html.RouteIf("Home", "active")">
-                <a href="/Home" title="Go back to home page."><i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">Home</span></a>
+                <a href="/home" title="Go back to home page."><i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">Home</span></a>
             </li>
             <li class="@Html.RouteIf("Ping", "active")">
-                <a href="/Ping" title="Test the reachability of a host on an Internet Protocol (IP) network and measure the round-trip time for messages sent from the originating host to a destination computer and back."><i class="fa fa-lg fa-fw fa-bar-chart-o"></i> <span class="menu-item-parent">Ping</span></a>
+                <a href="/ping" title="Test the reachability of a host on an Internet Protocol (IP) network and measure the round-trip time for messages sent from the originating host to a destination computer and back."><i class="fa fa-lg fa-fw fa-bar-chart-o"></i> <span class="menu-item-parent">Ping</span></a>
             </li>
             <li class="@Html.RouteIf("Traceroute", "active")">
-                <a href="/Traceroute" title="Display the route (path) and measure transit delays of packets across an Internet Protocol (IP) network."><i class="fa fa-lg fa-fw fa-cogs"></i> <span class="menu-item-parent">Traceroute</span></a>
+                <a href="/traceroute" title="Display the route (path) and measure transit delays of packets across an Internet Protocol (IP) network."><i class="fa fa-lg fa-fw fa-cogs"></i> <span class="menu-item-parent">Traceroute</span></a>
             </li>
-            <li class="@Html.RouteIf("Whois", "active")">
+            <li class="@Html.RouteIf("Speedtest", "active")">
+                <a href="/speedtest" title="Measure download/upload speed"><i class="fa fa-lg fa-fw fa-cogs"></i> <span class="menu-item-parent">Upload/Download speed</span></a>
+            </li>
+            @*<li class="@Html.RouteIf("Whois", "active")">
                 <a href="/Whois" title="Query databases that store the registered users or assignees of an Internet resource, such as a domain name, an IP address block, or an autonomous system."><i class="fa fa-lg fa-fw fa-rss"></i> <span class="menu-item-parent">Whois</span></a>
             </li>
             <li class="@Html.RouteIf("Dns", "active")">
@@ -38,7 +41,7 @@
             </li>
             <li class="@Html.RouteIf("MyIp", "active")">
                 <a href="/MyIp" title="Information about your current IP."><i class="fa fa-lg fa-fw fa-angle-double-down"></i> <span class="menu-item-parent">My IP</span></a>
-            </li>
+            </li>*@
         </ul>
     </nav>
     <span class="minifyme" data-action="minifyMenu">

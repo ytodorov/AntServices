@@ -9,7 +9,7 @@
     <script>
         function CreateRandomString(char) {
             var text = "";
-            var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
             for (var i = 0; i < char; i++)
                 text += possible.charAt(Math.floor(Math.random() * possible.length));
@@ -26,11 +26,11 @@
                 var numerictextbox = $("#tbDownloadLength").data("kendoNumericTextBox");
                 // use markes so performance.getEntriesByName is unique
                 var marker = new Date().getTime();
-
+                
                 var downloadLength = numerictextbox.value();
                 $.ajax({
                     AcceptEncoding: "text/plain",
-                    url: "/speedtest/download?bytes=" + downloadLength + "&marker=" + marker,
+                    url: "/speedtest/download?downloadLength=" + downloadLength + "&marker=" + marker,
                     cache: false
                 })
                   .done(function (html) {

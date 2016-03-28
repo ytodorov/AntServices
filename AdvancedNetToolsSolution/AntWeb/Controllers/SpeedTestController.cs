@@ -25,18 +25,12 @@ namespace SmartAdminMvc.Controllers
             return View();
         }
 
-        public string Download(int bytes)
+        public string Download(int downloadLength)
         {
             Response.ContentType = "text/plain; charset=utf-8";
             Request.Headers["Accept-Encoding"] = "";
-            //string s = new string('A', bytes);
-            //return s;
-
-            RNGCryptoServiceProvider Rand = new RNGCryptoServiceProvider();
-            byte[] byteArray = new byte[bytes];
-            Rand.GetBytes(byteArray);
-            string s = Convert.ToBase64String(byteArray);
-            return s;
+            string result = Utils.RandomString(downloadLength);
+            return result;
         }
 
         [HttpPost]
