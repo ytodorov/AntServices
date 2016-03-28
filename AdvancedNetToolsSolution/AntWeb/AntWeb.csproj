@@ -1101,6 +1101,7 @@
     <Compile Include="Controllers\IntelController.cs" />
     <Compile Include="Controllers\MiscController.cs" />
     <Compile Include="Controllers\TablesController.cs" />
+    <Compile Include="Extensions\GoogleMap.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

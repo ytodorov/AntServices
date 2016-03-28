@@ -1,12 +1,15 @@
-﻿<div id="map" style="width:100px;height: 300px"></div>
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
 
-
-@section pagespecific {
-
-    <script>
-        $(window).ready(function test() {
-
-            var myLatLng = { lat: 53.349443, lng: -6.260082 };
+namespace SmartAdminMvc.Extensions
+{
+    public static class GoogleMap
+    {
+        public static string GetMapWithLocaions()
+        {
+            string result = @"var myLatLng = { lat: 53.349443, lng: -6.260082 };
             var sofiaLatLng = { lat: 42.6975, lng: 23.3242 };
 
             var map = new google.maps.Map(document.getElementById('map'), {
@@ -31,15 +34,16 @@
                    myLatLng,
                     sofiaLatLng
                 ],
-                strokeColor: "#FF0000",
+                strokeColor: '#FF0000',
                 strokeOpacity: 1.0,
                 strokeWeight: 1,
                 map: map
             });
 
-            $("#map").width("100%");
+            $('#map').width('100%');";
 
+            return result;
+        }
 
-        });
-    </script>
+    }
 }

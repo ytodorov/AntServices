@@ -32,53 +32,66 @@
                         <div class="widget-body">
 
                             <form role="form">
-
-                                <div class="form-group">
-                                    <label class="control-label" for="ip">IP or URL:</label>
+                                <div id="accordion">
                                     <div>
-                                        <input class="k-textbox" id="ip" placeholder="Enter IP or URL" value="www.yahoo.com" type="text">
+                                        <h4>Main</h4>
+                                        <div class="padding-10">
+                                            <div class="form-group">
+                                                <label class="control-label" for="ip">IP or URL:</label>
+                                                <div>
+                                                    <input class="k-textbox" id="ip" placeholder="Enter IP or URL" value="www.yahoo.com" type="text" style="width:100%">
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div>
+
+                                        <div>
+                                            <h4>Advanced settings</h4>
+                                            <div class="padding-10">
+
+                                                <div class="form-group">
+                                                    <label class="control-label" for="tbPacketsCount">Packets Count:</label>
+                                                    <div>
+                                                        <input id="tbPacketsCount" placeholder="Enter packets count" type="number" value="4" min="1" max="10">
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="form-group">
+                                                    <label class="control-label" for="tbPacketsSize">Packet size in bytes:</label>
+                                                    <div>
+                                                        <input id="tbPacketsSize" placeholder="Enter MTU" type="number" min="1" max="65000">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label" for="tbDelayBetweenPings">Delay between pings (ms):</label>
+                                                    <div>
+                                                        <input id="tbDelayBetweenPings" placeholder="Enter delay between pings" value="10" type="number" min="1" max="1000">
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="form-group">
+                                                    <label class="control-label" for="tbTTL">Time to Live:</label>
+                                                    <div>
+                                                        <input id="tbTTL" placeholder="Enter TTL" type="number" value="64" min="1" max="128">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div>
+                                                        <input type="checkbox" id="cbDontFragment" class="k-checkbox" checked="checked">
+                                                        <label class="k-checkbox-label" for="cbDontFragment">Don't Fragment</label>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-
-                                <div class="form-group">
-                                    <label class="control-label" for="tbPacketsCount">Packets Count:</label>
-                                    <div>
-                                        <input id="tbPacketsCount" placeholder="Enter packets count" type="number" value="4" min="1" max="10">
-                                    </div>
-                                </div>
-
-
-                                <div class="form-group">
-                                    <label class="control-label" for="tbPacketsSize">Packet size in bytes:</label>
-                                    <div>
-                                        <input id="tbPacketsSize" placeholder="Enter MTU" type="number" min="1" max="65000">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label" for="tbDelayBetweenPings">Delay between pings (ms):</label>
-                                    <div>
-                                        <input id="tbDelayBetweenPings" placeholder="Enter delay between pings" value="10" type="number" min="1" max="1000">
-                                    </div>
-                                </div>
-
-                                
-                                <div class="form-group">
-                                    <label class="control-label" for="tbTTL">Time to Live:</label>
-                                    <div>
-                                        <input id="tbTTL" placeholder="Enter TTL" type="number" value="64" min="1" max="128">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div>
-                                        <input type="checkbox" id="cbDontFragment" class="k-checkbox" checked="checked">
-                                        <label class="k-checkbox-label" for="cbDontFragment">Don't Fragment</label>
-                                    </div>
-                                </div>
-
-
-
                                 <footer>
-                                    <input type="button" class="k-button" id="btnPing" value="Ping"/>
+                                    <input type="button" class="k-button" id="btnPing" value="Ping" />
                                 </footer>
                             </form>
 
@@ -119,18 +132,35 @@
 
 </div>
 
+<div id="map" style="width:100px;height: 300px"></div>
 
 @section pagespecific {
-    <script>
+    <script type="text/javascript">
         $(document).ready(function () {
+
+            var accordionIcons = {
+                header: "fa fa-plus",    // custom icon class
+                activeHeader: "fa fa-minus" // custom icon class
+            };
+
+            $("#accordion").accordion({
+                autoHeight: false,
+                heightStyle: "content",
+                collapsible: true,
+                animate: 300,
+                icons: accordionIcons,
+                header: "h4",
+            })
 
             $("#tbPacketsCount").kendoNumericTextBox({ format: "n0" });
             $("#tbTTL").kendoNumericTextBox({ format: "n0" });
             $("#tbPacketsSize").kendoNumericTextBox({ format: "n0", min: 1, max: 65000 });
             $("#tbDelayBetweenPings").kendoNumericTextBox({ format: "n0", min: 1, max: 1000 });
             $("#btnPing").click(function btnPingClick() {
-                $('#grid').data('kendoGrid').dataSource.read();
-                 
+                $('#grid').data('kendoGrid').dataSource.read().then(function (test) {
+                    @*eval(@(SmartAdminMvc.Extensions.GoogleMap.GetMapWithLocaions()));*@
+                });
+
                 $('#grid').show();
             });
 
