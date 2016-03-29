@@ -1,4 +1,67 @@
-﻿@model string
-@(
-    Model
-)
+﻿<span class="k-textbox k-space-right" style="width: 100%;" >
+    <input type="text" id="tbTraceRoute">
+    <a href="#" id="btnTracerRoute" class="k-icon k-i-search">&nbsp;</a>
+</span>
+<div id="grid"></div>
+
+@section pagespecific {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#btnTracerRoute").click(function tracert() {
+
+
+                $('#grid').data('kendoGrid').dataSource.read().then(function (test) {
+                   });
+
+                $('#grid').show();
+
+
+            });
+            
+
+
+
+            $('#grid').hide();
+
+            $("#grid").kendoGrid({
+                autoBind: false,
+                dataSource: {
+                    transport: {
+                        read: { url: "/Traceroute/Read" },
+
+                        parameterMap: function (data, type) {
+                            if (type == "read") {
+                                debugger;
+
+                                return {
+                                    ip: $("#tbTraceRoute").val(),
+                                }
+                            }
+                        }
+                    },
+                    schema: {
+                        data: "Data",
+                        model: {
+                            fields: {
+                                Hop: { type: "number" },
+                                Rtt: { type: "number" },
+                                AdressName: { type: "string" },
+                                Ip: { type: "string" },
+                            }
+                        }
+                    },
+                    pageSize: 20,
+                },
+                sortable: true,
+                columns: [{ field: "Hop" },
+                          { field: "Rtt" },
+                          { field: "AdressName" },
+                          { field: "Ip" }
+                ]
+            });
+
+            
+        }
+        );
+    </script>
+}
