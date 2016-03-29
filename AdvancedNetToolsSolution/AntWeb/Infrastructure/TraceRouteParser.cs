@@ -55,6 +55,7 @@ namespace SmartAdminMvc.Infrastructure
             result.Hop = hop;
             result.Rtt = rtt;
             result.AddressName = address;
+            ip = ip.Substring(1, ip.Length - 2);
             result.Ip = ip;
 
             return result;

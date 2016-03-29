@@ -11,8 +11,8 @@ namespace SmartAdminMvc.Models
 
         public double Rtt { get; set; }
 
-        public string Ip { get; set; }
-
         public string AddressName { get; set; }
+
+        public string Ip { get; set; }
     }
 }
