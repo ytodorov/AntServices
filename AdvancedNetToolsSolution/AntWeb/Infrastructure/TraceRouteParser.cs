@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 
 namespace SmartAdminMvc.Infrastructure
@@ -33,7 +34,7 @@ namespace SmartAdminMvc.Infrastructure
             var times = line.Split(new string[] {" "}, StringSplitOptions.RemoveEmptyEntries);
             int.TryParse(times[0], out hop);
             
-            if (times.Length == 4)
+            if (times.Length == 5)
             {
                 double.TryParse(times[1], NumberStyles.Any, CultureInfo.InvariantCulture, out rtt);
                 if (!string.IsNullOrEmpty(times[3]))
@@ -50,13 +51,14 @@ namespace SmartAdminMvc.Infrastructure
             }
             else
             {
-                double.TryParse(times[0], out rtt);
+                double.TryParse(times[1], out rtt);
                 address = "";
                 ip = "";
             }
             result.Hop = hop;
             result.Rtt = rtt;
             result.AddressName = address;
+            
             result.Ip = ip;
 
             return result;
