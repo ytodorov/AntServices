@@ -13,7 +13,7 @@ namespace SmartAdminMvc.Infrastructure
         public static List<TraceRouteReplyViewModel> ParseSummary(string traceRouteSummary)
         {
             List<TraceRouteReplyViewModel> result = new List<TraceRouteReplyViewModel>();
-            
+
             List<string> lines = GetLinesFromSummary(traceRouteSummary);
             foreach (var line in lines)
             {
@@ -30,7 +30,7 @@ namespace SmartAdminMvc.Infrastructure
             double rtt;
             string address, ip;
 
-            var times = line.Split(new string[] {" "}, StringSplitOptions.RemoveEmptyEntries);
+            var times = line.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
 
             int.TryParse(times[0], out hop);
             double.TryParse(times[1], NumberStyles.Any, CultureInfo.InvariantCulture, out rtt);
@@ -45,7 +45,7 @@ namespace SmartAdminMvc.Infrastructure
                 address = "";
                 ip = times[3];
             }
-            else 
+            else
             {
                 double.TryParse(times[1], out rtt);
                 address = "";
@@ -61,15 +61,31 @@ namespace SmartAdminMvc.Infrastructure
 
         private static List<string> GetLinesFromSummary(string traceRouteSummary)
         {
-            var pFrom = traceRouteSummary.IndexOf("1 ") + "1 ".Length;
-            var pTo = traceRouteSummary.LastIndexOf("Nmap");
-            var res = traceRouteSummary.Substring(pFrom, pTo - pFrom);
-            List<string> lines = new List<string>();
-            if (lines.Last() != "\n")
+            var lines = traceRouteSummary.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+
+            var correctLines = new List<string>();
+
+            foreach (string line in lines)
             {
-                lines.Add(res);
+                var words = line.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+                var firstWord = words.FirstOrDefault();
+                int helper;
+                if (int.TryParse(firstWord, out helper))
+                {
+                    correctLines.Add(line);
+                }
             }
-            return lines;
+            return correctLines;
+
+            //var pFrom = traceRouteSummary.IndexOf("1 ") + "1 ".Length;
+            //var pTo = traceRouteSummary.LastIndexOf("Nmap");
+            //var res = traceRouteSummary.Substring(pFrom, pTo - pFrom);
+            ////List<string> lines = new List<string>();
+            //if (lines.Last() != "\n")
+            //{
+            //    lines.Add(res);
+            //}
+            //return lines;
         }
     }
 }
