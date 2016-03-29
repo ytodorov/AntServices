@@ -20,7 +20,6 @@ namespace SmartAdminMvc.Infrastructure
                 TraceRouteReplyViewModel trrvm = ParseSingleLine(line);
                 result.Add(trrvm);
             }
-
             return result;
         }
 
@@ -32,24 +31,21 @@ namespace SmartAdminMvc.Infrastructure
             string address, ip;
 
             var times = line.Split(new string[] {" "}, StringSplitOptions.RemoveEmptyEntries);
+
             int.TryParse(times[0], out hop);
-            
+            double.TryParse(times[1], NumberStyles.Any, CultureInfo.InvariantCulture, out rtt);
+
             if (times.Length == 5)
             {
-                double.TryParse(times[1], NumberStyles.Any, CultureInfo.InvariantCulture, out rtt);
-                if (!string.IsNullOrEmpty(times[3]))
-                {
-                    address = times[3];
-                    ip = times[4];
-                }
-                else
-                {
-                    address = "";
-                    ip = times[3];
-                }
-                ip = ip.Substring(1, ip.Length - 2);
+                address = times[3];
+                ip = times[4].Substring(1, times[4].Length - 2);
             }
-            else
+            else if (times.Length == 4)
+            {
+                address = "";
+                ip = times[3];
+            }
+            else 
             {
                 double.TryParse(times[1], out rtt);
                 address = "";
@@ -58,7 +54,6 @@ namespace SmartAdminMvc.Infrastructure
             result.Hop = hop;
             result.Rtt = rtt;
             result.AddressName = address;
-            
             result.Ip = ip;
 
             return result;
@@ -70,7 +65,10 @@ namespace SmartAdminMvc.Infrastructure
             var pTo = traceRouteSummary.LastIndexOf("Nmap");
             var res = traceRouteSummary.Substring(pFrom, pTo - pFrom);
             List<string> lines = new List<string>();
-            lines.Add(res);
+            if (lines.Last() != "\n")
+            {
+                lines.Add(res);
+            }
             return lines;
         }
     }
