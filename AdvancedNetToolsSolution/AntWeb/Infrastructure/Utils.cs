@@ -2,8 +2,10 @@
 using SmartAdminMvc.Models;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net.Http;
+using System.Text;
 using System.Web;
 using System.Web.Helpers;
 
@@ -11,6 +13,8 @@ namespace SmartAdminMvc.Infrastructure
 {
     public static class Utils
     {
+        public static Random RandomNumberGenerator = new Random();
+
         public static IpLocationViewModel GetLocationDataForIp(string ipOrHostName)
         {
             using (HttpClient client = new HttpClient())
@@ -27,10 +31,90 @@ namespace SmartAdminMvc.Infrastructure
 
         public static string RandomString(int length)
         {
-            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-            var random = new Random();
-            var result = new string(Enumerable.Repeat(chars, length).Select(s => s[random.Next(s.Length)]).ToArray());
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";   
+            var result = new string(Enumerable.Repeat(chars, length).Select(s => s[RandomNumberGenerator.Next(s.Length)]).ToArray());
             return result;
+        }
+
+        public static string GetGoogleMapsString(TraceRouteReplyViewModel[] models)
+        {
+            models = models.Where(m => !string.IsNullOrEmpty(m.Ip)).OrderBy(m => m.Hop).ToArray();
+
+            List<IpLocationViewModel> locations = new List<IpLocationViewModel>();
+            List<string> locationNamesInMap = new List<string>();
+            List<string> markerNamesInMap = new List<string>();
+
+            for (int i = 0; i < models.Length; i++)
+            {
+                var currLocation = GetLocationDataForIp(models[i].Ip);
+
+                var lastLocation = locations.LastOrDefault();
+
+                if (locations.Any(l => l.Latitude == currLocation.Latitude && l.Longitude == currLocation.Longitude))
+                {
+                    currLocation.Latitude += RandomNumberGenerator.NextDouble() / 100;
+                    currLocation.Longitude += RandomNumberGenerator.NextDouble() / 100;
+                }
+
+                locations.Add(currLocation);
+                locationNamesInMap.Add("latLng" + i);
+                markerNamesInMap.Add("marker" + i);
+            }
+
+
+            StringBuilder sb = new StringBuilder();
+
+
+            for (int i = 0; i < models.Length; i++)
+            {
+                IpLocationViewModel location = locations[i];
+            }
+
+            for (int i = 0; i < models.Length; i++)
+            {
+                sb.AppendLine($@"var {locationNamesInMap[i]} = {{ lat: {locations[i].Latitude.ToString(CultureInfo.InvariantCulture)}, lng: {locations[i].Longitude.ToString(CultureInfo.InvariantCulture)} }};");
+            }
+
+            sb.AppendLine($@"var map = new google.maps.Map(document.getElementById('map'), {{
+                zoom: 1,
+                center: {locationNamesInMap.LastOrDefault()}
+            }});");
+
+            for (int i = 0; i < models.Length; i++)
+            {
+                sb.AppendLine($@"var {markerNamesInMap[i]} = new google.maps.Marker({{
+                position: {locationNamesInMap[i]},
+                map: map,
+                title: '{i}. {models[i].Ip} {locations[i].CityName} {locations[i].RegionName} {locations[i].CountryName}'
+            }});");
+            }
+
+            StringBuilder locationStringsForPolyline = new StringBuilder();
+            for (int i = 0; i < locationNamesInMap.Count; i++)
+            {
+                locationStringsForPolyline.Append(locationNamesInMap[i]);
+                if (i != locationNamesInMap.Count - 1)
+                {
+                    locationStringsForPolyline.AppendLine(",");
+                }
+            }
+
+            string polyline = $@" var line = new google.maps.Polyline({{
+                path: [
+                    {locationStringsForPolyline.ToString()}
+                ],
+                strokeColor: '#FF0000',
+                strokeOpacity: 1.0,
+                strokeWeight: 3,
+                map: map
+            }});";
+
+            sb.AppendLine(polyline);
+
+            sb.AppendLine(" $('#map').width('100%');");
+            string finalResult = sb.ToString();
+
+            return finalResult;
         }
     }
 }

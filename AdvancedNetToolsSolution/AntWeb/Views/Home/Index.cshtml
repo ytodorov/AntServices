@@ -123,9 +123,18 @@
                 title: 'Central US - Iowa'
             });
 
+            var infowindow = new google.maps.InfoWindow({
+                content: "test"
+            });
+
+            marker.addListener('click', function () {
+                infowindow.open(map, marker);
+            });
+
+
             var line = new google.maps.Polyline({
                 path: [
-                   dublinLatLng,
+                    dublinLatLng,
                     sofiaLatLng,
                     hongKongLatLng
                 ],

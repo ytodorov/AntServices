@@ -1,9 +1,9 @@
 ﻿<span class="k-textbox k-space-right" style="width: 100%;" >
-    <input type="text" id="tbTraceRoute">
+    <input type="text" id="tbTraceRoute" value="www.wheather.com">
     <a href="#" id="btnTracerRoute" class="k-icon k-i-search">&nbsp;</a>
 </span>
 <div id="grid"></div>
-
+<div id="map" style="width:500px;height: 300px"></div>
 @section pagespecific {
     <script type="text/javascript">
         $(document).ready(function () {
@@ -11,6 +11,20 @@
 
 
                 $('#grid').data('kendoGrid').dataSource.read().then(function (test) {
+                    var pd = $('#grid').data('kendoGrid').dataSource._pristineData;
+                    var pristineDataString = JSON.stringify(pd);
+                    debugger;
+                    $.ajax({
+                        method: "POST",
+                        url: "/home/googlemap",
+                        data: { models: pd },
+                        success: function f(gmData) {
+                            debugger;
+                            eval(gmData);
+
+                        }
+                    })
+
                    });
 
                 $('#grid').show();

@@ -1057,6 +1057,7 @@
     <Content Include="Views\Whois\Index.cshtml" />
     <Content Include="Views\MyIp\Index.cshtml" />
     <Content Include="Views\Speedtest\Index.cshtml" />
+    <Content Include="Views\Test\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1093,6 +1094,7 @@
     <Compile Include="Controllers\FeaturesController.cs" />
     <Compile Include="Controllers\MyIpController.cs" />
     <Compile Include="Controllers\SpeedtestController.cs" />
+    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\WhoisController.cs" />
     <Compile Include="Controllers\TracerouteController.cs" />
     <Compile Include="Controllers\PingController.cs" />

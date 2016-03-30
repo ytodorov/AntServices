@@ -1,0 +1,79 @@
+﻿<div id="map" style="width:500px;height: 300px"></div>
+
+
+@section pagespecific {
+
+    <script>
+        $(window).ready(function test() {
+
+            var latLng0 = { lat: 47.6829, lng: -122.121 };
+            var latLng1 = { lat: 47.6829, lng: -122.121 };
+            var latLng2 = { lat: 47.6829, lng: -122.121 };
+            var latLng3 = { lat: 47.6829, lng: -122.121 };
+            var latLng4 = { lat: 47.6829, lng: -122.121 };
+            var latLng5 = { lat: 47.6829, lng: -122.121 };
+            var latLng6 = { lat: 47.6829, lng: -122.121 };
+            var latLng7 = { lat: 42.6975, lng: 23.3242 };
+            var latLng8 = { lat: 42.6975, lng: 23.3242 };
+            var latLng9 = { lat: 42.6975, lng: 23.3242 };
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 1,
+                center: latLng0
+            });
+            var marker0 = new google.maps.Marker({
+                position: latLng0,
+                map: map,
+                title: 'Redmond Washington United States'
+            });
+            var marker1 = new google.maps.Marker({
+                position: latLng1,
+                map: map,
+                title: 'Redmond Washington United States'
+            });
+            var marker2 = new google.maps.Marker({
+                position: latLng2,
+                map: map,
+                title: 'Redmond Washington United States'
+            });
+            var marker3 = new google.maps.Marker({
+                position: latLng3,
+                map: map,
+                title: 'Redmond Washington United States'
+            });
+            var marker4 = new google.maps.Marker({
+                position: latLng4,
+                map: map,
+                title: 'Redmond Washington United States'
+            });
+            var marker5 = new google.maps.Marker({
+                position: latLng5,
+                map: map,
+                title: 'Redmond Washington United States'
+            });
+            var marker6 = new google.maps.Marker({
+                position: latLng6,
+                map: map,
+                title: 'Redmond Washington United States'
+            });
+            var marker7 = new google.maps.Marker({
+                position: latLng7,
+                map: map,
+                title: 'Sofia Grad Sofiya Bulgaria'
+            });
+            var marker8 = new google.maps.Marker({
+                position: latLng8,
+                map: map,
+                title: 'Sofia Grad Sofiya Bulgaria'
+            });
+            var marker9 = new google.maps.Marker({
+                position: latLng9,
+                map: map,
+                title: 'Sofia Grad Sofiya Bulgaria'
+            });
+            $('#map').width('100%');
+
+
+        });
+
+    </script>
+    }

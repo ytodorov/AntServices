@@ -3,7 +3,9 @@
 using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
 using SmartAdminMvc.Infrastructure;
+using SmartAdminMvc.Models;
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -37,11 +39,11 @@ namespace SmartAdminMvc.Controllers
         {
             using (HttpClient client = new HttpClient())
             {
-                var encodedArgs = Uri.EscapeDataString($"--traceroute {ip} -sn -n");
+                var encodedArgs = Uri.EscapeDataString($" --traceroute -sn -n {ip}");
                 string url = "http://antnortheu.cloudapp.net/home/exec?program=nmap&args=" + encodedArgs;
                 var tracerouteSummary = client.GetStringAsync(url).Result;
 
-                var list = TraceRouteParser.ParseSummary(tracerouteSummary);
+                List<TraceRouteReplyViewModel> list = TraceRouteParser.ParseSummary(tracerouteSummary);
 
                 var dsResult = Json(list.ToDataSourceResult(request));
                 return dsResult;
