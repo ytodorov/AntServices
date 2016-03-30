@@ -118,10 +118,6 @@
                 header: "h4",
             })
 
-            $("#tbPacketsCount").kendoNumericTextBox({ format: "n0" });
-            $("#tbTTL").kendoNumericTextBox({ format: "n0" });
-            $("#tbPacketsSize").kendoNumericTextBox({ format: "n0", min: 1, max: 65000 });
-            $("#tbDelayBetweenPings").kendoNumericTextBox({ format: "n0", min: 1, max: 1000 });
             $("#btnPing").click(function btnPingClick() {
                 $('#grid').data('kendoGrid').dataSource.read().then(function (test) {
                     @*eval(@(SmartAdminMvc.Extensions.GoogleMap.GetMapWithLocaions()));*@
