@@ -31,7 +31,7 @@
                             .Max(10)
                             .Value(4)
                             .Placeholder("Enter packets count")
-                            .HtmlAttributes(new { style = "width: 30%" })         
+                            .HtmlAttributes(new { style = "width: 30%" })
                             )
                         </div>
                     </div>
@@ -92,11 +92,40 @@
     </footer>
 </form>
 
-<div id="example">
-    <div id="grid"></div>
+@*<div id="example">
+    <div id="grid"></div>*@
+    @(Html.Kendo().Grid<PingReplySummaryViewModel>()
+        .Name("grid")
+        .Columns(columns =>
+        {
+            columns.Bound(c => c.MaxRtt).Format("n");
+            columns.Bound(c => c.MinRtt).Format("n");
+            columns.Bound(c => c.AvgRtt).Format("n");
 
-</div>
+            columns.Bound(c => c.TxTimeInSeconds).Format("n");
+            columns.Bound(c => c.TxBytesPerSecond).Format("n");
+            columns.Bound(c => c.TxPacketsPerSecond).Format("n");
 
+            columns.Bound(c => c.RxTimeInSeconds).Format("n");
+            columns.Bound(c => c.RxBytesPerSecond).Format("n");
+            columns.Bound(c => c.RxPacketsPerSecond).Format("n");
+         
+        })
+        .Scrollable()
+        .Groupable()
+        .Sortable()
+        .Pageable(pageable => pageable
+            .Refresh(true)
+            .PageSizes(true)
+            .ButtonCount(5))
+        .DataSource(dataSource => dataSource
+            .Ajax()
+            .Read(read => read.Data("/Ping/Read"))
+            .PageSize(20)
+        )
+    )
+
+@*</div>*@
 
 <div id="map" style="width:100px;height: 300px"></div>
 
@@ -166,20 +195,20 @@
                         }
                     },
                     pageSize: 20,
-                },
-                sortable: true,
-                columns: [{ field: "MaxRtt" },
-                          { field: "MinRtt" },
-                          { field: "AvgRtt" }
-                          //,
-                          //{ field: "TxTimeInSeconds" },
-                          //{ field: "TxBytesPerSecond" },
-                          //{ field: "TxPacketsPerSecond" },
-                          //{ field: "RxTimeInSeconds" },
-                          //{ field: "RxBytesPerSecond" },
-                          //{ field: "RxPacketsPerSecond" }
-                ]
-            });
+                        },
+                        //sortable: true,
+                        //columns: [{ field: "MaxRtt" },
+                        //          { field: "MinRtt" },
+                        //          { field: "AvgRtt" }
+                                  //,
+                                  //{ field: "TxTimeInSeconds" },
+                                  //{ field: "TxBytesPerSecond" },
+                                  //{ field: "TxPacketsPerSecond" },
+                                  //{ field: "RxTimeInSeconds" },
+                                  //{ field: "RxBytesPerSecond" },
+                                  //{ field: "RxPacketsPerSecond" }
+                        //]
+                });
         });
     </script>
 }
