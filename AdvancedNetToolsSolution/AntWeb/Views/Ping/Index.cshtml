@@ -25,21 +25,39 @@
                     <div class="form-group">
                         <label class="control-label" for="tbPacketsCount">Packets Count:</label>
                         <div>
-                            <input id="tbPacketsCount" placeholder="Enter packets count" type="number" value="4" min="1" max="10">
+                            @(Html.Kendo().NumericTextBox<int>()
+                            .Name("tbPacketsCount")
+                            .Min(1)
+                            .Max(10)
+                            .Value(4)
+                            .HtmlAttributes(new { style = "width: 30%" })         
+                            )
                         </div>
                     </div>
-
 
                     <div class="form-group">
                         <label class="control-label" for="tbPacketsSize">Packet size in bytes:</label>
                         <div>
-                            <input id="tbPacketsSize" placeholder="Enter MTU" type="number" min="1" max="65000">
+                            @(Html.Kendo().NumericTextBox<int>()
+                            .Name("tbPacketsSize")
+                            .Min(1)
+                            .Max(65000)
+                            .Placeholder("Enter MTU")
+                            .HtmlAttributes(new { style = "width: 30%" })
+                            )
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label" for="tbDelayBetweenPings">Delay between pings (ms):</label>
                         <div>
-                            <input id="tbDelayBetweenPings" placeholder="Enter delay between pings" value="10" type="number" min="1" max="1000">
+                            @(Html.Kendo().NumericTextBox<int>()
+                            .Name("tbDelayBetweenPings")
+                            .Min(1)
+                            .Max(1000)
+                            .Value(10)
+                            .Placeholder("Enter Delay Between Pings")
+                            .HtmlAttributes(new { style = "width: 30%" })
+                            )
                         </div>
                     </div>
 
@@ -47,7 +65,14 @@
                     <div class="form-group">
                         <label class="control-label" for="tbTTL">Time to Live:</label>
                         <div>
-                            <input id="tbTTL" placeholder="Enter TTL" type="number" value="64" min="1" max="128">
+                            @(Html.Kendo().NumericTextBox<int>()
+                            .Name("tbTTL")
+                            .Min(1)
+                            .Max(128)
+                            .Value(64)
+                            .Placeholder("Enter TTL")
+                            .HtmlAttributes(new { style = "width: 30%" })
+                            )
                         </div>
                     </div>
                     <div class="form-group">
