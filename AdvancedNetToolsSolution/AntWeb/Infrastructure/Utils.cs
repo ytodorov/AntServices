@@ -116,5 +116,15 @@ namespace SmartAdminMvc.Infrastructure
 
             return finalResult;
         }
+
+        public static List<string> GetDeployedUrlAddresses()
+        {
+            List<string> address = new List<string>()
+            {
+                "http://antnortheu.cloudapp.net",
+                "http://ant-northeurope.azurewebsites.net"
+            };
+            return address;
+        }
     }
 }

@@ -982,14 +982,6 @@
     <Content Include="Views\Shared\_TopRight.cshtml" />
     <Content Include="Views\Home\Inbox.cshtml" />
     <Content Include="Views\Home\Widgets.cshtml" />
-    <Content Include="Views\Icons\FontAwesome.cshtml" />
-    <Content Include="Views\Icons\GlyphIcons.cshtml" />
-    <Content Include="Views\Icons\Flags.cshtml" />
-    <Content Include="Views\Icons\Grid.cshtml" />
-    <Content Include="Views\Icons\TreeView.cshtml" />
-    <Content Include="Views\Icons\NestedLists.cshtml" />
-    <Content Include="Views\Icons\JQueryUI.cshtml" />
-    <Content Include="Views\Icons\Typography.cshtml" />
     <Content Include="Views\Home\Chat.cshtml" />
     <Content Include="Views\Home\Social.cshtml" />
     <Content Include="Scripts\plugin\bootstrap-tags\dist\bootstrap-tagsinput.min.js.map" />
@@ -1031,11 +1023,11 @@
     <Compile Include="Controllers\TracerouteController.cs" />
     <Compile Include="Controllers\PingController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\IconsController.cs" />
     <Compile Include="Extensions\GoogleMap.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\Constants.cs" />
     <Compile Include="Infrastructure\PingReplyParser.cs" />
     <Compile Include="Infrastructure\TraceRouteParser.cs" />
     <Compile Include="Infrastructure\Utils.cs" />
