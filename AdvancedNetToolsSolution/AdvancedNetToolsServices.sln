@@ -18,6 +18,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AntWeb", "AntWeb\AntWeb.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{7DB231C5-621A-4BFB-ACA5-47B940108D31}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeleniumUnitTests", "UnitTestProject1\SeleniumUnitTests.csproj", "{FE24A4C3-1C7B-40B4-80E4-259642BC4C58}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,6 +42,10 @@ Global
 		{7DB231C5-621A-4BFB-ACA5-47B940108D31}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7DB231C5-621A-4BFB-ACA5-47B940108D31}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7DB231C5-621A-4BFB-ACA5-47B940108D31}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE24A4C3-1C7B-40B4-80E4-259642BC4C58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE24A4C3-1C7B-40B4-80E4-259642BC4C58}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE24A4C3-1C7B-40B4-80E4-259642BC4C58}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE24A4C3-1C7B-40B4-80E4-259642BC4C58}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
