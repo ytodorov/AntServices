@@ -1,6 +1,7 @@
 ﻿#region Using
 
 using System;
+using System.Timers;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
@@ -23,6 +24,11 @@ namespace SmartAdminMvc
         protected void Application_Error()
         {
             Exception ex = Server.GetLastError();
+        }
+
+        private void PreventAppsFromSleep()
+        {
+            Timer timer = new Timer(TimeSpan.FromMinutes(10).TotalMilliseconds);
         }
     }
 }
