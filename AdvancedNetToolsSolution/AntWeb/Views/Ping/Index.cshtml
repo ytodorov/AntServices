@@ -1,5 +1,4 @@
-﻿@model string
-<script type="text/javascript">
+﻿<script type="text/javascript">
     function pingReadParameterMap(data, type) {
         debugger;
            
@@ -114,7 +113,7 @@
             columns.Bound(c => c.MinRtt);
             columns.Bound(t => t.AvgRtt);
         })
-        .Scrollable()
+        .Scrollable(s => s.Enabled(false))
         .Groupable()
         .Sortable()      
         .DataSource(dataSource => dataSource

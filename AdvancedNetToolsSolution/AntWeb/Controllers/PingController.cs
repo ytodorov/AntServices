@@ -21,15 +21,8 @@ namespace SmartAdminMvc.Controllers
         // GET: home/index
         public ActionResult Index()
         {
-            using (HttpClient client = new HttpClient())
-            {
-                string url = "http://antnortheu.cloudapp.net/home/exec?program=psping&args=8.8.8.8%20-q%20-i%200%20-n%2010";
-                var res = client.GetStringAsync(url).Result;
-
-                return View(model: res);
-
-
-            }
+            return View();
+                 
         }
         public ActionResult Read([DataSourceRequest] DataSourceRequest request, PingRequestViewModel prvm)
         {
