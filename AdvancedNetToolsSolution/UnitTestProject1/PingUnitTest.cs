@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium;
+using System.IO;
 
 namespace seleniumUnitTests
 {
@@ -12,10 +13,14 @@ namespace seleniumUnitTests
         [AssemblyInitialize]
         public static void SetUp(TestContext context)
         {
-            driverGC = new ChromeDriver(@"C:\chomedriver_win32");
+            //driverGC = new ChromeDriver(@"C:\chomedriver_win32");
+            string pathToDrive = Path.Combine(Environment.CurrentDirectory);
+            driverGC = new ChromeDriver(pathToDrive);
+            
         }
 
-        public static void main(String[] args)
+        [TestMethod]
+        public void PingTestUI()
         {
             driverGC.Navigate().GoToUrl("http://localhost:56110/ping");
             driverGC.FindElement(By.Id("ip")).SendKeys("www.abv.bg");
