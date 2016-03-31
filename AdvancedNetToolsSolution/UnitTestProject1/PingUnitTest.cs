@@ -2,30 +2,27 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium;
-using System.IO;
 
 namespace seleniumUnitTests
 {
     [TestClass]
     public class PingUnitTest
     {
-        static IWebDriver driverGC;
-        [AssemblyInitialize]
-        public static void SetUp(TestContext context)
+        public void TestWithChrome()
         {
-            //driverGC = new ChromeDriver(@"C:\chomedriver_win32");
-            string pathToDrive = Path.Combine(Environment.CurrentDirectory);
-            driverGC = new ChromeDriver(pathToDrive);
-            
-        }
+            using (var driverService = ChromeDriverService.CreateDefaultService())
+            {
+                driverService.Start();
+                IWebDriver driver = new ChromeDriver();
+                INavigation nav = driver.Navigate();
+                nav.GoToUrl("http://localhost:56110/ping");
+                driver.FindElement(By.Id("ip")).Clear();
+                driver.FindElement(By.Id("ip")).SendKeys("abv.bg");
+                driver.FindElement(By.Id("btnPing")).SendKeys(Keys.Enter);
 
-        [TestMethod]
-        public void PingTestUI()
-        {
-            driverGC.Navigate().GoToUrl("http://localhost:56110/ping");
-            driverGC.FindElement(By.Id("ip")).SendKeys("www.abv.bg");
-            driverGC.FindElement(By.Id("btnPing")).SendKeys(Keys.Enter);
-
+                //Assert.AreEqual("", value);
+                driver.Close();
+            }
         }
     }
 }
