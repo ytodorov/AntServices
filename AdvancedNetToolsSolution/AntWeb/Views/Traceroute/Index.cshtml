@@ -5,8 +5,8 @@
 <div id="traceRouteResult">
     
 <span class="k-textbox k-space-right" style="width: 100%;" >
-    <input type="text" id="tbTraceRoute" value="www.wheather.com">
-    <a href="#" id="btnTracerRoute" class="k-icon k-i-search">&nbsp;</a>
+    <input type="text" id="tbTraceRoute" value="www.wheather.com" class="k-textbox">
+    <a href="javascript:void(0)" id="btnTracerRoute" class="k-icon k-i-search">&nbsp;</a>
 </span>
 <div id="grid"></div>
 <div id="map" style="width:500px;height: 300px"></div>
@@ -21,9 +21,9 @@ else
 @section pagespecific {
     <script type="text/javascript">
         $(document).ready(function () {
-            $("#btnTracerRoute").click(function tracert() {
+            $("#btnTracerRoute").click(function tracert(e) {
 
-
+                e.preventDefault();
                 $('#grid').data('kendoGrid').dataSource.read().then(function (test) {
                     var pd = $('#grid').data('kendoGrid').dataSource._pristineData;
                     var pristineDataString = JSON.stringify(pd);

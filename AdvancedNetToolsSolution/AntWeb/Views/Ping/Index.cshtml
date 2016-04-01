@@ -1,33 +1,36 @@
 ﻿<script type="text/javascript">
     function pingReadParameterMap(data, type) {
         debugger;
-           
-            return {
-                ip: $("#ip").val(),
-                packetsCount: $("#tbPacketsCount").val(),
-                packetsSize: $("#tbPacketsSize").val(),
-                delayBetweenPings: $("#tbDelayBetweenPings").val(),
-                ttl: $("#tbTTL").val(),
-                df: $('#cbDontFragment').is(':checked')
-            }
-        
+
+        return {
+            ip: $("#ip").val(),
+            packetsCount: $("#tbPacketsCount").val(),
+            packetsSize: $("#tbPacketsSize").val(),
+            delayBetweenPings: $("#tbDelayBetweenPings").val(),
+            ttl: $("#tbTTL").val(),
+            df: $('#cbDontFragment').is(':checked')
+        }
+
     }
 </script>
 
 <form role="form">
     <div id="accordion">
-        <div>
-            <h4>Main</h4>
-            <div class="padding-10">
-                <div class="form-group">
-                    <label class="control-label" for="ip">IP or URL:</label>
-                    <div>
-                        <input class="k-textbox" id="ip" placeholder="Enter IP or URL" value="www.yahoo.com" type="text" style="width:100%">
-                    </div>
-                </div>
 
-            </div>
-        </div>
+        @*<div class="form-group">
+                <label class="control-label" for="ip">IP or URL:</label>
+                <div>
+                    <input class="k-textbox" id="ip" placeholder="Enter IP or URL" value="www.yahoo.com" type="text" style="width:100%">
+                </div>
+            </div>*@
+
+        <div class="k-block k-info-colored"><label class="control-label" for="ip">Enter IPv4, host name or IPv6 address to ping</label></div>
+        <span class="k-textbox k-space-right" style="width: 100%;">            
+            <input type="text" id="ip" class="k-textbox" value="google.com">
+            <a href="javascript:void(0)" id="btnPing" class="k-icon k-i-search">&nbsp;</a>
+        </span>
+
+
         <div>
 
             <div>
@@ -99,12 +102,12 @@
             </div>
         </div>
     </div>
-    <footer>
-        <input type="button" class="k-button" id="btnPing" value="Ping" />
-    </footer>
+    @*<footer>
+            <input type="button" class="k-button" id="btnPing" value="Ping" />
+        </footer>*@
 </form>
 
-    @(Html.Kendo().Grid<PingReplySummaryViewModel>()
+@(Html.Kendo().Grid<PingReplySummaryViewModel>()
         .Name("grid")
         .AutoBind(false)
         .Columns(columns =>
@@ -114,16 +117,21 @@
             columns.Bound(t => t.AvgRtt);
         })
         .Scrollable(s => s.Enabled(false))
-        .Groupable()
-        .Sortable()      
+        .ToolBar(t =>
+        {
+            t.Excel().Text(string.Empty);
+            t.Pdf().Text(string.Empty);
+        })
+        .Excel(e => e.FileName("pingExport(www.toolsfornet.com).xlsx"))
+        .Pdf(e => e.AllPages().FileName("pingExport(www.toolsfornet.com).pdf"))
         .DataSource(dataSource => dataSource
             .Ajax()
             .ServerOperation(false)
-            .Read(read => read.Action("Read", "Ping").Data("pingReadParameterMap"))               
+            .Read(read => read.Action("Read", "Ping").Data("pingReadParameterMap"))
 
         )
 
-    )
+)
 
 <div id="map" style="width:100px;height: 300px"></div>
 
@@ -145,15 +153,20 @@
                 header: "h4",
             })
 
-            $("#btnPing").click(function btnPingClick() {
+            $("#btnPing").click(function btnPingClick(e) {
+                e.preventDefault();
                 $('#grid').data('kendoGrid').dataSource.read().then(function (test) {
-                    @*eval(@(SmartAdminMvc.Extensions.GoogleMap.GetMapWithLocaions()));*@
                 });
 
-                $('#grid').show();
+            });
+            debugger;
+            $("#ip").keyup(function myfunction(eventData) {
+                if (eventData.keyCode == 13) {
+                    $("#btnPing").click();
+                }
+
             });
 
-            $('#grid').hide();          
         });
     </script>
 }
