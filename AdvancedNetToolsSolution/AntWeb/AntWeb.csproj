@@ -1033,12 +1033,14 @@
     </Compile>
     <Compile Include="Infrastructure\Constants.cs" />
     <Compile Include="Infrastructure\PingReplyParser.cs" />
+    <Compile Include="Infrastructure\PortParser.cs" />
     <Compile Include="Infrastructure\TraceRouteParser.cs" />
     <Compile Include="Infrastructure\Utils.cs" />
     <Compile Include="Models\IpLocationViewModel.cs" />
     <Compile Include="Models\PingReplySummaryViewModel.cs" />
     <Compile Include="Models\PingReplyViewModel.cs" />
     <Compile Include="Models\PingRequestViewModel.cs" />
+    <Compile Include="Models\PortReplyModel.cs" />
     <Compile Include="Models\TraceRouteReplyViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

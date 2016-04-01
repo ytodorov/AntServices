@@ -77,15 +77,6 @@ namespace SmartAdminMvc.Infrastructure
             }
             return correctLines;
 
-            //var pFrom = traceRouteSummary.IndexOf("1 ") + "1 ".Length;
-            //var pTo = traceRouteSummary.LastIndexOf("Nmap");
-            //var res = traceRouteSummary.Substring(pFrom, pTo - pFrom);
-            ////List<string> lines = new List<string>();
-            //if (lines.Last() != "\n")
-            //{
-            //    lines.Add(res);
-            //}
-            //return lines;
         }
     }
 }
