@@ -12,11 +12,12 @@ namespace UnitTests
 {
     public class PortTests
     {
+
         [Fact]
         public void ParseSingleLineExample1Test()
         {
             string line = "22/tcp  filtered ssh";
-            PortReplyModel result = PortParser.ParseSingleLine(line);
+            PortViewModel result = PortParser.ParseSingleLine(line);
 
             Assert.NotNull(result);
             Assert.Equal(22, result.Port);
@@ -25,6 +26,14 @@ namespace UnitTests
             Assert.Equal("ssh", result.Service);
 
         }
+
+        [Theory]
+        [InlineData("23/tcp  filtered telnet")]
+        [InlineData("81/tcp  open     hosts2-ns")]
+        [InlineData("80/tcp  open     http")]
+        [InlineData("111/tcp filtered rpcbind")]
+        [InlineData("135/tcp filtered msrpc")]
+
         [Fact]
         public void OpenPortsTest()
         {
@@ -35,8 +44,17 @@ namespace UnitTests
                 string url = "http://antnortheu.cloudapp.net/home/exec?program=nmap&args=" + encodedArgs0;
                 var portSummary = client.GetStringAsync(url).Result;
 
-                //List<PortViewModel> traceRouteViewModels = PortParser.ParseSummary(portSummary);
+                //List<PortViewModel> portViewModels = PortParser.ParseSummary(portSummary);
+                
             }
+        }
+
+        public void ParseSingleLineTest(string line)
+        {
+            PortViewModel result = PortParser.ParseSingleLine(line);
+
+            Assert.NotNull(result);
+            Assert.True(result.Port != 0);
         }
     }
 }
