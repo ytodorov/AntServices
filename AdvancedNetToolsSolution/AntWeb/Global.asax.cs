@@ -1,6 +1,9 @@
 ﻿#region Using
 
+using SmartAdminMvc.Infrastructure;
 using System;
+using System.Collections.Generic;
+using System.Net.Http;
 using System.Timers;
 using System.Web;
 using System.Web.Mvc;
@@ -20,6 +23,8 @@ namespace SmartAdminMvc
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            PreventAppsFromSleep();
         }
         protected void Application_Error()
         {
@@ -28,7 +33,21 @@ namespace SmartAdminMvc
 
         private void PreventAppsFromSleep()
         {
-            Timer timer = new Timer(TimeSpan.FromMinutes(10).TotalMilliseconds);
+            Timer timer = new Timer(TimeSpan.FromMinutes(1).TotalMilliseconds);
+            timer.Start();
+            timer.Elapsed += PingUrlsSoTheyDontSleep;
+        }
+
+        private void PingUrlsSoTheyDontSleep(object sender, ElapsedEventArgs e)
+        {
+            List<string> urls = Utils.GetDeployedUrlAddresses();
+            foreach (string url in urls)
+            {
+                using (HttpClient client = new HttpClient())
+                {
+                    var tracerouteSummary = client.GetStringAsync(url);
+                }
+            }
         }
     }
 }
