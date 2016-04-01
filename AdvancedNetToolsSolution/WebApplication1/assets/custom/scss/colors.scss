@@ -1,0 +1,145 @@
+
+$color00:    #fff;
+$color01: #f2f2f2;
+$color02: #dadada;
+$color03: #c1c1c1;
+$color04: #a7a7a7;
+$color05: #8e8e8e;
+$color06: #737373;
+$color07: #5d5d5d;
+$color08: #4a4a4a;
+$color09: #404040;
+$color10: #303030;
+$color11: #252525;
+$color12: #1b1b1b;
+$color13: #101010;
+
+$hovercolor: #E84855;
+$accentcolor: #43a5e6;
+
+$red: #e74c3c;
+$orange: #e67e22;
+$green: #1abc9c;
+$blue: #3498db;
+$darkblue: #1c4a6c;
+$cyan: #9b59b6;
+$yellow: #d9a81d;
+$l-grey: #f2f2f2;
+$grey: #999;
+
+// Jessica's sections backgrounds
+$bg-jessica-00: url('../images/01-jessica/backgrounds/subtle_white_feathers.png');
+$bg-jessica-01: url('../images/01-jessica/backgrounds/garden01-sm.jpg');
+$bg-jessica-02: url('../images/01-jessica/backgrounds/garden02.jpg');
+$bg-jessica-03: url('../images/01-jessica/backgrounds/garden03.jpg');
+
+.bg-jessica-00 {background: $bg-jessica-00;}
+.bg-jessica-01 {
+  background: $bg-jessica-01;
+  background-position: center center;
+  background-size: cover;
+}
+.bg-jessica-02 {background: $bg-jessica-02;}
+.bg-jessica-03 {
+  background: $bg-jessica-03;
+  background-position: center center;
+  background-size: cover;
+}
+
+
+
+// John's sections backgrounds
+$bg-john-00: url('../images/02-john/backgrounds/dark_wood.png');
+$bg-john-01: url('../images/02-john/backgrounds/bg-dark.png');
+$bg-john-02: url('../images/02-john/backgrounds/dark_fabric.png');
+$bg-john-03: url('../images/02-john/backgrounds/dark01.jpg');
+$bg-john-04: url('../images/02-john/backgrounds/dark02.jpg');
+
+.bg-john-00 {background: $bg-john-00;}
+.bg-john-01 {background: $bg-john-01;}
+.bg-john-02 {background: $bg-john-02;}
+.bg-john-03 {background: $bg-john-03;}
+.bg-john-04 {background: $bg-john-04;}
+
+
+
+// Samantha's sections backgrounds
+$bg-samantha-00: url('../images/03-samantha/backgrounds/bg00.jpg');
+$bg-samantha-01: url('../images/03-samantha/backgrounds/bg01.jpg');
+$bg-samantha-02: url('../images/03-samantha/backgrounds/bg02.jpg');
+$bg-samantha-03: url('../images/03-samantha/backgrounds/bg03.jpg');
+
+.bg-samantha-00 {
+  background: $bg-samantha-00;
+  background-position: center center;
+  background-size: cover;
+}
+.bg-samantha-01 {
+  background: $bg-samantha-01;
+  background-position: center center;
+  background-size: cover;
+}
+.bg-samantha-02 {
+  background: $bg-samantha-02;
+  background-position: center center;
+  background-size: cover;
+}
+.bg-samantha-03 {
+  background: $bg-samantha-03;
+  background-position: center center;
+  background-size: cover;
+}
+
+
+//Font/link Colors
+.fontcolor-regular, .fontcolor-regular a {color: $color10 !important;;}
+.fontcolor-invert, .fontcolor-invert a {color: $color01 !important;}
+.fontcolor-medium, .fontcolor-medium a {color: $color06 !important;}
+.fontcolor-medium-light, .fontcolor-medium-light a {color: $color05 !important;}
+.hovercolor, .hovercolor a {color: $hovercolor !important;}
+.accent-color, .accent-color a {color: $accentcolor !important;}
+.accent-color a:hover {color: $hovercolor !important;}
+
+.color00 {color: $color00 !important;}
+.color01 {color: $color01 !important;}
+.color02 {color: $color02 !important;}
+.color03 {color: $color03 !important;}
+.color04 {color: $color04 !important;}
+.color05 {color: $color05 !important;}
+.color06 {color: $color06 !important;}
+.color07 {color: $color07 !important;}
+.color08 {color: $color08 !important;}
+.color09 {color: $color09 !important;}
+.color10 {color: $color10 !important;}
+.color11 {color: $color11 !important;}
+.color12 {color: $color12 !important;}
+.color13 {color: $color13 !important;}
+
+
+//Background Color Classes
+.bg-color00 {background-color: $color00 !important;}
+.bg-color01 {background-color: $color01 !important;}
+.bg-color02 {background-color: $color02 !important;}
+.bg-color03 {background-color: $color03 !important;}
+.bg-color04 {background-color: $color04 !important;}
+.bg-color05 {background-color: $color05 !important;}
+.bg-color06 {background-color: $color06 !important;}
+.bg-color07 {background-color: $color07 !important;}
+.bg-color08 {background-color: $color08 !important;}
+.bg-color09 {background-color: $color09 !important;}
+.bg-color10 {background-color: $color10 !important;}
+.bg-color11 {background-color: $color11 !important;}
+.bg-color12 {background-color: $color12 !important;}
+.bg-color13 {background-color: $color13 !important;}
+
+.bg-red {background-color: $red !important;}
+.bg-orange {background-color: $orange !important;}
+.bg-green {background-color: $green !important;}
+.bg-blue {background-color: $blue !important;}
+.bg-darkblue {background-color: $darkblue !important;}
+.bg-cyan {background-color: $cyan !important;}
+.bg-yellow {background-color: $yellow !important;}
+.bg-l-grey {background-color: $l-grey !important;}
+.bg-grey {background-color: $grey !important;}
+.bg-skin {background-color: $color00 !important;}
+
