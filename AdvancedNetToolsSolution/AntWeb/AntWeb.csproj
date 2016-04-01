@@ -74,6 +74,7 @@
     </Reference>
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Net.Http" />
+    <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -991,6 +992,7 @@
     <Content Include="Views\MyIp\Index.cshtml" />
     <Content Include="Views\Speedtest\Index.cshtml" />
     <Content Include="Views\Test\Index.cshtml" />
+    <Content Include="Views\Ports\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1017,6 +1019,7 @@
     <Compile Include="Areas\Landing\LandingAreaRegistration.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\MyIpController.cs" />
+    <Compile Include="Controllers\PortsController.cs" />
     <Compile Include="Controllers\SpeedtestController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\WhoisController.cs" />
@@ -1024,6 +1027,7 @@
     <Compile Include="Controllers\PingController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Extensions\GoogleMap.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

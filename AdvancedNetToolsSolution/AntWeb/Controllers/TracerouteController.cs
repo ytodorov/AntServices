@@ -2,11 +2,13 @@
 
 using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
+using SmartAdminMvc.Extensions;
 using SmartAdminMvc.Infrastructure;
 using SmartAdminMvc.Models;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Runtime.Caching;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
@@ -18,21 +20,14 @@ namespace SmartAdminMvc.Controllers
     public class TracerouteController : BaseController
     {
         // GET: home/index
-        public ActionResult Index()
+        public ActionResult Index(int? id)
         {
-            using (HttpClient client = new HttpClient())
+            if (id == 123)
             {
-                //var encodedArgs = Uri.EscapeDataString($"--traceroute 92.247.12.80 -sn -n -T5");
-                //string url = "http://antnortheu.cloudapp.net/home/exec?program=nmap&args=" + encodedArgs;
-                //var tracerouteSummary = client.GetStringAsync(url).Result;
-
-                //TraceRouteParser.ParseSummary(tracerouteSummary);
-
-                //return View(model: tracerouteSummary);
-                return View();
+               var result =  MemoryCache.Default.Get("123") as string;
+                return View(model: result);
             }
-
-           
+            return View();
         }
 
         public ActionResult Read([DataSourceRequest] DataSourceRequest request, string ip)
@@ -48,10 +43,16 @@ namespace SmartAdminMvc.Controllers
                 var dsResult = Json(list.ToDataSourceResult(request));
                 return dsResult;
             }
+        }
 
+        [HttpPost]
+        public ActionResult SaveResultHtml(string resultHtmlBase64)
+        {
+            string resultHtml = resultHtmlBase64.Base64Decode();
 
-         
+            MemoryCache.Default.Add("123", resultHtml, null);
 
+            return new EmptyResult();
         }
 
     }

@@ -1,9 +1,23 @@
-﻿<span class="k-textbox k-space-right" style="width: 100%;" >
+﻿@model string
+
+@if (string.IsNullOrWhiteSpace(Model))
+{
+<div id="traceRouteResult">
+    
+<span class="k-textbox k-space-right" style="width: 100%;" >
     <input type="text" id="tbTraceRoute" value="www.wheather.com">
     <a href="#" id="btnTracerRoute" class="k-icon k-i-search">&nbsp;</a>
 </span>
 <div id="grid"></div>
 <div id="map" style="width:500px;height: 300px"></div>
+
+</div>
+}
+else
+{
+    @Html.Raw(Model);
+}
+
 @section pagespecific {
     <script type="text/javascript">
         $(document).ready(function () {
@@ -13,14 +27,31 @@
                 $('#grid').data('kendoGrid').dataSource.read().then(function (test) {
                     var pd = $('#grid').data('kendoGrid').dataSource._pristineData;
                     var pristineDataString = JSON.stringify(pd);
-                    debugger;
                     $.ajax({
                         method: "POST",
                         url: "/home/googlemap",
                         data: { models: pd },
                         success: function f(gmData) {
-                            debugger;
                             eval(gmData);
+                            
+
+                            var resultHtml = $("#traceRouteResult").html();
+                            var resultHtmlBase64 = btoa(resultHtml);
+                            debugger;
+                            $.ajax({
+                                method: "POST",
+                                url: "/traceroute/saveresulthtml",
+                                data: { resultHtmlBase64: resultHtmlBase64 },
+                                success: function f(gmData) {
+                                    debugger;
+                                  
+
+
+
+
+                                }
+                            })
+
 
                         }
                     })
@@ -45,8 +76,6 @@
 
                         parameterMap: function (data, type) {
                             if (type == "read") {
-                                debugger;
-
                                 return {
                                     ip: $("#tbTraceRoute").val(),
                                 }
