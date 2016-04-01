@@ -10,22 +10,22 @@ namespace SmartAdminMvc.Infrastructure
 {
     public static class PortParser
     {
-        public static List<PortReplyModel> ParseSummary(string portSummary)
+        public static List<PortViewModel> ParseSummary(string portSummary)
         {
-            List<PortReplyModel> result = new List<PortReplyModel>();
+            List<PortViewModel> result = new List<PortViewModel>();
 
             List<string> lines = GetLinesFromSummary(portSummary);
             foreach (var line in lines)
             {
-                PortReplyModel prvm = ParseSingleLine(line);
+                PortViewModel prvm = ParseSingleLine(line);
                 result.Add(prvm);
             }
             return result;
         }
 
-        public static PortReplyModel ParseSingleLine(string line)
+        public static PortViewModel ParseSingleLine(string line)
         {
-            PortReplyModel result = new PortReplyModel();
+            PortViewModel result = new PortViewModel();
             int port;
             string protocol, state, service;
             var times = line.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
