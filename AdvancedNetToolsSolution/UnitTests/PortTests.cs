@@ -39,7 +39,7 @@ namespace UnitTests
 
             Assert.NotNull(result);
         }
-        //[Fact]
+        [Fact]
         public void OpenPortsTest()
         {
             using (HttpClient client = new HttpClient())
@@ -49,7 +49,9 @@ namespace UnitTests
                 string url = "http://antnortheu.cloudapp.net/home/exec?program=nmap&args=" + encodedArgs0;
                 var portSummary = client.GetStringAsync(url).Result;
 
-                //List<PortViewModel> portViewModels = PortParser.ParseSummary(portSummary);
+                List<PortViewModel> portViewModels = PortParser.ParseSummary(portSummary);
+
+                Assert.True(portViewModels.Count > 0);
                 
             }
         }

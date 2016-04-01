@@ -1,0 +1,25 @@
+[
+  {
+    "outputFileName": "assets/vendor/anicounter/bundle.js",
+    "inputFiles": [
+      "assets/vendor/anicounter/jquery.counterup.min.js",
+      "assets/vendor/circle-progress/circle-progress.js"
+    ]
+  },
+  {
+    "outputFileName": "bundle.css",
+    "inputFiles": [
+      "assets/vendor/bootstrap/css/bootstrap.min.css",
+      "assets/vendor/fontawesome/css/font-awesome.min.css",
+      "assets/vendor/flaticon/flaticon.min.css",
+      "assets/vendor/rs-plugin/css/settings.css",
+      "assets/vendor/rs-plugin/css/layers.css",
+      "assets/vendor/rs-plugin/css/navigation.css",
+      "assets/vendor/mfp/css/magnific-popup.min.css",
+      "assets/vendor/progresstracker/css/jquery.progresstracker.min.css",
+      "assets/vendor/offcanvas-menu/css/normalize.min.css",
+      "assets/vendor/styleselector/styleselector.css",
+      "assets/custom/css/style.css"
+    ]
+  }
+]
