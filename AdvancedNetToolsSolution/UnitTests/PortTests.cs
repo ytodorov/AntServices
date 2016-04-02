@@ -50,7 +50,7 @@ namespace UnitTests
                 var portSummary = client.GetStringAsync(url).Result;
 
                 List<PortViewModel> portViewModels = PortParser.ParseSummary(portSummary);
-
+                
                 Assert.True(portViewModels.Count > 0);
                 
             }

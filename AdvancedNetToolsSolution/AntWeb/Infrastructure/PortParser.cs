@@ -50,8 +50,9 @@ namespace SmartAdminMvc.Infrastructure
             {
                 var words = line.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
                 var firstWord = words.FirstOrDefault();
+                var splitPortAndProtocol = firstWord.Split(new string[] { "/" }, StringSplitOptions.RemoveEmptyEntries);
                 int helper;
-                if (int.TryParse(firstWord, out helper))
+                if (int.TryParse(splitPortAndProtocol[0], out helper))
                 {
                     correctLines.Add(line);
                 }
