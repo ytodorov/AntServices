@@ -5,7 +5,14 @@
 <div id="traceRouteResult">
     
 <span class="k-textbox k-space-right" style="width: 100%;" >
-    <input type="text" id="tbTraceRoute" value="www.wheather.com" class="k-textbox">
+    <label class="control-label" for="tbTraceRoute">Packets Count:</label>
+    <div>
+        @(Html.Kendo().TextBox<string>()
+            .Name("tbTraceRoute")
+            .Value("www.wheather.com")
+            .HtmlAttributes(new { style = "width: 30%" })
+        )
+    </div>
     <a href="javascript:void(0)" id="btnTracerRoute" class="k-icon k-i-search">&nbsp;</a>
 </span>
 <div id="grid"></div>
