@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.NetworkInformation;
+using System.Runtime.Caching;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
@@ -19,13 +20,31 @@ namespace SmartAdminMvc.Controllers
     public class PingController : BaseController
     {
         // GET: home/index
-        public ActionResult Index()
+        public ActionResult Index(int? id)
         {
+            if (id == 123)
+            {
+                var result = MemoryCache.Default.Get("123") as string;
+
+                PingPermalinkViewModel ppvm = new PingPermalinkViewModel();
+                ppvm.Ip = "1.2.3.4";
+                ppvm.PingReplies = new List<PingReplySummaryViewModel>()
+                {
+                    new PingReplySummaryViewModel() {  MinRtt=1, MaxRtt=2, AvgRtt = 1.5 }
+                };
+
+
+                return View(model: ppvm);
+            }
             return View();
-                 
+
         }
         public ActionResult Read([DataSourceRequest] DataSourceRequest request, PingRequestViewModel prvm)
         {
+            if (string.IsNullOrEmpty(prvm.Ip))
+            {
+                return Json(new List<PingReplySummaryViewModel>().ToDataSourceResult(request));
+            }
             List<PingReplySummaryViewModel> list = new List<PingReplySummaryViewModel>();
             List<Task<string>> tasks = new List<Task<string>>();
             List<HttpClient> clients = new List<HttpClient>();
