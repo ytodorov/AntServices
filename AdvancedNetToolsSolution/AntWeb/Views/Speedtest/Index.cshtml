@@ -59,7 +59,6 @@
                     cache: false
                 })
                   .done(function (html) {
-                      //debugger;
                       
                       var performanceLastRequest = performance.getEntriesByName(location.origin + this.url);
                       var timeInMilliseconds = performanceLastRequest[0].responseStart - performanceLastRequest[0].requestStart;

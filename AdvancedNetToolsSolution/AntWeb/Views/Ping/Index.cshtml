@@ -1,6 +1,7 @@
-﻿<script type="text/javascript">
+﻿@model PingPermalinkViewModel
+
+<script type="text/javascript">
     function pingReadParameterMap(data, type) {
-        debugger;
 
         return {
             ip: $("#ip").val(),
@@ -20,7 +21,7 @@
         <div class="well no-padding">
             <div class="k-block k-info-colored"><label class="control-label" for="ip">Enter IPv4, host name or IPv6 address to ping</label></div>
             <span class="k-textbox k-space-right" style="width: 100%;">
-                <input type="text" id="ip" class="k-textbox" value="google.com">
+                <input type="text" id="ip" class="k-textbox" value="@(Model?.Ip)">
                 <a href="javascript:void(0)" id="btnPing" class="k-icon k-i-search">&nbsp;</a>
             </span>
         </div>
@@ -35,12 +36,12 @@
                         <label class="control-label" for="tbPacketsCount">Packets Count:</label>
                         <div>
                             @(Html.Kendo().NumericTextBox<int>()
-                            .Name("tbPacketsCount")
-                            .Min(1)
-                            .Max(10)
-                            .Value(4)
-                            .Placeholder("Enter packets count")
-                            .HtmlAttributes(new { style = "width: 30%" })
+            .Name("tbPacketsCount")
+            .Min(1)
+            .Max(10)
+            .Value(4)
+            .Placeholder("Enter packets count")
+            .HtmlAttributes(new { style = "width: 30%" })
                             )
                         </div>
                     </div>
@@ -49,11 +50,11 @@
                         <label class="control-label" for="tbPacketsSize">Packet size in bytes:</label>
                         <div>
                             @(Html.Kendo().NumericTextBox<int>()
-                            .Name("tbPacketsSize")
-                            .Min(1)
-                            .Max(65000)
-                            .Placeholder("Enter MTU")
-                            .HtmlAttributes(new { style = "width: 30%" })
+            .Name("tbPacketsSize")
+            .Min(1)
+            .Max(65000)
+            .Placeholder("Enter MTU")
+            .HtmlAttributes(new { style = "width: 30%" })
                             )
                         </div>
                     </div>
@@ -61,12 +62,12 @@
                         <label class="control-label" for="tbDelayBetweenPings">Delay between pings (ms):</label>
                         <div>
                             @(Html.Kendo().NumericTextBox<int>()
-                            .Name("tbDelayBetweenPings")
-                            .Min(1)
-                            .Max(1000)
-                            .Value(10)
-                            .Placeholder("Enter Delay Between Pings")
-                            .HtmlAttributes(new { style = "width: 30%" })
+            .Name("tbDelayBetweenPings")
+            .Min(1)
+            .Max(1000)
+            .Value(10)
+            .Placeholder("Enter Delay Between Pings")
+            .HtmlAttributes(new { style = "width: 30%" })
                             )
                         </div>
                     </div>
@@ -76,12 +77,12 @@
                         <label class="control-label" for="tbTTL">Time to Live:</label>
                         <div>
                             @(Html.Kendo().NumericTextBox<int>()
-                            .Name("tbTTL")
-                            .Min(1)
-                            .Max(128)
-                            .Value(64)
-                            .Placeholder("Enter TTL")
-                            .HtmlAttributes(new { style = "width: 30%" })
+            .Name("tbTTL")
+            .Min(1)
+            .Max(128)
+            .Value(64)
+            .Placeholder("Enter TTL")
+            .HtmlAttributes(new { style = "width: 30%" })
                             )
                         </div>
                     </div>
@@ -102,67 +103,73 @@
 </form>
 <div class="well no-padding">
     @(Html.Kendo().Grid<PingReplySummaryViewModel>()
-        .Name("grid")
-        .AutoBind(false)
-        .Columns(columns =>
-        {
-            columns.Bound(c => c.MaxRtt);
-            columns.Bound(c => c.MinRtt);
-            columns.Bound(t => t.AvgRtt);
-        })
-        .Scrollable(s => s.Enabled(false))
-        .ToolBar(t =>
-        {
-            t.Excel().Text(string.Empty);
-            t.Pdf().Text(string.Empty);
-        })
-        .Excel(e => e.FileName("pingExport(www.toolsfornet.com).xlsx"))
-        .Pdf(e => e.AllPages().FileName("pingExport(www.toolsfornet.com).pdf"))
-        .DataSource(dataSource => dataSource
-            .Ajax()
-            .ServerOperation(false)
-            .Read(read => read.Action("Read", "Ping").Data("pingReadParameterMap"))
+                .Name("grid")
+                //.AutoBind(false)
+                .Columns(columns =>
+                {
+                    columns.Bound(c => c.MaxRtt);
+                    columns.Bound(c => c.MinRtt);
+                    columns.Bound(t => t.AvgRtt);
+                })
+                .Scrollable(s => s.Enabled(false))
+                .ToolBar(t =>
+                {
+                    t.Excel().Text(string.Empty);
+                    t.Pdf().Text(string.Empty);
+                })
+                .Excel(e => e.FileName("pingExport(www.toolsfornet.com).xlsx"))
+                .Pdf(e => e.AllPages().FileName("pingExport(www.toolsfornet.com).pdf"))
+                .DataSource(dataSource => dataSource
+                    .Ajax()
+                    .ServerOperation(false)
+                    .Read(read => read.Action("Read", "Ping").Data("pingReadParameterMap"))
 
-        )
+                ).BindTo(Model?.PingReplies)
 
     )
-    </div>
+</div>
 <div class="well no-padding">
     <div id="map" style="width:100px;height: 300px"></div>
-    </div>
+</div>
 
-    @section pagespecific {
-        <script type="text/javascript">
-            $(document).ready(function () {
+<script type="text/javascript">
 
-                var accordionIcons = {
-                    header: "fa fa-plus",    // custom icon class
-                    activeHeader: "fa fa-minus" // custom icon class
-                };
+    var accordionIcons = {
+        header: "fa fa-plus",    // custom icon class
+        activeHeader: "fa fa-minus" // custom icon class
+    };
 
-                $("#accordion").accordion({
-                    autoHeight: false,
-                    heightStyle: "content",
-                    collapsible: true,
-                    animate: 300,
-                    icons: accordionIcons,
-                    header: "h4",
-                })
+    $("#accordion").accordion({
+        autoHeight: false,
+        heightStyle: "content",
+        collapsible: true,
+        animate: 300,
+        icons: accordionIcons,
+        header: "h4",
+    })
 
-                $("#btnPing").click(function btnPingClick(e) {
-                    e.preventDefault();
-                    $('#grid').data('kendoGrid').dataSource.read().then(function (test) {
-                    });
+    $("#btnPing").click(function btnPingClick(e) {
+        e.preventDefault();
+        $('#grid').data('kendoGrid').dataSource.read().then(function (test) {
 
-                });
-                debugger;
-                $("#ip").keyup(function myfunction(eventData) {
-                    if (eventData.keyCode == 13) {
-                        $("#btnPing").click();
-                    }
+            var resultHtml = $("#bodyDiv").html();
+            var resultHtmlBase64 = btoa(resultHtml);
+            $.ajax({
+                method: "POST",
+                url: "/traceroute/saveresulthtml",
+                data: { resultHtmlBase64: resultHtmlBase64 },
+                success: function f(gmData) {
+                }
+            })
+        });
 
-                });
+    });
+    $("#ip").keyup(function myfunction(eventData) {
+        if (eventData.keyCode == 13) {
+            $("#btnPing").click();
+        }
 
-            });
-        </script>
-    }
+    });
+
+</script>
+
