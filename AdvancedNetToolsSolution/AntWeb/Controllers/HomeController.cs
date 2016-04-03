@@ -3,6 +3,8 @@
 using SmartAdminMvc.Infrastructure;
 using SmartAdminMvc.Models;
 using System.Web.Mvc;
+using System.Linq;
+
 
 #endregion
 
@@ -44,7 +46,15 @@ namespace SmartAdminMvc.Controllers
         public string GoogleMap(TraceRouteReplyViewModel[] models)
         {
             Response.ContentType = "text/plain; charset=utf-8";
-            var gmString = Utils.GetGoogleMapsString(models);
+            var gmString = Utils.GetGoogleMapsString(models.Select(m => m.Ip));
+            return gmString;
+        }
+
+        [HttpPost]
+        public string GoogleMapFromIps(string[] ips)
+        {
+            Response.ContentType = "text/plain; charset=utf-8";
+            var gmString = Utils.GetGoogleMapsString(ips);
             return gmString;
         }
     }

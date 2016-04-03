@@ -36,25 +36,25 @@ namespace SmartAdminMvc.Infrastructure
             return result;
         }
 
-        public static string GetGoogleMapsString(TraceRouteReplyViewModel[] models)
+        public static string GetGoogleMapsString(IEnumerable<string> ips)
         {
-            models = models.Where(m => !string.IsNullOrEmpty(m.Ip)).OrderBy(m => m.Hop).ToArray();
+            ips = ips.Where(m => !string.IsNullOrEmpty(m));//.OrderBy(m => m.Hop).ToArray();
 
             List<IpLocationViewModel> locations = new List<IpLocationViewModel>();
             List<string> locationNamesInMap = new List<string>();
             List<string> markerNamesInMap = new List<string>();
 
-            for (int i = 0; i < models.Length; i++)
+            for (int i = 0; i < ips.Count(); i++)
             {
-                var currLocation = GetLocationDataForIp(models[i].Ip);
+                var currLocation = GetLocationDataForIp(ips.ElementAt(i));
 
-                var lastLocation = locations.LastOrDefault();
+                //var lastLocation = locations.LastOrDefault();
 
-                if (locations.Any(l => l.Latitude == currLocation.Latitude && l.Longitude == currLocation.Longitude))
-                {
-                    currLocation.Latitude += RandomNumberGenerator.NextDouble() / 100;
-                    currLocation.Longitude += RandomNumberGenerator.NextDouble() / 100;
-                }
+                //if (locations.Any(l => l.Latitude == currLocation.Latitude && l.Longitude == currLocation.Longitude))
+                //{
+                //    currLocation.Latitude += RandomNumberGenerator.NextDouble() / 100;
+                //    currLocation.Longitude += RandomNumberGenerator.NextDouble() / 100;
+                //}
 
                 locations.Add(currLocation);
                 locationNamesInMap.Add("latLng" + i);
@@ -65,27 +65,27 @@ namespace SmartAdminMvc.Infrastructure
             StringBuilder sb = new StringBuilder();
 
 
-            for (int i = 0; i < models.Length; i++)
+            for (int i = 0; i < ips.Count(); i++)
             {
                 IpLocationViewModel location = locations[i];
             }
 
-            for (int i = 0; i < models.Length; i++)
+            for (int i = 0; i < ips.Count(); i++)
             {
                 sb.AppendLine($@"var {locationNamesInMap[i]} = {{ lat: {locations[i].Latitude.ToString(CultureInfo.InvariantCulture)}, lng: {locations[i].Longitude.ToString(CultureInfo.InvariantCulture)} }};");
             }
 
             sb.AppendLine($@"var map = new google.maps.Map(document.getElementById('map'), {{
-                zoom: 1,
+                zoom: 3,
                 center: {locationNamesInMap.LastOrDefault()}
             }});");
 
-            for (int i = 0; i < models.Length; i++)
+            for (int i = 0; i < ips.Count(); i++)
             {
                 sb.AppendLine($@"var {markerNamesInMap[i]} = new google.maps.Marker({{
                 position: {locationNamesInMap[i]},
                 map: map,
-                title: '{i}. {models[i].Ip} {locations[i].CityName} {locations[i].RegionName} {locations[i].CountryName}'
+                title: '{i}. {ips.ElementAt(i)} {locations[i].CityName} {locations[i].RegionName} {locations[i].CountryName}'
             }});");
             }
 

@@ -42,9 +42,12 @@
         pageSetUp();
         drawBreadCrumb();
 
+        var homeLis = $(".breadcrumb li:contains('Home')");
 
-        $(".breadcrumb li:contains('Home')").first().html("<a href='/Home'>Home</a>");
-        $(".breadcrumb li:contains('Home')").last().remove();
+        homeLis.first().html("<a href='/Home'>Home</a>");
+        if (homeLis.length > 1) {
+            homeLis.last().remove();
+        }
 
     });
 </script>

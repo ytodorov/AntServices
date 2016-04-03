@@ -51,7 +51,7 @@
     <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
     <script> if (!window.jQuery.ui) { document.write('<script src="/scripts/libs/jquery-ui-1.10.3.min.js"><\/script>'); } </script>
 </head>
-<body class="@ViewBag.PageClass @Settings.CurrentTheme fixed-header fixed-page-footer minified">
+<body class="@ViewBag.PageClass @Settings.CurrentTheme fixed-header">
     @{ Html.RenderPartial("_Header", RenderSection("topright", false)); }
     @{ Html.RenderPartial("_Aside"); }
     <div id="main" role="main">

@@ -7,7 +7,7 @@ namespace SmartAdminMvc.Infrastructure
 {
     public class Constants
     {
-        static readonly string DublinLatLng = "http://antnortheu.cloudapp.net";
+        public const string DublinUrl = "antnortheu.cloudapp.net";
         //string sofiaLatLng = { lat: 42.6975, lng: 23.3242 };
         //var hongKongLatLng = { lat: 22.41102, lng: 114.09301 };
         //var singaporeLatLng = { lat: 1.27842, lng: 103.84414 };
