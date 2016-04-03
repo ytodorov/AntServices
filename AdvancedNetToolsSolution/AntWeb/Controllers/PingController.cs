@@ -49,7 +49,7 @@ namespace SmartAdminMvc.Controllers
         [HttpPost]
         public ActionResult GenerateId(PingRequestViewModel prvm)
         {
-            prvm.DelayBetweenPings = 10;
+            prvm.DelayBetweenPings = 200; // 200 is more successfull
             if (string.IsNullOrEmpty(prvm.Ip))
             {
                 return Json(string.Empty);
