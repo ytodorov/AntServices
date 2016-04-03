@@ -102,7 +102,7 @@
         </footer>*@
 </form>
 <div class="well no-padding">
-    @(Html.Kendo().Grid<PingReplySummaryViewModel>()
+    @(Html.Kendo().Grid<PingResponseSummaryViewModel>()
                 .Name("grid")
                 //.AutoBind(false)
                 .Columns(columns =>
@@ -124,7 +124,7 @@
                     .ServerOperation(false)
                     .Read(read => read.Action("Read", "Ping").Data("pingReadParameterMap"))
 
-                ).BindTo(Model?.PingReplies)
+                ).BindTo(Model?.PingResponseSummaries)
 
     )
 </div>

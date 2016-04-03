@@ -5545,7 +5545,7 @@ tp-caption.Team-Thumb,
     line-height: px;
     font-weight: 700;
     font-style: normal;
-    font-family: 'Times New Roman', Times, serif;
+    font-family: ;
     padding: 0 0 0 0px;
     text-decoration: none;
     text-align: left;
@@ -6948,7 +6948,7 @@ opacity:1
     font-size:13px;
     font-weight:700;
     text-transform:uppercase;
-    font-family:"Roboto Slab";
+    font-family:"Roboto Slab"
     margin-bottom:5px;
 }
 
@@ -7609,7 +7609,7 @@ border-radius:6px;
     font-size:13px;
     font-weight:700;
     text-transform:uppercase;
-    font-family:"Roboto Slab";
+    font-family:"Roboto Slab"
     margin-bottom:5px;
 }
 

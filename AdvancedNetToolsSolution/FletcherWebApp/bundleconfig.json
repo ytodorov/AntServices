@@ -61,7 +61,8 @@
       "assets/vendor/superfish/js/supersubs.js",
       "assets/vendor/waypoints/waypoints.min.js"
     ]
-  },
+  }
+  ,
   {
     "outputFileName": "bundle.css",
     "inputFiles": [

@@ -22,6 +22,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeleniumUnitTests", "UnitTe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FletcherWebApp", "FletcherWebApp\FletcherWebApp.csproj", "{DD1C3C88-0165-4E11-93C2-93F57FBDC7A8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AntDal", "AntDal\AntDal.csproj", "{FFB9C514-F619-437B-93C8-F462160BB7DE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -52,6 +54,10 @@ Global
 		{DD1C3C88-0165-4E11-93C2-93F57FBDC7A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DD1C3C88-0165-4E11-93C2-93F57FBDC7A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DD1C3C88-0165-4E11-93C2-93F57FBDC7A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFB9C514-F619-437B-93C8-F462160BB7DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFB9C514-F619-437B-93C8-F462160BB7DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFB9C514-F619-437B-93C8-F462160BB7DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFB9C514-F619-437B-93C8-F462160BB7DE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

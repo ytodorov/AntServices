@@ -5,9 +5,9 @@ using System.Web;
 
 namespace SmartAdminMvc.Models
 {
-    public class PingReplySummaryViewModel
+    public class PingResponseSummaryViewModel
     {
-        public string Address { get; set; }
+        public string SourceAddress { get; set; }
 
         public double MaxRtt { get; set; }
 

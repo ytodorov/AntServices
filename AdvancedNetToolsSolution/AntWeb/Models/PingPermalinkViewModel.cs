@@ -9,6 +9,6 @@ namespace SmartAdminMvc.Models
     {
         public string Ip { get; set; }
 
-        public List<PingReplySummaryViewModel> PingReplies { get; set; }
+        public List<PingResponseSummaryViewModel> PingResponseSummaries { get; set; }
     }
 }

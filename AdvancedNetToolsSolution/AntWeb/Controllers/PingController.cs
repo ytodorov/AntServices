@@ -1,5 +1,6 @@
 ﻿#region Using
 
+using AntDal;
 using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
 using SmartAdminMvc.Infrastructure;
@@ -21,20 +22,18 @@ namespace SmartAdminMvc.Controllers
     {
         // GET: home/index
         public ActionResult Index(int? id)
-        {
-            if (id == 123)
+        {          
+            if (id.HasValue)
             {
-                var result = MemoryCache.Default.Get("123") as string;
-
-                PingPermalinkViewModel ppvm = new PingPermalinkViewModel();
-                ppvm.Ip = "1.2.3.4";
-                ppvm.PingReplies = new List<PingReplySummaryViewModel>()
+                using (AntDbContext context = new AntDbContext())
                 {
-                    new PingReplySummaryViewModel() {  MinRtt=1, MaxRtt=2, AvgRtt = 1.5 }
-                };
-
-
-                return View(model: ppvm);
+                    PingPermalink pp = context.PingPermalinks.Find(id);
+                    PingPermalinkViewModel ppvm = new PingPermalinkViewModel();
+                    ppvm.Ip = pp.DestinationAddress;
+                    ppvm.PingResponseSummaries = AutoMapper.Mapper.DynamicMap<List<PingResponseSummaryViewModel>>(pp.PingResponseSummaries);
+                    return View(model: ppvm);
+                }
+                               
             }
             return View();
 
@@ -43,9 +42,9 @@ namespace SmartAdminMvc.Controllers
         {
             if (string.IsNullOrEmpty(prvm.Ip))
             {
-                return Json(new List<PingReplySummaryViewModel>().ToDataSourceResult(request));
+                return Json(new List<PingResponseSummaryViewModel>().ToDataSourceResult(request));
             }
-            List<PingReplySummaryViewModel> list = new List<PingReplySummaryViewModel>();
+            List<PingResponseSummaryViewModel> list = new List<PingResponseSummaryViewModel>();
             List<Task<string>> tasks = new List<Task<string>>();
             List<HttpClient> clients = new List<HttpClient>();
 
@@ -72,6 +71,20 @@ namespace SmartAdminMvc.Controllers
                     list.Add(summary);
                     clients[i].Dispose();
                 }
+            }
+
+            // Save to Db
+
+            using (AntDbContext context = new AntDbContext())
+            {
+                PingPermalink pp = new PingPermalink();
+                pp.DestinationAddress = prvm.Ip;
+
+                PingResponseSummary pr = AutoMapper.Mapper.DynamicMap<PingResponseSummary>(list[0]);
+
+                pp.PingResponseSummaries.Add(pr);
+                context.PingPermalinks.Add(pp);
+                context.SaveChanges();
             }
 
 

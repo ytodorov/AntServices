@@ -9,14 +9,14 @@ namespace SmartAdminMvc.Infrastructure
 {
     public static class PingReplyParser
     {
-        public static PingReplySummaryViewModel ParseSummary(string summary)
+        public static PingResponseSummaryViewModel ParseSummary(string summary)
         {
             /*Max rtt: 4.000ms | Min rtt: 3.000ms | Avg rtt: 3.599ms
               Raw packets sent: 5 (210B) | Rcvd: 5 (230B) | Lost: 0 (0.00%)
               Tx time: 0.15100s | Tx bytes/s: 1390.73 | Tx pkts/s: 33.11
               Rx time: 0.15400s | Rx bytes/s: 1493.51 | Rx pkts/s: 32.47*/
 
-            PingReplySummaryViewModel result = new PingReplySummaryViewModel();
+            PingResponseSummaryViewModel result = new PingResponseSummaryViewModel();
 
             var lines = summary.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
 
