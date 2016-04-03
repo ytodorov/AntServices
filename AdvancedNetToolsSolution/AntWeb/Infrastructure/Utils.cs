@@ -122,7 +122,7 @@ namespace SmartAdminMvc.Infrastructure
             List<string> address = new List<string>()
             {
                 "http://antnortheu.cloudapp.net",
-                "http://ant-northeurope.azurewebsites.net"
+                "http://ant-ne.azurewebsites.net"
             };
             return address;
         }
