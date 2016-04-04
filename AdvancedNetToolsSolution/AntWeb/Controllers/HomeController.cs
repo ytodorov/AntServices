@@ -4,6 +4,7 @@ using SmartAdminMvc.Infrastructure;
 using SmartAdminMvc.Models;
 using System.Web.Mvc;
 using System.Linq;
+using SmartAdminMvc.Data;
 
 
 #endregion
@@ -13,6 +14,12 @@ namespace SmartAdminMvc.Controllers
     
     public class HomeController : Controller
     {
+        private readonly ApplicationDbContext _context;
+
+        public HomeController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
         // GET: home/index
         public ActionResult Index()
         {
