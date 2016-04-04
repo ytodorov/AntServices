@@ -1,5 +1,4 @@
-﻿using Microsoft.Win32;
-using StructureMap.Graph;
+﻿using StructureMap.Graph;
 using StructureMap.Pipeline;
 using StructureMap.TypeRules;
 using System;

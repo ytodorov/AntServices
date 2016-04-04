@@ -8,8 +8,7 @@ namespace SmartAdminMvc.Infrastructure
 {
     public class StructureMapDependecyResolver : IDependencyResolver
     {
-
-        private Func<IContainer> _containerFactory;
+        private readonly Func<IContainer> _containerFactory;
 
         public StructureMapDependecyResolver(Func<IContainer> containerFactory)
         {
@@ -26,13 +25,13 @@ namespace SmartAdminMvc.Infrastructure
             var container = _containerFactory();
 
             return serviceType.IsAbstract || serviceType.IsInterface
-                ? container.TryGetInterface(serviceType)
+                ? container.TryGetInstance(serviceType)
                 : container.GetInstance(serviceType);
         }
 
         public IEnumerable<object> GetServices(Type serviceType)
         {
-            return ObjectFatcory.GetAllInstances(serviceType).Cast<object>();
+            return _containerFactory().GetAllInstances(serviceType).Cast<object>();
         }
     }
 }

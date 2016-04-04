@@ -5,6 +5,7 @@ using SmartAdminMvc.Models;
 using System.Web.Mvc;
 using System.Linq;
 using SmartAdminMvc.Data;
+using AntDal;
 
 
 #endregion
@@ -14,9 +15,9 @@ namespace SmartAdminMvc.Controllers
     
     public class HomeController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly AntDbContext _context;
 
-        public HomeController(ApplicationDbContext context)
+        public HomeController(AntDbContext context)
         {
             _context = context;
         }

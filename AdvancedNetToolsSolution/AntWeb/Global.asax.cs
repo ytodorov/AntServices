@@ -29,6 +29,7 @@ namespace SmartAdminMvc
                 HttpContext.Current.Items["_Container"] = value;
             }
         }
+
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
@@ -50,6 +51,15 @@ namespace SmartAdminMvc
                     scan.WithDefaultConventions();
                     scan.With(new ControllerConvention());
                 });
+
+                cfg.For<IFilterProvider>().Use
+                (new StructureMapFilterProvider(() => Container ?? ObjectFactory.Container));
+
+                cfg.SetAllProperties(x =>
+                x.Matching(p =>
+                p.DeclaringType.CanBeCastTo(typeof(ActionFilterAttribute)) && p.DeclaringType.Namespace.StartsWith("FailTracker") &&
+                !p.PropertyType.IsPrimitive &&
+                p.PropertyType != typeof(string)));
             });
 
         }

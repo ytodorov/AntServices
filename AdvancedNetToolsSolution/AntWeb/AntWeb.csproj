@@ -1062,14 +1062,16 @@
     <Compile Include="Controllers\TracerouteController.cs" />
     <Compile Include="Controllers\PingController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Data\ApplicationDbContext.cs" />
-    <Compile Include="Domain\ApplicationUser.cs" />
+    <Compile Include="Data\AntDbContext.cs" />
     <Compile Include="Extensions\GoogleMap.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Filters\LogAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\Constants.cs" />
+    <Compile Include="Infrastructure\ControllerConvention.cs" />
+    <Compile Include="Infrastructure\StructureMapFilterProvider.cs" />
     <Compile Include="Infrastructure\PingReplyParser.cs" />
     <Compile Include="Infrastructure\PortParser.cs" />
     <Compile Include="Infrastructure\StructureMapDependecyResolver.cs" />
