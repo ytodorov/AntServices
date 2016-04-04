@@ -19,5 +19,9 @@
     <DnxInvisibleContent Include=".bowerrc" />
     <DnxInvisibleContent Include="package.json" />
   </ItemGroup>
+  <ItemGroup>
+    <DnxInvisibleCompile Include="Controllers\BaseController.cs" />
+    <DnxInvisibleCompile Include="Controllers\PingController.cs" />
+  </ItemGroup>
   <Import Project="$(VSToolsPath)\DNX\Microsoft.DNX.targets" Condition="'$(VSToolsPath)' != ''" />
 </Project>
