@@ -15,8 +15,9 @@ paths.js = paths.webroot + "js/**/*.js";
 paths.minJs = paths.webroot + "js/**/*.min.js";
 paths.css = paths.webroot + "css/**/*.css";
 paths.minCss = paths.webroot + "css/**/*.min.css";
-paths.concatJsDest = paths.webroot + "js/homer.min.js";
-paths.concatCssDest = paths.webroot + "css/style.min.css";
+paths.concatJsDest = paths.webroot + "js/gulpAllJs.min.js";
+paths.concatCssDest = paths.webroot + "css/gulpAllCss.min.css";
+
 
 gulp.task("clean:js", function (cb) {
     rimraf(paths.concatJsDest, cb);

@@ -23,5 +23,8 @@
     <DnxInvisibleCompile Include="Controllers\BaseController.cs" />
     <DnxInvisibleCompile Include="Controllers\PingController.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AntDal\AntDal.csproj" />
+  </ItemGroup>
   <Import Project="$(VSToolsPath)\DNX\Microsoft.DNX.targets" Condition="'$(VSToolsPath)' != ''" />
 </Project>

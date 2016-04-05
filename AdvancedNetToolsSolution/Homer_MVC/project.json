@@ -1,4 +1,4 @@
-﻿{
+{
   "userSecretsId": "aspnet5-Homer_MVC-2109b672-9c06-43c9-873e-d4963dcc2815",
   "version": "1.0.0-*",
   "compilationOptions": {
@@ -30,6 +30,7 @@
     "Microsoft.AspNet.Mvc.ViewFeatures": "6.0.0-rc1-final",
     "Microsoft.Extensions.PlatformAbstractions": "1.0.0-rc1-final",
     "Newtonsoft.Json": "8.0.2"
+    
   },
 
   "commands": {
@@ -39,6 +40,9 @@
 
   "frameworks": {
     "dnx451": {
+      "dependencies": {
+        "AntDal": "1.0.0-*"
+      },
       "frameworkAssemblies": {
         "System.Web": "4.0.0.0"
       }
