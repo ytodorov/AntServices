@@ -72,7 +72,15 @@ namespace SmartAdminMvc
             {
                 using (HttpClient client = new HttpClient())
                 {
-                    var tracerouteSummary = client.GetStringAsync(url).Result;
+                    try
+                    {
+                        var tracerouteSummary = client.GetStringAsync(url).Result;
+                    }
+                    catch
+                    {
+
+                    }
+
                 }
             }
         }
