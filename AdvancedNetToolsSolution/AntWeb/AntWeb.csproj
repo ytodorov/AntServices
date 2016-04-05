@@ -557,8 +557,6 @@
     <Content Include="Content\fonts\fontawesome4.2\fontawesome-webfont.woff" />
     <Content Include="Content\fonts\fontawesome4.2\FontAwesome.otf" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="libs\Kendo.Mvc.2016.1.112.nupkg" />
-    <Content Include="libs\Kendo.Mvc.2016.1.112.symbols.nupkg" />
     <None Include="Properties\PublishProfiles\SmartAdmin - Release.pubxml" />
     <None Include="Properties\PublishProfiles\SmartAdmin - Debug.pubxml" />
     <Content Include="Scripts\app.config.js" />
