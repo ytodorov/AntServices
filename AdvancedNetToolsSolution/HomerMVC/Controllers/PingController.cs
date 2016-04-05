@@ -7,6 +7,7 @@ using Homer_MVC.Controllers;
 using Homer_MVC.Models;
 using System.Net.Http;
 using Homer_MVC.Infrastructure;
+using AntDal;
 
 namespace Homer_MVC.Controllers
 {
@@ -14,28 +15,28 @@ namespace Homer_MVC.Controllers
     public class PingController : BaseController
     {
         // GET: home/index
-        public ActionResult Index()
-        {          
-            //if (id.HasValue)
-            //{
-            //    using (AntDbContext context = new AntDbContext())
-            //    {
-            //        PingPermalink pp = context.PingPermalinks.Find(id);
-            //        if (pp != null)
-            //        {
+        public ActionResult Index(int? id)
+        {
+            if (id.HasValue)
+            {
+                using (AntDbContext context = new AntDbContext())
+                {
+                    PingPermalink pp = context.PingPermalinks.Find(id);
+                    if (pp != null)
+                    {
 
-            //            PingPermalinkViewModel ppvm = new PingPermalinkViewModel();
-            //            ppvm.Ip = pp.DestinationAddress;
-            //            ppvm.Id = pp.Id;
-            //            ppvm.PingResponseSummaries = AutoMapper.Mapper.DynamicMap<List<PingResponseSummaryViewModel>>(pp.PingResponseSummaries);
+                        PingPermalinkViewModel ppvm = new PingPermalinkViewModel();
+                        ppvm.Ip = pp.DestinationAddress;
+                        ppvm.Id = pp.Id;
+                        ppvm.PingResponseSummaries = AutoMapper.Mapper.DynamicMap<List<PingResponseSummaryViewModel>>(pp.PingResponseSummaries);
 
-            //            ppvm.GoogleMapString = Utils.GetGoogleMapsString(new string[] { Constants.DublinUrl, ppvm.PingResponseSummaries[0].SourceAddress });
-            //            return View(model: ppvm);
-            //        }
-            //    }
-                               
-            //}
-            return View(model: new PingPermalinkViewModel());
+                        ppvm.GoogleMapString = Utils.GetGoogleMapsString(new string[] { Constants.DublinUrl, ppvm.PingResponseSummaries[0].SourceAddress });
+                        return View(model: ppvm);
+                    }
+                }
+
+            }
+            return View();
 
         }
 
@@ -79,20 +80,20 @@ namespace Homer_MVC.Controllers
 
             // Save to Db
 
-            //using (AntDbContext context = new AntDbContext())
-            //{
-            //    PingPermalink pp = new PingPermalink();                
-            //    pp.DestinationAddress = prvm.Ip;
+            using (AntDbContext context = new AntDbContext())
+            {
+                PingPermalink pp = new PingPermalink();
+                pp.DestinationAddress = prvm.Ip;
 
-            //    PingResponseSummary pr = AutoMapper.Mapper.DynamicMap<PingResponseSummary>(list[0]);
+                PingResponseSummary pr = AutoMapper.Mapper.DynamicMap<PingResponseSummary>(list[0]);
 
-            //    pp.PingResponseSummaries.Add(pr);
-            //    context.PingPermalinks.Add(pp);
-            //    context.SaveChanges();
+                pp.PingResponseSummaries.Add(pr);
+                context.PingPermalinks.Add(pp);
+                context.SaveChanges();
 
-            //    return Json(pp.Id);
-            //}
-            return Json(1);
-        }        
+                return Json(pp.Id);
+            }
+        }
+      
     }
 }

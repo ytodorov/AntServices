@@ -30,7 +30,7 @@
     "Microsoft.AspNet.Mvc.ViewFeatures": "6.0.0-rc1-final",
     "Microsoft.Extensions.PlatformAbstractions": "1.0.0-rc1-final",
     "Newtonsoft.Json": "8.0.2"
-    
+
   },
 
   "commands": {
@@ -42,7 +42,9 @@
     "dnx451": {
       "dependencies": {
         "AntDal": "1.0.0-*",
-        "AutoMapper": "1.0.0-*"
+        "AutoMapper": "1.0.0-*",
+        "Kendo.Mvc": "1.0.0-*",
+        "System.Web.Mvc": "1.0.0-*"
       },
       "frameworkAssemblies": {
         "System.Web": "4.0.0.0"
