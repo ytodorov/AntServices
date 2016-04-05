@@ -27,7 +27,6 @@ namespace Homer_MVC.Infrastructure
         {
             PortViewModel result = new PortViewModel();
             int port;
-            string protocol, state, service;
             var times = line.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
             var splitPortAndProtocol = times[0].Split(new string[] { "/" }, StringSplitOptions.RemoveEmptyEntries);
             int.TryParse(splitPortAndProtocol[0], out port);
