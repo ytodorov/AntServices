@@ -1,0 +1,10 @@
+{
+  "version": "1.0.0-*",
+  "frameworks": {
+    "dnx451": {
+      "bin": {
+        "assembly": "../../packages/AutoMapper.4.2.1/lib/dotnet5.1/AutoMapper.dll"
+      }
+    }
+  }
+}

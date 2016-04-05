@@ -41,7 +41,8 @@
   "frameworks": {
     "dnx451": {
       "dependencies": {
-        "AntDal": "1.0.0-*"
+        "AntDal": "1.0.0-*",
+        "AutoMapper": "1.0.0-*"
       },
       "frameworkAssemblies": {
         "System.Web": "4.0.0.0"
