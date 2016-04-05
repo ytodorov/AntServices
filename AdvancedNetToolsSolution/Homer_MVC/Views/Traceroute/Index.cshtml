@@ -1,0 +1,130 @@
+﻿@model string
+
+@if (string.IsNullOrWhiteSpace(Model))
+{
+<div id="traceRouteResult">
+    
+
+    <span class="k-textbox k-space-right" style="width: 100%;">
+        <input type="text" id="tbTraceRoute" class="k-textbox">
+        <a href="javascript:void(0)" id="btnTracerRoute" class="k-icon k-i-search">&nbsp;</a>
+    </span>
+
+
+<div id="grid"></div>
+<div id="map" style="width:500px;height: 300px"></div>
+
+</div>
+}
+else
+{
+    @Html.Raw(Model);
+}
+<div class="well no-padding">
+    @(Html.Kendo().Grid<TraceRouteReplyViewModel>()
+                .Name("grid")
+                //.AutoBind(false)
+                .Columns(columns =>
+                {
+                    columns.Bound(c => c.Hop);
+                    columns.Bound(d => d.Rtt);
+                    columns.Bound(t => t.AddressName);
+                    columns.Bound(t => t.Ip);
+                })
+                .Scrollable(s => s.Enabled(false))
+                .ToolBar(t =>
+                {
+                    t.Excel().Text(string.Empty);
+                    t.Pdf().Text(string.Empty);
+                })
+                .Excel(e => e.FileName("traceRouteExport(www.toolsfornet.com).xlsx"))
+                .Pdf(e => e.AllPages().FileName("traceRouteExport(www.toolsfornet.com).pdf"))
+                .DataSource(dataSource => dataSource
+                    .Ajax()
+                    .ServerOperation(false)
+                    .Read(read => read.Action("Read", "TraceRoute").Data("traceRouteReadParameterMap"))
+                )//.BindTo(Model?.TraceRouteReplies)
+
+    )
+</div>
+@section pagespecific {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#btnTracerRoute").click(function tracert(e) {
+
+                e.preventDefault();
+                $('#grid').data('kendoGrid').dataSource.read().then(function (test) {
+                    var pd = $('#grid').data('kendoGrid').dataSource._pristineData;
+                    var pristineDataString = JSON.stringify(pd);
+                    $.ajax({
+                        method: "POST",
+                        url: "/home/googlemap",
+                        data: { models: pd },
+                        success: function f(gmData) {
+                            eval(gmData);
+                            
+
+                            var resultHtml = $("#traceRouteResult").html();
+                            var resultHtmlBase64 = btoa(resultHtml);
+                            $.ajax({
+                                method: "POST",
+                                url: "/traceroute/saveresulthtml",
+                                data: { resultHtmlBase64: resultHtmlBase64 },
+                                success: function f(gmData) {
+
+                                }
+                            })
+
+
+                        }
+                    })
+
+                   });
+
+                $('#grid').show();
+
+
+            });
+
+            $('#grid').hide();
+
+            //$("#grid").kendoGrid({
+            //    autoBind: false,
+            //    dataSource: {
+            //        transport: {
+            //            read: { url: "/Traceroute/Read" },
+
+            //            parameterMap: function (data, type) {
+            //                if (type == "read") {
+            //                    return {
+            //                        ip: $("#tbTraceRoute").val(),
+            //                    }
+            //                }
+            //            }
+            //        },
+            //        schema: {
+            //            data: "Data",
+            //            model: {
+            //                fields: {
+            //                    Hop: { type: "number" },
+            //                    Rtt: { type: "number" },
+            //                    AdressName: { type: "string" },
+            //                    Ip: { type: "string" },
+            //                }
+            //            }
+            //        },
+            //        pageSize: 20,
+            //    },
+            //    sortable: true,
+            //    columns: [{ field: "Hop" },
+            //              { field: "Rtt" },
+            //              { field: "AdressName" },
+            //              { field: "Ip" }
+            //    ]
+            //});
+
+            
+        }
+        );
+    </script>
+}

@@ -1,0 +1,25 @@
+﻿
+@{
+    ViewBag.Title = "Ports";
+}
+
+<div class="form-group">
+    <label class="control-label" for="ip">IP or URL:</label>
+    <div>
+        <input class="k-textbox" id="ip" placeholder="Enter IP or URL" value="www.yahoo.com" type="text" style="width:100%">
+    </div>
+</div>
+
+@section pagespecific {
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+
+            $("#btnPing").click(function btnPingClick() {
+                $('#grid').data('kendoGrid').dataSource.read().then(function (test) {
+                    @*eval(@(SmartAdminMvc.Extensions.GoogleMap.GetMapWithLocaions()));*@
+                });
+            });
+        });
+    </script>
+}

@@ -18,17 +18,17 @@ namespace SmartAdminMvc
 {
     public class MvcApplication : HttpApplication
     {
-        public IContainer Container
-        {
-            get
-            {
-                return (IContainer)HttpContext.Current.Items["_Container"];
-            }
-            set
-            {
-                HttpContext.Current.Items["_Container"] = value;
-            }
-        }
+        //public IContainer Container
+        //{
+        //    get
+        //    {
+        //        return (IContainer)HttpContext.Current.Items["_Container"];
+        //    }
+        //    set
+        //    {
+        //        HttpContext.Current.Items["_Container"] = value;
+        //    }
+        //}
 
         protected void Application_Start()
         {
@@ -42,16 +42,16 @@ namespace SmartAdminMvc
                       
 
         }
-        public void Application_BeginRequest()
-        {
-            Container = ObjectFactory.Container.GetNestedContainer();
-        }
+        ////public void Application_BeginRequest()
+        ////{
+        ////    Container = ObjectFactory.Container.GetNestedContainer();
+        ////}
 
-        public void Application_EndRequest()
-        {
-            Container.Dispose();
-            Container = null; 
-        }
+        ////public void Application_EndRequest()
+        ////{
+        ////    Container.Dispose();
+        ////    Container = null; 
+        ////}
 
         protected void Application_Error()
         {
