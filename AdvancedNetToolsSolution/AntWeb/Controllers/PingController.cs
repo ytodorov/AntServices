@@ -94,7 +94,7 @@ namespace SmartAdminMvc.Controllers
                 PingResponseSummary pr = AutoMapper.Mapper.DynamicMap<PingResponseSummary>(list[0]);
 
                 pp.PingResponseSummaries.Add(pr);
-                //context.PingPermalinks.Add(pp);
+                context.PingPermalinks.Add(pp);
                 context.SaveChanges();
 
                 return Json(pp.Id);

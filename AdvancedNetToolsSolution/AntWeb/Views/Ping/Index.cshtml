@@ -1,26 +1,22 @@
 ﻿@model PingPermalinkViewModel
-<script type="text/javascript">
-    function pingReadParameterMap(data, type) {
-        debugger;
 
-        return {
-            ip: $("#ip").val(),
-            packetsCount: $("#tbPacketsCount").val(),
-            packetsSize: $("#tbPacketsSize").val(),
-            delayBetweenPings: $("#tbDelayBetweenPings").val(),
-            ttl: $("#tbTTL").val(),
-            df: $('#cbDontFragment').is(':checked')
-        }
 
-    }
-</script>
-<div class="well">
-    <div class="k-block k-info-colored"><label class="control-label" for="ip">Enter IPv4, host name or IPv6 address to ping</label></div>
-    <span class="k-textbox k-space-right" style="width: 100%;">
-        <input type="text" id="ip" class="k-textbox" value="@(Model?.Ip)">
-        <a href="javascript:void(0)" id="btnPing" class="k-icon k-i-search">&nbsp;</a>
-    </span>
+
+<div class="col-lg-12">
+    <div class="hpanel hgreen">
+        <div class="panel-body">
+            <p>
+                <input type="text" class="form-control" id="ip" value="@(Model?.Ip)" placeholder="Host name or IPv4/6">
+            </p>
+            <p>
+                <button type="button" class="btn center-block btn-outline btn-default" id="btnPing">Ping</button>
+            </p>
+        </div>
+    </div>
 </div>
+
+
+
 <div class="well">
     @(Html.Kendo().Grid<PingResponseSummaryViewModel>()
                 .Name("grid")
@@ -41,7 +37,6 @@
                 .DataSource(dataSource => dataSource
                     .Ajax()
                     .ServerOperation(false)
-                    .Read(read => read.Action("Read", "Ping").Data("pingReadParameterMap"))
 
                 ).BindTo(Model?.PingResponseSummaries).Deferred()
 
@@ -52,66 +47,67 @@
 </div>
 
 @section scripts {
-@if (Model != null)
-{
-    <script>
-        var ips = [];
-        ips[0] = '@Model.Ip';
-        ips[1] = '@Model.PingResponseSummaries[0].SourceAddress';
+    @if (Model != null)
+    {
+        <script>
+            var ips = [];
+            ips[0] = '@Model.Ip';
+            ips[1] = '@Model.PingResponseSummaries[0].SourceAddress';
 
-        $.ajax({
-            method: "POST",
-            url: "/home/googlemapfromips",
-            data: { ips: ips },
-            success: function f(gmData) {
-                $("#map").height("300px");
-                eval(gmData);
-            }
-        });
-    </script>
+            $.ajax({
+                method: "POST",
+                url: "/home/googlemapfromips",
+                data: { ips: ips },
+                success: function f(gmData) {
+                    $("#map").height("300px");
+                    eval(gmData);
+                }
+            });
+        </script>
     }
 
 
-@if (Model != null)
-{
-    <div class="well" id="divPingPermalink">
-        Permalink to this ping tests:
-        @(
+    @if (Model != null)
+    {
+        <div class="well" id="divPingPermalink">
+            Permalink to this ping tests:
+            @(
         Html.Kendo().TextBox().Name("tbPingPermalink").Value(Request.Url.ToString()).HtmlAttributes(new { style = "width: 100%;" }).Deferred()
-        )
-    </div>
-}
-
-
-<script type="text/javascript">
-
-    $("#btnPing").click(function btnPingClick(e) {
-        e.preventDefault();
-
-        $.ajax({
-            method: "POST",
-            url: "/ping/GenerateId",
-            data: {
-                ip: $("#ip").val(),
-                packetsCount: $("#tbPacketsCount").val(),
-                packetsSize: $("#tbPacketsSize").val(),
-                delayBetweenPings: $("#tbDelayBetweenPings").val(),
-                ttl: $("#tbTTL").val(),
-                df: $('#cbDontFragment').is(':checked')
-            },
-            success: function f(id) {
-                window.location.href = "ping?id=" + id;
-
-            }
-        })
-        
-    });
-    $("#ip").keyup(function myfunction(eventData) {
-        if (eventData.keyCode == 13) {
-            $("#btnPing").click();
-        }
-
-    });
-
-</script>
+            )
+        </div>
     }
+
+
+    <script type="text/javascript">
+
+        $("#btnPing").click(function btnPingClick(e) {
+            e.preventDefault();
+
+            $.ajax({
+                method: "POST",
+                url: "/ping/GenerateId",
+                data: {
+                    ip: $("#ip").val(),
+                    packetsCount: $("#tbPacketsCount").val(),
+                    packetsSize: $("#tbPacketsSize").val(),
+                    delayBetweenPings: $("#tbDelayBetweenPings").val(),
+                    ttl: $("#tbTTL").val(),
+                    df: $('#cbDontFragment').is(':checked')
+                },
+                success: function f(id) {
+                    debugger;
+                    window.location.href = "ping?id=" + id;
+
+                }
+            })
+
+        });
+        $("#ip").keyup(function myfunction(eventData) {
+            if (eventData.keyCode == 13) {
+                $("#btnPing").click();
+            }
+
+        });
+
+    </script>
+}
