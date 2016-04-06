@@ -1,83 +1,55 @@
-﻿#region Using
-
+﻿using System.Web;
 using System.Web.Optimization;
-
-#endregion
 
 namespace SmartAdminMvc
 {
-    public static class BundleConfig
+    public class BundleConfig
     {
         public static void RegisterBundles(BundleCollection bundles)
         {
-            bundles.Add(new StyleBundle("~/content/smartadmin").IncludeDirectory("~/content/css", "*.min.css"));
 
-            bundles.Add(new ScriptBundle("~/scripts/smartadmin").Include(
-                "~/scripts/app.config.js",
-                "~/scripts/plugin/jquery-touch/jquery.ui.touch-punch.min.js",
-                "~/scripts/bootstrap/bootstrap.min.js",
-                "~/scripts/notification/SmartNotification.min.js",
-                "~/scripts/smartwidgets/jarvis.widget.min.js",
-                "~/scripts/plugin/jquery-validate/jquery.validate.min.js",
-                "~/scripts/plugin/masked-input/jquery.maskedinput.min.js",
-                "~/scripts/plugin/select2/select2.min.js",
-                "~/scripts/plugin/bootstrap-slider/bootstrap-slider.min.js",
-                "~/scripts/plugin/bootstrap-progressbar/bootstrap-progressbar.min.js",
-                "~/scripts/plugin/msie-fix/jquery.mb.browser.min.js",
-                "~/scripts/plugin/fastclick/fastclick.min.js",
-                "~/scripts/app.min.js"));
+            // Homer style
+            bundles.Add(new StyleBundle("~/bundles/homer/css").Include(
+                      "~/Content/style.css", new CssRewriteUrlTransform()));
 
-            bundles.Add(new ScriptBundle("~/scripts/full-calendar").Include(
-                "~/scripts/plugin/moment/moment.min.js",
-                "~/scripts/plugin/fullcalendar/jquery.fullcalendar.min.js"
-                ));
+            // Homer script
+            bundles.Add(new ScriptBundle("~/bundles/homer/js").Include(
+                      "~/Vendor/metisMenu/dist/metisMenu.min.js",
+                      "~/Scripts/homer.js"));
 
-            bundles.Add(new ScriptBundle("~/scripts/charts").Include(
-                "~/scripts/plugin/easy-pie-chart/jquery.easy-pie-chart.min.js",
-                "~/scripts/plugin/sparkline/jquery.sparkline.min.js",
-                "~/scripts/plugin/morris/morris.min.js",
-                "~/scripts/plugin/morris/raphael.min.js",
-                "~/scripts/plugin/flot/jquery.flot.cust.min.js",
-                "~/scripts/plugin/flot/jquery.flot.resize.min.js",
-                "~/scripts/plugin/flot/jquery.flot.time.min.js",
-                "~/scripts/plugin/flot/jquery.flot.fillbetween.min.js",
-                "~/scripts/plugin/flot/jquery.flot.orderBar.min.js",
-                "~/scripts/plugin/flot/jquery.flot.pie.min.js",
-                "~/scripts/plugin/flot/jquery.flot.tooltip.min.js",
-                "~/scripts/plugin/dygraphs/dygraph-combined.min.js",
-                "~/scripts/plugin/chartjs/chart.min.js",
-                "~/scripts/plugin/highChartCore/highcharts-custom.min.js",
-                "~/scripts/plugin/highchartTable/jquery.highchartTable.min.js"
-                ));
+            // Animate.css
+            bundles.Add(new StyleBundle("~/bundles/animate/css").Include(
+                      "~/Vendor/animate.css/animate.min.css"));
 
-            bundles.Add(new ScriptBundle("~/scripts/datatables").Include(
-                "~/scripts/plugin/datatables/jquery.dataTables.min.js",
-                "~/scripts/plugin/datatables/dataTables.colVis.min.js",
-                "~/scripts/plugin/datatables/dataTables.tableTools.min.js",
-                "~/scripts/plugin/datatables/dataTables.bootstrap.min.js",
-                "~/scripts/plugin/datatable-responsive/datatables.responsive.min.js"
-                ));
+            // Pe-icon-7-stroke
+            bundles.Add(new StyleBundle("~/bundles/peicon7stroke/css").Include(
+                      "~/Icons/pe-icon-7-stroke/css/pe-icon-7-stroke.css", new CssRewriteUrlTransform()));
 
-            bundles.Add(new ScriptBundle("~/scripts/jq-grid").Include(
-                "~/scripts/plugin/jqgrid/jquery.jqGrid.min.js",
-                "~/scripts/plugin/jqgrid/grid.locale-en.min.js"
-                ));
+            // Font Awesome icons style
+            bundles.Add(new StyleBundle("~/bundles/font-awesome/css").Include(
+                      "~/Vendor/fontawesome/css/font-awesome.min.css", new CssRewriteUrlTransform()));
 
-            bundles.Add(new ScriptBundle("~/scripts/forms").Include(
-                "~/scripts/plugin/jquery-form/jquery-form.min.js"
-                ));
+            // Bootstrap style
+            bundles.Add(new StyleBundle("~/bundles/bootstrap/css").Include(
+                      "~/Vendor/bootstrap/dist/css/bootstrap.min.css", new CssRewriteUrlTransform()));
 
-            bundles.Add(new ScriptBundle("~/scripts/smart-chat").Include(
-                "~/scripts/smart-chat-ui/smart.chat.ui.min.js",
-                "~/scripts/smart-chat-ui/smart.chat.manager.min.js"
-                ));
+            // Bootstrap
+            bundles.Add(new ScriptBundle("~/bundles/bootstrap/js").Include(
+                      "~/Vendor/bootstrap/dist/js/bootstrap.min.js"));
 
-            bundles.Add(new ScriptBundle("~/scripts/vector-map").Include(
-                "~/scripts/plugin/vectormap/jquery-jvectormap-1.2.2.min.js",
-                "~/scripts/plugin/vectormap/jquery-jvectormap-world-mill-en.js"
-                ));
+            // jQuery
+            bundles.Add(new ScriptBundle("~/bundles/jquery/js").Include(
+                      "~/Vendor/jquery/dist/jquery.min.js"));
 
-            BundleTable.EnableOptimizations = true;
+            // jQuery UI
+            bundles.Add(new ScriptBundle("~/bundles/jqueryui/js").Include(
+                      "~/Vendor/jquery-ui/jquery-ui.min.js"));
+
+            // jQuery Validation
+            bundles.Add(new ScriptBundle("~/bundles/validation/js").Include(
+                      "~/Vendor/jquery-validation/jquery.validate.min.js"));
+
         }
+
     }
 }

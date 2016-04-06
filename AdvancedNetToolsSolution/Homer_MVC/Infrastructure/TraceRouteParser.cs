@@ -1,4 +1,4 @@
-﻿using Homer_MVC.Models;
+﻿using SmartAdminMvc.Models;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
 
-namespace Homer_MVC.Infrastructure
+namespace SmartAdminMvc.Infrastructure
 {
     public static class TraceRouteParser
     {

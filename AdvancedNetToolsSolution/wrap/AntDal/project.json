@@ -1,0 +1,15 @@
+{
+  "version": "1.0.0-*",
+  "frameworks": {
+    "net45": {
+      "wrappedProject": "../../AntDal/AntDal.csproj",
+      "bin": {
+        "assembly": "../../AntDal/obj/{configuration}/AntDal.dll",
+        "pdb": "../../AntDal/obj/{configuration}/AntDal.pdb"
+      },
+      "dependencies": {
+        "EntityFramework": "6.1.3"
+      }
+    }
+  }
+}

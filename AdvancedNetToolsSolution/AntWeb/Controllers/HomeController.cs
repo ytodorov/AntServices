@@ -17,9 +17,9 @@ namespace SmartAdminMvc.Controllers
     {
         private readonly AntDbContext _context;
 
-        public HomeController(AntDbContext context)
+        public HomeController()
         {
-            _context = context;
+            //_context = context;
         }
         // GET: home/index
         public ActionResult Index()

@@ -18,17 +18,17 @@ namespace SmartAdminMvc
 {
     public class MvcApplication : HttpApplication
     {
-        public IContainer Container
-        {
-            get
-            {
-                return (IContainer)HttpContext.Current.Items["_Container"];
-            }
-            set
-            {
-                HttpContext.Current.Items["_Container"] = value;
-            }
-        }
+        //public IContainer Container
+        //{
+        //    get
+        //    {
+        //        return (IContainer)HttpContext.Current.Items["_Container"];
+        //    }
+        //    set
+        //    {
+        //        HttpContext.Current.Items["_Container"] = value;
+        //    }
+        //}
 
         protected void Application_Start()
         {
@@ -39,40 +39,19 @@ namespace SmartAdminMvc
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             PreventAppsFromSleep();
-
-            DependencyResolver.SetResolver(
-                new StructureMapDependecyResolver(() => Container ?? ObjectFactory.Container));
-
-            ObjectFactory.Configure(cfg =>
-            {
-                cfg.Scan(scan =>
-                {
-                    scan.TheCallingAssembly();
-                    scan.WithDefaultConventions();
-                    scan.With(new ControllerConvention());
-                });
-
-                cfg.For<IFilterProvider>().Use
-                (new StructureMapFilterProvider(() => Container ?? ObjectFactory.Container));
-
-                cfg.SetAllProperties(x =>
-                x.Matching(p =>
-                p.DeclaringType.CanBeCastTo(typeof(ActionFilterAttribute)) && p.DeclaringType.Namespace.StartsWith("FailTracker") &&
-                !p.PropertyType.IsPrimitive &&
-                p.PropertyType != typeof(string)));
-            });
+                      
 
         }
-        public void Application_BeginRequest()
-        {
-            Container = ObjectFactory.Container.GetNestedContainer();
-        }
+        ////public void Application_BeginRequest()
+        ////{
+        ////    Container = ObjectFactory.Container.GetNestedContainer();
+        ////}
 
-        public void Application_EndRequest()
-        {
-            Container.Dispose();
-            Container = null; 
-        }
+        ////public void Application_EndRequest()
+        ////{
+        ////    Container.Dispose();
+        ////    Container = null; 
+        ////}
 
         protected void Application_Error()
         {
@@ -93,7 +72,15 @@ namespace SmartAdminMvc
             {
                 using (HttpClient client = new HttpClient())
                 {
-                    var tracerouteSummary = client.GetStringAsync(url).Result;
+                    try
+                    {
+                        var tracerouteSummary = client.GetStringAsync(url).Result;
+                    }
+                    catch
+                    {
+
+                    }
+
                 }
             }
         }

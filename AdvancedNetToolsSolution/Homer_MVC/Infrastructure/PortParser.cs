@@ -1,4 +1,4 @@
-﻿using Homer_MVC.Models;
+﻿using SmartAdminMvc.Models;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
 
-namespace Homer_MVC.Infrastructure
+namespace SmartAdminMvc.Infrastructure
 {
     public static class PortParser
     {
@@ -27,6 +27,7 @@ namespace Homer_MVC.Infrastructure
         {
             PortViewModel result = new PortViewModel();
             int port;
+            string protocol, state, service;
             var times = line.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
             var splitPortAndProtocol = times[0].Split(new string[] { "/" }, StringSplitOptions.RemoveEmptyEntries);
             int.TryParse(splitPortAndProtocol[0], out port);

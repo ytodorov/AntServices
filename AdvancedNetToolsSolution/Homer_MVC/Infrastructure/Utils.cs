@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-using Homer_MVC.Models;
+using SmartAdminMvc.Models;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -7,8 +7,9 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Web;
+using System.Web.Helpers;
 
-namespace Homer_MVC.Infrastructure
+namespace SmartAdminMvc.Infrastructure
 {
     public static class Utils
     {

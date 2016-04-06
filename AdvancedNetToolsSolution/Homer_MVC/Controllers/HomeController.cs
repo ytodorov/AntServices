@@ -1,23 +1,68 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNet.Mvc;
+﻿#region Using
 
-namespace Homer_MVC.Controllers
+using SmartAdminMvc.Infrastructure;
+using SmartAdminMvc.Models;
+using System.Web.Mvc;
+using System.Linq;
+using AntDal;
+
+
+#endregion
+
+namespace SmartAdminMvc.Controllers
 {
+    
     public class HomeController : Controller
     {
-        
-        public IActionResult Index()
+        private readonly AntDbContext _context;
+
+        public HomeController(AntDbContext context)
+        {
+            _context = context;
+        }
+        // GET: home/index
+        public ActionResult Index()
         {
             return View();
         }
 
-        public IActionResult Page2()
+        public ActionResult Social()
         {
             return View();
         }
 
+        // GET: home/inbox
+        public ActionResult Inbox()
+        {
+            return View();
+        }
+
+        // GET: home/widgets
+        public ActionResult Widgets()
+        {
+            return View();
+        }
+
+        // GET: home/chat
+        public ActionResult Chat()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public string GoogleMap(TraceRouteReplyViewModel[] models)
+        {
+            Response.ContentType = "text/plain; charset=utf-8";
+            var gmString = Utils.GetGoogleMapsString(models.Select(m => m.Ip));
+            return gmString;
+        }
+
+        [HttpPost]
+        public string GoogleMapFromIps(string[] ips)
+        {
+            Response.ContentType = "text/plain; charset=utf-8";
+            var gmString = Utils.GetGoogleMapsString(ips);
+            return gmString;
+        }
     }
 }
