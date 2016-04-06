@@ -1,17 +1,5 @@
 ﻿@model PingPermalinkViewModel
 
-<script type="text/javascript">
-    function pingReadParameterMap(data, type) {
-        return {
-            ip: $("#ip").val(),
-            packetsCount: $("#tbPacketsCount").val(),
-            packetsSize: $("#tbPacketsSize").val(),
-            delayBetweenPings: $("#tbDelayBetweenPings").val(),
-            ttl: $("#tbTTL").val(),
-            df: $('#cbDontFragment').is(':checked')
-        }
-    }
-</script>
 <div class="well">
     <div class="k-block k-info-colored"><label class="control-label" for="ip">Enter IPv4, host name or IPv6 address to ping</label></div>
     <span class="k-textbox k-space-right" style="width: 100%;">
