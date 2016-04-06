@@ -38,8 +38,8 @@ namespace SmartAdminMvc
                       "~/Vendor/bootstrap/dist/js/bootstrap.min.js"));
 
             // jQuery
-            bundles.Add(new ScriptBundle("~/bundles/jquery/js").Include(
-                      "~/Vendor/jquery/dist/jquery.min.js"));
+            //bundles.Add(new ScriptBundle("~/bundles/jquery/js").Include(
+            //          "~/Vendor/jquery/dist/jquery.min.js"));
 
             // jQuery UI
             bundles.Add(new ScriptBundle("~/bundles/jqueryui/js").Include(

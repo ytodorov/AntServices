@@ -1,5 +1,19 @@
 ﻿@model PingPermalinkViewModel
+<script type="text/javascript">
+    function pingReadParameterMap(data, type) {
+        debugger;
 
+        return {
+            ip: $("#ip").val(),
+            packetsCount: $("#tbPacketsCount").val(),
+            packetsSize: $("#tbPacketsSize").val(),
+            delayBetweenPings: $("#tbDelayBetweenPings").val(),
+            ttl: $("#tbTTL").val(),
+            df: $('#cbDontFragment').is(':checked')
+        }
+
+    }
+</script>
 <div class="well">
     <div class="k-block k-info-colored"><label class="control-label" for="ip">Enter IPv4, host name or IPv6 address to ping</label></div>
     <span class="k-textbox k-space-right" style="width: 100%;">
@@ -7,83 +21,6 @@
         <a href="javascript:void(0)" id="btnPing" class="k-icon k-i-search">&nbsp;</a>
     </span>
 </div>
-@*<form role="form">
-        <div id="accordion">
-
-
-
-            <div>
-
-                <div>
-                    <h4>Advanced settings</h4>
-                    <div class="padding-10">
-
-                        <div class="form-group">
-                            <label class="control-label" for="tbPacketsCount">Packets Count:</label>
-                            <div>
-                                @(Html.Kendo().NumericTextBox<int>()
-                .Name("tbPacketsCount")
-                .Min(1)
-                .Max(10)
-                .Value(4)
-                .Placeholder("Enter packets count")
-                .HtmlAttributes(new { style = "width: 30%" })
-                                )
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="control-label" for="tbPacketsSize">Packet size in bytes:</label>
-                            <div>
-                                @(Html.Kendo().NumericTextBox<int>()
-                .Name("tbPacketsSize")
-                .Min(1)
-                .Max(65000)
-                .Placeholder("Enter MTU")
-                .HtmlAttributes(new { style = "width: 30%" })
-                                )
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label" for="tbDelayBetweenPings">Delay between pings (ms):</label>
-                            <div>
-                                @(Html.Kendo().NumericTextBox<int>()
-                .Name("tbDelayBetweenPings")
-                .Min(1)
-                .Max(1000)
-                .Value(10)
-                .Placeholder("Enter Delay Between Pings")
-                .HtmlAttributes(new { style = "width: 30%" })
-                                )
-                            </div>
-                        </div>
-
-
-                        <div class="form-group">
-                            <label class="control-label" for="tbTTL">Time to Live:</label>
-                            <div>
-                                @(Html.Kendo().NumericTextBox<int>()
-                .Name("tbTTL")
-                .Min(1)
-                .Max(128)
-                .Value(64)
-                .Placeholder("Enter TTL")
-                .HtmlAttributes(new { style = "width: 30%" })
-                                )
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div>
-                                <input type="checkbox" id="cbDontFragment" class="k-checkbox" checked="checked">
-                                <label class="k-checkbox-label" for="cbDontFragment">Don't Fragment</label>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>*@
 <div class="well">
     @(Html.Kendo().Grid<PingResponseSummaryViewModel>()
                 .Name("grid")
@@ -106,7 +43,7 @@
                     .ServerOperation(false)
                     .Read(read => read.Action("Read", "Ping").Data("pingReadParameterMap"))
 
-                ).BindTo(Model?.PingResponseSummaries)
+                ).BindTo(Model?.PingResponseSummaries).Deferred()
 
     )
 </div>
@@ -114,7 +51,7 @@
     <div id="map" style="width:100px;height: 10px"></div>
 </div>
 
-@section pagespecific {
+@section scripts {
 @if (Model != null)
 {
     <script>
@@ -133,36 +70,20 @@
         });
     </script>
     }
-}
+
 
 @if (Model != null)
 {
     <div class="well" id="divPingPermalink">
         Permalink to this ping tests:
         @(
-        Html.Kendo().TextBox().Name("tbPingPermalink").Value(Request.Url.ToString()).HtmlAttributes(new { style = "width: 100%;" })
+        Html.Kendo().TextBox().Name("tbPingPermalink").Value(Request.Url.ToString()).HtmlAttributes(new { style = "width: 100%;" }).Deferred()
         )
     </div>
 }
 
 
 <script type="text/javascript">
-
-    //var accordionIcons = {
-    //    header: "fa fa-plus",
-    //    activeHeader: "fa fa-minus"
-    //};
-
-    //$("#accordion").accordion({
-    //    autoHeight: false,
-    //    heightStyle: "content",
-    //    collapsible: true,
-    //    animate: 300,
-    //    icons: accordionIcons,
-    //    header: "h4",
-    //})
-
-
 
     $("#btnPing").click(function btnPingClick(e) {
         e.preventDefault();
@@ -183,21 +104,7 @@
 
             }
         })
-
-
-        //$('#grid').data('kendoGrid').dataSource.read().then(function (test) {
-
-        //    var resultHtml = $("#bodyDiv").html();
-        //    var resultHtmlBase64 = btoa(resultHtml);
-        //    $.ajax({
-        //        method: "POST",
-        //        url: "/traceroute/saveresulthtml",
-        //        data: { resultHtmlBase64: resultHtmlBase64 },
-        //        success: function f(gmData) {
-        //        }
-        //    })
-        //});
-
+        
     });
     $("#ip").keyup(function myfunction(eventData) {
         if (eventData.keyCode == 13) {
@@ -207,4 +114,4 @@
     });
 
 </script>
-
+    }
