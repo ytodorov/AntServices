@@ -22,7 +22,7 @@ namespace SmartAdminMvc.Controllers
     {
         // GET: home/index
         public ActionResult Index(int? id)
-        {          
+        {
             if (id.HasValue)
             {
                 using (AntDbContext context = new AntDbContext())
@@ -40,7 +40,7 @@ namespace SmartAdminMvc.Controllers
                         return View(model: ppvm);
                     }
                 }
-                               
+
             }
             return View();
 
@@ -58,42 +58,41 @@ namespace SmartAdminMvc.Controllers
             List<Task<string>> tasks = new List<Task<string>>();
             List<HttpClient> clients = new List<HttpClient>();
 
-            //using (HttpClient client = new HttpClient())
+            var urls = Utils.GetDeployedServicesUrlAddresses();
+
+            for (int i = 0; i < urls.Count; i++)
             {
-                for (int i = 0; i < 1; i++)
-                {
-                    HttpClient client = new HttpClient();
-                    clients.Add(client);
-                    var encodedArgs = Uri.EscapeDataString($" {prvm.Ip} --delay {prvm.DelayBetweenPings}ms -v1");
-                    string url = "http://antnortheu.cloudapp.net/home/exec?program=nping&args=" + encodedArgs;
-                    Task<string> task = client.GetStringAsync(url);
-                    //var summary = PingReplyParser.ParseSummary(task.Result);
-                    //list.Add(summary);
-                    tasks.Add(task);
-                }
 
-
-                Task.WaitAll(tasks.ToArray());
-
-                for (int i = 0; i < tasks.Count; i++)
-                {
-                    var summary = PingReplyParser.ParseSummary(tasks[i].Result);
-                    summary.SourceAddress = "antnortheu.cloudapp.net"; // TEEEEEMP
-                    list.Add(summary);
-                    clients[i].Dispose();
-                }
+                HttpClient client = new HttpClient();
+                clients.Add(client);
+                var encodedArgs = Uri.EscapeDataString($" {prvm.Ip} --delay {prvm.DelayBetweenPings}ms -v1 -tcp");
+                var urlWithArgs = urls[i] + "/home/exec?program=nping&args=" + encodedArgs;
+                Task<string> task = client.GetStringAsync(urlWithArgs);
+                tasks.Add(task);
             }
+
+            Task.WaitAll(tasks.ToArray());
+          
+
+            for (int i = 0; i < tasks.Count; i++)
+            {
+                var summary = PingReplyParser.ParseSummary(tasks[i].Result);
+                summary.SourceAddress = urls[i]; 
+                list.Add(summary);
+                clients[i].Dispose();
+            }
+
 
             // Save to Db
 
             using (AntDbContext context = new AntDbContext())
             {
-                PingPermalink pp = new PingPermalink();                
+                PingPermalink pp = new PingPermalink();
                 pp.DestinationAddress = prvm.Ip;
 
-                PingResponseSummary pr = AutoMapper.Mapper.DynamicMap<PingResponseSummary>(list[0]);
+                List<PingResponseSummary> pr = AutoMapper.Mapper.DynamicMap<List<PingResponseSummary>>(list);
 
-                pp.PingResponseSummaries.Add(pr);
+                pp.PingResponseSummaries.AddRange(pr);
                 context.PingPermalinks.Add(pp);
                 context.SaveChanges();
 

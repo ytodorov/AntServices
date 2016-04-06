@@ -67,7 +67,8 @@ namespace SmartAdminMvc
 
         private void PingUrlsSoTheyDontSleep(object sender, ElapsedEventArgs e)
         {
-            List<string> urls = Utils.GetDeployedUrlAddresses();
+            List<string> urls = Utils.GetDeployedServicesUrlAddresses();
+            urls.Add("http://ant-ne.azurewebsites.net");
             foreach (string url in urls)
             {
                 using (HttpClient client = new HttpClient())

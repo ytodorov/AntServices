@@ -117,12 +117,14 @@ namespace SmartAdminMvc.Infrastructure
             return finalResult;
         }
 
-        public static List<string> GetDeployedUrlAddresses()
+        public static List<string> GetDeployedServicesUrlAddresses()
         {
             List<string> address = new List<string>()
             {
                 "http://antnortheu.cloudapp.net",
-                "http://ant-ne.azurewebsites.net"
+                "http://ants-ea.cloudapp.net",
+                 "http://ants-je.cloudapp.net"
+                //"http://ant-ne.azurewebsites.net"
             };
             return address;
         }
