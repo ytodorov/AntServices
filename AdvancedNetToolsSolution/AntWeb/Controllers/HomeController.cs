@@ -27,25 +27,11 @@ namespace SmartAdminMvc.Controllers
             return View();
         }
 
-        public ActionResult Social()
+        public ActionResult Error404()
         {
             return View();
         }
-
-        // GET: home/inbox
-        public ActionResult Inbox()
-        {
-            return View();
-        }
-
-        // GET: home/widgets
-        public ActionResult Widgets()
-        {
-            return View();
-        }
-
-        // GET: home/chat
-        public ActionResult Chat()
+        public ActionResult Error500()
         {
             return View();
         }

@@ -1250,10 +1250,6 @@
     <Content Include="Views\Shared\_TermsAndConditions.cshtml" />
     <Content Include="Views\Shared\_Tiles.cshtml" />
     <Content Include="Views\Shared\_TopRight.cshtml" />
-    <Content Include="Views\Home\Inbox.cshtml" />
-    <Content Include="Views\Home\Widgets.cshtml" />
-    <Content Include="Views\Home\Chat.cshtml" />
-    <Content Include="Views\Home\Social.cshtml" />
     <Content Include="Scripts\plugin\bootstrap-tags\dist\bootstrap-tagsinput.min.js.map" />
     <Content Include="Views\Ping\Index.cshtml" />
     <Content Include="Views\Traceroute\Index.cshtml" />
@@ -1415,6 +1411,8 @@
     <Content Include="Vendor\ladda\css\ladda.scss" />
     <Content Include="Vendor\ladda\LICENSE" />
     <Content Include="Vendor\ladda\README.md" />
+    <Content Include="Views\Home\Error404.cshtml" />
+    <Content Include="Views\Home\Error500.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
