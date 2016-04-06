@@ -43,7 +43,7 @@
     <!-- Main view  -->
     <div id="wrapper">
         @RenderBody()
-
+        @RenderSection("pagespecific", required: false)
         <!-- Footer-->
         @Html.Partial("_Footer")
     </div>
