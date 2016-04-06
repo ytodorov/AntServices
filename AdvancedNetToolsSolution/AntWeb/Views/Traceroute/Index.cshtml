@@ -23,7 +23,7 @@ else
 <div class="well no-padding">
     @(Html.Kendo().Grid<TraceRouteReplyViewModel>()
                 .Name("grid")
-                //.AutoBind(false)
+                .AutoBind(false)
                 .Columns(columns =>
                 {
                     columns.Bound(c => c.Hop);
@@ -88,40 +88,40 @@ else
 
             $('#grid').hide();
 
-            //$("#grid").kendoGrid({
-            //    autoBind: false,
-            //    dataSource: {
-            //        transport: {
-            //            read: { url: "/Traceroute/Read" },
+            $("#grid").kendoGrid({
+                autoBind: false,
+                dataSource: {
+                    transport: {
+                        read: { url: "/Traceroute/Read" },
 
-            //            parameterMap: function (data, type) {
-            //                if (type == "read") {
-            //                    return {
-            //                        ip: $("#tbTraceRoute").val(),
-            //                    }
-            //                }
-            //            }
-            //        },
-            //        schema: {
-            //            data: "Data",
-            //            model: {
-            //                fields: {
-            //                    Hop: { type: "number" },
-            //                    Rtt: { type: "number" },
-            //                    AdressName: { type: "string" },
-            //                    Ip: { type: "string" },
-            //                }
-            //            }
-            //        },
-            //        pageSize: 20,
-            //    },
-            //    sortable: true,
-            //    columns: [{ field: "Hop" },
-            //              { field: "Rtt" },
-            //              { field: "AdressName" },
-            //              { field: "Ip" }
-            //    ]
-            //});
+                        parameterMap: function (data, type) {
+                            if (type == "read") {
+                                return {
+                                    ip: $("#tbTraceRoute").val(),
+                                }
+                            }
+                        }
+                    },
+                    schema: {
+                        data: "Data",
+                        model: {
+                            fields: {
+                                Hop: { type: "number" },
+                                Rtt: { type: "number" },
+                                AdressName: { type: "string" },
+                                Ip: { type: "string" },
+                            }
+                        }
+                    },
+                    pageSize: 20,
+                },
+                sortable: true,
+                columns: [{ field: "Hop" },
+                          { field: "Rtt" },
+                          { field: "AdressName" },
+                          { field: "Ip" }
+                ]
+            });
 
             
         }
