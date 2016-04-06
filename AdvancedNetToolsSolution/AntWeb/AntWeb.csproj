@@ -1185,6 +1185,19 @@
     <Content Include="Vendor\jquery\src\var\support.js" />
     <Content Include="Vendor\jquery\src\var\toString.js" />
     <Content Include="Vendor\jquery\src\wrap.js" />
+    <Content Include="Vendor\ladda\css\demo.css" />
+    <Content Include="Vendor\ladda\dist\ladda-themeless.min.css" />
+    <Content Include="Vendor\ladda\dist\ladda.jquery.min.js" />
+    <Content Include="Vendor\ladda\dist\ladda.min.css" />
+    <Content Include="Vendor\ladda\dist\ladda.min.js" />
+    <Content Include="Vendor\ladda\dist\spin.min.js" />
+    <Content Include="Vendor\ladda\Gruntfile.js" />
+    <Content Include="Vendor\ladda\index.html" />
+    <Content Include="Vendor\ladda\js\ladda.jquery.js" />
+    <Content Include="Vendor\ladda\js\ladda.js" />
+    <Content Include="Vendor\ladda\js\spin.js" />
+    <Content Include="Vendor\ladda\test\bootstrap.html" />
+    <Content Include="Vendor\ladda\test\bootstrap.jquery.html" />
     <Content Include="Vendor\metisMenu\dist\jquery.metisMenu.css" />
     <Content Include="Vendor\metisMenu\dist\jquery.metisMenu.js" />
     <Content Include="Vendor\metisMenu\dist\jquery.metisMenu.min.js" />
@@ -1396,6 +1409,12 @@
     <Content Include="Vendor\slimScroll\bower.json" />
     <Content Include="Vendor\slimScroll\README.md" />
     <Content Include="Vendor\slimScroll\slimScroll.jquery.json" />
+    <Content Include="Vendor\ladda\.bower.json" />
+    <Content Include="Vendor\ladda\bower.json" />
+    <Content Include="Vendor\ladda\css\ladda-themed.scss" />
+    <Content Include="Vendor\ladda\css\ladda.scss" />
+    <Content Include="Vendor\ladda\LICENSE" />
+    <Content Include="Vendor\ladda\README.md" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

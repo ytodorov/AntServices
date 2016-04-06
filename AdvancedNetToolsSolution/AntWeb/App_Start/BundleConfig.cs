@@ -37,6 +37,16 @@ namespace SmartAdminMvc
             bundles.Add(new ScriptBundle("~/bundles/bootstrap/js").Include(
                       "~/Vendor/bootstrap/dist/js/bootstrap.min.js"));
 
+            // Ladda
+            bundles.Add(new ScriptBundle("~/bundles/ladda/js").Include(
+                      "~/Vendor/ladda/dist/spin.min.js",
+                      "~/Vendor/ladda/dist/ladda.min.js",
+                      "~/Vendor/ladda/dist/ladda.jquery.min.js"));
+
+            // Ladda style
+            bundles.Add(new StyleBundle("~/bundles/ladda/css").Include(
+                      "~/Vendor/ladda/dist/ladda-themeless.min.css"));
+
             // jQuery
             //bundles.Add(new ScriptBundle("~/bundles/jquery/js").Include(
             //          "~/Vendor/jquery/dist/jquery.min.js"));

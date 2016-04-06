@@ -6,45 +6,79 @@
     <div class="hpanel hgreen">
         <div class="panel-body">
             <p>
-                <input type="text" class="form-control" id="ip" value="@(Model?.Ip)" placeholder="Host name or IPv4/6">
+                <input type="text" class="form-control" id="ip" value="@(Model != null ? Model.Ip : "facebook.com")" placeholder="Host name or IPv4/6">
             </p>
             <p>
-                <button type="button" class="btn center-block btn-outline btn-default" id="btnPing">Ping</button>
+                <button type="button" class="ladda-button btn center-block btn-outline btn-success" id="btnPing" data-style="zoom-in">
+                    <span class="ladda-label">Ping</span>
+                    <span class="ladda-spinner"></span>
+                </button>
+
             </p>
         </div>
     </div>
 </div>
+@if (Model != null)
+{
+    <div class="col-lg-12">
+        <div class="hpanel hyellow">
+            <div class="panel-body">
+                <p>
+                    @(Html.Kendo().Grid<PingResponseSummaryViewModel>()
+        .Name("grid")
+        .Columns(columns =>
+        {
+            columns.Bound(c => c.MaxRtt);
+            columns.Bound(c => c.MinRtt);
+            columns.Bound(t => t.AvgRtt);
+        })
+        .Scrollable(s => s.Enabled(false))
+        .ToolBar(t =>
+        {
+            t.Excel().Text(string.Empty);
+            t.Pdf().Text(string.Empty);
+        })
+        .Excel(e => e.FileName("pingExport(www.toolsfornet.com).xlsx"))
+        .Pdf(e => e.AllPages().FileName("pingExport(www.toolsfornet.com).pdf"))
+        .DataSource(dataSource => dataSource
+            .Ajax()
+            .ServerOperation(false)
 
+        ).BindTo(Model?.PingResponseSummaries).Deferred()
 
+                    )
+                </p>
 
-<div class="well">
-    @(Html.Kendo().Grid<PingResponseSummaryViewModel>()
-                .Name("grid")
-                .Columns(columns =>
-                {
-                    columns.Bound(c => c.MaxRtt);
-                    columns.Bound(c => c.MinRtt);
-                    columns.Bound(t => t.AvgRtt);
-                })
-                .Scrollable(s => s.Enabled(false))
-                .ToolBar(t =>
-                {
-                    t.Excel().Text(string.Empty);
-                    t.Pdf().Text(string.Empty);
-                })
-                .Excel(e => e.FileName("pingExport(www.toolsfornet.com).xlsx"))
-                .Pdf(e => e.AllPages().FileName("pingExport(www.toolsfornet.com).pdf"))
-                .DataSource(dataSource => dataSource
-                    .Ajax()
-                    .ServerOperation(false)
+            </div>
+        </div>
+    </div>
+}
+@if (Model != null)
+{
 
-                ).BindTo(Model?.PingResponseSummaries).Deferred()
+    <div class="col-lg-12">
+        <div class="hpanel hblue">
+            <div class="panel-body">
+                <p>
+                    <div id="map" style="width:100px;height: 10px"></div>
+                </p>
+            </div>
+        </div>
+    </div>
 
-    )
-</div>
-<div class="well">
-    <div id="map" style="width:100px;height: 10px"></div>
-</div>
+}
+@if (Model != null)
+{
+    <div class="col-lg-12">
+        <div class="hpanel horange">
+            <div class="panel-body">
+                <p>
+                    <input type="text" class="form-control" id="permalink" value="@(Request.Url.ToString())" readonly>
+                </p>
+            </div>
+        </div>
+    </div>
+}
 
 @section scripts {
     @if (Model != null)
@@ -67,21 +101,19 @@
     }
 
 
-    @if (Model != null)
-    {
-        <div class="well" id="divPingPermalink">
-            Permalink to this ping tests:
-            @(
-        Html.Kendo().TextBox().Name("tbPingPermalink").Value(Request.Url.ToString()).HtmlAttributes(new { style = "width: 100%;" }).Deferred()
-            )
-        </div>
-    }
+
 
 
     <script type="text/javascript">
 
         $("#btnPing").click(function btnPingClick(e) {
             e.preventDefault();
+
+            var l = $("#btnPing").ladda();
+
+            // Start loading
+            l.ladda('start');
+
 
             $.ajax({
                 method: "POST",
@@ -95,7 +127,6 @@
                     df: $('#cbDontFragment').is(':checked')
                 },
                 success: function f(id) {
-                    debugger;
                     window.location.href = "ping?id=" + id;
 
                 }
