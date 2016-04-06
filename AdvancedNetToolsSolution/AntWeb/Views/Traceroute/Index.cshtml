@@ -20,6 +20,19 @@ else
 {
     @Html.Raw(Model);
 }
+<script type="text/javascript">
+    function traceRouteReadParameterMap(data, type) {
+        debugger;
+
+        return {
+            hop: $("#ip").val(),
+            rtt: $("#tbPacketsCount").val(),
+            adressName: $("#tbPacketsSize").val(),
+            ip: $("#tbDelayBetweenPings").val(),
+        }
+
+    }
+</script>
 <div class="well no-padding">
     @(Html.Kendo().Grid<TraceRouteReplyViewModel>()
                 .Name("grid")
@@ -43,7 +56,7 @@ else
                     .Ajax()
                     .ServerOperation(false)
                     .Read(read => read.Action("Read", "TraceRoute").Data("traceRouteReadParameterMap"))
-                )//.BindTo(Model?.TraceRouteReplies)
+                ).BindTo(Model?.TraceRouteReplies)
 
     )
 </div>
