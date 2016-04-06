@@ -20,7 +20,7 @@ else
 {
     @Html.Raw(Model);
 }
-<div class="well no-padding">
+@*<div class="well no-padding">
     @(Html.Kendo().Grid<TraceRouteReplyViewModel>()
                 .Name("grid")
                 //.AutoBind(false)
@@ -46,7 +46,7 @@ else
                 )//.BindTo(Model?.TraceRouteReplies)
 
     )
-</div>
+</div>*@
 @section pagespecific {
     <script type="text/javascript">
         $(document).ready(function () {
