@@ -1,1 +1,9 @@
-﻿
+﻿@model PingPermalinkViewModel
+
+<div class="well">
+    <div class="k-block k-info-colored"><label class="control-label" for="ip">Enter IPv4, host name or IPv6 address to ping</label></div>
+    <span class="k-textbox k-space-right" style="width: 100%;">
+        <input type="text" id="ip" class="k-textbox" value="@(Model?.Ip)">
+        <input type="button" value="Submit">
+    </span>
+</div>
