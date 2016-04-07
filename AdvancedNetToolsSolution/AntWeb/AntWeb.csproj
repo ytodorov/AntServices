@@ -1414,14 +1414,13 @@
     <Content Include="Views\Home\Error404.cshtml" />
     <Content Include="Views\Home\Error500.cshtml" />
     <Content Include="Views\AppViews\EmailCompose.cshtml" />
-    <Content Include="Views\AppViews\EmailTemplate.cshtml" />
-    <Content Include="Views\AppViews\EmailView.cshtml" />
     <Content Include="Views\AppViews\Mailbox.cshtml" />
     <Content Include="Views\EmailTemplates\Basic.cshtml" />
     <Content Include="Views\EmailTemplates\Hero.cshtml" />
     <Content Include="Views\EmailTemplates\NewsLetter.cshtml" />
     <Content Include="Views\EmailTemplates\SideBar.cshtml" />
     <Content Include="Views\EmailTemplates\SideBarHero.cshtml" />
+    <Content Include="Views\AppViews\SendMail.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1467,12 +1466,14 @@
     <Compile Include="Helpers\HMTLHelperExtensions.cs" />
     <Compile Include="Infrastructure\Constants.cs" />
     <Compile Include="Infrastructure\ControllerConvention.cs" />
+    <Compile Include="Infrastructure\EMailSender.cs" />
     <Compile Include="Infrastructure\StructureMapFilterProvider.cs" />
     <Compile Include="Infrastructure\PingReplyParser.cs" />
     <Compile Include="Infrastructure\PortParser.cs" />
     <Compile Include="Infrastructure\StructureMapDependecyResolver.cs" />
     <Compile Include="Infrastructure\TraceRouteParser.cs" />
     <Compile Include="Infrastructure\Utils.cs" />
+    <Compile Include="Models\EmailFormModel.cs" />
     <Compile Include="Models\IpLocationViewModel.cs" />
     <Compile Include="Models\PingPermalinkViewModel.cs" />
     <Compile Include="Models\PingReplySummaryViewModel.cs" />
