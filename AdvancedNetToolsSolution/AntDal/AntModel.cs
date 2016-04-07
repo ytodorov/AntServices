@@ -16,6 +16,7 @@ namespace AntDal
         public AntDbContext()
             : base("name=AntModel")
         {
+            Database.SetInitializer<AntDbContext>(new DropCreateDatabaseIfModelChanges<AntDbContext>());
         }
 
         // Add a DbSet for each entity type that you want to include in your model. For more information 
@@ -39,7 +40,9 @@ namespace AntDal
 
     public class PingResponseSummary : EntityBase
     {
-        public string SourceAddress { get; set; }
+        public string SourceIpAddress { get; set; }
+
+        public string DestinationIpAddress { get; set; }
 
         public double? MaxRtt { get; set; }
 

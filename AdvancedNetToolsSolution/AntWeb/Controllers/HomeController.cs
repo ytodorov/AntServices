@@ -6,13 +6,15 @@ using System.Web.Mvc;
 using System.Linq;
 using SmartAdminMvc.Data;
 using AntDal;
+using System;
+using System.Collections.Generic;
 
 
 #endregion
 
 namespace SmartAdminMvc.Controllers
 {
-    
+
     public class HomeController : Controller
     {
         private readonly AntDbContext _context;
@@ -45,11 +47,28 @@ namespace SmartAdminMvc.Controllers
         }
 
         [HttpPost]
-        public string GoogleMapFromIps(string[] ips)
+        public string GoogleMapFromIps(int? permalinkId)
         {
-            Response.ContentType = "text/plain; charset=utf-8";
-            var gmString = Utils.GetGoogleMapsString(ips);
-            return gmString;
+            using (AntDbContext context = new AntDbContext())
+            {
+                var pingPermalink = context.PingPermalinks.Find(permalinkId);
+
+                List<string> ipAddresses = new List<string>();
+                foreach (var prs in pingPermalink.PingResponseSummaries)
+                {
+                    ipAddresses.Add(prs.SourceIpAddress);
+                    ipAddresses.Add(prs.DestinationIpAddress);
+                }
+
+                //string[] ipAddresses = pingPermalink.PingResponseSummaries.
+                //     string[] ipAddress = ips.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+                Response.ContentType = "text/plain; charset=utf-8";
+                var gmString = Utils.GetGoogleMapsString(ipAddresses, starLine: true);
+                return gmString;
+
+            }
+
+
         }
     }
 }

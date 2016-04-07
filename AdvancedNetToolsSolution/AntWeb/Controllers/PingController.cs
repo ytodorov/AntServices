@@ -7,6 +7,7 @@ using SmartAdminMvc.Infrastructure;
 using SmartAdminMvc.Models;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Net.Http;
 using System.Net.NetworkInformation;
 using System.Runtime.Caching;
@@ -36,7 +37,7 @@ namespace SmartAdminMvc.Controllers
                         ppvm.Id = pp.Id;
                         ppvm.PingResponseSummaries = AutoMapper.Mapper.DynamicMap<List<PingResponseSummaryViewModel>>(pp.PingResponseSummaries);
 
-                        ppvm.GoogleMapString = Utils.GetGoogleMapsString(new string[] { Constants.DublinUrl, ppvm.PingResponseSummaries[0].SourceAddress });
+                        //ppvm.GoogleMapString = Utils.GetGoogleMapsString(new string[] { Constants.DublinUrl, ppvm.PingResponseSummaries[0].SourceAddress });
                         return View(model: ppvm);
                     }
                 }
@@ -54,6 +55,8 @@ namespace SmartAdminMvc.Controllers
             {
                 return Json(string.Empty);
             }
+
+
             List<PingResponseSummaryViewModel> list = new List<PingResponseSummaryViewModel>();
             List<Task<string>> tasks = new List<Task<string>>();
             List<HttpClient> clients = new List<HttpClient>();
@@ -72,12 +75,24 @@ namespace SmartAdminMvc.Controllers
             }
 
             Task.WaitAll(tasks.ToArray());
-          
+
+            bool isUserRequestedAddressIp = false;
+            IPAddress dummy1;
+            isUserRequestedAddressIp = IPAddress.TryParse(prvm.Ip, out dummy1);
 
             for (int i = 0; i < tasks.Count; i++)
             {
                 var summary = PingReplyParser.ParseSummary(tasks[i].Result);
-                summary.SourceAddress = urls[i]; 
+                string sourceIp = Utils.HotstNameToIp[urls[i]];
+                summary.SourceIpAddress = sourceIp;
+                if (!isUserRequestedAddressIp)
+                {
+                    summary.DestinationIpAddress = Utils.GetIpAddressFromHostName(prvm.Ip, urls[i]);
+                }
+                else
+                {
+                    summary.DestinationIpAddress = prvm.Ip;
+                }
                 list.Add(summary);
                 clients[i].Dispose();
             }

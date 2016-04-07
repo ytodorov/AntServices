@@ -36,9 +36,9 @@ namespace SmartAdminMvc.Infrastructure
             return result;
         }
 
-        public static string GetGoogleMapsString(IEnumerable<string> ips)
+        public static string GetGoogleMapsString(IEnumerable<string> ips, bool starLine = true)
         {
-            ips = ips.Where(m => !string.IsNullOrEmpty(m));//.OrderBy(m => m.Hop).ToArray();
+            ips = ips.Where(m => !string.IsNullOrEmpty(m));
 
             List<IpLocationViewModel> locations = new List<IpLocationViewModel>();
             List<string> locationNamesInMap = new List<string>();
@@ -47,14 +47,6 @@ namespace SmartAdminMvc.Infrastructure
             for (int i = 0; i < ips.Count(); i++)
             {
                 var currLocation = GetLocationDataForIp(ips.ElementAt(i));
-
-                //var lastLocation = locations.LastOrDefault();
-
-                //if (locations.Any(l => l.Latitude == currLocation.Latitude && l.Longitude == currLocation.Longitude))
-                //{
-                //    currLocation.Latitude += RandomNumberGenerator.NextDouble() / 100;
-                //    currLocation.Longitude += RandomNumberGenerator.NextDouble() / 100;
-                //}
 
                 locations.Add(currLocation);
                 locationNamesInMap.Add("latLng" + i);
@@ -99,7 +91,29 @@ namespace SmartAdminMvc.Infrastructure
                 }
             }
 
-            string polyline = $@" var line = new google.maps.Polyline({{
+            if (starLine)
+            {
+                // count should be even
+                for (int i = 0; i < locationNamesInMap.Count / 2; i++)
+                {
+                    string polyline = $@" var line = new google.maps.Polyline({{
+                path: [
+                    {locationNamesInMap[2 * i]} , {locationNamesInMap[2 * i + 1]}
+                ],
+                strokeColor: '#FF0000',
+                strokeOpacity: 1.0,
+                strokeWeight: 1,
+                map: map
+            }});";
+                    sb.AppendLine(polyline);
+                }
+
+
+            }
+            else
+            {
+
+                string polyline = $@" var line = new google.maps.Polyline({{
                 path: [
                     {locationStringsForPolyline.ToString()}
                 ],
@@ -109,7 +123,8 @@ namespace SmartAdminMvc.Infrastructure
                 map: map
             }});";
 
-            sb.AppendLine(polyline);
+                sb.AppendLine(polyline);
+            }
 
             sb.AppendLine(" $('#map').width('100%');");
             string finalResult = sb.ToString();
@@ -117,16 +132,48 @@ namespace SmartAdminMvc.Infrastructure
             return finalResult;
         }
 
+
+
         public static List<string> GetDeployedServicesUrlAddresses()
         {
             List<string> address = new List<string>()
             {
-                "http://antnortheu.cloudapp.net",
-                "http://ants-ea.cloudapp.net",
-                 "http://ants-je.cloudapp.net"
+                "http://antnortheu.cloudapp.net",//"13.79.153.220",
+                "http://ants-ea.cloudapp.net", // "40.83.125.9",
+                "http://ants-je.cloudapp.net" // "13.71.155.140"
                 //"http://ant-ne.azurewebsites.net"
             };
             return address;
+        }
+
+        public static Dictionary<string, string> HotstNameToIp = new Dictionary<string, string>()
+        {
+            {  "http://antnortheu.cloudapp.net", "13.79.153.220" },
+            {  "http://ants-ea.cloudapp.net", "40.83.125.9" },
+             {  "http://ants-je.cloudapp.net", "13.71.155.140" },
+        };
+
+        public static string GetIpAddressFromHostName(string hostName, string locationOfDeployedService)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+
+                var encodedArgs0 = Uri.EscapeDataString($" -sn {hostName}");
+                string url = $"{locationOfDeployedService}/home/exec?program=nmap&args=" + encodedArgs0;
+                var res = client.GetStringAsync(url).Result;
+
+                var lines = res.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+                string ipLine = lines.FirstOrDefault(l => l.StartsWith("Nmap scan report"));
+                if (ipLine != null)
+                {
+                    int lastIndexOfOpen = ipLine.LastIndexOf("(");
+                    int lastIndexOfClose = ipLine.LastIndexOf(")");
+                    int ipLength = lastIndexOfClose - lastIndexOfOpen;
+                    string ip = ipLine.Substring(lastIndexOfOpen + 1, ipLength - 1);
+                    return ip;
+                }
+            }
+            return string.Empty;
         }
 
         public static class GeoCodeCalc

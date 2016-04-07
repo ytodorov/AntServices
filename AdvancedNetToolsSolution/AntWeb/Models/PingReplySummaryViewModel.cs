@@ -7,7 +7,9 @@ namespace SmartAdminMvc.Models
 {
     public class PingResponseSummaryViewModel
     {
-        public string SourceAddress { get; set; }
+        public string SourceIpAddress { get; set; }
+
+        public string DestinationIpAddress { get; set; }
 
         public double MaxRtt { get; set; }
 

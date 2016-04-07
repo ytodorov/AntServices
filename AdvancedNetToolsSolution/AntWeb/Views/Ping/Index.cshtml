@@ -37,7 +37,8 @@
         .Name("grid")
         .Columns(columns =>
         {
-            columns.Bound(c => c.SourceAddress).Title("Source");
+            columns.Bound(c => c.SourceIpAddress).Title("Src");
+            columns.Bound(c => c.DestinationIpAddress).Title("Dest");
             columns.Bound(c => c.MaxRtt);
             columns.Bound(c => c.MinRtt);
             columns.Bound(t => t.AvgRtt);
@@ -94,14 +95,13 @@
     @if (Model != null)
     {
         <script>
-            var ips = [];
-            ips[0] = '@Model.Ip';
-            ips[1] = '@Model.PingResponseSummaries[0].SourceAddress';
+            debugger;
+            var permalinkId = '@Model.Id';
 
             $.ajax({
                 method: "POST",
                 url: "/home/googlemapfromips",
-                data: { ips: ips },
+                data: { permalinkId: permalinkId },
                 success: function f(gmData) {
                     $("#map").height("300px");
                     eval(gmData);
