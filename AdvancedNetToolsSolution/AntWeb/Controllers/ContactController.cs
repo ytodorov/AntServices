@@ -24,7 +24,7 @@ namespace SmartAdminMvc.Controllers
         }
         [AcceptVerbs("POST")]
 
-        public ActionResult Index(string name, string email, string comments, string preventspam)
+        public ActionResult Send(string name, string email, string comments)
         {
             const string emailregex = @"\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*";
             var result = false;
@@ -32,7 +32,6 @@ namespace SmartAdminMvc.Controllers
             ViewData["name"] = name;
             ViewData["email"] = email;
             ViewData["comments"] = comments;
-            ViewData["preventspam"] = preventspam;
 
             if (string.IsNullOrEmpty(name))
                 ViewData.ModelState.AddModelError("name", "Please enter your name!");
@@ -42,35 +41,39 @@ namespace SmartAdminMvc.Controllers
                 ViewData.ModelState.AddModelError("email", "Please enter a valid e-mail!");
             if (string.IsNullOrEmpty(comments))
                 ViewData.ModelState.AddModelError("comments", "Please enter a message!");
-            if (string.IsNullOrEmpty(preventspam))
-                ViewData.ModelState.AddModelError("preventspam", "Please enter the total");
             if (!ViewData.ModelState.IsValid)
                 return View();
 
-            if (HttpContext.Session["random"] != null &&
-              preventspam == HttpContext.Session["random"].ToString())
+            if (HttpContext.Session["random"] != null)   
             {
                 var message = new MailMessage(email, "ivanov.alexandar.bg@gmail.com")
                 {
                     Subject = "Comment Via Mikesdotnetting from " + name,
                     Body = comments
                 };
-
+                message.From = new MailAddress("ivanov.alexandar.bg@gmail.com", "GMail");
+                message.To.Add(new MailAddress("ivanov.alexandar.bg@gmail.com"));
+                message.CC.Add(new MailAddress("ivanov.alexandar.bg@gmail.com"));
                 var client = new SmtpClient("smtp.sendgrid.net", 587);
+                client.Credentials = new System.Net.NetworkCredential("ivanov.alexandar.bg@gmail.com", "Palec!%10");
+                client.UseDefaultCredentials = true;
+                client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                client.EnableSsl = true;
                 try
                 {
                     client.Send(message);
-                    result = true;
+                    if (Request.IsAjaxRequest())
+                    {
+                        return Content(result.ToString());
+                    }
+                    return result ? View() : View("EmailError");
                 }
                 catch
                 {
+                    return View("EmailError");
                 }
             }
-            if (Request.IsAjaxRequest())
-            {
-                return Content(result.ToString());
-            }
-            return result ? View() : View("EmailError");
+            return View();
         }
     }
 }
