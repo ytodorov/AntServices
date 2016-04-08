@@ -1415,13 +1415,7 @@
     <Content Include="Views\Home\Error404.cshtml" />
     <Content Include="Views\Home\Error500.cshtml" />
     <Content Include="Views\Contact\Index.cshtml" />
-    <Content Include="Views\EmailTemplates\Basic.cshtml" />
-    <Content Include="Views\EmailTemplates\Hero.cshtml" />
-    <Content Include="Views\EmailTemplates\NewsLetter.cshtml" />
-    <Content Include="Views\EmailTemplates\SideBar.cshtml" />
-    <Content Include="Views\EmailTemplates\SideBarHero.cshtml" />
-    <Content Include="Views\Emails\_ViewStart.cshtml" />
-    <Content Include="Views\Emails\Web.config" />
+
     <Content Include="Views\Contact\EmailError.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
