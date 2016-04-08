@@ -55,7 +55,7 @@
 
             $.ajax({
                 method: "POST",
-                url: "/contact/send",
+                url: '@Url.Action("Index", "ContactController")',
                 data: {
                     ip: $("#ip").val(),
                     senderName: $("#senderName"),

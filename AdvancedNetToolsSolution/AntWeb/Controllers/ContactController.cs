@@ -29,16 +29,16 @@ namespace SmartAdminMvc.Controllers
             const string emailregex = @"\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*";
             var result = false;
 
-            ViewData["name"] = name;
-            ViewData["email"] = email;
+            ViewData["senderName"] = name;
+            ViewData["senderMail"] = email;
             ViewData["comments"] = comments;
 
             if (string.IsNullOrEmpty(name))
-                ViewData.ModelState.AddModelError("name", "Please enter your name!");
+                ViewData.ModelState.AddModelError("senderName", "Please enter your name!");
             if (string.IsNullOrEmpty(email))
-                ViewData.ModelState.AddModelError("email", "Please enter your e-mail!");
+                ViewData.ModelState.AddModelError("senderMail", "Please enter your e-mail!");
             if (!string.IsNullOrEmpty(email) && !Regex.IsMatch(email, emailregex))
-                ViewData.ModelState.AddModelError("email", "Please enter a valid e-mail!");
+                ViewData.ModelState.AddModelError("senderMail", "Please enter a valid e-mail!");
             if (string.IsNullOrEmpty(comments))
                 ViewData.ModelState.AddModelError("comments", "Please enter a message!");
             if (!ViewData.ModelState.IsValid)
