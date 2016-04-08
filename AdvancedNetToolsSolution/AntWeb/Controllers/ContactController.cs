@@ -40,7 +40,7 @@ namespace SmartAdminMvc.Controllers
                     Body = comments
                 };
                 message.From = new MailAddress("ivanov.alexandar.bg@gmail.com", "GMail");
-                message.To.Add(new MailAddress("ivanov.alexandar.bg@gmail.com"));
+               
                 message.CC.Add(new MailAddress("ivanov.alexandar.bg@gmail.com"));
                 var client = new SmtpClient("smtp.sendgrid.net", 587);
                 client.Credentials = new System.Net.NetworkCredential("alexandariv", "Palec!%10");

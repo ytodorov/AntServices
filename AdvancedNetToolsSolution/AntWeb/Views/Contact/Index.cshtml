@@ -47,10 +47,7 @@
         $(document).ready(function () {
             $("#btnSend").click(function btnSendClick(e) {
                 e.preventDefault();
-                var l = $("#btnSend").ladda();
 
-                // Start loading
-                l.ladda('start');
                 $.ajax({
                     method: "POST",
                     url: '/contact/index',
@@ -58,18 +55,8 @@
                         name: $("#senderName").val(),
                         email: $("#senderMail").val(),
                         comments: $("#comments").val()
-                    },
-                    success: function f(id) {
-                        window.location.href = "contact?id=" + id;
-
-                    }
-                });    debugger;
-                $("#id").keyup(function myfunction(eventData) {
-                    if (eventData.keyCode == 13) {
-                        $("#btnSend").click();
-                    }
-
-                });
+                    }    
+                });         
             })
         });
     </script>
