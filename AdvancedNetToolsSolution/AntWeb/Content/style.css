@@ -4453,3 +4453,8 @@ ul.h-list {
 .k-pdf-export .k-grouping-header {
     display: none;
 }
+
+.k-grid-header-wrap > table,
+.k-grid-content > table {
+    border-right: 1px solid #ccc;
+}
