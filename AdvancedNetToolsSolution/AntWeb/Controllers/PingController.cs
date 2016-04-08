@@ -85,8 +85,10 @@ namespace SmartAdminMvc.Controllers
                 var summary = PingReplyParser.ParseSummary(tasks[i].Result);
                 string sourceIp = Utils.HotstNameToIp[urls[i]];
                 summary.SourceIpAddress = sourceIp;
+                summary.SourceHostName = Utils.HotstNameToAzureLocation[urls[i]];
                 if (!isUserRequestedAddressIp)
                 {
+                    summary.DestinationHostName = prvm.Ip;
                     summary.DestinationIpAddress = Utils.GetIpAddressFromHostName(prvm.Ip, urls[i]);
                 }
                 else
@@ -104,7 +106,7 @@ namespace SmartAdminMvc.Controllers
             {
                 PingPermalink pp = new PingPermalink();
                 pp.DestinationAddress = prvm.Ip;
-
+                
                 List<PingResponseSummary> pr = AutoMapper.Mapper.DynamicMap<List<PingResponseSummary>>(list);
 
                 pp.PingResponseSummaries.AddRange(pr);

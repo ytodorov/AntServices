@@ -153,6 +153,13 @@ namespace SmartAdminMvc.Infrastructure
              {  "http://ants-je.cloudapp.net", "13.71.155.140" },
         };
 
+        public static Dictionary<string, string> HotstNameToAzureLocation = new Dictionary<string, string>()
+        {
+            {  "http://antnortheu.cloudapp.net", "North Europe" },
+            {  "http://ants-ea.cloudapp.net", "East Asia" },
+             {  "http://ants-je.cloudapp.net", "East Japan" },
+        };
+
         public static string GetIpAddressFromHostName(string hostName, string locationOfDeployedService)
         {
             using (HttpClient client = new HttpClient())

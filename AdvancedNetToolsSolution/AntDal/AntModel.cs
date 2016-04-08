@@ -22,13 +22,13 @@ namespace AntDal
         // Add a DbSet for each entity type that you want to include in your model. For more information 
         // on configuring and using a Code First model, see http://go.microsoft.com/fwlink/?LinkId=390109.
 
-         public virtual DbSet<PingPermalink> PingPermalinks { get; set; }
+        public virtual DbSet<PingPermalink> PingPermalinks { get; set; }
 
         public virtual DbSet<PingResponseSummary> PingResponseSummaries { get; set; }
     }
 
     public class PingPermalink : EntityBase
-    {   
+    {
         public PingPermalink()
         {
             PingResponseSummaries = new List<PingResponseSummary>();
@@ -42,7 +42,11 @@ namespace AntDal
     {
         public string SourceIpAddress { get; set; }
 
+        public string SourceHostName { get; set; }
+
         public string DestinationIpAddress { get; set; }
+
+        public string DestinationHostName { get; set; }
 
         public double? MaxRtt { get; set; }
 

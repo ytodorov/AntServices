@@ -38,7 +38,10 @@
         .Columns(columns =>
         {
             columns.Bound(c => c.SourceIpAddress).Title("Src");
+            columns.Bound(c => c.SourceHostName).Title("SrcHN");
             columns.Bound(c => c.DestinationIpAddress).Title("Dest");
+            columns.Bound(c => c.DestinationHostName).Title("DestHN");
+            //columns.Bound(c => c.AddressInfoSummary).GroupHeaderTemplate(f => f.Title).Title(" ");
             columns.Bound(c => c.MaxRtt);
             columns.Bound(c => c.MinRtt);
             columns.Bound(t => t.AvgRtt);
@@ -51,9 +54,11 @@
         })
         .Excel(e => e.FileName("pingExport(www.toolsfornet.com).xlsx"))
         .Pdf(e => e.AllPages().FileName("pingExport(www.toolsfornet.com).pdf"))
+        .Groupable(g => g.Enabled(true))
         .DataSource(dataSource => dataSource
             .Ajax()
             .ServerOperation(false)
+            //.Group(g => g.Add(s => s.AddressInfoSummary))
 
         ).BindTo(Model?.PingResponseSummaries).Deferred()
 

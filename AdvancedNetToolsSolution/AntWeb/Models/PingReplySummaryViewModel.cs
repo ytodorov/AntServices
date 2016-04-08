@@ -9,7 +9,24 @@ namespace SmartAdminMvc.Models
     {
         public string SourceIpAddress { get; set; }
 
+        public string SourceHostName { get; set; }
+
         public string DestinationIpAddress { get; set; }
+
+        public string DestinationHostName { get; set; }
+
+        public string AddressInfoSummary
+        {
+            get
+            {
+                string result = $"From {SourceIpAddress} ({SourceHostName}) To {DestinationIpAddress}";
+                if (string.IsNullOrEmpty(""))
+                {
+                    result += $"({DestinationHostName})";
+                }
+                return result;
+            }
+        }
 
         public double MaxRtt { get; set; }
 
