@@ -54,11 +54,11 @@
         })
         .Excel(e => e.FileName("pingExport(www.toolsfornet.com).xlsx"))
         .Pdf(e => e.AllPages().FileName("pingExport(www.toolsfornet.com).pdf"))
-        .Groupable(g => g.Enabled(true))
+        //.Groupable(g => g.Enabled(true))
         .DataSource(dataSource => dataSource
             .Ajax()
             .ServerOperation(false)
-            //.Group(g => g.Add(s => s.AddressInfoSummary))
+        //.Group(g => g.Add(s => s.AddressInfoSummary))
 
         ).BindTo(Model?.PingResponseSummaries).Deferred()
 
