@@ -100,6 +100,14 @@
       <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Postal, Version=1.0.0.0, Culture=neutral, PublicKeyToken=45719375b8b4d528, processorArchitecture=MSIL">
+      <HintPath>..\packages\Postal.Mvc5.1.2.0\lib\net45\Postal.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="RazorEngine, Version=3.4.1.0, Culture=neutral, PublicKeyToken=9ee697374c7e744a, processorArchitecture=MSIL">
+      <HintPath>..\packages\RazorEngine.3.4.1\lib\net45\RazorEngine.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="StructureMap, Version=3.0.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\structuremap.3.0.4.125\lib\net40\StructureMap.dll</HintPath>
       <Private>True</Private>
@@ -1413,13 +1421,16 @@
     <Content Include="Vendor\ladda\README.md" />
     <Content Include="Views\Home\Error404.cshtml" />
     <Content Include="Views\Home\Error500.cshtml" />
-    <Content Include="Views\AppViews\EmailCompose.cshtml" />
+    <Content Include="Views\AppViews\Contact.cshtml" />
     <Content Include="Views\AppViews\Mailbox.cshtml" />
     <Content Include="Views\EmailTemplates\Basic.cshtml" />
     <Content Include="Views\EmailTemplates\Hero.cshtml" />
     <Content Include="Views\EmailTemplates\NewsLetter.cshtml" />
     <Content Include="Views\EmailTemplates\SideBar.cshtml" />
     <Content Include="Views\EmailTemplates\SideBarHero.cshtml" />
+    <Content Include="Views\Emails\_ViewStart.cshtml" />
+    <Content Include="Views\Emails\Web.config" />
+    <Content Include="Views\AppViews\EmailError.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1471,7 +1482,6 @@
     <Compile Include="Infrastructure\StructureMapDependecyResolver.cs" />
     <Compile Include="Infrastructure\TraceRouteParser.cs" />
     <Compile Include="Infrastructure\Utils.cs" />
-    <Compile Include="Models\EmailFormModel.cs" />
     <Compile Include="Models\IpLocationViewModel.cs" />
     <Compile Include="Models\PingPermalinkViewModel.cs" />
     <Compile Include="Models\PingReplySummaryViewModel.cs" />

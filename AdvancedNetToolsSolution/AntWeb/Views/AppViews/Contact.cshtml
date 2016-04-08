@@ -1,0 +1,104 @@
+﻿@{
+    ViewBag.Title = "EmailCompose";
+}
+
+<div id="contactform">
+    <p>
+        If you feel like contacting me, please use this form to do so.
+    </p>
+
+    <form id="contact" action="<%= Url.Action(" Index") %>
+        " method="post">
+
+        <fieldset>
+            <legend>Message/Comments</legend>
+            <div class="row">
+                <span class="label">
+
+                    <label for="name">
+                        Your name:
+                    </label>
+                </span>
+                <%=Html.TextBox("name", ViewData["name"] ?? "")%>
+
+                <%=Html.ValidationMessage("name")%>
+            </div>
+            <div class="row">
+
+                <span class="label">
+                    <label for="email">
+                        Your email address:
+                    </label>
+                </span>
+
+                <%=Html.TextBox("email", ViewData["email"] ?? "")%>
+                <%=Html.ValidationMessage("email")%>
+
+            </div>
+            <div class="row">
+                <span class="label">
+                    <label for="comments">
+
+                        Your comments:
+                    </label>
+                </span>
+                <%=Html.TextArea("comments",
+                ViewData["comments"] != null ? ViewData["comments"].ToString() : "",
+                new{cols="60", rows="8"})%>
+
+                <%=Html.ValidationMessage("comments")%>
+            </div>
+            <div class="row">
+                <span class="label">
+
+                    <label for="preventspam">
+                        <%= HttpContext.Current.Session["a"] %>
+                        +
+                        <%= HttpContext.Current.Session["b"]%>
+
+                    </label>
+                </span>
+                <input type="text" id="preventspam" name="preventspam" class="required" />
+            </div>
+
+            <div class="row">
+                <span class="label">
+                    &nbsp;
+                </span>
+
+                <input type="submit" id="action" name="action" value="Submit" />
+            </div>
+        </fieldset>
+
+    </form>
+</div>
+@section scripts {
+<script type="text/javascript">
+  $(document).ready(function() {
+
+
+    $("#name,#comments,#preventspam").addClass("required");
+    $("#email").addClass("required email");
+    $("#contact").validate({
+      submitHandler: function(form) {
+        $.ajax({
+          type: "POST",
+          url: $("#contact").attr('action'),
+          data: $("#contact").serialize(),
+          dataType: "text/plain",
+          success: function(response) {
+            $("#contactform").hide('slow');
+            response == "True" ? $("#thanks").show('slow') : $("#oops").show('slow');
+          },
+          error: function(response) {
+            $("#contactform").hide('slow');
+            $("#oops").show('slow');
+          }
+        });
+      }
+    });
+    return false;
+  });
+
+</script>
+}
