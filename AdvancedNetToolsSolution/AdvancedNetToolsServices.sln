@@ -10,8 +10,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		global.json = global.json
 	EndProjectSection
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AdvancedNetToolsServicesWeb", "src\AdvancedNetToolsServicesWeb\AdvancedNetToolsServicesWeb.xproj", "{87588E95-233A-4F09-BC37-E5493B5EFACB}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AntServicesMvc5", "AntServicesMvc5\AntServicesMvc5.csproj", "{27641129-62D6-4FC8-86E6-733AB2C85D2B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AntWeb", "AntWeb\AntWeb.csproj", "{24CA74F5-6AF8-4C67-AC79-3E648ECBEA68}"
@@ -20,11 +18,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\Unit
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeleniumUnitTests", "UnitTestProject1\SeleniumUnitTests.csproj", "{FE24A4C3-1C7B-40B4-80E4-259642BC4C58}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FletcherWebApp", "FletcherWebApp\FletcherWebApp.csproj", "{DD1C3C88-0165-4E11-93C2-93F57FBDC7A8}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AntDal", "AntDal\AntDal.csproj", "{FFB9C514-F619-437B-93C8-F462160BB7DE}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Homer_MVC", "Homer_MVC\Homer_MVC.csproj", "{BE779B94-079D-4691-ABD9-3C3BF7735029}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,10 +26,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{87588E95-233A-4F09-BC37-E5493B5EFACB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{87588E95-233A-4F09-BC37-E5493B5EFACB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{87588E95-233A-4F09-BC37-E5493B5EFACB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{87588E95-233A-4F09-BC37-E5493B5EFACB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{27641129-62D6-4FC8-86E6-733AB2C85D2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{27641129-62D6-4FC8-86E6-733AB2C85D2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{27641129-62D6-4FC8-86E6-733AB2C85D2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -52,23 +42,12 @@ Global
 		{FE24A4C3-1C7B-40B4-80E4-259642BC4C58}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FE24A4C3-1C7B-40B4-80E4-259642BC4C58}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FE24A4C3-1C7B-40B4-80E4-259642BC4C58}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DD1C3C88-0165-4E11-93C2-93F57FBDC7A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DD1C3C88-0165-4E11-93C2-93F57FBDC7A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DD1C3C88-0165-4E11-93C2-93F57FBDC7A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DD1C3C88-0165-4E11-93C2-93F57FBDC7A8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FFB9C514-F619-437B-93C8-F462160BB7DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FFB9C514-F619-437B-93C8-F462160BB7DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FFB9C514-F619-437B-93C8-F462160BB7DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FFB9C514-F619-437B-93C8-F462160BB7DE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BE779B94-079D-4691-ABD9-3C3BF7735029}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BE779B94-079D-4691-ABD9-3C3BF7735029}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BE779B94-079D-4691-ABD9-3C3BF7735029}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BE779B94-079D-4691-ABD9-3C3BF7735029}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{87588E95-233A-4F09-BC37-E5493B5EFACB} = {3174D32B-4AC5-400C-A69C-674FC53F367B}
 	EndGlobalSection
 EndGlobal

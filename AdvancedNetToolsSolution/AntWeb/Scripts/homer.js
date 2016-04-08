@@ -95,12 +95,7 @@ $(document).ready(function () {
     // Move modal to body
     // Fix Bootstrap backdrop issu with animation.css
     $('.modal').appendTo("body")
-
-    // Yordan
-
-    $(window).resize(function () {
-        $(".k-chart").data("kendoChart").refresh();
-    });
+      
 
 });
 
