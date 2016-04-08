@@ -28,10 +28,6 @@ namespace SmartAdminMvc.Controllers
         {
             var result = false;
 
-            ViewData["senderName"] = name;
-            ViewData["senderMail"] = email;
-            ViewData["comments"] = comments;
-
             if (HttpContext.Session["random"] != null)   
             {
                 var message = new MailMessage(email, "ivanov.alexandar.bg@gmail.com")
@@ -39,11 +35,11 @@ namespace SmartAdminMvc.Controllers
                     Subject = "Comment Via Mikesdotnetting from " + name,
                     Body = comments
                 };
-                message.From = new MailAddress("ivanov.alexandar.bg@gmail.com", "GMail");
-               
+                message.From = new MailAddress(email);
+                message.To.Add(new MailAddress("ivanov.alexandar.bg@gmail.com"));
                 message.CC.Add(new MailAddress("ivanov.alexandar.bg@gmail.com"));
                 var client = new SmtpClient("smtp.sendgrid.net", 587);
-                client.Credentials = new System.Net.NetworkCredential("alexandariv", "Palec!%10");
+                client.Credentials = new System.Net.NetworkCredential("alexandariv", "a!%10");
                 client.DeliveryMethod = SmtpDeliveryMethod.Network;
                 client.EnableSsl = true;
                 try

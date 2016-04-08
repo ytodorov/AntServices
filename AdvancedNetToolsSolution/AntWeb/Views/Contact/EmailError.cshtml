@@ -1,16 +1,8 @@
-﻿<asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
-    Contact Me
+﻿
+@{
+    ViewBag.Title = "EmailError";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
 
-</asp:Content>
+<h2>EmailError</h2>
 
-<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-
-    <h2>Contact Me</h2>
-    <div id="oops">
-        <p>
-            Unfortunately, something went wrong and your message or comments have not been submitted
-            successfully. I'll try to fix whatever the problem is as soon as I can.
-        </p>
-
-    </div>
-</asp:Content>
