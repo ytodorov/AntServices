@@ -24,25 +24,13 @@ namespace SmartAdminMvc.Controllers
         }
         [AcceptVerbs("POST")]
 
-        public ActionResult Send(string name, string email, string comments)
+        public ActionResult Index(string name, string email, string comments)
         {
-            const string emailregex = @"\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*";
             var result = false;
 
             ViewData["senderName"] = name;
             ViewData["senderMail"] = email;
             ViewData["comments"] = comments;
-
-            if (string.IsNullOrEmpty(name))
-                ViewData.ModelState.AddModelError("senderName", "Please enter your name!");
-            if (string.IsNullOrEmpty(email))
-                ViewData.ModelState.AddModelError("senderMail", "Please enter your e-mail!");
-            if (!string.IsNullOrEmpty(email) && !Regex.IsMatch(email, emailregex))
-                ViewData.ModelState.AddModelError("senderMail", "Please enter a valid e-mail!");
-            if (string.IsNullOrEmpty(comments))
-                ViewData.ModelState.AddModelError("comments", "Please enter a message!");
-            if (!ViewData.ModelState.IsValid)
-                return View();
 
             if (HttpContext.Session["random"] != null)   
             {
@@ -55,8 +43,7 @@ namespace SmartAdminMvc.Controllers
                 message.To.Add(new MailAddress("ivanov.alexandar.bg@gmail.com"));
                 message.CC.Add(new MailAddress("ivanov.alexandar.bg@gmail.com"));
                 var client = new SmtpClient("smtp.sendgrid.net", 587);
-                client.Credentials = new System.Net.NetworkCredential("ivanov.alexandar.bg@gmail.com", "Palec!%10");
-                client.UseDefaultCredentials = true;
+                client.Credentials = new System.Net.NetworkCredential("alexandariv", "Palec!%10");
                 client.DeliveryMethod = SmtpDeliveryMethod.Network;
                 client.EnableSsl = true;
                 try

@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Send";
+    ViewBag.Title = "Index";
 }
 
 <div id="contactform">
@@ -41,40 +41,36 @@
 
     </form>
 </div>
+
 @section scripts {
     <script type="text/javascript">
+        $(document).ready(function () {
+            $("#btnSend").click(function btnSendClick(e) {
+                e.preventDefault();
+                var l = $("#btnSend").ladda();
 
-        $("#btnSend").click(function btnSendClick(e) {
-            e.preventDefault();
+                // Start loading
+                l.ladda('start');
+                $.ajax({
+                    method: "POST",
+                    url: '/contact/index',
+                    data: {
+                        name: $("#senderName").val(),
+                        email: $("#senderMail").val(),
+                        comments: $("#comments").val()
+                    },
+                    success: function f(id) {
+                        window.location.href = "contact?id=" + id;
 
-            var l = $("#btnSend").ladda();
+                    }
+                });    debugger;
+                $("#id").keyup(function myfunction(eventData) {
+                    if (eventData.keyCode == 13) {
+                        $("#btnSend").click();
+                    }
 
-            // Start loading
-            l.ladda('start');
-
-
-            $.ajax({
-                method: "POST",
-                url: '@Url.Action("Index", "ContactController")',
-                data: {
-                    ip: $("#ip").val(),
-                    senderName: $("#senderName"),
-                    senderMail: $("#senderMail"),
-                    comments: $("#comments")
-                },
-                //success: function f(id) {
-                //    window.location.href = "ping?id=" + id;
-
-                //}
+                });
             })
-
         });
-        $("#ip").keyup(function myfunction(eventData) {
-            if (eventData.keyCode == 13) {
-                $("#btnSend").click();
-            }
-
-        });
-
     </script>
 }
