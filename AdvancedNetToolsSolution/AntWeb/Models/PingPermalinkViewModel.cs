@@ -14,6 +14,23 @@ namespace SmartAdminMvc.Models
 
         public bool? ShowInHistory { get; set; }
 
+        public string PermalinkAddress
+        {
+            get
+            {
+                string result = string.Empty;
+
+                if (HttpContext.Current?.Request != null)
+                {
+                    string fullRootUrl = HttpContext.Current?.Request.Url.OriginalString.Replace(HttpContext.Current?.Request.Url.LocalPath, string.Empty);
+
+                    result = $"{fullRootUrl}/ping?id={Id}";
+                    return result;
+                }
+                return string.Empty;
+            }
+        }
+
         public List<PingResponseSummaryViewModel> PingResponseSummaries { get; set; }
 
         //public string PingResponsesIpAddress
