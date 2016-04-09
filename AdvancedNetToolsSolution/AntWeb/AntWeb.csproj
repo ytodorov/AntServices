@@ -562,6 +562,8 @@
     <Content Include="Scripts\app.config.js" />
     <Content Include="Scripts\app.min.js" />
     <Content Include="Scripts\bootstrap\bootstrap.min.js" />
+    <Content Include="Scripts\clipboard\clipboard.js" />
+    <Content Include="Scripts\clipboard\clipboard.min.js" />
     <Content Include="Scripts\homer.js" />
     <Content Include="Scripts\libs\jquery-ui-1.10.3.min.js" />
     <Content Include="Scripts\notification\SmartNotification.min.js" />
