@@ -1416,7 +1416,7 @@
     <Content Include="Views\Home\Error500.cshtml" />
     <Content Include="Views\Contact\Index.cshtml" />
     <Content Include="Views\Contact\EmailError.cshtml" />
-    <Content Include="Views\AppViews\EmailComposer.cshtml" />
+    <Content Include="Views\AppViews\EmailCompose.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
