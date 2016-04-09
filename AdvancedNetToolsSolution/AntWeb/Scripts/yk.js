@@ -21,7 +21,6 @@ $(window).ready(function myfunction() {
     var clipboard = new Clipboard('.fa-pencil-square');
 
     clipboard.on('success', function (e) {
-        debugger;
         var text = e.text;
         console.log(e);
     });
