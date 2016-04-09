@@ -1,0 +1,65 @@
+﻿@{
+    ViewBag.Title = "Contactus";
+}
+
+<div class="hpanel email-compose">
+    <div class="panel-heading hbuilt">
+        <div class="p-xs h4">New message</div>
+    </div>
+    <div class="panel-heading hbuilt">
+        <div class="p-xs">
+
+            <form method="get" class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-sm-1 control-label text-left" for="#senderName">To:</label>
+
+                    <div class="col-sm-11"><input type="text" class="form-control input-sm" placeholder="example@email.com" name="#senderName"></div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-1 control-label text-left" for="#senderMail">Cc:</label>
+
+                    <div class="col-sm-11"><input type="text" class="form-control input-sm" name="#senderMail"></div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-1 control-label text-left" for="#subject">Subject:</label>
+
+                    <div class="col-sm-11"><input type="text" class="form-control input-sm" placeholder="Enter Email subject" name="subject"></div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-1 control-label text-left">Body:</label>
+                    <div class="col-sm-11">@Html.Kendo().Editor().Name("emailBody").Deferred()</div>
+                </div>
+            </form>
+
+
+        </div>
+    </div>
+</div>
+
+<div class="panel-footer">
+    <button class="btn btn-primary" id="btnSend">Send email</button>
+</div>
+
+@section scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#btnSend").click(function btnSendClick(e) {
+                e.preventDefault();
+                var name = $("#senderName").val();
+                var email = $("#senderMail").val();
+                var subject = $("#subject").val();
+                var comments = $("#emailBody").val();
+                $.ajax({
+                    method: "POST",
+                    url: '/contactUs/Index',
+                    data: {
+                        name: name,
+                        email: email,
+                        subject: subject,
+                        comments: comments
+                    }
+                });
+            })
+        });
+    </script>
+}

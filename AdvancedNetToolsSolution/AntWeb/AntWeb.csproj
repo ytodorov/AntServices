@@ -1416,9 +1416,7 @@
     <Content Include="Vendor\ladda\README.md" />
     <Content Include="Views\Home\Error404.cshtml" />
     <Content Include="Views\Home\Error500.cshtml" />
-    <Content Include="Views\Contact\Index.cshtml" />
-    <Content Include="Views\Contact\EmailError.cshtml" />
-    <Content Include="Views\AppViews\EmailCompose.cshtml" />
+    <Content Include="Views\ContactUs\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1443,8 +1441,7 @@
     <Compile Include="App_Helpers\Settings.cs" />
     <Compile Include="Areas\Landing\Controllers\LandingController.cs" />
     <Compile Include="Areas\Landing\LandingAreaRegistration.cs" />
-    <Compile Include="Controllers\AppViewsController.cs" />
-    <Compile Include="Controllers\ContactController.cs" />
+    <Compile Include="Controllers\ContactusController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\InterfaceController.cs" />
     <Compile Include="Controllers\MyIpController.cs" />
