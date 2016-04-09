@@ -31,11 +31,8 @@ namespace SmartAdminMvc.Controllers
                     PingPermalink pp = context.PingPermalinks.Find(id);
                     if (pp != null)
                     {
-
-                        PingPermalinkViewModel ppvm = new PingPermalinkViewModel();
-                        ppvm.Ip = pp.DestinationAddress;
-                        ppvm.Id = pp.Id;
-                        ppvm.PingResponseSummaries = AutoMapper.Mapper.DynamicMap<List<PingResponseSummaryViewModel>>(pp.PingResponseSummaries);
+                        PingPermalinkViewModel ppvm =   AutoMapper.Mapper.DynamicMap<PingPermalinkViewModel>(pp);
+                        //ppvm.PingResponseSummaries = AutoMapper.Mapper.DynamicMap<List<PingResponseSummaryViewModel>>(pp.PingResponseSummaries);
 
                         //ppvm.GoogleMapString = Utils.GetGoogleMapsString(new string[] { Constants.DublinUrl, ppvm.PingResponseSummaries[0].SourceAddress });
                         return View(model: ppvm);
@@ -106,7 +103,11 @@ namespace SmartAdminMvc.Controllers
             {
                 PingPermalink pp = new PingPermalink();
                 pp.DestinationAddress = prvm.Ip;
-                
+                pp.UserCreated = Request.UserHostAddress;
+                pp.UserModified = Request.UserHostAddress;
+                pp.DateCreated = DateTime.Now;
+                pp.DateModified = DateTime.Now;
+
                 List<PingResponseSummary> pr = AutoMapper.Mapper.DynamicMap<List<PingResponseSummary>>(list);
 
                 pp.PingResponseSummaries.AddRange(pr);
