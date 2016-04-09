@@ -1,9 +1,11 @@
-﻿using Newtonsoft.Json;
+﻿using AntDal;
+using Newtonsoft.Json;
 using SmartAdminMvc.Models;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Web;
@@ -17,15 +19,35 @@ namespace SmartAdminMvc.Infrastructure
 
         public static IpLocationViewModel GetLocationDataForIp(string ipOrHostName)
         {
-            using (HttpClient client = new HttpClient())
+            //IPAddress ipString;
+            //if(!IPAddress.TryParse(ipOrHostName, out ipString))
+            //{
+                
+            //}
+            using (AntDbContext context = new AntDbContext())
             {
+                var ipLocation = context.IpLocations.Where(ip => ip.IpAddress == ipOrHostName).FirstOrDefault();
+                if (ipLocation != null)
+                {
+                    var IpLocationViewModel = AutoMapper.Mapper.DynamicMap<IpLocationViewModel>(ipLocation);
+                    return IpLocationViewModel;
+                }
+                else
+                {
+                    using (HttpClient client = new HttpClient())
+                    {
 
-                string apiKey = "45c5fd0e7b3a7f323010de71fbc4aae7943b9f139ef3578af1b38878d0d02e81";
-                string url = $"http://api.ipinfodb.com/v3/ip-city/?key={apiKey}&ip={ipOrHostName}&format=json";
-                string result = client.GetStringAsync(url).Result;
+                        string apiKey = "45c5fd0e7b3a7f323010de71fbc4aae7943b9f139ef3578af1b38878d0d02e81";
+                        string url = $"http://api.ipinfodb.com/v3/ip-city/?key={apiKey}&ip={ipOrHostName}&format=json";
+                        string result = client.GetStringAsync(url).Result;
 
-                var ipLocationViewModel = JsonConvert.DeserializeObject<IpLocationViewModel>(result);
-                return ipLocationViewModel;
+                        var ipLocationViewModel = JsonConvert.DeserializeObject<IpLocationViewModel>(result);
+                        var ipLocationToSaveInDb = AutoMapper.Mapper.DynamicMap<IpLocation>(ipLocationViewModel);
+                        context.IpLocations.Add(ipLocationToSaveInDb);
+                        context.SaveChanges();
+                        return ipLocationViewModel;
+                    }
+                }
             }
         }
 

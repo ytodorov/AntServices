@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Contactus";
+    ViewBag.Title = "ContactUs";
 }
 
 <div class="hpanel email-compose">
@@ -11,19 +11,19 @@
 
             <form method="get" class="form-horizontal">
                 <div class="form-group">
-                    <label class="col-sm-1 control-label text-left" for="#senderName">To:</label>
+                    <label class="col-sm-1 control-label text-left" for="senderName">To:</label>
 
-                    <div class="col-sm-11"><input type="text" class="form-control input-sm" placeholder="example@email.com" name="#senderName"></div>
+                    <div class="col-sm-11"><input type="text" class="form-control input-sm" placeholder="example@email.com" id="senderName"></div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-1 control-label text-left" for="#senderMail">Cc:</label>
+                    <label class="col-sm-1 control-label text-left" for="senderMail">Cc:</label>
 
-                    <div class="col-sm-11"><input type="text" class="form-control input-sm" name="#senderMail"></div>
+                    <div class="col-sm-11"><input type="text" class="form-control input-sm" id="senderMail"></div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-1 control-label text-left" for="#subject">Subject:</label>
+                    <label class="col-sm-1 control-label text-left" for="subject">Subject:</label>
 
-                    <div class="col-sm-11"><input type="text" class="form-control input-sm" placeholder="Enter Email subject" name="subject"></div>
+                    <div class="col-sm-11"><input type="text" class="form-control input-sm" placeholder="Enter Email subject" id="subject"></div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-1 control-label text-left">Body:</label>
@@ -48,15 +48,16 @@
                 var name = $("#senderName").val();
                 var email = $("#senderMail").val();
                 var subject = $("#subject").val();
-                var comments = $("#emailBody").val();
+                var emailBody = $("#emailBody").val();
+                debugger;
                 $.ajax({
                     method: "POST",
-                    url: '/contactUs/Index',
+                    url: '/contactUs/SendEmail',
                     data: {
                         name: name,
                         email: email,
                         subject: subject,
-                        comments: comments
+                        emailBody: emailBody
                     }
                 });
             })

@@ -15,7 +15,7 @@ namespace UnitTests
         [Fact]
         public void GetLocationTest()
         {
-            IpLocationViewModel ipLocationViewModel = Utils.GetLocationDataForIp("www.abv.bg");
+            IpLocationViewModel ipLocationViewModel = Utils.GetLocationDataForIp("8.8.4.4");
 
             Assert.NotNull(ipLocationViewModel);
         }

@@ -7,12 +7,16 @@ using System.Web.Mvc;
 
 namespace Homer_MVC.Controllers
 {
-    public class ContactUs : Controller
+    public class ContactUsController : Controller
     {
-        //[HttpPost]
-        public ActionResult Index(string name, string email, string comments)
+        public ActionResult Index()
         {
-            if (name != "" && email != "" && comments != "")
+            return View();
+        }
+        [HttpPost]
+        public ActionResult SendEmail(string name, string email, string title, string emailBody)
+        {
+            if (name != "" && email != "" && emailBody != "")
             {
                 MailMessage mailMsg = new MailMessage();
 
@@ -22,8 +26,8 @@ namespace Homer_MVC.Controllers
                 mailMsg.From = new MailAddress(email, name);
 
                 // Subject and multipart/alternative Body
-                mailMsg.Subject = "Mail from Ant";
-                mailMsg.Body = comments;
+                mailMsg.Subject = title;
+                mailMsg.Body = emailBody;
 
                 // Init SmtpClient and send
                 SmtpClient smtpClient = new SmtpClient("smtp.sendgrid.net", Convert.ToInt32(587));
