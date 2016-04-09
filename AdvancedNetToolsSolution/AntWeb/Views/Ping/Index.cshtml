@@ -8,6 +8,11 @@
 </div>
 <div class="col-lg-12">
     <div class="hpanel hgreen">
+        <div class="panel-heading">
+            <p class="text-center">
+                Ping an IP address or host name
+            </p>
+        </div>
         <div class="panel-body">
             <p>
                 <input type="text" class="form-control" id="ip" value="@(Model != null ? Model.DestinationAddress : "facebook.com")" placeholder="Host name or IPv4/6">
@@ -31,6 +36,11 @@
 {
     <div class="col-lg-12">
         <div class="hpanel hyellow">
+            <div class="panel-heading">
+                <p class="text-center">
+                    Ping grid
+                </p>
+            </div>
             <div class="panel-body">
                 <p>
                     @(Html.Kendo().Grid<PingResponseSummaryViewModel>()
@@ -77,11 +87,15 @@
 {
     <div class="col-lg-12">
         <div class="hpanel hred">
+            <div class="panel-heading">
+                <p class="text-center">
+                    Ping chart
+                </p>
+            </div>
             <div class="panel-body">
                 <p>
                     @(Html.Kendo().Chart(Model.PingResponseSummaries).Theme("silver")
-        .Name("pingResultsChart")
-        .Title("Ping chart")
+        .Name("pingResultsChart")      
         .Legend(legend => legend
             .Position(ChartLegendPosition.Top)
         )
@@ -122,6 +136,11 @@
 
     <div class="col-lg-12">
         <div class="hpanel hblue">
+            <div class="panel-heading">
+                <p class="text-center">
+                    Ping map
+                </p>
+            </div>
             <div class="panel-body">
                 <p>
                     <div id="map" style="width:100px;height: 10px"></div>
@@ -135,12 +154,18 @@
 {
     <div class="col-lg-12">
         <div class="hpanel horange">
+            <div class="panel-heading">
+                <p class="text-center">
+                    Ping permalink
+                </p>
+            </div>
             <div class="panel-body">
                 <p class="text-center">
-                    <input type="text" class="form-control" id="permalink" value="@(Request.Url.ToString())" readonly>
+                    <a href="@(Request.Url.ToString())" id="permalink">@(Request.Url.ToString())</a>
+                    @*<input type="text" class="form-control" id="permalink" value="@(Request.Url.ToString())" readonly>*@
                 </p>
                 <p class="text-center" style="font-size:larger">
-                    Share permalink:
+                    Share on:
                 </p>
                 <p class="text-center" style="font-size:xx-large">
 
@@ -218,11 +243,16 @@
 
 @*history*@
 
-    <div class="col-lg-12">
-        <div class="hpanel hyellow">
-            <div class="panel-body">
-                <p>
-                    @(Html.Kendo().Grid<PingPermalinkViewModel>()
+<div class="col-lg-12">
+    <div class="hpanel hviolet">
+        <div class="panel-heading">
+            <p class="text-center">
+                Ping history for current user's IP
+            </p>
+        </div>
+        <div class="panel-body">
+            <p>
+                @(Html.Kendo().Grid<PingPermalinkViewModel>()
         .Name("pingPermalinksHistory")
         .Columns(columns =>
         {
@@ -247,12 +277,12 @@
         )
         .Deferred()
 
-                    )
-                </p>
+                )
+            </p>
 
-            </div>
         </div>
     </div>
+</div>
 
 
 <div class="normalheader transition animated fadeIn">
