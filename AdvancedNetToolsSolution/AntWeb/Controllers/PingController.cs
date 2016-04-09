@@ -14,6 +14,7 @@ using System.Net.NetworkInformation;
 using System.Runtime.Caching;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using System.Linq;
 
 #endregion
 
@@ -32,14 +33,10 @@ namespace SmartAdminMvc.Controllers
                     PingPermalink pp = context.PingPermalinks.Find(id);
                     if (pp != null)
                     {
-                        PingPermalinkViewModel ppvm =   AutoMapper.Mapper.DynamicMap<PingPermalinkViewModel>(pp);
-                        //ppvm.PingResponseSummaries = AutoMapper.Mapper.DynamicMap<List<PingResponseSummaryViewModel>>(pp.PingResponseSummaries);
-
-                        //ppvm.GoogleMapString = Utils.GetGoogleMapsString(new string[] { Constants.DublinUrl, ppvm.PingResponseSummaries[0].SourceAddress });
+                        PingPermalinkViewModel ppvm = AutoMapper.Mapper.DynamicMap<PingPermalinkViewModel>(pp);
                         return View(model: ppvm);
                     }
                 }
-
             }
             return View();
 
@@ -103,6 +100,7 @@ namespace SmartAdminMvc.Controllers
             using (AntDbContext context = new AntDbContext())
             {
                 PingPermalink pp = new PingPermalink();
+                pp.UserCreatedIpAddress = Request.UserHostAddress;
                 pp.DestinationAddress = prvm.Ip;
                 pp.UserCreated = Request.UserHostAddress;
                 pp.UserModified = Request.UserHostAddress;
@@ -118,58 +116,18 @@ namespace SmartAdminMvc.Controllers
                 return Json(pp.Id);
             }
         }
-        public ActionResult Read([DataSourceRequest] DataSourceRequest request, PingRequestViewModel prvm)
+        public ActionResult ReadPingPermalinks([DataSourceRequest] DataSourceRequest request)
         {
-            if (string.IsNullOrEmpty(prvm.Ip))
-            {
-                return Json(new List<PingResponseSummaryViewModel>().ToDataSourceResult(request));
-            }
-            List<PingResponseSummaryViewModel> list = new List<PingResponseSummaryViewModel>();
-            List<Task<string>> tasks = new List<Task<string>>();
-            List<HttpClient> clients = new List<HttpClient>();
-
-            //using (HttpClient client = new HttpClient())
-            {
-                for (int i = 0; i < 1; i++)
-                {
-                    HttpClient client = new HttpClient();
-                    clients.Add(client);
-                    var encodedArgs = Uri.EscapeDataString($" {prvm.Ip} --delay {prvm.DelayBetweenPings}ms -v1");
-                    string url = "http://antnortheu.cloudapp.net/home/exec?program=nping&args=" + encodedArgs;
-                    Task<string> task = client.GetStringAsync(url);
-                    //var summary = PingReplyParser.ParseSummary(task.Result);
-                    //list.Add(summary);
-                    tasks.Add(task);
-                }
-
-
-                Task.WaitAll(tasks.ToArray());
-
-                for (int i = 0; i < tasks.Count; i++)
-                {
-                    var summary = PingReplyParser.ParseSummary(tasks[i].Result);
-                    list.Add(summary);
-                    clients[i].Dispose();
-                }
-            }
-
-            // Save to Db
-
+            string userIpAddress = Request.UserHostAddress;
             using (AntDbContext context = new AntDbContext())
             {
-                PingPermalink pp = new PingPermalink();
-                pp.DestinationAddress = prvm.Ip;
-
-                PingResponseSummary pr = AutoMapper.Mapper.DynamicMap<PingResponseSummary>(list[0]);
-
-                pp.PingResponseSummaries.Add(pr);
-                context.PingPermalinks.Add(pp);
-                context.SaveChanges();
+                var pingPermalinks = context.PingPermalinks.Where(p => p.UserCreatedIpAddress == userIpAddress).ToList();
+                var pingPermalinksViewModels = AutoMapper.Mapper.DynamicMap<List<PingPermalinkViewModel>>(pingPermalinks);
+                var dsResult = Json(pingPermalinksViewModels.ToDataSourceResult(request));
+                return dsResult;
             }
 
 
-            var dsResult = Json(list.ToDataSourceResult(request));
-            return dsResult;
 
         }
     }
