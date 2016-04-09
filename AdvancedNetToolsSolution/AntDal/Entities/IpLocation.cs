@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace SmartAdminMvc.Models
+namespace AntDal.Entities
 {
-    public class IpLocationViewModel : ViewModelBase
+    public class IpLocation : EntityBase
     {
         public string StatusCode { get; set; }
         public string StatusMessage { get; set; }

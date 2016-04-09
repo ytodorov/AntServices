@@ -10,7 +10,7 @@
     <div class="hpanel hgreen">
         <div class="panel-body">
             <p>
-                <input type="text" class="form-control" id="ip" value="@(Model != null ? Model.Ip : "facebook.com")" placeholder="Host name or IPv4/6">
+                <input type="text" class="form-control" id="ip" value="@(Model != null ? Model.DestinationAddress : "facebook.com")" placeholder="Host name or IPv4/6">
             </p>
             <p>
                 <button type="button" class="ladda-button btn center-block btn-outline btn-success" id="btnPing" data-style="zoom-in">
@@ -41,7 +41,7 @@
             columns.Bound(c => c.SourceHostName).Title("SrcHN");
             columns.Bound(c => c.DestinationIpAddress).Title("Dest");
             IPAddress dummy;
-            var isIpAddress = IPAddress.TryParse(Model.Ip, out dummy);
+            var isIpAddress = IPAddress.TryParse(Model.DestinationAddress, out dummy);
             if (!isIpAddress)
             {
                 columns.Bound(c => c.DestinationHostName).Title("DestHN");

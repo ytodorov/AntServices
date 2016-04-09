@@ -1,4 +1,5 @@
 ﻿using AntDal;
+using AntDal.Entities;
 using Newtonsoft.Json;
 using SmartAdminMvc.Models;
 using System;
@@ -86,7 +87,7 @@ namespace SmartAdminMvc.Infrastructure
 
             for (int i = 0; i < ips.Count(); i++)
             {
-                sb.AppendLine($@"var {locationNamesInMap[i]} = {{ lat: {locations[i].Latitude.ToString(CultureInfo.InvariantCulture)}, lng: {locations[i].Longitude.ToString(CultureInfo.InvariantCulture)} }};");
+                sb.AppendLine($@"var {locationNamesInMap[i]} = {{ lat: {locations[i].Latitude.GetValueOrDefault().ToString(CultureInfo.InvariantCulture)}, lng: {locations[i].Longitude.GetValueOrDefault().ToString(CultureInfo.InvariantCulture)} }};");
             }
 
             sb.AppendLine($@"var map = new google.maps.Map(document.getElementById('map'), {{
@@ -162,8 +163,8 @@ namespace SmartAdminMvc.Infrastructure
             {
                 "http://antnortheu.cloudapp.net",//"13.79.153.220",
                 "http://ants-ea.cloudapp.net", // "40.83.125.9",
-                "http://ants-je.cloudapp.net" // "13.71.155.140"
-                //"http://ant-ne.azurewebsites.net"
+                "http://ants-je.cloudapp.net", // "13.71.155.140"
+                "http://ants-sea.cloudapp.net", // 13.76.100.42
             };
             return address;
         }
@@ -172,14 +173,16 @@ namespace SmartAdminMvc.Infrastructure
         {
             {  "http://antnortheu.cloudapp.net", "13.79.153.220" },
             {  "http://ants-ea.cloudapp.net", "40.83.125.9" },
-             {  "http://ants-je.cloudapp.net", "13.71.155.140" },
+            {  "http://ants-je.cloudapp.net", "13.71.155.140" },
+            {  "http://ants-sea.cloudapp.net", "13.76.100.42" }
         };
 
         public static Dictionary<string, string> HotstNameToAzureLocation = new Dictionary<string, string>()
         {
             {  "http://antnortheu.cloudapp.net", "North Europe" },
             {  "http://ants-ea.cloudapp.net", "East Asia" },
-             {  "http://ants-je.cloudapp.net", "East Japan" },
+            {  "http://ants-je.cloudapp.net", "East Japan" },
+            {  "http://ants-sea.cloudapp.net", "Southeast Asia" }
         };
 
         public static string GetIpAddressFromHostName(string hostName, string locationOfDeployedService)

@@ -1,4 +1,5 @@
 ﻿using AntDal;
+using AntDal.Entities;
 using SmartAdminMvc.Models;
 using System;
 using System.Collections.Generic;

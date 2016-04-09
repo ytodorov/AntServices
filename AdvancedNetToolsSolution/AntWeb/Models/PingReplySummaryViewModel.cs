@@ -5,7 +5,7 @@ using System.Web;
 
 namespace SmartAdminMvc.Models
 {
-    public class PingResponseSummaryViewModel
+    public class PingResponseSummaryViewModel : ViewModelBase
     {
         public string SourceIpAddress { get; set; }
 
@@ -28,11 +28,11 @@ namespace SmartAdminMvc.Models
             }
         }
 
-        public double MaxRtt { get; set; }
+        public double? MaxRtt { get; set; }
 
-        public double MinRtt { get; set; }
+        public double? MinRtt { get; set; }
 
-        public double AvgRtt { get; set; }
+        public double? AvgRtt { get; set; }
 
         public int PacketsCountSent { get; set; }
 

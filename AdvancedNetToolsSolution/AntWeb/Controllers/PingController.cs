@@ -1,6 +1,7 @@
 ﻿#region Using
 
 using AntDal;
+using AntDal.Entities;
 using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
 using SmartAdminMvc.Infrastructure;

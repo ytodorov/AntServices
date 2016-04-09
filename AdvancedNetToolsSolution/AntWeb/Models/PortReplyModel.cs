@@ -5,7 +5,7 @@ using System.Web;
 
 namespace SmartAdminMvc.Models
 {
-    public class PortViewModel
+    public class PortViewModel : ViewModelBase
     {
         public int Port { get; set; }
 
