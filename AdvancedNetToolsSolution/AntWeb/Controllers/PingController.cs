@@ -66,7 +66,7 @@ namespace SmartAdminMvc.Controllers
 
                 HttpClient client = new HttpClient();
                 clients.Add(client);
-                var encodedArgs = Uri.EscapeDataString($" {prvm.Ip} --delay {prvm.DelayBetweenPings}ms -v1 -tcp");
+                var encodedArgs = Uri.EscapeDataString($" {prvm.Ip} --delay 50ms -c 4 -v1");
                 var urlWithArgs = urls[i] + "/home/exec?program=nping&args=" + encodedArgs;
                 Task<string> task = client.GetStringAsync(urlWithArgs);
                 tasks.Add(task);
