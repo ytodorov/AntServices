@@ -1,5 +1,8 @@
 ﻿$(window).resize(function () {
-    $(".k-chart").data("kendoChart").refresh();
+    var $kendoCharts = $(".k-chart").data("kendoChart");
+    if ($kendoCharts) {
+        $kendoCharts.refresh();
+    }
    
 });
 
