@@ -25,12 +25,9 @@ $(window).ready(function myfunction() {
     var clipboard = new Clipboard('.fa-pencil-square');
 
     clipboard.on('success', function (e) {
-        var text = e.text;
-        console.log(e);
     });
 
     clipboard.on('error', function (e) {
-        console.log(e);
     });
 })
 

@@ -50,16 +50,10 @@
         {
             //columns.Bound(c => c.SourceIpAddress).Title("Src");
             columns.Bound(c => c.SourceHostName).Title("Origin");
-            if (!Request.Browser.IsMobileDevice)
+            columns.Bound(c => c.DestinationIpAddress).Title("Dest");
+            if (!Model.IsDestinationIpAddress)
             {
-                columns.Bound(c => c.DestinationIpAddress).Title("Dest");
-            }
-            if (!Request.Browser.IsMobileDevice)
-            {
-                if (!Model.IsDestinationIpAddress)
-                {
-                    columns.Bound(c => c.DestinationHostName).Title("Host");
-                }
+                columns.Bound(c => c.DestinationHostName).Title("Host");
             }
 
             //columns.Bound(c => c.AddressInfoSummary).GroupHeaderTemplate(f => f.Title).Title(" ");
@@ -81,7 +75,6 @@
 
         )
         .BindTo(Model?.PingResponseSummaries)
-        .Mobile(MobileMode.Auto)
         .Deferred()
 
                     )
@@ -226,8 +219,8 @@
         .Columns(columns =>
         {
             //columns.Bound(c => c.SourceIpAddress).Title("Src");
-            //columns.Bound(c => c.DestinationAddress).Title("Address");
-            columns.Bound(c => c.PermalinkAddress).Title("Permalink").ClientTemplate("<a href='#: data.PermalinkAddress #'>#: data.DestinationAddress #</a>");
+            columns.Bound(c => c.DestinationAddress).Title("Address");
+            columns.Bound(c => c.PermalinkAddress).Title("Permalink").ClientTemplate("<a href='#: data.PermalinkAddress #'>#: data.PermalinkAddress #</a>");
             columns.Bound(c => c.DateCreated).Title("Created on").Format("{0:u}");
         })
         .Scrollable(s => s.Enabled(false))
