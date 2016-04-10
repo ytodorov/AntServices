@@ -10,32 +10,57 @@ namespace SmartAdminMvc.Infrastructure
 {
     public static class PortParser
     {
-        public static List<PortViewModel> ParseSummary(string portSummary)
+        public static List<PortResponseSummaryViewModel> ParseSummary(string portSummary)
         {
-            List<PortViewModel> result = new List<PortViewModel>();
+            List<PortResponseSummaryViewModel> result = new List<PortResponseSummaryViewModel>();
 
             List<string> lines = GetLinesFromSummary(portSummary);
             foreach (var line in lines)
             {
-                PortViewModel prvm = ParseSingleLine(line);
+                PortResponseSummaryViewModel prvm = ParseSingleLine(line);
                 result.Add(prvm);
             }
+            result = result.Where(r => r != null).ToList();
             return result;
         }
 
-        public static PortViewModel ParseSingleLine(string line)
+        public static PortResponseSummaryViewModel ParseSingleLine(string line)
         {
-            PortViewModel result = new PortViewModel();
+            PortResponseSummaryViewModel result = new PortResponseSummaryViewModel();
             int port;
             string protocol, state, service;
             var times = line.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
-            var splitPortAndProtocol = times[0].Split(new string[] { "/" }, StringSplitOptions.RemoveEmptyEntries);
-            int.TryParse(splitPortAndProtocol[0], out port);
+            if (times.Length > 0)
+            {
+                var splitPortAndProtocol = times[0].Split(new string[] { "/" }, StringSplitOptions.RemoveEmptyEntries);
+                int.TryParse(splitPortAndProtocol[0], out port);
 
-            result.Port = port;
-            result.Protocol = splitPortAndProtocol[1];
-            result.State = times[1];
-            result.Service = times[2];
+                result.PortNumber = port;
+                if (splitPortAndProtocol.Length == 2)
+                {
+                    result.Protocol = splitPortAndProtocol[1];
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            if (times.Length > 1)
+            {
+                result.State = times[1];
+            }
+            if (times.Length > 2)
+            {
+                result.Service = times[2];
+            }
+            if (times.Length > 3)
+            {
+                result.Version = times[3];
+            }
+            if (times.Length > 4)
+            {
+                result.Version += times[4];
+            }
 
             return result;
         }

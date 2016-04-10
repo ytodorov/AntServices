@@ -1527,11 +1527,13 @@
     <Compile Include="Infrastructure\TraceRouteParser.cs" />
     <Compile Include="Infrastructure\Utils.cs" />
     <Compile Include="Models\IpLocationViewModel.cs" />
+    <Compile Include="Models\PermalinkBaseViewModel.cs" />
     <Compile Include="Models\PingPermalinkViewModel.cs" />
-    <Compile Include="Models\PingReplySummaryViewModel.cs" />
+    <Compile Include="Models\PingResponseSummaryViewModel.cs" />
     <Compile Include="Models\PingReplyViewModel.cs" />
     <Compile Include="Models\PingRequestViewModel.cs" />
-    <Compile Include="Models\PortReplyModel.cs" />
+    <Compile Include="Models\PortPermalinkViewModel.cs" />
+    <Compile Include="Models\PortResponseSummaryViewModel.cs" />
     <Compile Include="Models\TraceRouteReplyViewModel.cs" />
     <Compile Include="Models\ViewModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

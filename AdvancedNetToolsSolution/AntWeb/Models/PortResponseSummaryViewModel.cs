@@ -5,14 +5,16 @@ using System.Web;
 
 namespace SmartAdminMvc.Models
 {
-    public class PortViewModel : ViewModelBase
+    public class PortResponseSummaryViewModel : ViewModelBase
     {
-        public int Port { get; set; }
+        public int PortNumber { get; set; }
 
         public string Protocol { get; set; }
 
         public string State { get; set; }
 
         public string Service { get; set; }
+
+        public string Version { get; set; }
     }
 }

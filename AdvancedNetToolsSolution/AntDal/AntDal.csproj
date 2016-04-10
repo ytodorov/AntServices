@@ -55,8 +55,11 @@
     <Compile Include="AntDbContext.cs" />
     <Compile Include="Entities\EntityBase.cs" />
     <Compile Include="Entities\IpLocation.cs" />
+    <Compile Include="Entities\PermalinkBase.cs" />
     <Compile Include="Entities\PingPermalink.cs" />
     <Compile Include="Entities\PingResponseSummary.cs" />
+    <Compile Include="Entities\PortResponseSummary.cs" />
+    <Compile Include="Entities\PortPermalink.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

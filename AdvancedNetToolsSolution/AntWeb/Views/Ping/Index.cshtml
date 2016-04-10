@@ -52,7 +52,6 @@
         .Name("pingResultsGrid")
         .Columns(columns =>
         {
-            //columns.Bound(c => c.SourceIpAddress).Title("Src");
             columns.Bound(c => c.SourceHostName).Title("Origin");
             columns.Bound(c => c.DestinationIpAddress).Title("Dest");
             if (!Model.IsDestinationIpAddress)
@@ -60,7 +59,6 @@
                 columns.Bound(c => c.DestinationHostName).Title("Host");
             }
 
-            //columns.Bound(c => c.AddressInfoSummary).GroupHeaderTemplate(f => f.Title).Title(" ");
             columns.Bound(c => c.MaxRtt);
             columns.Bound(c => c.MinRtt);
             columns.Bound(t => t.AvgRtt);
@@ -71,8 +69,8 @@
             t.Excel().Text(string.Empty);
             t.Pdf().Text(string.Empty);
         })
-        .Excel(e => e.FileName("pingExportHistory(www.toolsfornet.com).xlsx"))
-        .Pdf(e => e.AllPages().FileName("pingExportHistory(www.toolsfornet.com).pdf"))
+        .Excel(e => e.FileName("pingExportHistory(www.toolsfornet.com).xlsx").ProxyURL(Url.Action("Excel_Export_Save", "Home")))
+        .Pdf(e => e.AllPages().FileName("pingExportHistory(www.toolsfornet.com).pdf").ProxyURL(Url.Action("Pdf_Export_Save", "Home")))
         .DataSource(dataSource => dataSource
             .Ajax()
             .ServerOperation(false)
@@ -89,7 +87,7 @@
     </div>
 }
 
-@if (Model != null)
+            @if (Model != null)
 {
     <div class="col-lg-12">
         <div class="hpanel hred">
@@ -138,7 +136,7 @@
 }
 
 @if (Model != null)
-{
+    {
 
     <div class="col-lg-12">
         <div class="hpanel hblue">

@@ -17,10 +17,10 @@ namespace UnitTests
         public void ParseSingleLineExample1Test()
         {
             string line = "22/tcp  filtered ssh";
-            PortViewModel result = PortParser.ParseSingleLine(line);
+            PortResponseSummaryViewModel result = PortParser.ParseSingleLine(line);
 
             Assert.NotNull(result);
-            Assert.Equal(22, result.Port);
+            Assert.Equal(22, result.PortNumber);
             Assert.Equal("tcp", result.Protocol);
             Assert.Equal("filtered", result.State);
             Assert.Equal("ssh", result.Service);
@@ -35,7 +35,7 @@ namespace UnitTests
         [InlineData("135/tcp filtered msrpc")]
         public void ParseSingleLineTest(string line)
         {
-            PortViewModel result = PortParser.ParseSingleLine(line);
+            PortResponseSummaryViewModel result = PortParser.ParseSingleLine(line);
 
             Assert.NotNull(result);
         }
@@ -49,7 +49,7 @@ namespace UnitTests
                 string url = "http://antnortheu.cloudapp.net/home/exec?program=nmap&args=" + encodedArgs0;
                 var portSummary = client.GetStringAsync(url).Result;
 
-                List<PortViewModel> portViewModels = PortParser.ParseSummary(portSummary);
+                List<PortResponseSummaryViewModel> portViewModels = PortParser.ParseSummary(portSummary);
                 
                 Assert.True(portViewModels.Count > 0);
                 

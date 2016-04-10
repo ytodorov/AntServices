@@ -8,6 +8,7 @@ using SmartAdminMvc.Data;
 using AntDal;
 using System;
 using System.Collections.Generic;
+using Kendo.Mvc.UI;
 
 
 #endregion
@@ -59,16 +60,26 @@ namespace SmartAdminMvc.Controllers
                     ipAddresses.Add(prs.SourceIpAddress);
                     ipAddresses.Add(prs.DestinationIpAddress);
                 }
-
-                //string[] ipAddresses = pingPermalink.PingResponseSummaries.
-                //     string[] ipAddress = ips.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
                 Response.ContentType = "text/plain; charset=utf-8";
                 var gmString = Utils.GetGoogleMapsString(ipAddresses, starLine: true);
                 return gmString;
-
             }
+        }
+        
+        [HttpPost]
+        public ActionResult Excel_Export_Save(string contentType, string base64, string fileName)
+        {
+            var fileContents = Convert.FromBase64String(base64);
 
+            return File(fileContents, contentType, fileName);
+        }
 
+        [HttpPost]
+        public ActionResult Pdf_Export_Save(string contentType, string base64, string fileName)
+        {
+            var fileContents = Convert.FromBase64String(base64);
+
+            return File(fileContents, contentType, fileName);
         }
     }
 }

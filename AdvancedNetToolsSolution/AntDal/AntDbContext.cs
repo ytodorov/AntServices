@@ -18,6 +18,10 @@ namespace AntDal
 
         public virtual DbSet<PingResponseSummary> PingResponseSummaries { get; set; }
 
+        public virtual DbSet<PortPermalink> PortPermalinks { get; set; }
+
+        public virtual DbSet<PortResponseSummary> PortResponseSummaries { get; set; }
+
         public virtual DbSet<IpLocation> IpLocations { get; set; }
     }
 }
