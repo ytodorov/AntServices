@@ -4458,3 +4458,7 @@ ul.h-list {
 .k-grid-content > table {
     border-right: 1px solid #ccc;
 }
+
+.k-textbox{
+    width:100% !important
+}

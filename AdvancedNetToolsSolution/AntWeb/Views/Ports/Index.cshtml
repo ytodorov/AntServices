@@ -13,8 +13,6 @@
 @section pagespecific {
     <script type="text/javascript">
         $(document).ready(function () {
-
-
             $("#btnPing").click(function btnPingClick() {
                 $('#grid').data('kendoGrid').dataSource.read().then(function (test) {
                     @*eval(@(SmartAdminMvc.Extensions.GoogleMap.GetMapWithLocaions()));*@

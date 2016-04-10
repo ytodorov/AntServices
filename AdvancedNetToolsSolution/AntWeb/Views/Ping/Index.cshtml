@@ -16,7 +16,7 @@
         </div>
         <div class="panel-body">
             <p>
-                <input type="text" class="form-control" id="ip" value="@(Model != null ? Model.DestinationAddress : "facebook.com")" placeholder="Host name or IPv4/6">
+                <input type="text" class="k-textbox" id="ip" value="@(Model != null ? Model.DestinationAddress : "facebook.com")" placeholder="Host name or IPv4/6">
             </p>
             <p class="text-center">
                 <input type="checkbox" id="showInHistory" class="k-checkbox" checked="checked">
@@ -162,7 +162,7 @@
         <div class="hpanel horange">
             <div class="panel-heading">
                 <p class="text-center">
-                    Ping permalink
+                    Permalink
                 </p>
             </div>
             <div class="panel-body">
@@ -193,22 +193,22 @@
                             <form method="get" class="form-horizontal">
                                 <div class="form-group">
                                     <label class="col-sm-1 control-label text-left" for="senderName">To:</label>
-                                    <div class="col-sm-11"><input type="text" class="form-control input-sm" placeholder="example@email.com" id="senderName"></div>
+                                    <div class="col-sm-11"><input type="text" class="k-textbox" placeholder="example@email.com" id="senderName"></div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-1 control-label text-left" for="senderMail">Cc:</label>
-                                    <div class="col-sm-11"><input type="text" class="form-control input-sm" id="senderMail"></div>
+                                    <div class="col-sm-11"><input type="text" class="k-textbox" id="senderMail"></div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-1 control-label text-left" for="subject">Subject:</label>
-                                    <div class="col-sm-11"><input type="text" class="form-control input-sm" placeholder="Enter Email subject" id="subject"></div>
+                                    <div class="col-sm-11"><input type="text" class="k-textbox" placeholder="Enter Email subject" id="subject"></div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-1 control-label text-left">Body:</label>
                                     <div class="col-sm-11">@Html.Kendo().Editor().Name("emailBody").Tools(t => t.Clear()).Deferred()</div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-1 control-label text-left" for="subject"></label>
+                                    <label class="col-sm-1 control-label text-left" for="subject">&nbsp;</label>
                                     <div class="col-sm-11">
                                         <button class="btn btn-info btn-sm" id="btnSend">Send email</button>
                                     </div>
