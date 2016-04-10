@@ -5,13 +5,16 @@
 
     // Start loading
     l.ladda('start');
-
+    debugger;
+    var showInHistory = $("#showInHistory").is(":checked");
 
     $.ajax({
         method: "POST",
         url: "/ping/GenerateId",
+
         data: {
             ip: $("#ip").val(),
+            showInHistory: showInHistory,
             packetsCount: $("#tbPacketsCount").val(),
             packetsSize: $("#tbPacketsSize").val(),
             delayBetweenPings: $("#tbDelayBetweenPings").val(),

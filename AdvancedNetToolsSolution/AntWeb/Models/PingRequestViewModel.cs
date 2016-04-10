@@ -9,6 +9,8 @@ namespace SmartAdminMvc.Models
     {
         public string Ip { get; set; }
 
+        public bool? ShowInHistory { get; set; }
+
         public int PacketsCount { get; set; }
 
         public int PacketsSize { get; set; }

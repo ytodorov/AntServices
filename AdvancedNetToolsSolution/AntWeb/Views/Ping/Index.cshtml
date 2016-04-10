@@ -18,6 +18,10 @@
             <p>
                 <input type="text" class="form-control" id="ip" value="@(Model != null ? Model.DestinationAddress : "facebook.com")" placeholder="Host name or IPv4/6">
             </p>
+            <p class="text-center">
+                    <input type="checkbox" id="showInHistory" class="k-checkbox" checked="checked">
+                    <label class="k-checkbox-label" for="showInHistory">Save in history</label>
+            </p>
             <p>
                 <button type="button" class="ladda-button btn center-block btn-outline btn-success" id="btnPing" data-style="zoom-in">
                     <span class="ladda-label">Ping</span>
@@ -39,7 +43,7 @@
         <div class="hpanel hyellow">
             <div class="panel-heading">
                 <p class="text-center">
-                    Ping grid
+                    Round-trip times
                 </p>
             </div>
             <div class="panel-body">
@@ -140,7 +144,7 @@
         <div class="hpanel hblue">
             <div class="panel-heading">
                 <p class="text-center">
-                    Ping map
+                    Ping locations and distances
                 </p>
             </div>
             <div class="panel-body">
@@ -172,8 +176,8 @@
                 <p class="text-center" style="font-size:xx-large">
 
                     @*<a href="#" target="_blank"><i class="fa fa-facebook-square" title="Share on Facebook"></i></a>
-                    <a href="#" target="_blank"><i class="fa fa-twitter-square" title="Share on Twitter"></i></a>
-                    <a href="#" target="_blank"><i class="fa fa-google-plus-square" title="Share on Google+"></i></a>*@
+                        <a href="#" target="_blank"><i class="fa fa-twitter-square" title="Share on Twitter"></i></a>
+                        <a href="#" target="_blank"><i class="fa fa-google-plus-square" title="Share on Google+"></i></a>*@
                     <a href="javascript:void(0)"><i class="fa fa-envelope-square" title="Send email"></i></a>
                     <a href="javascript:void(0)"><i class="fa fa-pencil-square" title="Copy to clipboard" data-clipboard-action="copy" data-clipboard-target="#permalink"></i></a>
                 </p>

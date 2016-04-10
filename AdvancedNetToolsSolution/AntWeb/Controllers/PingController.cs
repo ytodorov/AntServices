@@ -100,6 +100,7 @@ namespace SmartAdminMvc.Controllers
             using (AntDbContext context = new AntDbContext())
             {
                 PingPermalink pp = new PingPermalink();
+                pp.ShowInHistory = prvm.ShowInHistory;
                 pp.UserCreatedIpAddress = Request.UserHostAddress;
                 pp.DestinationAddress = prvm.Ip;
                 pp.UserCreated = Request.UserHostAddress;
@@ -121,7 +122,7 @@ namespace SmartAdminMvc.Controllers
             string userIpAddress = Request.UserHostAddress;
             using (AntDbContext context = new AntDbContext())
             {
-                var pingPermalinks = context.PingPermalinks.Where(p => p.UserCreatedIpAddress == userIpAddress).ToList();
+                var pingPermalinks = context.PingPermalinks.Where(p => p.UserCreatedIpAddress == userIpAddress && p.ShowInHistory == true).ToList();
                 var pingPermalinksViewModels = AutoMapper.Mapper.DynamicMap<List<PingPermalinkViewModel>>(pingPermalinks);
                 var dsResult = Json(pingPermalinksViewModels.ToDataSourceResult(request));
                 return dsResult;
