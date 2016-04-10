@@ -19,8 +19,8 @@
                 <input type="text" class="form-control" id="ip" value="@(Model != null ? Model.DestinationAddress : "facebook.com")" placeholder="Host name or IPv4/6">
             </p>
             <p class="text-center">
-                    <input type="checkbox" id="showInHistory" class="k-checkbox" checked="checked">
-                    <label class="k-checkbox-label" for="showInHistory">Save in history</label>
+                <input type="checkbox" id="showInHistory" class="k-checkbox" checked="checked">
+                <label class="k-checkbox-label" for="showInHistory">Save in history</label>
             </p>
             <p>
                 <button type="button" class="ladda-button btn center-block btn-outline btn-success" id="btnPing" data-style="zoom-in">
@@ -178,15 +178,74 @@
                     @*<a href="#" target="_blank"><i class="fa fa-facebook-square" title="Share on Facebook"></i></a>
                         <a href="#" target="_blank"><i class="fa fa-twitter-square" title="Share on Twitter"></i></a>
                         <a href="#" target="_blank"><i class="fa fa-google-plus-square" title="Share on Google+"></i></a>*@
-                    <a href="javascript:void(0)"><i class="fa fa-envelope-square" title="Send email"></i></a>
-                    <a href="javascript:void(0)"><i class="fa fa-pencil-square" title="Copy to clipboard" data-clipboard-action="copy" data-clipboard-target="#permalink"></i></a>
+                    <a href="javascript:void(0)">
+                        <i class="fa fa-envelope-square" title="Send email" id="iconSendEmail"
+                           data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"></i>
+                    </a>
+                    <a href="javascript:void(0)">
+                        <i class="fa fa-pencil-square collapsed" title="Copy to clipboard"
+                           data-clipboard-action="copy" data-clipboard-target="#permalink"></i>
+                    </a>
                 </p>
+                <div class="collapse" id="collapseExample" aria-expanded="true">
+                    <div class="panel-heading hbuilt">
+                        <div class="p-xs">
+                            <form method="get" class="form-horizontal">
+                                <div class="form-group">
+                                    <label class="col-sm-1 control-label text-left" for="senderName">To:</label>
+                                    <div class="col-sm-11"><input type="text" class="form-control input-sm" placeholder="example@email.com" id="senderName"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-1 control-label text-left" for="senderMail">Cc:</label>
+                                    <div class="col-sm-11"><input type="text" class="form-control input-sm" id="senderMail"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-1 control-label text-left" for="subject">Subject:</label>
+                                    <div class="col-sm-11"><input type="text" class="form-control input-sm" placeholder="Enter Email subject" id="subject"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-1 control-label text-left">Body:</label>
+                                    <div class="col-sm-11">@Html.Kendo().Editor().Name("emailBody").Tools(t => t.Clear()).Deferred()</div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-1 control-label text-left" for="subject"></label>
+                                    <div class="col-sm-11">
+                                        <button class="btn btn-info btn-sm" id="btnSend">Send email</button>
+                                    </div>
+                                </div>
+                               
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+
     </div>
 }
 
 @section scripts {
+    <script>
+        $(window).ready(function myfunction() {
+            // Toastr options
+            toastr.options = {
+                "debug": false,
+                "newestOnTop": false,
+                "positionClass": "toast-top-center",
+                "closeButton": true,
+                "toastClass": "animated fadeInDown",
+            };
+            $('#btnSend').click(function (e) {
+                debugger;
+                toastr.success('Success - Email was successfully sent.');
+                e.preventDefault();
+                $("#iconSendEmail").click();
+            });
+        });
+
+    </script>
+
     @if (Model != null)
     {
         <script>

@@ -1286,6 +1286,8 @@
     <Content Include="Vendor\slimScroll\examples\style.css" />
     <Content Include="Vendor\slimScroll\jquery.slimscroll.js" />
     <Content Include="Vendor\slimScroll\jquery.slimscroll.min.js" />
+    <Content Include="Vendor\toastr\build\toastr.min.css" />
+    <Content Include="Vendor\toastr\build\toastr.min.js" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
@@ -1472,6 +1474,7 @@
     <Content Include="Views\Home\Error404.cshtml" />
     <Content Include="Views\Home\Error500.cshtml" />
     <Content Include="Views\ContactUs\Index.cshtml" />
+    <Content Include="Vendor\toastr\build\toastr.js.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

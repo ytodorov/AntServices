@@ -60,6 +60,14 @@ namespace SmartAdminMvc
             bundles.Add(new ScriptBundle("~/bundles/validation/js").Include(
                       "~/Vendor/jquery-validation/jquery.validate.min.js"));
 
+            // Toastr
+            bundles.Add(new ScriptBundle("~/bundles/toastr/js").Include(
+                      "~/Vendor/toastr/build/toastr.min.js"));
+
+            // Toastr style
+            bundles.Add(new StyleBundle("~/bundles/toastr/css").Include(
+                      "~/Vendor/toastr/build/toastr.min.css"));
+
         }
 
     }

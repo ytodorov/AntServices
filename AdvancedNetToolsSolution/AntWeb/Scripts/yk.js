@@ -25,6 +25,21 @@ $(window).ready(function myfunction() {
     var clipboard = new Clipboard('.fa-pencil-square');
 
     clipboard.on('success', function (e) {
+
+        // Toastr options
+        toastr.options = {
+            "debug": false,
+            "newestOnTop": false,
+            "positionClass": "toast-top-center",
+            "closeButton": true,
+            "toastClass": "animated fadeInDown",
+        };
+       
+          
+            toastr.info('Info - Copied to clipboard.');
+            e.preventDefault();
+            $("#iconSendEmail").click();
+    
     });
 
     clipboard.on('error', function (e) {
