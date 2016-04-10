@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Web;
 
@@ -13,6 +14,16 @@ namespace SmartAdminMvc.Models
         public string UserCreatedIpAddress { get; set; }
 
         public bool? ShowInHistory { get; set; }
+
+        public bool IsDestinationIpAddress
+        {
+            get
+            {
+                IPAddress dummy;
+                var isIpAddress = IPAddress.TryParse(DestinationAddress, out dummy);
+                return isIpAddress;
+            }
+        }
 
         public string PermalinkAddress
         {

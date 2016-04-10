@@ -49,14 +49,19 @@
         .Columns(columns =>
         {
             //columns.Bound(c => c.SourceIpAddress).Title("Src");
-            columns.Bound(c => c.SourceHostName).Title("SrcHN");
-            columns.Bound(c => c.DestinationIpAddress).Title("Dest");
-            IPAddress dummy;
-            var isIpAddress = IPAddress.TryParse(Model.DestinationAddress, out dummy);
-            if (!isIpAddress)
+            columns.Bound(c => c.SourceHostName).Title("Origin");
+            if (!Request.Browser.IsMobileDevice)
             {
-                columns.Bound(c => c.DestinationHostName).Title("DestHN");
+                columns.Bound(c => c.DestinationIpAddress).Title("Dest");
             }
+            if (!Request.Browser.IsMobileDevice)
+            {
+                if (!Model.IsDestinationIpAddress)
+                {
+                    columns.Bound(c => c.DestinationHostName).Title("Host");
+                }
+            }
+
             //columns.Bound(c => c.AddressInfoSummary).GroupHeaderTemplate(f => f.Title).Title(" ");
             columns.Bound(c => c.MaxRtt);
             columns.Bound(c => c.MinRtt);
@@ -74,7 +79,10 @@
             .Ajax()
             .ServerOperation(false)
 
-        ).BindTo(Model?.PingResponseSummaries).Deferred()
+        )
+        .BindTo(Model?.PingResponseSummaries)
+        .Mobile(MobileMode.Auto)
+        .Deferred()
 
                     )
                 </p>
@@ -96,7 +104,7 @@
             <div class="panel-body">
                 <p>
                     @(Html.Kendo().Chart(Model.PingResponseSummaries).Theme("silver")
-        .Name("pingResultsChart")      
+        .Name("pingResultsChart")
         .Legend(legend => legend
             .Position(ChartLegendPosition.Top)
         )
@@ -198,8 +206,8 @@
             });
         </script>
     }
-<script src="~/Scripts/viewsJS/pingIndex.js"></script>
-    
+    <script src="~/Scripts/viewsJS/pingIndex.js"></script>
+
 }
 
 @*history*@
@@ -218,8 +226,8 @@
         .Columns(columns =>
         {
             //columns.Bound(c => c.SourceIpAddress).Title("Src");
-            columns.Bound(c => c.DestinationAddress).Title("Address");
-            columns.Bound(c => c.PermalinkAddress).Title("Permalink").ClientTemplate("<a href='#: data.PermalinkAddress #'>#: data.PermalinkAddress #</a>");
+            //columns.Bound(c => c.DestinationAddress).Title("Address");
+            columns.Bound(c => c.PermalinkAddress).Title("Permalink").ClientTemplate("<a href='#: data.PermalinkAddress #'>#: data.DestinationAddress #</a>");
             columns.Bound(c => c.DateCreated).Title("Created on").Format("{0:u}");
         })
         .Scrollable(s => s.Enabled(false))
