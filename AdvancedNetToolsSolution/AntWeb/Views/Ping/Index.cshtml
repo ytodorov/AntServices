@@ -69,8 +69,8 @@
             t.Excel().Text(string.Empty);
             t.Pdf().Text(string.Empty);
         })
-        .Excel(e => e.FileName("pingExportHistory(www.toolsfornet.com).xlsx").ProxyURL(Url.Action("Excel_Export_Save", "Home")))
-        .Pdf(e => e.AllPages().FileName("pingExportHistory(www.toolsfornet.com).pdf").ProxyURL(Url.Action("Pdf_Export_Save", "Home")))
+        .Excel(e => e.FileName("pingExportHistory(www.toolsfornet.com).xlsx").ProxyURL(Url.Action("Excel", "Export")))
+        .Pdf(e => e.AllPages().FileName("pingExportHistory(www.toolsfornet.com).pdf").ProxyURL(Url.Action("Pdf", "Export")))
         .DataSource(dataSource => dataSource
             .Ajax()
             .ServerOperation(false)
@@ -290,8 +290,8 @@
             t.Excel().Text(string.Empty);
             t.Pdf().Text(string.Empty);
         })
-        .Excel(e => e.FileName("pingExport(www.toolsfornet.com).xlsx"))
-        .Pdf(e => e.AllPages().FileName("pingExport(www.toolsfornet.com).pdf"))
+        .Excel(e => e.FileName("pingExport(www.toolsfornet.com).xlsx").ProxyURL(Url.Action("Excel", "Export")))
+        .Pdf(e => e.AllPages().FileName("pingExport(www.toolsfornet.com).pdf").ProxyURL(Url.Action("Pdf", "Export")))
         .DataSource(dataSource => dataSource
             .Ajax()
             .ServerOperation(false)

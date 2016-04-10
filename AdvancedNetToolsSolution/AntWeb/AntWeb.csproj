@@ -1501,6 +1501,7 @@
     <Compile Include="Areas\Landing\LandingAreaRegistration.cs" />
     <Compile Include="Controllers\ContactUsController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\ExportController.cs" />
     <Compile Include="Controllers\InterfaceController.cs" />
     <Compile Include="Controllers\MyIpController.cs" />
     <Compile Include="Controllers\PortsController.cs" />
@@ -1540,6 +1541,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\img\realestate\thumbs\" />
+    <Folder Include="Views\Export\" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

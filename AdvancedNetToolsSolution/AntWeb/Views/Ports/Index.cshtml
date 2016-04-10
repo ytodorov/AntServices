@@ -62,9 +62,9 @@
         e.FileName("portExportHistory(www.toolsfornet.com).xlsx")
 
          .Filterable(true)
-        .ProxyURL(Url.Action("Excel_Export_Save", "Home"))
+        .ProxyURL(Url.Action("Excel", "Export"))
         )
-        .Pdf(e => e.AllPages().FileName("portExportHistory(www.toolsfornet.com).pdf").ProxyURL(Url.Action("Pdf_Export_Save", "Home")))
+        .Pdf(e => e.AllPages().FileName("portExportHistory(www.toolsfornet.com).pdf").ProxyURL(Url.Action("Pdf", "Export")))
         .DataSource(dataSource => dataSource
             .Ajax()
             .ServerOperation(false)
