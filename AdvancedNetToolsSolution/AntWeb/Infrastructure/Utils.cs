@@ -16,14 +16,72 @@ namespace SmartAdminMvc.Infrastructure
 {
     public static class Utils
     {
-        public static Random RandomNumberGenerator = new Random();
+        static Utils()
+        {
+            RandomNumberGenerator = new Random();
+            GetDeployedServicesUrlAddresses = new List<string>()
+            {
+                "http://antnortheu.cloudapp.net", //"13.79.153.220",
+                "http://ants-ea.cloudapp.net", // "40.83.125.9",
+                "http://ants-je.cloudapp.net", // "13.71.155.140"
+                "http://ants-sea.cloudapp.net", // "13.76.100.42"
+                "http://ant-cus.cloudapp.net", // "52.165.26.10"
+                "http://ant-jw.cloudapp.net", // "40.74.137.95"
+                //"http://ants-ea.cloudapp.net", // "40.83.125.9"
+                "http://ants-eus.cloudapp.net", // "13.90.212.72"
+                "http://ants-neu.cloudapp.net", // "13.74.188.161"
+                "http://ants-scus.cloudapp.net", // "104.214.70.79"
+                "http://ants-weu.cloudapp.net", // "104.46.38.89"
+                "http://ants-wus.cloudapp.net" // "13.93.211.38"
+            };
+
+            HotstNameToIp = new Dictionary<string, string>()
+        {
+            {  "http://antnortheu.cloudapp.net", "13.79.153.220" },
+            {  "http://ants-ea.cloudapp.net", "40.83.125.9" },
+            {  "http://ants-je.cloudapp.net", "13.71.155.140" },
+            {  "http://ants-sea.cloudapp.net", "13.76.100.42" },
+            {  "http://ant-cus.cloudapp.net", "52.165.26.10" },
+            {  "http://ant-jw.cloudapp.net", "40.74.137.95" },
+            //{  "http://ants-ea.cloudapp.net", "40.83.125.9" },
+            {  "http://ants-eus.cloudapp.net", "13.90.212.72" },
+            {  "http://ants-neu.cloudapp.net", "13.74.188.161" },
+            {  "http://ants-scus.cloudapp.net", "104.214.70.79" },
+            {  "http://ants-weu.cloudapp.net", "104.46.38.89" },
+            {  "http://ants-wus.cloudapp.net" , "13.93.211.38"}
+        };
+            HotstNameToAzureLocation = new Dictionary<string, string>()
+            {
+                 {  "http://antnortheu.cloudapp.net", "North Europe" },
+            { "http://ants-ea.cloudapp.net", "East Asia" },
+            //{ "http://ants-ea.cloudapp.net", "East Asia" },
+            { "http://ants-sea.cloudapp.net", "South East Asia" },
+            { "http://ants-je.cloudapp.net", "East Japan" },
+            { "http://ant-jw.cloudapp.net", "West Japan" },
+            { "http://ant-cus.cloudapp.net", "Central US" },
+            { "http://ants-eus.cloudapp.net", "East US" },
+            { "http://ants-neu.cloudapp.net", "North EU" },
+            { "http://ants-scus.cloudapp.net", "South Central US" },
+            { "http://ants-weu.cloudapp.net", "West EU" },
+            { "http://ants-wus.cloudapp.net" , "West US"}
+
+            };
+        }
+        public static List<string> GetDeployedServicesUrlAddresses { get; set; }
+
+
+        public static Dictionary<string, string> HotstNameToIp { get; set; }
+
+        public static Dictionary<string, string> HotstNameToAzureLocation { get; set; }
+
+        public static Random RandomNumberGenerator;
 
         public static IpLocationViewModel GetLocationDataForIp(string ipOrHostName)
         {
             //IPAddress ipString;
             //if(!IPAddress.TryParse(ipOrHostName, out ipString))
             //{
-                
+
             //}
             using (AntDbContext context = new AntDbContext())
             {
@@ -157,57 +215,7 @@ namespace SmartAdminMvc.Infrastructure
 
 
 
-        public static List<string> GetDeployedServicesUrlAddresses()
-        {
-            List<string> address = new List<string>()
-            {
-                "http://antnortheu.cloudapp.net", //"13.79.153.220",
-                "http://ants-ea.cloudapp.net", // "40.83.125.9",
-                "http://ants-je.cloudapp.net", // "13.71.155.140"
-                "http://ants-sea.cloudapp.net", // "13.76.100.42"
-                "http://ant-cus.cloudapp.net", // "52.165.26.10"
-                "http://ant-jw.cloudapp.net", // "40.74.137.95"
-                "http://ants-ea.cloudapp.net", // "40.83.125.9"
-                "http://ants-eus.cloudapp.net", // "13.90.212.72"
-                "http://ants-neu.cloudapp.net", // "13.74.188.161"
-                "http://ants-scus.cloudapp.net", // "104.214.70.79"
-                "http://ants-weu.cloudapp.net", // "104.46.38.89"
-                "http://ants-wus.cloudapp.net" // "13.93.211.38"
-            };
-            return address;
-        }
 
-        public static Dictionary<string, string> HotstNameToIp = new Dictionary<string, string>()
-        {
-            {  "http://antnortheu.cloudapp.net", "13.79.153.220" },
-            {  "http://ants-ea.cloudapp.net", "40.83.125.9" },
-            {  "http://ants-je.cloudapp.net", "13.71.155.140" },
-            {  "http://ants-sea.cloudapp.net", "13.76.100.42" },
-            {  "http://ant-cus.cloudapp.net", "52.165.26.10" },
-            {  "http://ant-jw.cloudapp.net", "40.74.137.95" },
-            {  "http://ants-ea.cloudapp.net", "40.83.125.9" },
-            {  "http://ants-eus.cloudapp.net", "13.90.212.72" },
-            {  "http://ants-neu.cloudapp.net", "13.74.188.161" },
-            {  "http://ants-scus.cloudapp.net", "104.214.70.79" },
-            {  "http://ants-weu.cloudapp.net", "104.46.38.89" },
-            {  "http://ants-wus.cloudapp.net" , "13.93.211.38"} 
-        };
-
-        public static Dictionary<string, string> HotstNameToAzureLocation = new Dictionary<string, string>()
-        {
-            {  "http://antnortheu.cloudapp.net", "North Europe" },
-            {  "http://ants-ea.cloudapp.net", "East Asia" },
-            {  "http://ants-ea.cloudapp.net", "East Asia" },
-            {  "http://ants-sea.cloudapp.net", "South East Asia" },
-            {  "http://ants-je.cloudapp.net", "East Japan" },
-            {  "http://ant-jw.cloudapp.net", "West Japan" },
-            {  "http://ant-cus.cloudapp.net", "Central US" },
-            {  "http://ants-eus.cloudapp.net", "East US" },
-            {  "http://ants-neu.cloudapp.net", "North EU" },
-            {  "http://ants-scus.cloudapp.net", "South Central US" },
-            {  "http://ants-weu.cloudapp.net", "West EU" },
-            {  "http://ants-wus.cloudapp.net" , "West US"}
-        };
 
         public static string GetIpAddressFromHostName(string hostName, string locationOfDeployedService)
         {

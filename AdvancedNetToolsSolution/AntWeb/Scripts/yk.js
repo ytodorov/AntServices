@@ -46,3 +46,20 @@ $(window).ready(function myfunction() {
     });
 })
 
+$.ajaxSetup({
+    error: function (XMLHttpRequest, textStatus, errorThrown) {
+        debugger;
+        // Toastr options
+        toastr.options = {
+            "debug": false,
+            "newestOnTop": false,
+            "positionClass": "toast-top-center",
+            "closeButton": true,
+            "toastClass": "animated fadeInDown",
+        };
+        var laddaButtons = $("[data-loading]");
+        laddaButtons.ladda('stop');
+
+        toastr.error('An error occured. It will be fixed soon!');
+    }
+});

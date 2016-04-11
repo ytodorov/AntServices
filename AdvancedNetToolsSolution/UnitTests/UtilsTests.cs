@@ -14,7 +14,7 @@ namespace UnitTests
         [Fact]
         public void GetIpAddressFromHostNameTest()
         {
-            List<string> locations = Utils.GetDeployedServicesUrlAddresses();
+            List<string> locations = Utils.GetDeployedServicesUrlAddresses;
             List<string> results = new List<string>();
             foreach (string location in locations)
             {

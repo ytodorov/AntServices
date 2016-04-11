@@ -38,7 +38,7 @@ namespace SmartAdminMvc
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            PreventAppsFromSleep();
+            //PreventAppsFromSleep();
                       
 
         }
@@ -67,7 +67,7 @@ namespace SmartAdminMvc
 
         private void PingUrlsSoTheyDontSleep(object sender, ElapsedEventArgs e)
         {
-            List<string> urls = Utils.GetDeployedServicesUrlAddresses();
+            List<string> urls = Utils.GetDeployedServicesUrlAddresses;
             urls.Add("http://ant-ne.azurewebsites.net");
             foreach (string url in urls)
             {

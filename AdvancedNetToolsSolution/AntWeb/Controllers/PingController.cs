@@ -56,7 +56,7 @@ namespace SmartAdminMvc.Controllers
             List<Task<string>> tasks = new List<Task<string>>();
             List<HttpClient> clients = new List<HttpClient>();
 
-            var urls = Utils.GetDeployedServicesUrlAddresses();
+            var urls = Utils.GetDeployedServicesUrlAddresses;
 
             for (int i = 0; i < urls.Count; i++)
             {

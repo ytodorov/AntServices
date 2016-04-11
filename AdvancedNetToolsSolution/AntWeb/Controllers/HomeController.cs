@@ -30,6 +30,8 @@ namespace SmartAdminMvc.Controllers
             return View();
         }
 
+        //http://stackoverflow.com/questions/7265193/mvc-problem-with-custom-error-pages
+
         public ActionResult Error404()
         {
             return View();

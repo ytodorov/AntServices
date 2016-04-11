@@ -10,6 +10,8 @@
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDoER6oaWJAUFMNCCE8IkCGsIyHsbTE0Zw"></script>
 
+    <link rel="icon" type="image/x-icon" href="~/favicon.ico">
+    @*<link rel="shortcut icon" href="favicon.ico">*@
     <!-- Primary vendor style -->
     @Styles.Render("~/bundles/font-awesome/css")
     @Styles.Render("~/bundles/animate/css")
@@ -28,7 +30,7 @@
     <link rel="stylesheet" href="http://kendo.cdn.telerik.com/2016.1.226/styles/kendo.common.min.css">
     <link rel="stylesheet" href="http://kendo.cdn.telerik.com/2016.1.226/styles/kendo.silver.min.css">
 </head>
-<body class="@Html.PageClass() fixed-footer">
+<body class="@Html.PageClass() fixed-footer fixed-sidebar fixed-navbar">
     <script src="~/Scripts/googleAnalytics.js"></script>
     <!-- Simple splash screen-->
     <div class="splash">
