@@ -5,10 +5,35 @@
         if ($kendoCharts) {
             $kendoCharts.refresh();
         }
+
+        resizeGrids()
     }
    , 10);
    
 });
+
+function resizeGrids() {
+    var grids = $(".k-grid table");
+    if (grids) {
+        grids.each(function (i) {
+            var $tbody = $(this).find("tbody").first();
+            if (!$tbody) {
+                return;
+            }
+            if ($tbody.width() > $(this).parent().parent().width()) {
+                if (!$(this).attr("style")) {
+                    $(this).attr('style', 'overflow-x: auto !important; display: block !important;');
+                }
+            }
+            else {
+                if ($(this).attr("style")) {
+                    $(this).removeAttr("style");
+                }
+            }
+        }
+        );
+    }
+}
 
 $(window).ready(function myfunction() {
     //заради менюто което се премахва на малък екран. Важно е да е около 200, защото лявото меню се скрива след определено време и то трябва да мине за да се преначертае графиката отново
