@@ -18,7 +18,9 @@ namespace SmartAdminMvc
                 controller = "Home",
                 action = "Index",
                 id = UrlParameter.Optional
-            }).RouteHandler = new DashRouteHandler();
+            },
+    new[] { "SmartAdminMvc.Controllers" })
+    .RouteHandler = new DashRouteHandler();
         }
     }
 }
