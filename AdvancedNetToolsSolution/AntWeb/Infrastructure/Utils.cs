@@ -240,6 +240,30 @@ namespace SmartAdminMvc.Infrastructure
             return string.Empty;
         }
 
+        public static string GetFirstOpenPort(string ipOrHostName)
+        {
+
+            using (HttpClient client = new HttpClient())
+            {
+
+                var encodedArgs0 = Uri.EscapeDataString($"-T4 -F {ipOrHostName}");
+                string url = "http://antnortheu.cloudapp.net/home/exec?program=nmap&args=" + encodedArgs0;
+                var portSummary = client.GetStringAsync(url).Result;
+
+                List<PortResponseSummaryViewModel> portViewModels = PortParser.ParseSummary(portSummary);
+                var firstOpen = portViewModels.FirstOrDefault(p => p.State.Equals("open"));
+                string result = string.Empty;
+                if (firstOpen != null)
+                {
+                    result = firstOpen.PortNumber.ToString();
+                }
+                return result;
+
+
+            }
+
+        }
+
         public static class GeoCodeCalc
         {
             public const double EarthRadiusInMiles = 3956.0;
@@ -264,6 +288,8 @@ namespace SmartAdminMvc.Infrastructure
                 var result = radius * 2 * Math.Asin(Math.Min(1, Math.Sqrt((Math.Pow(Math.Sin((DiffRadian(lat1, lat2)) / 2.0), 2.0) + Math.Cos(ToRadian(lat1)) * Math.Cos(ToRadian(lat2)) * Math.Pow(Math.Sin((DiffRadian(lng1, lng2)) / 2.0), 2.0)))));
                 return result;
             }
+
+           
         }
 
         public enum GeoCodeCalcMeasurement : int

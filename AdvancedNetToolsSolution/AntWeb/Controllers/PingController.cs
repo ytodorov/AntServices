@@ -56,6 +56,8 @@ namespace SmartAdminMvc.Controllers
             List<Task<string>> tasks = new List<Task<string>>();
             List<HttpClient> clients = new List<HttpClient>();
 
+            string firstOpenPort = Utils.GetFirstOpenPort(prvm.Ip);
+
             var urls = Utils.GetDeployedServicesUrlAddresses;
 
             for (int i = 0; i < urls.Count; i++)
@@ -63,7 +65,7 @@ namespace SmartAdminMvc.Controllers
 
                 HttpClient client = new HttpClient();
                 clients.Add(client);
-                var encodedArgs = Uri.EscapeDataString($" {prvm.Ip} --delay 50ms -c 4 -v1");
+                var encodedArgs = Uri.EscapeDataString($"--tcp -p  {firstOpenPort} -v1 {prvm.Ip}");
                 var urlWithArgs = urls[i] + "/home/exec?program=nping&args=" + encodedArgs;
                 Task<string> task = client.GetStringAsync(urlWithArgs);
                 tasks.Add(task);

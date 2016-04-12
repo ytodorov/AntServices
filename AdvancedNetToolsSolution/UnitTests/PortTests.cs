@@ -45,7 +45,7 @@ namespace UnitTests
             using (HttpClient client = new HttpClient())
             {
 
-                var encodedArgs0 = Uri.EscapeDataString("-p 1-1024 -Pn www.dir.bg");
+                var encodedArgs0 = Uri.EscapeDataString("-T4 -F www.dir.bg");
                 string url = "http://antnortheu.cloudapp.net/home/exec?program=nmap&args=" + encodedArgs0;
                 var portSummary = client.GetStringAsync(url).Result;
 
