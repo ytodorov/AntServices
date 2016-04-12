@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
@@ -28,6 +29,27 @@ namespace UnitTests
 
             }
            
+        }
+        [Fact]
+        private void PingUrlsSoTheyDontSleep()
+        {
+            List<string> urls = Utils.GetDeployedServicesUrlAddresses;
+            urls.Add("http://ant-ne.azurewebsites.net");
+            foreach (string url in urls)
+            {
+                using (HttpClient client = new HttpClient())
+                {
+                    try
+                    {
+                        var tracerouteSummary = client.GetStringAsync(url).Result;
+                    }
+                    catch
+                    {
+
+                    }
+
+                }
+            }
         }
     }
 }
