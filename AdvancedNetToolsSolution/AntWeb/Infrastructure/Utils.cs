@@ -153,11 +153,19 @@ namespace SmartAdminMvc.Infrastructure
                 center: {locationNamesInMap.LastOrDefault()}
             }});");
 
+            string fullRootUrl = HttpContext.Current?.Request.Url.OriginalString.Replace(HttpContext.Current?.Request.Url.LocalPath, string.Empty);
+            if (!HttpContext.Current.Request.Url.ToString().Contains("localhost"))
+            {
+                fullRootUrl = fullRootUrl.Replace(":" + HttpContext.Current?.Request.Url.Port, string.Empty);
+            }
+
             for (int i = 0; i < ips.Count(); i++)
             {
+                string iconPath = "'" + fullRootUrl + "/favicon.ico'" ;
                 sb.AppendLine($@"var {markerNamesInMap[i]} = new google.maps.Marker({{
                 position: {locationNamesInMap[i]},
                 map: map,
+                icon: {iconPath},
                 title: '{i}. {ips.ElementAt(i)} {locations[i].CityName} {locations[i].RegionName} {locations[i].CountryName}'
             }});");
             }
