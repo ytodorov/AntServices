@@ -286,33 +286,7 @@
         </div>
         <div class="panel-body">
             <p>
-                @(Html.Kendo().Grid<PingPermalinkViewModel>()
-        .Name("pingPermalinksHistoryCurrentIp")
-        .Columns(columns =>
-        {
-            //columns.Bound(c => c.SourceIpAddress).Title("Src");
-            columns.Bound(c => c.DestinationAddress).Title("Address");
-            columns.Bound(c => c.PermalinkAddress).Title("Permalink").ClientTemplate("<a href='#: data.PermalinkAddress #'>#: data.PermalinkAddress #</a>");
-            columns.Bound(c => c.DateCreated).Title("Created on").Format("{0:u}");
-        })
-        .Scrollable(s => s.Enabled(false))
-        .ToolBar(t =>
-        {
-            t.Excel().Text(string.Empty);
-            t.Pdf().Text(string.Empty);
-        })
-        .Excel(e => e.AllPages(true).FileName("pingExport(www.toolsfornet.com).xlsx").ProxyURL(Url.Action("Excel", "Export")))
-        .Pdf(e => e.AllPages().FileName("pingExport(www.toolsfornet.com).pdf").ProxyURL(Url.Action("Pdf", "Export")))
-        .DataSource(dataSource => dataSource
-            .Ajax()
-            .ServerOperation(false)
-            .Read(r => r.Action("ReadPingPermalinks", "Ping"))
-
-        )
-        .Pageable()
-        .Deferred()
-
-                )
+                @(Html.Kendo().Grid<PingPermalinkViewModel>().CreatePingPermalinkGrid(Url))
             </p>
 
         </div>
@@ -340,33 +314,7 @@
             </div>
             <div class="panel-body">
                 <p>
-                    @(Html.Kendo().Grid<PingPermalinkViewModel>()
-.Name("pingPermalinksHistoryRequestedAddress")
-.Columns(columns =>
-{
-    //columns.Bound(c => c.SourceIpAddress).Title("Src");
-    columns.Bound(c => c.DestinationAddress).Title("Address");
-    columns.Bound(c => c.PermalinkAddress).Title("Permalink").ClientTemplate("<a href='#: data.PermalinkAddress #'>#: data.PermalinkAddress #</a>");
-    columns.Bound(c => c.DateCreated).Title("Created on").Format("{0:u}");
-})
-.Scrollable(s => s.Enabled(false))
-.ToolBar(t =>
-{
-    t.Excel().Text(string.Empty);
-    t.Pdf().Text(string.Empty);
-})
-.Excel(e => e.FileName("pingExport(www.toolsfornet.com).xlsx").ProxyURL(Url.Action("Excel", "Export")))
-.Pdf(e => e.AllPages().FileName("pingExport(www.toolsfornet.com).pdf").ProxyURL(Url.Action("Pdf", "Export")))
-.DataSource(dataSource => dataSource
-    .Ajax()
-    .ServerOperation(false)
-    .Read(r => r.Action("ReadPingPermalinks", "Ping").Data("getRequestedAddress"))
-
-)
-.Pageable()
-.Deferred()
-
-                    )
+                    @(Html.Kendo().Grid<PingPermalinkViewModel>().CreatePingPermalinkGrid(Url, "getRequestedAddress"))
                 </p>
 
             </div>
