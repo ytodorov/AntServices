@@ -158,16 +158,44 @@ namespace SmartAdminMvc.Infrastructure
             {
                 fullRootUrl = fullRootUrl.Replace(":" + HttpContext.Current?.Request.Url.Port, string.Empty);
             }
+            string greenColorPin = @"
+            var pinGreenColor = '00FF00';
+            var pinGreenImage = new google.maps.MarkerImage('http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|' + pinGreenColor,
+                new google.maps.Size(21, 34),
+                new google.maps.Point(0, 0),
+                new google.maps.Point(10, 34));";
+            sb.AppendLine(greenColorPin);
+
+
+            string redColorPing = @"
+            var pinRedColor = 'FF0000';
+            var pinRedImage = new google.maps.MarkerImage('http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|' + pinRedColor,
+                new google.maps.Size(21, 34),
+                new google.maps.Point(0, 0),
+                new google.maps.Point(10, 34));";
+            sb.AppendLine(redColorPing);
 
             for (int i = 0; i < ips.Count(); i++)
             {
-                string iconPath = "'" + fullRootUrl + "/favicon.ico'" ;
-                sb.AppendLine($@"var {markerNamesInMap[i]} = new google.maps.Marker({{
+                if (i%2 == 0)
+                {
+                    sb.AppendLine($@"var {markerNamesInMap[i]} = new google.maps.Marker({{
                 position: {locationNamesInMap[i]},
                 map: map,
-                icon: {iconPath},
+                icon: pinRedImage,
                 title: '{i}. {ips.ElementAt(i)} {locations[i].CityName} {locations[i].RegionName} {locations[i].CountryName}'
-            }});");
+                }});");
+                }
+                else
+                {
+                    sb.AppendLine($@"var {markerNamesInMap[i]} = new google.maps.Marker({{
+                position: {locationNamesInMap[i]},
+                map: map,
+                icon: pinGreenImage,
+                title: '{i}. {ips.ElementAt(i)} {locations[i].CityName} {locations[i].RegionName} {locations[i].CountryName}'
+                }});");
+                }
+               
             }
 
             StringBuilder locationStringsForPolyline = new StringBuilder();
