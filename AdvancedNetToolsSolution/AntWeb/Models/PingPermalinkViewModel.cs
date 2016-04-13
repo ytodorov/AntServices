@@ -29,7 +29,7 @@ namespace SmartAdminMvc.Models
                 if (HttpContext.Current?.Request != null)
                 {
                     string fullRootUrl = HttpContext.Current?.Request.Url.OriginalString.Replace(HttpContext.Current?.Request.Url.LocalPath, string.Empty);
-
+                    fullRootUrl = fullRootUrl.Replace(":" + HttpContext.Current?.Request.Url.Port, string.Empty);
                     result = $"{fullRootUrl}/ping?id={Id}";
                     return result;
                 }

@@ -43,7 +43,7 @@
         <div class="hpanel hyellow">
             <div class="panel-heading">
                 <p class="text-center">
-                    Round-trip times
+                    Round-trip times in ms
                 </p>
             </div>
             <div class="panel-body">
@@ -59,9 +59,9 @@
                 columns.Bound(c => c.DestinationHostName).Title("Host");
             }
 
-            columns.Bound(c => c.MaxRtt);
-            columns.Bound(c => c.MinRtt);
-            columns.Bound(t => t.AvgRtt);
+            columns.Bound(c => c.MaxRtt).Title("Max");
+            columns.Bound(t => t.AvgRtt).Title("Avg").Format("{0:n0}");
+            columns.Bound(c => c.MinRtt).Title("Min");
         })
         .Scrollable(s => s.Enabled(false))
         .ToolBar(t =>
@@ -73,9 +73,11 @@
         .Pdf(e => e.AllPages().FileName("pingExportHistory(www.toolsfornet.com).pdf").ProxyURL(Url.Action("Pdf", "Export")))
         .DataSource(dataSource => dataSource
             .Ajax()
+            .Sort(s => s.Add(ss => ss.AvgRtt))
             .ServerOperation(false)
 
         )
+        .Sortable()
         .BindTo(Model?.PingResponseSummaries)
         .Deferred()
 
@@ -98,7 +100,7 @@
             </div>
             <div class="panel-body">
                 <p>
-                    @(Html.Kendo().Chart(Model.PingResponseSummaries).Theme("silver")
+                    @(Html.Kendo().Chart(Model.PingResponseSummaries.OrderBy(s => s.AvgRtt)).Theme("silver")
         .Name("pingResultsChart")
         .Legend(legend => legend
             .Position(ChartLegendPosition.Top)
@@ -298,6 +300,7 @@
             .Read(r => r.Action("ReadPingPermalinks", "Ping"))
 
         )
+        .Pageable()
         .Deferred()
 
                 )
