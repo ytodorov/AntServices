@@ -27,7 +27,16 @@
                     <span class="ladda-label">Ping</span>
                     <span class="ladda-spinner"></span>
                 </button>
-
+            </p>
+            <p>
+                @(Html.Kendo().ProgressBar()
+                  .Name("loadingProgressBar")
+                  .Orientation(ProgressBarOrientation.Horizontal)
+                  .ShowStatus(true)
+                  .Animation(true)
+                  .HtmlAttributes(new { style = "display:none;width:100%" })
+                  .Deferred()
+                )
             </p>
         </div>
     </div>
@@ -69,7 +78,7 @@
             t.Excel().Text(string.Empty);
             t.Pdf().Text(string.Empty);
         })
-        .Excel(e => e.FileName("pingExportHistory(www.toolsfornet.com).xlsx").ProxyURL(Url.Action("Excel", "Export")))
+        .Excel(e => e.AllPages(true).FileName("pingExportHistory(www.toolsfornet.com).xlsx").ProxyURL(Url.Action("Excel", "Export")))
         .Pdf(e => e.AllPages().FileName("pingExportHistory(www.toolsfornet.com).pdf").ProxyURL(Url.Action("Pdf", "Export")))
         .DataSource(dataSource => dataSource
             .Ajax()
@@ -292,7 +301,7 @@
             t.Excel().Text(string.Empty);
             t.Pdf().Text(string.Empty);
         })
-        .Excel(e => e.FileName("pingExport(www.toolsfornet.com).xlsx").ProxyURL(Url.Action("Excel", "Export")))
+        .Excel(e => e.AllPages(true).FileName("pingExport(www.toolsfornet.com).xlsx").ProxyURL(Url.Action("Excel", "Export")))
         .Pdf(e => e.AllPages().FileName("pingExport(www.toolsfornet.com).pdf").ProxyURL(Url.Action("Pdf", "Export")))
         .DataSource(dataSource => dataSource
             .Ajax()
