@@ -5,7 +5,6 @@
 
     // Start loading
     l.ladda('start');
-    debugger;
     var showInHistory = $("#showInHistory").is(":checked");
 
     $.ajax({

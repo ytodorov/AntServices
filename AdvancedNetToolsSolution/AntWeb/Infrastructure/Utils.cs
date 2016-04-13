@@ -222,7 +222,7 @@ namespace SmartAdminMvc.Infrastructure
             using (HttpClient client = new HttpClient())
             {
 
-                var encodedArgs0 = Uri.EscapeDataString($" -sn {hostName}");
+                var encodedArgs0 = Uri.EscapeDataString($" -sn -Pn {hostName}");
                 string url = $"{locationOfDeployedService}/home/exec?program=nmap&args=" + encodedArgs0;
                 var res = client.GetStringAsync(url).Result;
 
@@ -245,8 +245,8 @@ namespace SmartAdminMvc.Infrastructure
 
             using (HttpClient client = new HttpClient())
             {
-
-                var encodedArgs0 = Uri.EscapeDataString($"-T4 -F {ipOrHostName}");
+                //Note: Host seems down. If it is really up, but blocking our ping probes, try -Pn
+                var encodedArgs0 = Uri.EscapeDataString($"-T4 -F -Pn {ipOrHostName}");
                 string url = "http://antnortheu.cloudapp.net/home/exec?program=nmap&args=" + encodedArgs0;
                 var portSummary = client.GetStringAsync(url).Result;
 

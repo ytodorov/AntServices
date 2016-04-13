@@ -1,16 +1,19 @@
 ﻿$(window).resize(function () {
     //заради менюто което се премахва на малък екран   
-    setTimeout(function resizeChart() {
-        var $kendoCharts = $(".k-chart").data("kendoChart");
-        if ($kendoCharts) {
-            $kendoCharts.refresh();
-        }
-
-        resizeGrids()
+    setTimeout(function () {
+        resizeCharts();
+        resizeGrids();
     }
-   , 10);
+   , 1);
    
 });
+
+function resizeCharts() {
+    var $kendoCharts = $(".k-chart").data("kendoChart");
+    if ($kendoCharts) {
+        $kendoCharts.refresh();
+    }
+}
 
 function resizeGrids() {
     var grids = $(".k-grid table");
@@ -37,12 +40,9 @@ function resizeGrids() {
 
 $(window).ready(function myfunction() {
     //заради менюто което се премахва на малък екран. Важно е да е около 200, защото лявото меню се скрива след определено време и то трябва да мине за да се преначертае графиката отново
-    setTimeout(function resizeChart() {
-        var $kendoCharts = $(".k-chart").data("kendoChart");
-        if ($kendoCharts)
-        {
-            $kendoCharts.refresh();
-        }
+    setTimeout(function () {
+        resizeCharts();
+        resizeGrids();
     }
    , 200);
 
@@ -61,7 +61,7 @@ $(window).ready(function myfunction() {
         };
        
           
-            toastr.info('Info - Copied to clipboard.');
+            toastr.info('Copied to clipboard.');
             e.preventDefault();
             $("#iconSendEmail").click();
     
@@ -73,7 +73,6 @@ $(window).ready(function myfunction() {
 
 $.ajaxSetup({
     error: function (XMLHttpRequest, textStatus, errorThrown) {
-        debugger;
         // Toastr options
         toastr.options = {
             "debug": false,
@@ -85,6 +84,6 @@ $.ajaxSetup({
         var laddaButtons = $("[data-loading]");
         laddaButtons.ladda('stop');
 
-        toastr.error('An error occured. It will be fixed soon!');
+        toastr.error('An error occured! Try again.');
     }
 });
