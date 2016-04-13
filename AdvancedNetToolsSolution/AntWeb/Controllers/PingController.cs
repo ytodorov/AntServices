@@ -119,12 +119,20 @@ namespace SmartAdminMvc.Controllers
                 return Json(pp.Id);
             }
         }
-        public ActionResult ReadPingPermalinks([DataSourceRequest] DataSourceRequest request)
+        public ActionResult ReadPingPermalinks([DataSourceRequest] DataSourceRequest request, string address)
         {
             string userIpAddress = Request.UserHostAddress;
             using (AntDbContext context = new AntDbContext())
             {
-                var pingPermalinks = context.PingPermalinks.Where(p => p.UserCreatedIpAddress == userIpAddress && p.ShowInHistory == true).ToList();
+                List<PingPermalink> pingPermalinks;
+                if (string.IsNullOrEmpty(address))
+                {
+                    pingPermalinks = context.PingPermalinks.Where(p => p.UserCreatedIpAddress == userIpAddress && p.ShowInHistory == true).ToList();
+                }
+                else
+                {
+                    pingPermalinks = context.PingPermalinks.Where(p => p.DestinationAddress == address && p.ShowInHistory == true).ToList();
+                }
                 var pingPermalinksViewModels = AutoMapper.Mapper.DynamicMap<List<PingPermalinkViewModel>>(pingPermalinks);
                 var dsResult = Json(pingPermalinksViewModels.ToDataSourceResult(request));
                 return dsResult;

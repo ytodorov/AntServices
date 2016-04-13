@@ -89,7 +89,7 @@
     </div>
 }
 
-            @if (Model != null)
+@if (Model != null)
 {
     <div class="col-lg-12">
         <div class="hpanel hred">
@@ -138,7 +138,7 @@
 }
 
 @if (Model != null)
-    {
+{
 
     <div class="col-lg-12">
         <div class="hpanel hblue">
@@ -187,7 +187,7 @@
                            data-clipboard-action="copy" data-clipboard-target="#permalink"></i>
                     </a>
                 </p>
-        
+
                 <div class="collapse" id="collapseExample" aria-expanded="true">
                     <div class="panel-heading hbuilt">
                         <div class="p-xs">
@@ -214,7 +214,7 @@
                                         <button class="btn btn-info btn-sm" id="btnSend">Send email</button>
                                     </div>
                                 </div>
-                               
+
                             </form>
 
                         </div>
@@ -278,7 +278,7 @@
         <div class="panel-body">
             <p>
                 @(Html.Kendo().Grid<PingPermalinkViewModel>()
-        .Name("pingPermalinksHistory")
+        .Name("pingPermalinksHistoryCurrentIp")
         .Columns(columns =>
         {
             //columns.Bound(c => c.SourceIpAddress).Title("Src");
@@ -310,6 +310,60 @@
     </div>
 </div>
 
+@if (Model != null)
+{
+    <script>
+        function getRequestedAddress() {
+            debugger;
+            var data =
+            {
+                address: $("#ip").val()
+            };
+            return data;
+        }
+    </script>
+    <div class="col-lg-12">
+        <div class="hpanel hviolet">
+            <div class="panel-heading">
+                <p class="text-center">
+                    Ping history for @(Model.DestinationAddress)
+                </p>
+            </div>
+            <div class="panel-body">
+                <p>
+                    @(Html.Kendo().Grid<PingPermalinkViewModel>()
+.Name("pingPermalinksHistoryRequestedAddress")
+.Columns(columns =>
+{
+    //columns.Bound(c => c.SourceIpAddress).Title("Src");
+    columns.Bound(c => c.DestinationAddress).Title("Address");
+    columns.Bound(c => c.PermalinkAddress).Title("Permalink").ClientTemplate("<a href='#: data.PermalinkAddress #'>#: data.PermalinkAddress #</a>");
+    columns.Bound(c => c.DateCreated).Title("Created on").Format("{0:u}");
+})
+.Scrollable(s => s.Enabled(false))
+.ToolBar(t =>
+{
+    t.Excel().Text(string.Empty);
+    t.Pdf().Text(string.Empty);
+})
+.Excel(e => e.FileName("pingExport(www.toolsfornet.com).xlsx").ProxyURL(Url.Action("Excel", "Export")))
+.Pdf(e => e.AllPages().FileName("pingExport(www.toolsfornet.com).pdf").ProxyURL(Url.Action("Pdf", "Export")))
+.DataSource(dataSource => dataSource
+    .Ajax()
+    .ServerOperation(false)
+    .Read(r => r.Action("ReadPingPermalinks", "Ping").Data("getRequestedAddress"))
+
+)
+.Pageable()
+.Deferred()
+
+                    )
+                </p>
+
+            </div>
+        </div>
+    </div>
+}
 
 <div class="normalheader transition animated fadeIn">
 
