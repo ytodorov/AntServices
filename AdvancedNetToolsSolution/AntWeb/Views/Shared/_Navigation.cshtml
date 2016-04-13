@@ -4,13 +4,16 @@
             <a href="@Url.Action("Index", "Home")"> <span class="nav-label">Home</span> <span class="label label-success pull-right">Start</span> </a>
         </li>
         <li class="@Html.IsSelected(action: "Index")">
-            <a href="@Url.Action("Index", "Ping")"> <span class="nav-label">Ping</span> </a>
-        </li>
-        @*<li class="@Html.IsSelected(action: "Index")">
-            <a href="@Url.Action("Index", "TraceRoute")"> <span class="nav-label">TraceRoute</span> </a>
+            <a href="@Url.Action("Index", "Ping")"> <span class="nav-label">Ping</span><span class="label label-warning pull-right">New</span>  </a>
         </li>
         <li class="@Html.IsSelected(action: "Index")">
-            <a href="@Url.Action("Index", "ContactUs")"> <span class="nav-label">Contact Us</span> </a>
-        </li>*@
+            <a href="javascript:void()"> <span class="nav-label">TraceRoute</span><span class="label label-info pull-right">Soon</span> </a>
+        </li>
+    @*<li class="@Html.IsSelected(action: "Index")">
+        <a href="@Url.Action("Index", "TraceRoute")"> <span class="nav-label">TraceRoute</span> </a>
+    </li>
+    <li class="@Html.IsSelected(action: "Index")">
+        <a href="@Url.Action("Index", "ContactUs")"> <span class="nav-label">Contact Us</span> </a>
+    </li>*@
     </ul>
 </div>

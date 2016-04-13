@@ -87,7 +87,6 @@ $.ajaxSetup({
         toastr.error('An error occured! Try again.');
     },
     success: function myfunction(event, xhr, settings) {
-        debugger;
         alert(message);
     }
 });

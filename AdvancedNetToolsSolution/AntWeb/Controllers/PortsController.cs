@@ -45,7 +45,7 @@ namespace SmartAdminMvc.Controllers
             using (HttpClient client = new HttpClient())
             {                
                 var encodedArgs0 = Uri.EscapeDataString($"-T4 -F {ip}");
-                string url = "http://antnortheu.cloudapp.net/home/exec?program=nmap&args=" + encodedArgs0;
+                string url = "http://ants-neu.cloudapp.net/home/exec?program=nmap&args=" + encodedArgs0;
 
                 var portSummary = client.GetStringAsync(url).Result;
 

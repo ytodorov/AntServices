@@ -45,6 +45,15 @@ namespace SmartAdminMvc.Controllers
         [HttpPost]
         public ActionResult GenerateId(PingRequestViewModel prvm)
         {
+            Uri uriResult;
+            bool isUri = Uri.TryCreate(prvm.Ip, UriKind.Absolute, out uriResult)
+                && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
+            if (isUri)
+            {
+                prvm.Ip = uriResult.Host;
+            }
+
+
             prvm.DelayBetweenPings = 200; // 200 is more successfull
             if (string.IsNullOrEmpty(prvm.Ip))
             {

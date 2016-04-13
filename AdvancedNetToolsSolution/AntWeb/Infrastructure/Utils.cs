@@ -21,13 +21,11 @@ namespace SmartAdminMvc.Infrastructure
             RandomNumberGenerator = new Random();
             GetDeployedServicesUrlAddresses = new List<string>()
             {
-                "http://antnortheu.cloudapp.net", //"13.79.153.220",
                 "http://ants-ea.cloudapp.net", // "40.83.125.9",
                 "http://ants-je.cloudapp.net", // "13.71.155.140"
                 "http://ants-sea.cloudapp.net", // "13.76.100.42"
                 "http://ant-cus.cloudapp.net", // "52.165.26.10"
                 "http://ant-jw.cloudapp.net", // "40.74.137.95"
-                //"http://ants-ea.cloudapp.net", // "40.83.125.9"
                 "http://ants-eus.cloudapp.net", // "13.90.212.72"
                 "http://ants-neu.cloudapp.net", // "13.74.188.161"
                 "http://ants-scus.cloudapp.net", // "104.214.70.79"
@@ -37,13 +35,11 @@ namespace SmartAdminMvc.Infrastructure
 
             HotstNameToIp = new Dictionary<string, string>()
         {
-            {  "http://antnortheu.cloudapp.net", "13.79.153.220" },
             {  "http://ants-ea.cloudapp.net", "40.83.125.9" },
             {  "http://ants-je.cloudapp.net", "13.71.155.140" },
             {  "http://ants-sea.cloudapp.net", "13.76.100.42" },
             {  "http://ant-cus.cloudapp.net", "52.165.26.10" },
             {  "http://ant-jw.cloudapp.net", "40.74.137.95" },
-            //{  "http://ants-ea.cloudapp.net", "40.83.125.9" },
             {  "http://ants-eus.cloudapp.net", "13.90.212.72" },
             {  "http://ants-neu.cloudapp.net", "13.74.188.161" },
             {  "http://ants-scus.cloudapp.net", "104.214.70.79" },
@@ -52,9 +48,8 @@ namespace SmartAdminMvc.Infrastructure
         };
             HotstNameToAzureLocation = new Dictionary<string, string>()
             {
-                 {  "http://antnortheu.cloudapp.net", "North Europe" },
+                
             { "http://ants-ea.cloudapp.net", "East Asia" },
-            //{ "http://ants-ea.cloudapp.net", "East Asia" },
             { "http://ants-sea.cloudapp.net", "South East Asia" },
             { "http://ants-je.cloudapp.net", "East Japan" },
             { "http://ant-jw.cloudapp.net", "West Japan" },
@@ -276,6 +271,29 @@ namespace SmartAdminMvc.Infrastructure
             return string.Empty;
         }
 
+        public static bool IsValidIpOrUrl(string ipOrUrlToTest)
+        {
+            IPAddress dummy;
+            var isIpAddress = IPAddress.TryParse(ipOrUrlToTest, out dummy);
+            if (isIpAddress)
+            {
+                return true;
+            }
+            Uri uriDummy;
+            var isValidUri = Uri.TryCreate(ipOrUrlToTest, UriKind.Absolute, out uriDummy);
+            if (isValidUri)
+            {
+                return true;
+            }
+            isValidUri = Uri.TryCreate(ipOrUrlToTest, UriKind.Relative, out uriDummy);
+            if (isValidUri)
+            {
+                return true;
+            }
+            return false;
+        }
+             
+
         public static string GetFirstOpenPort(string ipOrHostName)
         {
 
@@ -283,7 +301,7 @@ namespace SmartAdminMvc.Infrastructure
             {
                 //Note: Host seems down. If it is really up, but blocking our ping probes, try -Pn
                 var encodedArgs0 = Uri.EscapeDataString($"-T4 -F -Pn {ipOrHostName}");
-                string url = "http://antnortheu.cloudapp.net/home/exec?program=nmap&args=" + encodedArgs0;
+                string url = "http://ants-neu.cloudapp.net/home/exec?program=nmap&args=" + encodedArgs0;
                 var portSummary = client.GetStringAsync(url).Result;
 
                 List<PortResponseSummaryViewModel> portViewModels = PortParser.ParseSummary(portSummary);

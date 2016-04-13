@@ -16,7 +16,7 @@ namespace SmartAdminMvc.Controllers
             return View(model: Request.UserHostAddress);
             //using (HttpClient client = new HttpClient())
             //{
-            //    string url = "http://antnortheu.cloudapp.net/home/getclientip";
+            //    string url = "http://ants-neu.cloudapp.net/home/getclientip";
             //    var res = client.GetStringAsync(url).Result;
             //    return View(model:res);
 
