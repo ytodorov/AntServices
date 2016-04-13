@@ -58,6 +58,12 @@ namespace SmartAdminMvc.Controllers
 
             string firstOpenPort = Utils.GetFirstOpenPort(prvm.Ip);
 
+            if (string.IsNullOrEmpty(firstOpenPort))
+            {
+                var result = new { error = "Invalid address for ping" };
+                return Json(result);
+            }
+
             var urls = Utils.GetDeployedServicesUrlAddresses;
 
             for (int i = 0; i < urls.Count; i++)

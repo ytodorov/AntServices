@@ -8,8 +8,9 @@
 
 
     var pb = $("#loadingProgressBar").data("kendoProgressBar");
-    $("#loadingProgressBar").show();
     pb.value(0);
+    $("#loadingProgressBar").show();
+   
 
     var interval = setInterval(function () {
         if (pb.value() < 100) {
@@ -36,7 +37,18 @@
             df: $('#cbDontFragment').is(':checked')
         },
         success: function f(id) {
-            window.location.href = "ping?id=" + id;
+            var error = id.error;
+            if (typeof error != 'undefined') {
+                $("#loadingProgressBar").hide();
+                var l = $("#btnPing").ladda();
+
+                // Start loading
+                l.ladda('stop');
+                toastr.error(error);
+            }
+            else {                
+                window.location.href = "ping?id=" + id;
+            }
 
         }
     })

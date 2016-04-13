@@ -5,7 +5,7 @@
         resizeGrids();
     }
    , 1);
-   
+
 });
 
 function resizeCharts() {
@@ -59,12 +59,12 @@ $(window).ready(function myfunction() {
             "closeButton": true,
             "toastClass": "animated fadeInDown",
         };
-       
-          
-            toastr.info('Copied to clipboard.');
-            e.preventDefault();
-            $("#iconSendEmail").click();
-    
+
+
+        toastr.info('Copied to clipboard.');
+        e.preventDefault();
+        $("#iconSendEmail").click();
+
     });
 
     clipboard.on('error', function (e) {
@@ -85,5 +85,9 @@ $.ajaxSetup({
         laddaButtons.ladda('stop');
 
         toastr.error('An error occured! Try again.');
+    },
+    success: function myfunction(event, xhr, settings) {
+        debugger;
+        alert(message);
     }
 });
