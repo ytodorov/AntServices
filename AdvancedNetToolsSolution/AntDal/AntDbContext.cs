@@ -23,5 +23,7 @@ namespace AntDal
         public virtual DbSet<PortResponseSummary> PortResponseSummaries { get; set; }
 
         public virtual DbSet<IpLocation> IpLocations { get; set; }
+
+        public virtual DbSet<ErrorLogging> ErrorLoggings { get; set; }
     }
 }

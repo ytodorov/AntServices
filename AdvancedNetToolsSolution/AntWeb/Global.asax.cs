@@ -1,10 +1,16 @@
 ﻿#region Using
 
+using AntDal;
+using AntDal.Entities;
+using Serilog;
+using Serilog.Sinks.MSSqlServer;
 using SmartAdminMvc.Infrastructure;
 using StructureMap;
 using StructureMap.Graph;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Data;
 using System.Net.Http;
 using System.Timers;
 using System.Web;
@@ -56,6 +62,29 @@ namespace SmartAdminMvc
         protected void Application_Error()
         {
             Exception ex = Server.GetLastError();
+            using (AntDbContext context = new AntDbContext())
+            {
+                ErrorLogging el = new ErrorLogging();
+                el.Message = ex.Message;
+                el.StackTrace = ex.StackTrace.ToString();
+                el.Data = ex.Data.ToString();
+                el.UserCreated = Request.UserHostAddress;
+                el.UserModified = Request.UserHostAddress;
+                el.DateCreated = DateTime.Now;
+                el.DateModified = DateTime.Now;
+
+
+                context.ErrorLoggings.Add(el);
+                context.SaveChanges();
+            }
+            //    var log = new LoggerConfiguration()
+            //        .WriteTo.MSSqlServer(connectionString: @"Server=Alex-PC\SQLEXPRESS;Database=Ant;user=sa;password=1510alex;MultipleActiveResultSets=true;", tableName: "ErrorLoggings")
+            //        .CreateLogger();
+            //}
+            
+            //log.("@{Title}", ex.Message);
+            //log.Information("@{Description}", ex.StackTrace);
+            //log.Information("@{IpAddress}", ex.Data);
         }
 
         private void PreventAppsFromSleep()
