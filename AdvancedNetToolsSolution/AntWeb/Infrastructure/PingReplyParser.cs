@@ -18,6 +18,14 @@ namespace SmartAdminMvc.Infrastructure
 
             PingResponseSummaryViewModel result = new PingResponseSummaryViewModel();
 
+            // destinationIp SENT (0.8440s) ICMP [10.0.0.4 > 8.8.8.8 Echo request (type=8/code=0) id=24130 seq=1] IP [ttl=64 id=40491 proto=1 csum=0xc2a2 iplen=28 ]
+            // SENT (0.2780s) TCP [100.104.66.29:20131 > 216.58.200.110:80 S seq=918634342 win=1480 csum=0x9DD1] IP [ttl=64 id=4649 proto=6 csum=0x2179 iplen=40 ]
+            int firstIndexOfGreaterThan = summary.IndexOf(">");
+            int firstIndexOfEchoRequest = summary.IndexOf(" S seq=");
+            int lengthOfIp = firstIndexOfEchoRequest - firstIndexOfGreaterThan;
+            string ipWithPort = summary.Substring(firstIndexOfGreaterThan + 1, lengthOfIp - 1).Trim();
+            result.DestinationIpAddress = ipWithPort.Substring(0, ipWithPort.IndexOf(":"));
+
             var lines = summary.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
 
             var firstLine = lines.First(s => s.StartsWith("max", StringComparison.InvariantCultureIgnoreCase));

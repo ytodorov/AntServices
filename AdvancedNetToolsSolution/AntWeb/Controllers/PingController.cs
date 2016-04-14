@@ -15,6 +15,7 @@ using System.Runtime.Caching;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using System.Linq;
+using System.Net.Sockets;
 
 #endregion
 
@@ -53,6 +54,9 @@ namespace SmartAdminMvc.Controllers
                 prvm.Ip = uriResult.Host;
             }
 
+      
+
+
 
             prvm.DelayBetweenPings = 200; // 200 is more successfull
             if (string.IsNullOrEmpty(prvm.Ip))
@@ -60,12 +64,50 @@ namespace SmartAdminMvc.Controllers
                 return Json(string.Empty);
             }
 
+            IPAddress dummy;
+            bool isIpAddress = IPAddress.TryParse(prvm.Ip, out dummy);
+            string firstOpenPort = null;
+            if (!isIpAddress)
+            {
+                if (prvm.Ip.Trim().StartsWith("https"))
+                {
+                    firstOpenPort = "443";
+                }
+                else if (prvm.Ip.Trim().StartsWith("ftp"))
+                {
+                    firstOpenPort = "21";
+                }
+                else
+                {
+                    firstOpenPort = "80";
+                }
+            }
+            
+            if (string.IsNullOrEmpty(firstOpenPort))
+            {
+                firstOpenPort = Utils.GetFirstOpenPort(prvm.Ip);
+            }
 
             List<PingResponseSummaryViewModel> list = new List<PingResponseSummaryViewModel>();
             List<Task<string>> tasks = new List<Task<string>>();
             List<HttpClient> clients = new List<HttpClient>();
+            //string firstOpenPort = "80";
+            //using (var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
+            //{
+            //    try
+            //    {
+            //        socket.SendTimeout = 500;
+            //        socket.ReceiveTimeout = 500;
+            //        socket.Connect(prvm.Ip, 80);
+            //        socket.Close();
+            //    }
+            //    catch (SocketException ex)
+            //    {
+            //        firstOpenPort = Utils.GetFirstOpenPort(prvm.Ip);
+            //    }
+            //}
 
-            string firstOpenPort = Utils.GetFirstOpenPort(prvm.Ip);
+            //string firstOpenPort = Utils.GetFirstOpenPort(prvm.Ip);
 
             if (string.IsNullOrEmpty(firstOpenPort))
             {
@@ -80,7 +122,7 @@ namespace SmartAdminMvc.Controllers
 
                 HttpClient client = new HttpClient();
                 clients.Add(client);
-                var encodedArgs = Uri.EscapeDataString($"--tcp -p  {firstOpenPort} -v1 {prvm.Ip}");
+                var encodedArgs = Uri.EscapeDataString($"--tcp -p  {firstOpenPort} --delay 50ms -v1 {prvm.Ip} -c 5");
                 var urlWithArgs = urls[i] + "/home/exec?program=nping&args=" + encodedArgs;
                 Task<string> task = client.GetStringAsync(urlWithArgs);
                 tasks.Add(task);
@@ -101,7 +143,7 @@ namespace SmartAdminMvc.Controllers
                 if (!isUserRequestedAddressIp)
                 {
                     summary.DestinationHostName = prvm.Ip;
-                    summary.DestinationIpAddress = Utils.GetIpAddressFromHostName(prvm.Ip, urls[i]);
+                    summary.DestinationIpAddress = summary.DestinationIpAddress; //Utils.GetIpAddressFromHostName(prvm.Ip, urls[i]);
                 }
                 else
                 {

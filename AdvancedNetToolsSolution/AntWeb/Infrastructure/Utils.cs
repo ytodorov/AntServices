@@ -253,7 +253,7 @@ namespace SmartAdminMvc.Infrastructure
             using (HttpClient client = new HttpClient())
             {
 
-                var encodedArgs0 = Uri.EscapeDataString($" -sn -Pn {hostName}");
+                var encodedArgs0 = Uri.EscapeDataString($"{hostName} -n -sn -Pn");
                 string url = $"{locationOfDeployedService}/home/exec?program=nmap&args=" + encodedArgs0;
                 var res = client.GetStringAsync(url).Result;
 
