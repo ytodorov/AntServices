@@ -115,7 +115,7 @@ namespace SmartAdminMvc.Controllers
                 return Json(result);
             }
 
-            var urls = Utils.GetDeployedServicesUrlAddresses;
+            var urls = Utils.GetDeployedServicesUrlAddresses.ToList();
 
             for (int i = 0; i < urls.Count; i++)
             {

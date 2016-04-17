@@ -1,11 +1,48 @@
-﻿<div id="map" style="width:500px;height: 300px"></div>
-@{
+﻿@{
     ViewBag.Title = "| Home";
     ViewBag.MetaDescription = "Distributed network tools and services. Ping, traceroute, upload/download speed, port checker.";
 }
 
-@section scripts {
+<section id="features2" class="bg-light landing-page icon-big">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-lg-12">
+                <h2><span class="text-success">Tools for Net</span></h2>
+                <p>Distributed network services</p>
+            </div>
+        </div>
+        <div class="row text-center">
+            <a href="~/Ping">
+                <div class="col-xs-12 col-sm-6 col-md-4">
+                    <h4 class="m-t-lg"><i class="pe-7s-sun text-success icon-big"></i></h4>
+                    <strong>Ping</strong>
+                    <p>Test the reachability of a host on an Internet Protocol (IP) network. Ping measures the round-trip time for messages sent from the originating host to a destination computer and echoed back to the source.</p>
+                </div>
+            </a>
+            <div class="col-xs-12 col-sm-6 col-md-4">
+                <h4 class="m-t-lg"><i class="pe-7s-science text-success icon-big"></i></h4>
+                <strong>Treaceroute</strong>
+                <p>Treaceroute is diagnostic tool for displaying the route (path) and measuring transit delays of packets across an Internet Protocol (IP) network.</p>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-4">
+                <h4 class="m-t-lg"><i class="pe-7s-cloud-download text-success icon-big"></i></h4>
+                <strong>Download speed</strong>
+                <p>Measure client's download speed from various locations across the world.</p>
+            </div>           
+        </div>
+        <div class="row text-center">           
+            <div class="col-xs-12 col-sm-6 col-md-4">
+                <h4 class="m-t-lg"><i class="pe-7s-cloud-upload text-success icon-big"></i></h4>
+                <strong>Upload speed</strong>
+                <p>Measure client's upload speed to various locations across the world.</p>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="normalheader transition animated fadeIn">
+</div>
+    @*<div id="map" style="width:500px;height: 300px"></div>
 
-   
-<script src="~/Scripts/viewsJS/homeIndex.js"></script>
-}
+    @section scripts {
+        <script src="~/Scripts/viewsJS/homeIndex.js"></script>
+    }*@

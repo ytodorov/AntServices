@@ -20,6 +20,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeleniumUnitTests", "UnitTe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AntDal", "AntDal\AntDal.csproj", "{FFB9C514-F619-437B-93C8-F462160BB7DE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PingAllLocationsWebJob", "PingAllLocationsWebJob\PingAllLocationsWebJob.csproj", "{7240F981-39F8-4585-9824-95C74FFAF783}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -46,6 +48,10 @@ Global
 		{FFB9C514-F619-437B-93C8-F462160BB7DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FFB9C514-F619-437B-93C8-F462160BB7DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FFB9C514-F619-437B-93C8-F462160BB7DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7240F981-39F8-4585-9824-95C74FFAF783}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7240F981-39F8-4585-9824-95C74FFAF783}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7240F981-39F8-4585-9824-95C74FFAF783}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7240F981-39F8-4585-9824-95C74FFAF783}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

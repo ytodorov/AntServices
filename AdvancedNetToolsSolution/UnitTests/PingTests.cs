@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Net.Http;
@@ -19,7 +20,7 @@ namespace UnitTests
             {
 
                 var encodedArgs0 = Uri.EscapeDataString(" 8.8.8.8 --delay 10ms -v1");
-                string url = "http://antnortheu.cloudapp.net/home/exec?program=nping&args=" + encodedArgs0;
+                string url = "http://ants-je.cloudapp.net/home/exec?program=nping&args=" + encodedArgs0;
                 var res = client.GetStringAsync(url).Result;
 
                 var lines = res.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
@@ -84,6 +85,45 @@ namespace UnitTests
 
                 }
 
+            }
+        }
+
+
+        [Fact]
+        public void MeasurePingTimings()
+        {
+            List<long> timings = new List<long>();
+            foreach (var urlService in SmartAdminMvc.Infrastructure.Utils.GetDeployedServicesUrlAddresses)
+            {
+                Stopwatch sw = Stopwatch.StartNew();
+
+                using (HttpClient client = new HttpClient())
+                {
+
+                    var encodedArgs0 = Uri.EscapeDataString(" 8.8.8.8 --delay 10ms -v1");
+                    string url = $"{urlService}/home/exec?program=nping&args=" + encodedArgs0;
+                    var res = client.GetStringAsync(url).Result;
+                }
+                timings.Add(sw.ElapsedMilliseconds);
+            }
+        }
+
+        [Fact]
+        public void MeasurePingTimings2()
+        {
+            List<long> timings = new List<long>();
+            foreach (var urlService in SmartAdminMvc.Infrastructure.Utils.GetDeployedServicesUrlAddresses)
+            {
+                Stopwatch sw = Stopwatch.StartNew();
+
+                using (HttpClient client = new HttpClient())
+                {
+
+                    var encodedArgs0 = Uri.EscapeDataString(" 8.8.8.8 --delay 10ms -v1");
+                    string url =urlService;
+                    var res = client.GetStringAsync(url).Result;
+                }
+                timings.Add(sw.ElapsedMilliseconds);
             }
         }
     }
