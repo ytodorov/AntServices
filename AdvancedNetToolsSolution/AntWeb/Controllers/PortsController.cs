@@ -10,6 +10,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.Entity;
 
 namespace SmartAdminMvc.Controllers
 {
@@ -22,7 +23,7 @@ namespace SmartAdminMvc.Controllers
             {
                 using (AntDbContext context = new AntDbContext())
                 {
-                    PortPermalink pp = context.PortPermalinks.Find(id);
+                    PortPermalink pp = context.PortPermalinks.Include(e => e.PortResponseSummaries).FirstOrDefault(s => s.Id == id);
                     if (pp != null)
                     {
                         PortPermalinkViewModel ppvm = AutoMapper.Mapper.DynamicMap<PortPermalinkViewModel>(pp);

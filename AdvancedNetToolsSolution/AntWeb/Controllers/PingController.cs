@@ -16,6 +16,7 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using System.Linq;
 using System.Net.Sockets;
+using System.Data.Entity;
 
 #endregion
 
@@ -24,14 +25,16 @@ namespace SmartAdminMvc.Controllers
 
     public class PingController : BaseController
     {
+
         // GET: home/index
         public ActionResult Index(int? id)
         {
+
             if (id.HasValue)
             {
                 using (AntDbContext context = new AntDbContext())
                 {
-                    PingPermalink pp = context.PingPermalinks.Find(id);
+                    PingPermalink pp = context.PingPermalinks.Include(e => e.PingResponseSummaries).FirstOrDefault(d => d.Id == id);
                     if (pp != null)
                     {
                         PingPermalinkViewModel ppvm = AutoMapper.Mapper.DynamicMap<PingPermalinkViewModel>(pp);
@@ -54,7 +57,7 @@ namespace SmartAdminMvc.Controllers
                 prvm.Ip = uriResult.Host;
             }
 
-      
+
 
 
 
@@ -82,7 +85,7 @@ namespace SmartAdminMvc.Controllers
                     firstOpenPort = "80";
                 }
             }
-            
+
             if (string.IsNullOrEmpty(firstOpenPort))
             {
                 firstOpenPort = Utils.GetFirstOpenPort(prvm.Ip);
@@ -178,9 +181,36 @@ namespace SmartAdminMvc.Controllers
         }
         public ActionResult ReadPingPermalinks([DataSourceRequest] DataSourceRequest request, string address)
         {
-            string userIpAddress = Request.UserHostAddress;
+            List<PingPermalink> pingPermalinks = GetPermalinksForCurrentUser(address);
+
+            var pingPermalinksViewModels = AutoMapper.Mapper.DynamicMap<List<PingPermalinkViewModel>>(pingPermalinks);
+            var dsResult = Json(pingPermalinksViewModels.ToDataSourceResult(request));
+            return dsResult;
+
+        }
+        public ActionResult ReadAddressesToPing([DataSourceRequest] DataSourceRequest request)
+        {
+            List<PingPermalink> pingPermalinks = GetPermalinksForCurrentUser(null);
+            pingPermalinks = pingPermalinks.GroupBy(pp => pp.DestinationAddress).Select(group => group.First()).ToList();
+
+            List<AddressHistoryViewModel> list = new List<AddressHistoryViewModel>();
+
+            foreach (var pp in pingPermalinks)
+            {
+                  AddressHistoryViewModel ahvm = new AddressHistoryViewModel() { Name = pp.DestinationAddress, Category = "History" };
+                 list.Add(ahvm);
+            }                    
+
+            return Json(list, JsonRequestBehavior.AllowGet);
+
+
+        }
+
+        private List<PingPermalink> GetPermalinksForCurrentUser(string address)
+        {
             using (AntDbContext context = new AntDbContext())
             {
+                string userIpAddress = Request.UserHostAddress;
                 List<PingPermalink> pingPermalinks;
                 if (string.IsNullOrEmpty(address))
                 {
@@ -190,13 +220,9 @@ namespace SmartAdminMvc.Controllers
                 {
                     pingPermalinks = context.PingPermalinks.Where(p => p.DestinationAddress == address && p.ShowInHistory == true).ToList();
                 }
-                var pingPermalinksViewModels = AutoMapper.Mapper.DynamicMap<List<PingPermalinkViewModel>>(pingPermalinks);
-                var dsResult = Json(pingPermalinksViewModels.ToDataSourceResult(request));
-                return dsResult;
+                return pingPermalinks;
             }
-
-
-
         }
+
     }
 }

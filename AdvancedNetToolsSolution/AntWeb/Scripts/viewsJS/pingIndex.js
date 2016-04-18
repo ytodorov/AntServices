@@ -1,5 +1,6 @@
 ﻿$("#btnPing").click(function btnPingClick(e) {
     e.preventDefault();
+    debugger;
 
     var l = $("#btnPing").ladda();
 

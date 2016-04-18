@@ -1542,6 +1542,7 @@
     <Compile Include="Infrastructure\StructureMapDependecyResolver.cs" />
     <Compile Include="Infrastructure\TraceRouteParser.cs" />
     <Compile Include="Infrastructure\Utils.cs" />
+    <Compile Include="Models\AddressHistoryViewModel.cs" />
     <Compile Include="Models\IpLocationViewModel.cs" />
     <Compile Include="Models\PermalinkBaseViewModel.cs" />
     <Compile Include="Models\PingPermalinkViewModel.cs" />

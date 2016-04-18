@@ -9,6 +9,7 @@ using AntDal;
 using System;
 using System.Collections.Generic;
 using Kendo.Mvc.UI;
+using System.Data.Entity;
 
 
 #endregion
@@ -54,7 +55,7 @@ namespace SmartAdminMvc.Controllers
         {
             using (AntDbContext context = new AntDbContext())
             {
-                var pingPermalink = context.PingPermalinks.Find(permalinkId);
+                var pingPermalink = context.PingPermalinks.Include(path => path.PingResponseSummaries).FirstOrDefault(p => p.Id == permalinkId);
 
                 List<string> ipAddresses = new List<string>();
                 foreach (var prs in pingPermalink.PingResponseSummaries)

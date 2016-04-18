@@ -12,6 +12,8 @@ namespace AntDal
             : base("name=AntModel")
         {
             Database.SetInitializer<AntDbContext>(new DropCreateDatabaseIfModelChanges<AntDbContext>());
+            Configuration.ProxyCreationEnabled = false;
+            Configuration.LazyLoadingEnabled = false;
         }
 
         public virtual DbSet<PingPermalink> PingPermalinks { get; set; }

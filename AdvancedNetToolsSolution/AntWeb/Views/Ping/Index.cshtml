@@ -10,17 +10,36 @@
 <div class="col-lg-12">
     <div class="hpanel hgreen">
         <div class="panel-heading">
-            
-                <p class="text-center">
-                    Ping an IP address or host name
-                </p>
-            
+
+            <p class="text-center">
+                Ping an IP address or host name
+            </p>
+
         </div>
         <div class="panel-body">
-            <p>
+            @*<p>
                 <input type="text" class="k-textbox" id="ip" value="@(Model != null ? Model.DestinationAddress : "facebook.com")" placeholder="Host name or IPv4/6">
-            </p>
+            </p>*@
             <p class="text-center">
+                @(Html.Kendo().AutoComplete()
+          .Name("ip")
+          .DataTextField("Name")
+          //.DataValueField("Name")
+          .MinLength(1)
+          .HtmlAttributes(new { style = "width:100%;" })
+          .Height(400)
+           .Filter("contains")
+          .DataSource(source => source
+              .Custom()
+              .Group(g => g.Add("Category", typeof(string)))
+              .Transport(transport => transport
+                .Read(read =>
+                {
+                    read.Action("ReadAddressesToPing", "Ping");
+                }))
+                .ServerFiltering(false)
+                ).Deferred()
+                )
                 <input type="checkbox" id="showInHistory" class="k-checkbox" checked="checked">
                 <label class="k-checkbox-label" for="showInHistory">Save in history</label>
             </p>
@@ -111,7 +130,7 @@
             </div>
             <div class="panel-body">
                 <p>
-                    @(Html.Kendo().Chart(Model.PingResponseSummaries.OrderBy(s => s.AvgRtt)).Theme("silver")
+                    @(Html.Kendo().Chart(Model.PingResponseSummaries.OrderBy(s => s.AvgRtt)).Theme("fiori")
         .Name("pingResultsChart")
         .Legend(legend => legend
             .Position(ChartLegendPosition.Top)
