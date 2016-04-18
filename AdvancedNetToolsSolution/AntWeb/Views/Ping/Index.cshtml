@@ -18,16 +18,34 @@
         </div>
         <div class="panel-body">
             <p>
-                <input type="text" class="k-textbox" id="ip" value="@(Model != null ? Model.DestinationAddress : "facebook.com")" placeholder="Host name or IPv4/6">
+                @(Html.Kendo().AutoComplete()
+          .Name("ip")
+          .DataTextField("Name")
+          //.DataValueField("Name")
+          .MinLength(1)
+          .HtmlAttributes(new { style = "width:100%;" })
+          //.Height(400)
+          .Value(Model?.DestinationAddress)
+           .Filter("contains")
+          .DataSource(source => source
+              .Custom()
+              .Group(g => g.Add("Category", typeof(string)))
+              .Transport(transport => transport
+                .Read(read =>
+                {
+                    read.Action("ReadAddressesToPing", "Ping");
+                }))
+                .ServerFiltering(false)
+                ).Deferred()
+                )
+
             </p>
-            
+            <p class="text-center">
+                <input type="checkbox" id="showInHistory" class="k-checkbox" checked="checked">
+                <label class="k-checkbox-label" for="showInHistory">Save in history</label>
+            </p>
             <p>
-                <div class="demo-section k-content">
-                    @(Html.Kendo().CheckBox()
-                    .Name("showInHistory")
-                    .Checked(true)
-                    .Label("Save in history"))
-                </div>
+
                 <button type="button" class="ladda-button btn center-block btn-outline btn-success" id="btnPing" data-style="zoom-in">
                     <span class="ladda-label">Ping</span>
                     <span class="ladda-spinner"></span>
@@ -114,24 +132,24 @@
             </div>
             <div class="panel-body">
                 <p>
-                <button type="button" class="ladda-button btn center-block btn-outline btn-success" id="btnPing" data-style="zoom-in">
-                    <span class="ladda-label">Ping</span>
-                    <span class="ladda-spinner"></span>
-                </button>
-            </p>
-            <p>
-                @(Html.Kendo().ProgressBar()
+                    <button type="button" class="ladda-button btn center-block btn-outline btn-success" id="btnPing" data-style="zoom-in">
+                        <span class="ladda-label">Ping</span>
+                        <span class="ladda-spinner"></span>
+                    </button>
+                </p>
+                <p>
+                    @(Html.Kendo().ProgressBar()
           .Name("loadingProgressBar")
           .Orientation(ProgressBarOrientation.Horizontal)
           .ShowStatus(true)
           .Animation(true)
           .HtmlAttributes(new { style = "display:none;width:100%" })
           .Deferred()
-                )
-            </p>
+                    )
+                </p>
+            </div>
         </div>
     </div>
-</div>
 
 }
 
@@ -200,7 +218,7 @@
             </div>
             <div class="panel-body">
                 <p>
-                    @(Html.Kendo().Chart(Model.PingResponseSummaries.OrderBy(s => s.AvgRtt)).Theme("fiori")
+                    @(Html.Kendo().Chart(Model.PingResponseSummaries.OrderBy(s => s.AvgRtt)).Theme("metro")
         .Name("pingResultsChart")
         .Legend(legend => legend
             .Position(ChartLegendPosition.Top)

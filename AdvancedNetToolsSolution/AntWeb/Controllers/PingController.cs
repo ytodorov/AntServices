@@ -190,20 +190,25 @@ namespace SmartAdminMvc.Controllers
         }
         public ActionResult ReadAddressesToPing([DataSourceRequest] DataSourceRequest request)
         {
+
+
             List<PingPermalink> pingPermalinks = GetPermalinksForCurrentUser(null);
             pingPermalinks = pingPermalinks.GroupBy(pp => pp.DestinationAddress).Select(group => group.First()).ToList();
 
             List<AddressHistoryViewModel> list = new List<AddressHistoryViewModel>();
-
+            list.Add(new AddressHistoryViewModel { Name = Request.UserHostAddress, Category = "My IP" });
             foreach (var pp in pingPermalinks)
             {
-                  AddressHistoryViewModel ahvm = new AddressHistoryViewModel() { Name = pp.DestinationAddress, Category = "History" };
-                 list.Add(ahvm);
-            }                    
+                AddressHistoryViewModel ahvm = new AddressHistoryViewModel() { Name = pp.DestinationAddress, Category = "History" };
+                list.Add(ahvm);
+            }
 
+            foreach (string topSite in Utils.TopSitesGlobal)
+            {
+                AddressHistoryViewModel ahvm = new AddressHistoryViewModel() { Name = topSite, Category = "Top sites" };
+                list.Add(ahvm);
+            }
             return Json(list, JsonRequestBehavior.AllowGet);
-
-
         }
 
         private List<PingPermalink> GetPermalinksForCurrentUser(string address)

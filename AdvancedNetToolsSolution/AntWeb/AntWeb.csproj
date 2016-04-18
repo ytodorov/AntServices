@@ -1489,6 +1489,7 @@
     <Content Include="Vendor\toastr\build\toastr.js.map" />
     <Content Include="Views\Shared\Error500.cshtml" />
     <Content Include="Views\Shared\Error404.cshtml" />
+    <Content Include="Views\Faq\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1516,6 +1517,7 @@
     <Compile Include="Controllers\ContactUsController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ExportController.cs" />
+    <Compile Include="Controllers\FaqController.cs" />
     <Compile Include="Controllers\InterfaceController.cs" />
     <Compile Include="Controllers\MyIpController.cs" />
     <Compile Include="Controllers\PortsController.cs" />

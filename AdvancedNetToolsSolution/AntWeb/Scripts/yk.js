@@ -8,6 +8,7 @@
 
 });
 
+
 function resizeCharts() {
     var $kendoCharts = $(".k-chart").data("kendoChart");
     if ($kendoCharts) {
@@ -46,6 +47,13 @@ $(window).ready(function myfunction() {
     }
    , 200);
 
+    $("div.hide-menu").click(function () {
+        setTimeout(function () {
+            resizeCharts();
+            resizeGrids();
+        }
+       , 300); // важен е този timeout 300
+    });
 
     var clipboard = new Clipboard('.fa-pencil-square');
 

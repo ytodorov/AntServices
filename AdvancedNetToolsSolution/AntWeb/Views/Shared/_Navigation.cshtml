@@ -1,19 +1,20 @@
-﻿<div id="navigation">  
+﻿<div id="navigation">
     <ul class="nav metismenu" id="side-menu">
         <li class="@Html.IsSelected(action: "Index")">
-            <a href="@Url.Action("Index", "Home")"> <span class="nav-label">Home</span> <span class="pull-right"><i class="pe-7s-home"></i></span></a>
+            <a href="@Url.Action("Index", "Home")"> <span class="nav-label">Home</span> <span class="pull-right"><i class="pe-7s-home" style="font-size:large"></i></span></a>
         </li>
         <li class="@Html.IsSelected(action: "Index")">
-            <a href="@Url.Action("Index", "Ping")"> <span class="nav-label">Ping</span><span class="pull-right"><i class="pe-7s-sun"></i></span></a>
+            <a href="@Url.Action("Index", "Ping")"> <span class="nav-label">Ping</span><span class="pull-right"><i class="pe-7s-sun" style="font-size:large"></i></span></a>
         </li>
         <li class="@Html.IsSelected(action: "Index")">
-            <a href="javascript:void()"> <span class="nav-label">TraceRoute</span><span class="pull-right"><i class="pe-7s-science"></i></span> </a>
+            <a href="javascript:void()"> <span class="nav-label">TraceRoute</span><span class="pull-right"><i class="pe-7s-science" style="font-size:large"></i></span> </a>
         </li>
-    @*<li class="@Html.IsSelected(action: "Index")">
-        <a href="@Url.Action("Index", "TraceRoute")"> <span class="nav-label">TraceRoute</span> </a>
-    </li>
-    <li class="@Html.IsSelected(action: "Index")">
-        <a href="@Url.Action("Index", "ContactUs")"> <span class="nav-label">Contact Us</span> </a>
-    </li>*@
+        <li class="@Html.IsSelected(action: "Index")">
+            <a href="@Url.Action("Index", "Faq")"> <span class="nav-label">FAQ</span> <span class="pull-right"><i class="pe-7s-chat" style="font-size:large"></i></span></a>
+        </li>
+        <li class="@Html.IsSelected(action: "Index")">
+            <a href="@Url.Action("Index", "ContactUs")"> <span class="nav-label">Contact Us</span> <span class="pull-right"><i class="pe-7s-mail" style="font-size:large"></i></span></a>
+        </li>
     </ul>
 </div>
+

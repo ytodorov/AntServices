@@ -62,6 +62,36 @@ namespace SmartAdminMvc.Infrastructure
 
             };
         }
+
+        public static List<string> TopSitesGlobal = new List<string>()
+        {
+            "Google.com",
+"Youtube.com",
+"Facebook.com",
+"Baidu.com",
+"Yahoo.com",
+"Amazon.com",
+"Wikipedia.org",
+"Qq.com",
+"Google.co.in",
+"Twitter.com",
+"Taobao.com",
+"Live.com",
+"Sina.com.cn",
+"Google.co.jp",
+"Msn.com",
+"Bing.com",
+"Yahoo.co.jp",
+"Weibo.com",
+"Linkedin.com",
+"Vk.com",
+"Yandex.ru",
+"Hao123.com",
+"Instagram.com",
+"Google.de",
+"Ebay.com",
+        };
+
         public static List<string> GetDeployedServicesUrlAddresses { get; set; }
 
 
