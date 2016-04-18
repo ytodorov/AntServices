@@ -20,7 +20,7 @@
             @*<p>
                 <input type="text" class="k-textbox" id="ip" value="@(Model != null ? Model.DestinationAddress : "facebook.com")" placeholder="Host name or IPv4/6">
             </p>*@
-            <p class="text-center">
+            @*<p class="text-center">
                 @(Html.Kendo().AutoComplete()
           .Name("ip")
           .DataTextField("Name")
@@ -42,8 +42,107 @@
                 )
                 <input type="checkbox" id="showInHistory" class="k-checkbox" checked="checked">
                 <label class="k-checkbox-label" for="showInHistory">Save in history</label>
+            </p>*@
+            @*<p class="text-center">
+                    <input type="checkbox" id="showInHistory" class="k-checkbox" checked="checked">
+                    <li>
+                        @(Html.Kendo().CheckBox().Name("eq1").Checked(true).Label("Rear side airbags"));
+                    </li>
+                    <label class="k-checkbox-label" for="showInHistory">Save in history</label>
+                </p>*@
+            <p>
+                <div class="demo-section k-content">
+                    @(Html.Kendo().CheckBox()
+                    .Name("showInHistory")
+                    .Checked(true)
+                    .Label("Save in history"))
+                </div>
+                <button type="button" class="ladda-button btn center-block btn-outline btn-success" id="btnPing" data-style="zoom-in">
+                    <span class="ladda-label">Ping</span>
+                    <span class="ladda-spinner"></span>
+                </button>
             </p>
             <p>
+                @(Html.Kendo().ProgressBar()
+                  .Name("loadingProgressBar")
+                  .Orientation(ProgressBarOrientation.Horizontal)
+                  .ShowStatus(true)
+                  .Animation(true)
+                  .HtmlAttributes(new { style = "display:none;width:100%" })
+                  .Deferred()
+                )
+            </p>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+@if (Model != null)
+{
+    <div class="col-lg-12">
+        <div class="hpanel hyellow">
+            <div class="panel-heading">
+                <p class="text-center">
+                    Round-trip times in ms
+                </p>
+            </div>
+            <div class="panel-body">
+                <p>
+                    @(Html.Kendo().Grid<PingResponseSummaryViewModel>()
+        .Name("pingResultsGrid")
+        .Columns(columns =>
+        {
+            columns.Bound(c => c.SourceHostName).Title("Origin");
+            columns.Bound(c => c.DestinationIpAddress).Title("Dest");
+            if (!Model.IsDestinationIpAddress)
+            {
+                columns.Bound(c => c.DestinationHostName).Title("Host");
+            }
+
+            columns.Bound(c => c.MaxRtt).Title("Max");
+            columns.Bound(t => t.AvgRtt).Title("Avg").Format("{0:n0}");
+            columns.Bound(c => c.MinRtt).Title("Min");
+        })
+        .Scrollable(s => s.Enabled(false))
+        .ToolBar(t =>
+        {
+            t.Excel().Text(string.Empty);
+            t.Pdf().Text(string.Empty);
+        })
+        .Excel(e => e.AllPages(true).FileName("pingExportHistory(www.toolsfornet.com).xlsx").ProxyURL(Url.Action("Excel", "Export")))
+        .Pdf(e => e.AllPages().FileName("pingExportHistory(www.toolsfornet.com).pdf").ProxyURL(Url.Action("Pdf", "Export")))
+        .DataSource(dataSource => dataSource
+            .Ajax()
+            .Sort(s => s.Add(ss => ss.AvgRtt))
+            .ServerOperation(false)
+
+        )
+        .Sortable()
+        .BindTo(Model?.PingResponseSummaries)
+        .Deferred()
+
+                    )
+                </p>
+
+            </div>
+        </div>
+    </div>
+}
+
+@if (Model != null)
+{
+    <div class="col-lg-12">
+        <div class="hpanel hred">
+            <div class="panel-heading">
+                <p class="text-center">
+                    Ping chart
+                </p>
+            </div>
+            <div class="panel-body">
+                <p>
                 <button type="button" class="ladda-button btn center-block btn-outline btn-success" id="btnPing" data-style="zoom-in">
                     <span class="ladda-label">Ping</span>
                     <span class="ladda-spinner"></span>
