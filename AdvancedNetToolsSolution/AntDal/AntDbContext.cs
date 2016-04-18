@@ -25,5 +25,7 @@ namespace AntDal
         public virtual DbSet<IpLocation> IpLocations { get; set; }
 
         public virtual DbSet<ErrorLogging> ErrorLoggings { get; set; }
+
+        public virtual DbSet<PingSuccess> PingSuccesses { get; set; }
     }
 }

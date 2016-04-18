@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Timers;
 using System.Web;
@@ -98,19 +99,37 @@ namespace SmartAdminMvc
         {
             List<string> urls = Utils.GetDeployedServicesUrlAddresses;
             urls.Add("http://ant-ne.azurewebsites.net");
+            Stopwatch stopWatch = new Stopwatch();
             foreach (string url in urls)
             {
-                using (HttpClient client = new HttpClient())
+                using (AntDbContext context = new AntDbContext())
                 {
-                    try
-                    {
-                        var tracerouteSummary = client.GetStringAsync(url).Result;
-                    }
-                    catch
-                    {
+                    PingSuccess ps = new PingSuccess();
 
-                    }
+                    using (HttpClient client = new HttpClient())
+                    {
+                        try
+                        {
+                            stopWatch.Start();
+                             var tracerouteSummary = client.GetStringAsync(url).Result;
+                            ps.Successful = true;
+                            ps.IpAddress = url;
+                            stopWatch.Stop();
+                            ps.TimeNeeded =  stopWatch.Elapsed;
+                            ps.StatusMessage = "The url '{0}' has successfully been pinged for {1}", ps.IpAddress, ps.TimeNeeded);
 
+                        }
+                        catch
+                        {
+                            ps.Successful = false;
+                            ps.IpAddress = url;
+                            stopWatch.Stop();
+                            ps.TimeNeeded = stopWatch.Elapsed;
+                            ps.StatusMessage = "Error occured during the build";
+                        }
+                        context.PingSuccesses.Add(ps);
+                        context.SaveChanges();
+                    }
                 }
             }
         }

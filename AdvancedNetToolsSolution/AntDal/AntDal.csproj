@@ -59,6 +59,7 @@
     <Compile Include="Entities\PermalinkBase.cs" />
     <Compile Include="Entities\PingPermalink.cs" />
     <Compile Include="Entities\PingResponseSummary.cs" />
+    <Compile Include="Entities\PingSuccess.cs" />
     <Compile Include="Entities\PortResponseSummary.cs" />
     <Compile Include="Entities\PortPermalink.cs" />
     <Compile Include="Migrations\Configuration.cs" />
