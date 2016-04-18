@@ -11,14 +11,14 @@
 
             <form method="get" class="form-horizontal">
                 <div class="form-group">
-                    <label class="col-sm-1 control-label text-left" for="senderName">To:</label>
+                    <label class="col-sm-1 control-label text-left" for="senderName">Sender's Name</label>
 
-                    <div class="col-sm-11"><input type="text" class="form-control input-sm" placeholder="example@email.com" id="senderName"></div>
+                    <div class="col-sm-11"><input type="text" class="form-control input-sm" placeholder="John Doe" id="senderName"></div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-1 control-label text-left" for="senderMail">Cc:</label>
+                    <label class="col-sm-1 control-label text-left" for="senderMail">Sender's Email</label>
 
-                    <div class="col-sm-11"><input type="text" class="form-control input-sm" id="senderMail"></div>
+                    <div class="col-sm-11"><input type="text" class="form-control input-sm" placeholder="example@email.com" id="senderMail"></div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-1 control-label text-left" for="subject">Subject:</label>
@@ -45,16 +45,16 @@
         $(document).ready(function () {
             $("#btnSend").click(function btnSendClick(e) {
                 e.preventDefault();
-                var name = $("#senderName").val();
-                var email = $("#senderMail").val();
+                var senderName = $("#senderName").val();
+                var senderMail = $("#senderMail").val();
                 var subject = $("#subject").val();
                 var emailBody = $("#emailBody").val();
                 $.ajax({
                     method: "POST",
                     url: '/contactUs/SendEmail',
                     data: {
-                        name: name,
-                        email: email,
+                        senderName: senderName,
+                        senderMail: senderMail,
                         subject: subject,
                         emailBody: emailBody
                     }
