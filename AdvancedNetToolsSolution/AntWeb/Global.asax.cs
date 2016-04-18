@@ -116,7 +116,7 @@ namespace SmartAdminMvc
                             ps.IpAddress = url;
                             stopWatch.Stop();
                             ps.TimeNeeded =  stopWatch.Elapsed;
-                            ps.StatusMessage = "The url '{0}' has successfully been pinged for {1}", ps.IpAddress, ps.TimeNeeded);
+                            ps.StatusMessage = "The url" + ps.IpAddress + "has successfully been pinged for" + ps.TimeNeeded;
 
                         }
                         catch
