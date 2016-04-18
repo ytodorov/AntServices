@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<build-type xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" uuid="1025a690-44b7-4347-8d35-3f7cf79231ad" xsi:noNamespaceSchemaLocation="http://www.jetbrains.com/teamcity/schemas/9.0/project-config.xsd">
+  <name>Build</name>
+  <description />
+  <settings>
+    <options>
+      <option name="shouldFailBuildOnAnyErrorMessage" value="true" />
+    </options>
+    <parameters />
+    <build-runners>
+      <runner id="RUNNER_2" name="" type="VS.Solution">
+        <parameters>
+          <param name="build-file-path" value="AdvancedNetToolsSolution/AdvancedNetToolsServices.sln" />
+          <param name="msbuild.prop.Configuration" value="Release" />
+          <param name="msbuild_version" value="12.0" />
+          <param name="run-platform" value="x86" />
+          <param name="targets" value="Rebuild" />
+          <param name="teamcity.step.mode" value="default" />
+          <param name="toolsVersion" value="12.0" />
+          <param name="vs.version" value="vs2013" />
+        </parameters>
+      </runner>
+    </build-runners>
+    <vcs-settings>
+      <vcs-entry-ref root-id="AntServices_HttpsGithubComYtodorovAntServicesRefsHeadsMaster" />
+    </vcs-settings>
+    <requirements />
+    <build-triggers>
+      <build-trigger id="vcsTrigger" type="vcsTrigger">
+        <parameters>
+          <param name="quietPeriodMode" value="DO_NOT_USE" />
+        </parameters>
+      </build-trigger>
+    </build-triggers>
+    <build-extensions>
+      <extension id="BUILD_EXT_1" type="jb.nuget.auth">
+        <parameters>
+          <param name="nuget.auth.feed" value="%teamcity.nuget.feed.server%" />
+          <param name="nuget.auth.username" value="ivalexandar" />
+          <param name="secure:nuget.auth.password" value="zxx71da0aea4f197550775d03cbe80d301b" />
+        </parameters>
+      </extension>
+    </build-extensions>
+    <cleanup />
+  </settings>
+</build-type>
+
