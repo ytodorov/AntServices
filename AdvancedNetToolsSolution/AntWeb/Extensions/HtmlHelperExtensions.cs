@@ -29,21 +29,32 @@ namespace SmartAdminMvc.Extensions
 })
 .Excel(e => e.FileName("pingExport(www.toolsfornet.com).xlsx").ProxyURL(urlHelper.Action("Excel", "Export")))
 .Pdf(e => e.AllPages().FileName("pingExport(www.toolsfornet.com).pdf").ProxyURL(urlHelper.Action("Pdf", "Export")))
-.DataSource(dataSource => dataSource
-    .Ajax()
-    .ServerOperation(false)
-    .Read(r =>
+.DataSource(dataSource =>
+{
+    var ajaxDatasource = dataSource
+      .Ajax()
+      .ServerOperation(false)
+      .Read(r =>
+      {
+          var cub = r.Action("ReadPingPermalinks", "Ping");
+          if (!string.IsNullOrEmpty(readDataJavascriptMethodName))
+          {
+              cub.Data(readDataJavascriptMethodName);
+          }
+      });
+    if (HttpContext.Current.Request.Browser.IsMobileDevice)
     {
-        var cub = r.Action("ReadPingPermalinks", "Ping");
-        if (!string.IsNullOrEmpty(readDataJavascriptMethodName))
-        {
-            cub.Data(readDataJavascriptMethodName);
-        }
-    })
+        ajaxDatasource.PageSize(5);
+    }
+    else
+    {
+        ajaxDatasource.PageSize(10);
+    }
+}
+);
 
-)
-.Pageable()
-.Deferred();
+           
+builder.Deferred();
             return builder;
         }
     }
