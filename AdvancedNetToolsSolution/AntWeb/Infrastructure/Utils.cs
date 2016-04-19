@@ -19,6 +19,9 @@ namespace SmartAdminMvc.Infrastructure
     {
         static Utils()
         {
+            //TopSitesGlobal = Зареди тук сайтовете от файла Misc\TopSites като ги парснеш по подходящ начин. 
+            // накрая в TopSitesGlobal трябва да има 1000 сайта
+
             RandomNumberGenerator = new Random();
             GetDeployedServicesUrlAddresses = new List<string>()
             {
