@@ -1,5 +1,6 @@
 ﻿using AntDal;
 using AntDal.Entities;
+using AutoMapper;
 using SmartAdminMvc.Models;
 using System;
 using System.Collections.Generic;
@@ -23,8 +24,12 @@ namespace UnitTests
             pr.AvgRtt = 12;
             pr.MinRtt = 566;
             pr.MaxRtt = 1241313;
-
-            PingResponseSummaryViewModel res = AutoMapper.Mapper.DynamicMap<PingResponseSummaryViewModel>(pr);
+            var config = new MapperConfiguration(cfg => {
+                cfg.CreateMap<PingResponseSummary, PingResponseSummaryViewModel>();
+            });
+           
+            IMapper mapper = config.CreateMapper();
+            PingResponseSummaryViewModel res = mapper.Map<PingResponseSummaryViewModel>(pr);
         }
     }
 }

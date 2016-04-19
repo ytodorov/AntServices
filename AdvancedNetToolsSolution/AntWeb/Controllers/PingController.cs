@@ -17,6 +17,7 @@ using System.Web.Mvc;
 using System.Linq;
 using System.Net.Sockets;
 using System.Data.Entity;
+using AutoMapper;
 
 #endregion
 
@@ -37,7 +38,7 @@ namespace SmartAdminMvc.Controllers
                     PingPermalink pp = context.PingPermalinks.Include(e => e.PingResponseSummaries).FirstOrDefault(d => d.Id == id);
                     if (pp != null)
                     {
-                        PingPermalinkViewModel ppvm = AutoMapper.Mapper.DynamicMap<PingPermalinkViewModel>(pp);
+                        PingPermalinkViewModel ppvm = Mapper.Map<PingPermalinkViewModel>(pp);
                         return View(model: ppvm);
                     }
                 }
@@ -170,7 +171,7 @@ namespace SmartAdminMvc.Controllers
                 pp.DateCreated = DateTime.Now;
                 pp.DateModified = DateTime.Now;
 
-                List<PingResponseSummary> pr = AutoMapper.Mapper.DynamicMap<List<PingResponseSummary>>(list);
+                List<PingResponseSummary> pr = Mapper.Map<List<PingResponseSummary>>(list);
 
                 pp.PingResponseSummaries.AddRange(pr);
                 context.PingPermalinks.Add(pp);
@@ -183,7 +184,7 @@ namespace SmartAdminMvc.Controllers
         {
             List<PingPermalink> pingPermalinks = GetPermalinksForCurrentUser(address);
 
-            var pingPermalinksViewModels = AutoMapper.Mapper.DynamicMap<List<PingPermalinkViewModel>>(pingPermalinks);
+            var pingPermalinksViewModels = Mapper.Map<List<PingPermalinkViewModel>>(pingPermalinks);
             var dsResult = Json(pingPermalinksViewModels.ToDataSourceResult(request));
             return dsResult;
 

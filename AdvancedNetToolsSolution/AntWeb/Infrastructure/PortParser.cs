@@ -28,7 +28,6 @@ namespace SmartAdminMvc.Infrastructure
         {
             PortResponseSummaryViewModel result = new PortResponseSummaryViewModel();
             int port;
-            string protocol, state, service;
             var times = line.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
             if (times.Length > 0)
             {

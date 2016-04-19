@@ -1510,6 +1510,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Helpers\HtmlHelperExtensions.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
+    <Compile Include="App_Start\MappingConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Helpers\Settings.cs" />
     <Compile Include="Areas\Landing\Controllers\LandingController.cs" />

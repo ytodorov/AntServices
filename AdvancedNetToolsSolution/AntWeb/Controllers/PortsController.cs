@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
+using AutoMapper;
 
 namespace SmartAdminMvc.Controllers
 {
@@ -26,7 +27,7 @@ namespace SmartAdminMvc.Controllers
                     PortPermalink pp = context.PortPermalinks.Include(e => e.PortResponseSummaries).FirstOrDefault(s => s.Id == id);
                     if (pp != null)
                     {
-                        PortPermalinkViewModel ppvm = AutoMapper.Mapper.DynamicMap<PortPermalinkViewModel>(pp);
+                        PortPermalinkViewModel ppvm = Mapper.Map<PortPermalinkViewModel>(pp);
                         return View(model: ppvm);
                     }
                 }
@@ -70,7 +71,7 @@ namespace SmartAdminMvc.Controllers
                     pp.DateCreated = DateTime.Now;
                     pp.DateModified = DateTime.Now;
 
-                    List<PortResponseSummary> pr = AutoMapper.Mapper.DynamicMap<List<PortResponseSummary>>(portViewModels);
+                    List<PortResponseSummary> pr = Mapper.Map<List<PortResponseSummary>>(portViewModels);
 
                     pp.PortResponseSummaries.AddRange(pr);
                     context.PortPermalinks.Add(pp);

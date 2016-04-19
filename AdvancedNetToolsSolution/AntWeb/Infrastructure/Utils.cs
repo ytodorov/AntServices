@@ -1,5 +1,6 @@
 ﻿using AntDal;
 using AntDal.Entities;
+using AutoMapper;
 using Newtonsoft.Json;
 using SmartAdminMvc.Models;
 using System;
@@ -113,7 +114,7 @@ namespace SmartAdminMvc.Infrastructure
                 var ipLocation = context.IpLocations.Where(ip => ip.IpAddress == ipOrHostName).FirstOrDefault();
                 if (ipLocation != null)
                 {
-                    var IpLocationViewModel = AutoMapper.Mapper.DynamicMap<IpLocationViewModel>(ipLocation);
+                    var IpLocationViewModel = Mapper.Map<IpLocationViewModel>(ipLocation);
                     return IpLocationViewModel;
                 }
                 else
@@ -126,7 +127,7 @@ namespace SmartAdminMvc.Infrastructure
                         string result = client.GetStringAsync(url).Result;
 
                         var ipLocationViewModel = JsonConvert.DeserializeObject<IpLocationViewModel>(result);
-                        var ipLocationToSaveInDb = AutoMapper.Mapper.DynamicMap<IpLocation>(ipLocationViewModel);
+                        var ipLocationToSaveInDb = Mapper.Map<IpLocation>(ipLocationViewModel);
                         context.IpLocations.Add(ipLocationToSaveInDb);
                         context.SaveChanges();
                         return ipLocationViewModel;

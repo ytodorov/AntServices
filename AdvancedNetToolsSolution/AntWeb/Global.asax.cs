@@ -2,9 +2,12 @@
 
 using AntDal;
 using AntDal.Entities;
+using AutoMapper;
 using Serilog;
 using Serilog.Sinks.MSSqlServer;
+using SmartAdminMvc.App_Start;
 using SmartAdminMvc.Infrastructure;
+using SmartAdminMvc.Models;
 using StructureMap;
 using StructureMap.Graph;
 using System;
@@ -44,10 +47,9 @@ namespace SmartAdminMvc
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-
+            MappingConfig.RegisterMaps();
             //PreventAppsFromSleep();
-                      
-
+            
         }
         ////public void Application_BeginRequest()
         ////{

@@ -19,7 +19,7 @@ namespace SmartAdminMvc.Controllers
 
     public class HomeController : Controller
     {
-        private readonly AntDbContext _context;
+        //private readonly AntDbContext _context; // never used
 
         public HomeController()
         {
