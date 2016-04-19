@@ -7,10 +7,10 @@
 <div class="normalheader transition animated fadeIn">
 
 </div>
+
 <div class="col-lg-12">
     <div class="hpanel hgreen">
         <div class="panel-heading">
-
             <p class="text-center">
                 Ping an IP address or host name
             </p>
@@ -65,16 +65,9 @@
 
 @if (Model != null)
 {
-    <div class="col-lg-12">
-        <div class="hpanel hyellow">
-            <div class="panel-heading">
-                <p class="text-center">
-                    Round-trip times in ms
-                </p>
-            </div>
-            <div class="panel-body">
-                <p>
-                    @(Html.Kendo().Grid<PingResponseSummaryViewModel>()
+
+  @Html.Raw((Html.AntCreateStandardPanel("hyellow", "  Round-trip times in ms", "<p>" +
+    Html.Kendo().Grid<PingResponseSummaryViewModel>()
         .Name("pingResultsGrid")
         .Columns(columns =>
         {
@@ -105,28 +98,15 @@
         )
         .Sortable()
         .BindTo(Model?.PingResponseSummaries)
-        .Deferred()
+        .Deferred().ToHtmlString() + "</p>")))
 
-                    )
-                </p>
-
-            </div>
-        </div>
-    </div>
 }
 
 @if (Model != null)
 {
-    <div class="col-lg-12">
-        <div class="hpanel hred">
-            <div class="panel-heading">
-                <p class="text-center">
-                    Ping chart
-                </p>
-            </div>
-            <div class="panel-body">
-                <p>
-                    @(Html.Kendo().Chart(Model.PingResponseSummaries.OrderBy(s => s.AvgRtt)).Theme("metro")
+
+    @Html.Raw((Html.AntCreateStandardPanel("hred", "Ping chart", "<p>" +
+    Html.Kendo().Chart(Model.PingResponseSummaries.OrderBy(s => s.AvgRtt)).Theme("metro")
         .Name("pingResultsChart")
         .Legend(legend => legend
             .Position(ChartLegendPosition.Top)
@@ -145,22 +125,12 @@
         )
         .ValueAxis(axis => axis.Numeric()
             .Labels(labels => labels.Format("{0:N0}"))
-            //.MajorUnit(10000)
             .Line(line => line.Visible(false))
         )
         .Tooltip(tooltip => tooltip
             .Visible(true)
             .Format("{0:N0}")
-        ).Deferred()
-                    )
-
-                </p>
-            </div>
-        </div>
-    </div>
-
-
-
+        ).Deferred().ToHtmlString() + "</p>")))
 }
 
 @if (Model != null)
@@ -184,72 +154,10 @@
 }
 @if (Model != null)
 {
-    <div class="col-lg-12">
-        <div class="hpanel horange">
-            <div class="panel-heading">
-                <p class="text-center">
-                    Permalink
-                </p>
-            </div>
-            <div class="panel-body">
-                <p class="text-center">
-                    <a href="@(Request.Url.ToString())" id="permalink">@(Request.Url.ToString())</a>
-                    @*<input type="text" class="form-control" id="permalink" value="@(Request.Url.ToString())" readonly>*@
-                </p>
-                <p class="text-center" style="font-size:larger">
-                    Share on:
-                </p>
-                <p class="text-center" style="font-size:xx-large">
 
-                    @*<a href="#" target="_blank"><i class="fa fa-facebook-square" title="Share on Facebook"></i></a>
-                        <a href="#" target="_blank"><i class="fa fa-twitter-square" title="Share on Twitter"></i></a>
-                        <a href="#" target="_blank"><i class="fa fa-google-plus-square" title="Share on Google+"></i></a>*@
-                    <a href="javascript:void(0)">
-                        <i class="fa fa-envelope-square" title="Send email" id="iconSendEmail"
-                           data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"></i>
-                    </a>
-                    <a href="javascript:void(0)">
-                        <i class="fa fa-pencil-square collapsed" title="Copy to clipboard"
-                           data-clipboard-action="copy" data-clipboard-target="#permalink"></i>
-                    </a>
-                </p>
-
-                <div class="collapse" id="collapseExample" aria-expanded="true">
-                    <div class="panel-heading hbuilt">
-                        <div class="p-xs">
-                            <form method="get" class="form-horizontal">
-                                <div class="form-group">
-                                    <label class="col-sm-1 control-label text-left" for="senderName">To:</label>
-                                    <div class="col-sm-11"><input type="text" class="k-textbox" placeholder="example@email.com" id="senderName"></div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-1 control-label text-left" for="senderMail">Cc:</label>
-                                    <div class="col-sm-11"><input type="text" class="k-textbox" id="senderMail"></div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-1 control-label text-left" for="subject">Subject:</label>
-                                    <div class="col-sm-11"><input type="text" class="k-textbox" placeholder="Enter Email subject" id="subject"></div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-1 control-label text-left">Body:</label>
-                                    <div class="col-sm-11">@Html.Kendo().Editor().Name("emailBody").Tools(t => t.Clear()).Deferred()</div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-1 control-label text-left" for="subject">&nbsp;</label>
-                                    <div class="col-sm-11">
-                                        <button class="btn btn-info btn-sm" id="btnSend">Send email</button>
-                                    </div>
-                                </div>
-
-                            </form>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
+    @Html.Raw((Html.AntCreateStandardPanel("horange", " Permalink", "<p>" +
+    "permalinks" + "</p>")))
+      
 }
 
 @section scripts {
@@ -294,50 +202,27 @@
 
 @*history*@
 
-<div class="col-lg-12">
-    <div class="hpanel hviolet">
-        <div class="panel-heading">
-            <p class="text-center">
-                Ping history for current user's IP
-            </p>
-        </div>
-        <div class="panel-body">
-            <p>
-                @(Html.Kendo().Grid<PingPermalinkViewModel>().CreatePingPermalinkGrid(Url))
-            </p>
+@Html.Raw((Html.AntCreateStandardPanel("hviolet", "Ping history for current user's IP", "<p>" + 
+    Html.Kendo().Grid<PingPermalinkViewModel>().CreatePingPermalinkGrid(Url).ToHtmlString() + "</p>")))
 
-        </div>
+    @if (Model != null)
+    {
+        <script>
+            function getRequestedAddress() {
+                var data =
+                {
+                    address: $("#ip").val()
+                };
+                return data;
+            }
+        </script>
+
+
+        @Html.Raw((Html.AntCreateStandardPanel("hviolet", " Ping history for" + Model.DestinationAddress, "<p>" +
+     Html.Kendo().Grid<PingPermalinkViewModel>().CreatePingPermalinkGrid(Url, "getRequestedAddress").ToHtmlString() + "</p>")))
+
+    }
+
+    <div class="normalheader transition animated fadeIn">
+
     </div>
-</div>
-
-@if (Model != null)
-{
-    <script>
-        function getRequestedAddress() {
-            var data =
-            {
-                address: $("#ip").val()
-            };
-            return data;
-        }
-    </script>
-    <div class="col-lg-12">
-        <div class="hpanel hviolet">
-            <div class="panel-heading">
-                <p class="text-center">
-                    Ping history for @(Model.DestinationAddress)
-                </p>
-            </div>
-            <div class="panel-body">
-                <p>
-                    @(Html.Kendo().Grid<PingPermalinkViewModel>().CreatePingPermalinkGrid(Url, "getRequestedAddress"))
-                </p>
-
-            </div>
-        </div>
-    </div>
-}
-
-<div class="normalheader transition animated fadeIn">
-
-</div>

@@ -11,6 +11,36 @@ namespace SmartAdminMvc.Extensions
 {
     public static class HtmlHelperExtensions
     {
+        public static string AntCreateStandardPanel(this HtmlHelper htmlHelper, string headerColorClass = null, string headerText = null, string body = null)
+        {
+            if (headerColorClass == null)
+            {
+                headerColorClass = string.Empty;
+            }
+            if (headerText == null)
+            {
+                headerText = string.Empty;
+            }
+            if (body == string.Empty)
+            {
+                body = string.Empty;
+            }
+
+            string template = $@"<div class='col-lg-12'>
+    <div class='hpanel {headerColorClass}'>
+        <div class='panel-heading'>
+            <p class='text-center'>
+                {headerText}
+            </p>
+        </div>
+        <div class='panel-body'>
+           {body}
+        </div>
+    </div>
+</div>";
+            return template;
+        }
+
         public static GridBuilder<PingPermalinkViewModel> CreatePingPermalinkGrid
             (this GridBuilder<PingPermalinkViewModel> builder, UrlHelper urlHelper, string readDataJavascriptMethodName = null)
         {
