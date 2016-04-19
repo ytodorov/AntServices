@@ -59,11 +59,16 @@ namespace SmartAdminMvc.Extensions
 })
 .Excel(e => e.FileName("pingExport(www.toolsfornet.com).xlsx").ProxyURL(urlHelper.Action("Excel", "Export")))
 .Pdf(e => e.AllPages().FileName("pingExport(www.toolsfornet.com).pdf").ProxyURL(urlHelper.Action("Pdf", "Export")))
+.Pageable()
+.Sortable()
+.Filterable(f => f.Extra(false))
 .DataSource(dataSource =>
 {
     var ajaxDatasource = dataSource
       .Ajax()
+      .Sort(s => s.Add(ss => ss.DateCreated).Descending())
       .ServerOperation(false)
+      
       .Read(r =>
       {
           var cub = r.Action("ReadPingPermalinks", "Ping");

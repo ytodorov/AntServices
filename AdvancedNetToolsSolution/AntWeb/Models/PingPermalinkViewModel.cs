@@ -33,7 +33,12 @@ namespace SmartAdminMvc.Models
                     {
                         fullRootUrl = fullRootUrl.Replace(":" + HttpContext.Current?.Request.Url.Port, string.Empty);
                     }
-                    result = $"{fullRootUrl}/ping?id={Id}";
+                    string urlOrIpString = "url";
+                    if (IsDestinationIpAddress)
+                    {
+                        urlOrIpString = "ip";
+                    }
+                    result = $"{fullRootUrl}/ping?{urlOrIpString}={DestinationAddress}&id={Id}";
                     return result;
                 }
                 return string.Empty;
