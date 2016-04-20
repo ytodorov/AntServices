@@ -153,6 +153,7 @@ namespace SmartAdminMvc.Infrastructure
             List<IpLocationViewModel> locations = new List<IpLocationViewModel>();
             List<string> locationNamesInMap = new List<string>();
             List<string> markerNamesInMap = new List<string>();
+            List<string> infoWindowsNamesInMap = new List<string>();
 
             for (int i = 0; i < ips.Count(); i++)
             {
@@ -161,6 +162,7 @@ namespace SmartAdminMvc.Infrastructure
                 locations.Add(currLocation);
                 locationNamesInMap.Add("latLng" + i);
                 markerNamesInMap.Add("marker" + i);
+                infoWindowsNamesInMap.Add("infoWindow" + i);
             }
 
 
@@ -223,8 +225,20 @@ namespace SmartAdminMvc.Infrastructure
                 icon: pinGreenImage,
                 title: '{i}. {ips.ElementAt(i)} {locations[i].CityName} {locations[i].RegionName} {locations[i].CountryName}'
                 }});");
+                                        
                 }
-               
+
+                var infowindow = $@" var {infoWindowsNamesInMap[i]} = new google.maps.InfoWindow({{
+    content: '{i}. {ips.ElementAt(i)} {locations[i].CityName} {locations[i].RegionName} {locations[i].CountryName}',
+    maxWidth: 200
+  }});";
+                sb.Append(infowindow);
+
+                var markerWithInfoWindow = $@" {markerNamesInMap[i]}.addListener('click', function() {{
+    {infoWindowsNamesInMap[i]}.open(map, {markerNamesInMap[i]});
+  }});";
+
+                sb.Append(markerWithInfoWindow);
             }
 
             StringBuilder locationStringsForPolyline = new StringBuilder();
