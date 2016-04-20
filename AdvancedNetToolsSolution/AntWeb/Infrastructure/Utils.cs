@@ -17,12 +17,28 @@ namespace SmartAdminMvc.Infrastructure
 {
     public static class Utils
     {
+
         static Utils()
         {
+            RandomNumberGenerator = new Random();
+
             //TopSitesGlobal = Зареди тук сайтовете от файла Misc\TopSites като ги парснеш по подходящ начин. 
             // накрая в TopSitesGlobal трябва да има 1000 сайта
+            TopSitesGlobal = new List<string>();
 
-            RandomNumberGenerator = new Random();
+            using (System.IO.StreamReader sr = new System.IO.StreamReader(System.Web.Hosting.HostingEnvironment.MapPath("~/Misc/TopSites.txt")))
+            {
+                while (!sr.EndOfStream)
+                {
+                    string splitMe = sr.ReadLine();
+                    string[] rowsSplits = splitMe.Split(new char[] { ',' });
+                    if (rowsSplits.Length == 2)
+                    {
+                        TopSitesGlobal.Add(rowsSplits[1]);
+                    }
+                }
+            }
+
             GetDeployedServicesUrlAddresses = new List<string>()
             {
                 "http://ants-ea.cloudapp.net", // "40.83.125.9",
@@ -67,37 +83,9 @@ namespace SmartAdminMvc.Infrastructure
             };
         }
 
-        public static List<string> TopSitesGlobal = new List<string>()
-        {
-            "Google.com",
-"Youtube.com",
-"Facebook.com",
-"Baidu.com",
-"Yahoo.com",
-"Amazon.com",
-"Wikipedia.org",
-"Qq.com",
-"Google.co.in",
-"Twitter.com",
-"Taobao.com",
-"Live.com",
-"Sina.com.cn",
-"Google.co.jp",
-"Msn.com",
-"Bing.com",
-"Yahoo.co.jp",
-"Weibo.com",
-"Linkedin.com",
-"Vk.com",
-"Yandex.ru",
-"Hao123.com",
-"Instagram.com",
-"Google.de",
-"Ebay.com",
-        };
+        public static List<string> TopSitesGlobal { get; set; }
 
         public static List<string> GetDeployedServicesUrlAddresses { get; set; }
-
 
         public static Dictionary<string, string> HotstNameToIp { get; set; }
 
@@ -409,7 +397,6 @@ namespace SmartAdminMvc.Infrastructure
                 var result = radius * 2 * Math.Asin(Math.Min(1, Math.Sqrt((Math.Pow(Math.Sin((DiffRadian(lat1, lat2)) / 2.0), 2.0) + Math.Cos(ToRadian(lat1)) * Math.Cos(ToRadian(lat2)) * Math.Pow(Math.Sin((DiffRadian(lng1, lng2)) / 2.0), 2.0)))));
                 return result;
             }
-
            
         }
 
