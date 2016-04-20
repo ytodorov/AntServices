@@ -251,6 +251,13 @@ namespace SmartAdminMvc.Infrastructure
                 }
             }
 
+            // Define a symbol using a predefined path (an arrow)
+            // supplied by the Google Maps JavaScript API.
+            sb.Append(@" var lineSymbol = {
+    path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW
+  };");
+
+
             if (starLine)
             {
                 // count should be even
@@ -263,6 +270,18 @@ namespace SmartAdminMvc.Infrastructure
                 strokeColor: '#FF0000',
                 strokeOpacity: 1.0,
                 strokeWeight: 1,
+ icons: [
+      {{
+        icon: lineSymbol,
+        offset: '10%'
+      }}, {{
+        icon: lineSymbol,
+        offset: '50%'
+      }}, {{
+        icon: lineSymbol,
+        offset: '90%'
+      }}
+    ],
                 map: map
             }});";
                     sb.AppendLine(polyline);
