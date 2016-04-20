@@ -196,8 +196,18 @@ namespace SmartAdminMvc.Infrastructure
 
             for (int i = 0; i < ips.Count(); i++)
             {
+                double distanceKm = 0;
+                double distanceMiles = 0;
                 if (i%2 == 0)
                 {
+                   distanceKm = GeoCodeCalc.CalcDistance(locations[i].Latitude.GetValueOrDefault(), locations[i].Longitude.GetValueOrDefault(),
+                       locations[i + 1].Latitude.GetValueOrDefault(), locations[i + 1].Longitude.GetValueOrDefault());
+                    distanceKm = Math.Round(distanceKm, 0);
+                    distanceMiles = GeoCodeCalc.CalcDistance(locations[i].Latitude.GetValueOrDefault(), locations[i].Longitude.GetValueOrDefault(),
+                       locations[i + 1].Latitude.GetValueOrDefault(), locations[i + 1].Longitude.GetValueOrDefault(), GeoCodeCalcMeasurement.Miles);
+                    distanceMiles = Math.Round(distanceMiles, 0);
+
+
                     sb.AppendLine($@"var {markerNamesInMap[i]} = new google.maps.Marker({{
                 position: {locationNamesInMap[i]},
                 map: map,
@@ -216,8 +226,10 @@ namespace SmartAdminMvc.Infrastructure
                                         
                 }
 
+                string infoWindowContentHtml;
+
                 var infowindow = $@" var {infoWindowsNamesInMap[i]} = new google.maps.InfoWindow({{
-    content: '{i}. {ips.ElementAt(i)} {locations[i].CityName} {locations[i].RegionName} {locations[i].CountryName}',
+    content: '{i}. {ips.ElementAt(i)} {locations[i].CityName} {locations[i].RegionName} {locations[i].CountryName} Km: {distanceKm}, Miles: {distanceMiles}',
     maxWidth: 200
   }});";
                 sb.Append(infowindow);
@@ -264,11 +276,18 @@ namespace SmartAdminMvc.Infrastructure
         offset: '10%'
       }}, {{
         icon: lineSymbol,
+        offset: '30%'
+      }}, {{
+        icon: lineSymbol,
         offset: '50%'
+      }}, {{
+        icon: lineSymbol,
+        offset: '70%'
       }}, {{
         icon: lineSymbol,
         offset: '90%'
       }}
+
     ],
                 map: map
             }});";

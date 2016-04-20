@@ -50,12 +50,13 @@ namespace SmartAdminMvc.Controllers
         [HttpPost]
         public ActionResult GenerateId(PingRequestViewModel prvm)
         {
+            string addressToPing = prvm.Ip;
             Uri uriResult;
-            bool isUri = Uri.TryCreate(prvm.Ip, UriKind.Absolute, out uriResult)
-                && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
+            bool isUri = Uri.TryCreate(prvm.Ip, UriKind.Absolute, out uriResult);
+                //&& (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
             if (isUri)
             {
-                prvm.Ip = uriResult.Host;
+                addressToPing = uriResult.Host;
             }
 
 
@@ -71,25 +72,34 @@ namespace SmartAdminMvc.Controllers
             IPAddress dummy;
             bool isIpAddress = IPAddress.TryParse(prvm.Ip, out dummy);
             string firstOpenPort = null;
+          
             if (!isIpAddress)
             {
-                if (prvm.Ip.Trim().StartsWith("https"))
+                if (prvm.Ip.Trim().StartsWith("https://"))
                 {
+                    //Uri uriHelper;
+                    //if (Uri.TryCreate(prvm.Ip, UriKind.RelativeOrAbsolute, out uriHelper))
+                    //{
+
+                    //}
+                    //addressToPing = prvm.Ip.Trim().Replace("https://", string.Empty);
                     firstOpenPort = "443";
                 }
-                else if (prvm.Ip.Trim().StartsWith("ftp"))
+                else if (prvm.Ip.Trim().StartsWith("ftp://"))
                 {
+                    //addressToPing = prvm.Ip.Trim().Replace("ftp://", string.Empty);
                     firstOpenPort = "21";
                 }
-                else
+                else if (prvm.Ip.Trim().StartsWith("http://"))
                 {
+                    //addressToPing = prvm.Ip.Trim().Replace("ftp://", string.Empty);
                     firstOpenPort = "80";
                 }
             }
 
             if (string.IsNullOrEmpty(firstOpenPort))
             {
-                firstOpenPort = Utils.GetFirstOpenPort(prvm.Ip);
+                firstOpenPort = Utils.GetFirstOpenPort(addressToPing);
             }
 
             List<PingResponseSummaryViewModel> list = new List<PingResponseSummaryViewModel>();
@@ -126,7 +136,7 @@ namespace SmartAdminMvc.Controllers
 
                 HttpClient client = new HttpClient();
                 clients.Add(client);
-                var encodedArgs = Uri.EscapeDataString($"--tcp -p  {firstOpenPort} --delay 50ms -v1 {prvm.Ip} -c 5");
+                var encodedArgs = Uri.EscapeDataString($"--tcp -p  {firstOpenPort} --delay 50ms -v1 {addressToPing} -c 5");
                 var urlWithArgs = urls[i] + "/home/exec?program=nping&args=" + encodedArgs;
                 Task<string> task = client.GetStringAsync(urlWithArgs);
                 tasks.Add(task);
@@ -136,7 +146,7 @@ namespace SmartAdminMvc.Controllers
 
             bool isUserRequestedAddressIp = false;
             IPAddress dummy1;
-            isUserRequestedAddressIp = IPAddress.TryParse(prvm.Ip, out dummy1);
+            isUserRequestedAddressIp = IPAddress.TryParse(addressToPing, out dummy1);
 
             for (int i = 0; i < tasks.Count; i++)
             {
@@ -146,12 +156,12 @@ namespace SmartAdminMvc.Controllers
                 summary.SourceHostName = Utils.HotstNameToAzureLocation[urls[i]];
                 if (!isUserRequestedAddressIp)
                 {
-                    summary.DestinationHostName = prvm.Ip;
+                    summary.DestinationHostName = addressToPing;
                     summary.DestinationIpAddress = summary.DestinationIpAddress; //Utils.GetIpAddressFromHostName(prvm.Ip, urls[i]);
                 }
                 else
                 {
-                    summary.DestinationIpAddress = prvm.Ip;
+                    summary.DestinationIpAddress = addressToPing;
                 }
                 list.Add(summary);
                 clients[i].Dispose();
@@ -162,22 +172,22 @@ namespace SmartAdminMvc.Controllers
 
             using (AntDbContext context = new AntDbContext())
             {
-                PingPermalink pp = new PingPermalink();
-                pp.ShowInHistory = prvm.ShowInHistory;
-                pp.UserCreatedIpAddress = Request.UserHostAddress;
-                pp.DestinationAddress = prvm.Ip;
-                pp.UserCreated = Request.UserHostAddress;
-                pp.UserModified = Request.UserHostAddress;
-                pp.DateCreated = DateTime.Now;
-                pp.DateModified = DateTime.Now;
+                PingPermalink pingPermalink = new PingPermalink();
+                pingPermalink.ShowInHistory = prvm.ShowInHistory;
+                pingPermalink.UserCreatedIpAddress = Request.UserHostAddress;
+                pingPermalink.DestinationAddress = prvm.Ip;
+                pingPermalink.UserCreated = Request.UserHostAddress;
+                pingPermalink.UserModified = Request.UserHostAddress;
+                pingPermalink.DateCreated = DateTime.Now;
+                pingPermalink.DateModified = DateTime.Now;
 
                 List<PingResponseSummary> pr = Mapper.Map<List<PingResponseSummary>>(list);
 
-                pp.PingResponseSummaries.AddRange(pr);
-                context.PingPermalinks.Add(pp);
+                pingPermalink.PingResponseSummaries.AddRange(pr);
+                context.PingPermalinks.Add(pingPermalink);
                 context.SaveChanges();
 
-                return Json(pp.Id);
+                return Json(pingPermalink.Id);
             }
         }
         public ActionResult ReadPingPermalinks([DataSourceRequest] DataSourceRequest request, string address)
