@@ -77,6 +77,32 @@ $(window).ready(function myfunction() {
 
     clipboard.on('error', function (e) {
     });
+
+
+
+
+
+
+    var $ip = $("#ip");
+    if ($ip.length != 0) {
+        var arrOfPlaceholders = [];
+        arrOfPlaceholders[0] = "google.com";
+        arrOfPlaceholders[1] = "www.yahoo.com";
+        arrOfPlaceholders[2] = "http://www.facebook.com";
+        arrOfPlaceholders[3] = "ftp://ftp.microsoft.com/";
+        arrOfPlaceholders[4] = "https://weather.com/en-GB";
+        arrOfPlaceholders[5] = "8.8.8.8";
+        arrOfPlaceholders[6] = "172.217.3.238";
+        arrOfPlaceholders[7] = "https://en.wikipedia.org/wiki/Main_Page";
+        arrOfPlaceholders[8] = "https://www.youtube.com/";
+        arrOfPlaceholders[9] = "134.170.188.232";
+        arrOfPlaceholders[10] = "216.58.212.142";
+       
+        for (var i = 0; i < arrOfPlaceholders.length * 1000; i++) {
+            setTimeout(animateIpPlaceholder, 5000 * i, arrOfPlaceholders[i % arrOfPlaceholders.length]);           
+        }
+
+    }
 })
 
 $.ajaxSetup({
@@ -98,3 +124,54 @@ $.ajaxSetup({
         alert(message);
     }
 });
+
+function animateIpPlaceholder(txt) {
+
+    var timeOut;
+    var txtLen = txt.length;
+    var char = 0;
+    var $ip = $("#ip");
+    $ip.attr('placeholder', '|');
+    (function typeIt() {
+        var humanize = Math.round(Math.random() * (200 - 30)) + 30;
+        timeOut = setTimeout(function () {
+            var visible = vis(); // gives current state
+            if (visible) {
+                char++;
+                var type = txt.substring(0, char);
+                $ip.attr('placeholder', type + '|');
+                typeIt();
+
+                if (char == txtLen) {
+                    $ip.attr('placeholder', $ip.attr('placeholder').slice(0, -1)) // remove the '|'
+                    clearTimeout(timeOut);
+                }
+            }
+            else
+            {
+                $ip.attr('placeholder', txt);
+            }
+
+        },
+         humanize);
+    })();
+}
+
+var vis = (function () {
+    var stateKey, eventKey, keys = {
+        hidden: "visibilitychange",
+        webkitHidden: "webkitvisibilitychange",
+        mozHidden: "mozvisibilitychange",
+        msHidden: "msvisibilitychange"
+    };
+    for (stateKey in keys) {
+        if (stateKey in document) {
+            eventKey = keys[stateKey];
+            break;
+        }
+    }
+    return function (c) {
+        if (c) document.addEventListener(eventKey, c);
+        return !document[stateKey];
+    }
+})();

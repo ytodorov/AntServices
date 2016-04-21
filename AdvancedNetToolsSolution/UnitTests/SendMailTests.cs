@@ -20,7 +20,7 @@ namespace UnitTests
                 MailMessage mailMsg = new MailMessage();
 
                 // To
-                mailMsg.To.Add(new MailAddress("ivanov.alexandar.bg@gmail.com"));
+                mailMsg.To.Add(new MailAddress("test@ytodorov.com"));
 
                 // From
                 mailMsg.From = new MailAddress("ytodorov@ytodorov.com", "Dancho");
@@ -34,6 +34,11 @@ namespace UnitTests
                 System.Net.NetworkCredential credentials = new System.Net.NetworkCredential("ytodorov@ytodorov.com", "123x4567");
                 smtpClient.Credentials = credentials;
                 smtpClient.Send(mailMsg);
+
+                //SendGrid.SendGridMessage sg;
+                //sg.EnableTemplate();
+                //sg.EnableTemplateEngine()
+
             }
             catch (Exception ex)
             {

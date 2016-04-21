@@ -1,5 +1,8 @@
 ﻿$("#btnPing").click(function btnPingClick(e) {
     e.preventDefault();
+
+    
+
     var l = $("#btnPing").ladda();
 
     // Start loading
