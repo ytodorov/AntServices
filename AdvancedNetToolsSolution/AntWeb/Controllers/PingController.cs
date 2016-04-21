@@ -53,7 +53,7 @@ namespace SmartAdminMvc.Controllers
             string addressToPing = prvm.Ip;
             Uri uriResult;
             bool isUri = Uri.TryCreate(prvm.Ip, UriKind.Absolute, out uriResult);
-                //&& (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
+            //&& (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
             if (isUri)
             {
                 addressToPing = uriResult.Host;
@@ -72,7 +72,7 @@ namespace SmartAdminMvc.Controllers
             IPAddress dummy;
             bool isIpAddress = IPAddress.TryParse(prvm.Ip, out dummy);
             string firstOpenPort = null;
-          
+
             if (!isIpAddress)
             {
                 if (prvm.Ip.Trim().StartsWith("https://"))
@@ -207,19 +207,26 @@ namespace SmartAdminMvc.Controllers
             pingPermalinks = pingPermalinks.GroupBy(pp => pp.DestinationAddress).Select(group => group.First()).ToList();
 
             List<AddressHistoryViewModel> list = new List<AddressHistoryViewModel>();
-            list.Add(new AddressHistoryViewModel { Name = Request.UserHostAddress, Category = "My IP" });
+            list.Add(new AddressHistoryViewModel { Name = Request.UserHostAddress, Category = "My IP", Order = 0 });
             foreach (var pp in pingPermalinks)
             {
-                AddressHistoryViewModel ahvm = new AddressHistoryViewModel() { Name = pp.DestinationAddress, Category = "History" };
-                list.Add(ahvm);
+                AddressHistoryViewModel ahvm = new AddressHistoryViewModel() { Name = pp.DestinationAddress, Category = "History", Order = 1 };
+                if (!list.Any(l => l.Name.Equals(ahvm.Name)))
+                {
+                    list.Add(ahvm);
+                }
             }
 
             foreach (string topSite in Utils.TopSitesGlobal)
             {
-                AddressHistoryViewModel ahvm = new AddressHistoryViewModel() { Name = topSite, Category = "Top sites" };
-                list.Add(ahvm);
+                AddressHistoryViewModel ahvm = new AddressHistoryViewModel() { Name = topSite, Category = "Top sites", Order = 2 };
+                if (!list.Any(l => l.Name.Equals(ahvm.Name)))
+                {
+                    list.Add(ahvm);
+                }
             }
-            return Json(list, JsonRequestBehavior.AllowGet);
+            list = list.OrderBy(l => l.Order).ToList();
+           return Json(list, JsonRequestBehavior.AllowGet);
         }
 
         private List<PingPermalink> GetPermalinksForCurrentUser(string address)
