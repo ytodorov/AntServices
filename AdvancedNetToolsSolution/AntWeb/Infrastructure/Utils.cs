@@ -374,7 +374,7 @@ namespace SmartAdminMvc.Infrastructure
             using (HttpClient client = new HttpClient())
             {
                 //Note: Host seems down. If it is really up, but blocking our ping probes, try -Pn
-                var encodedArgs0 = Uri.EscapeDataString($"-T4 -F -Pn {ipOrHostName}");
+                var encodedArgs0 = Uri.EscapeDataString($"-T5 --top-ports 1000 -Pn {ipOrHostName}");
                 string url = "http://ants-neu.cloudapp.net/home/exec?program=nmap&args=" + encodedArgs0;
                 var portSummary = client.GetStringAsync(url).Result;
 
