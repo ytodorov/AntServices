@@ -235,7 +235,7 @@
         return data;
     }
 </script>
-@Html.Raw((Html.AntCreateStandardPanel("hviolet", "Ping history", "<p>" +
+@Html.Raw((Html.AntCreateStandardPanel("hviolet", "Ping history for the last 100 pings", "<p>" +
      Html.Kendo().Grid<PingPermalinkViewModel>().CreatePingPermalinkGrid(Url, "getAllPermalinks").ToHtmlString() + "</p>")))
 <div class="normalheader transition animated fadeIn">
 

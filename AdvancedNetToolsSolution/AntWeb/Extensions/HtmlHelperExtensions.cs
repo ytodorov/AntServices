@@ -49,7 +49,7 @@ namespace SmartAdminMvc.Extensions
 {
     columns.Bound(c => c.DestinationAddress).Title("Address");
     columns.Bound(c => c.PermalinkAddress).Title("Permalink").ClientTemplate("<a href='#: data.PermalinkAddress #'>#: data.PermalinkAddress #</a>");
-    columns.Bound(c => c.DateCreated).Title("Created on").Format("{0:u}");
+    columns.Bound(c => c.DateCreatedTimeAgo).Title("Created on");//.Format("{0:u}");
 })
 .Scrollable(s => s.Enabled(false))
 .ToolBar(t =>

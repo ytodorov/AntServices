@@ -18,6 +18,7 @@ using System.Linq;
 using System.Net.Sockets;
 using System.Data.Entity;
 using AutoMapper;
+using TimeAgo;
 
 #endregion
 
@@ -206,6 +207,11 @@ namespace SmartAdminMvc.Controllers
             }
 
             var pingPermalinksViewModels = Mapper.Map<List<PingPermalinkViewModel>>(pingPermalinks);
+            foreach (var p in pingPermalinksViewModels)
+            {
+                p.DateCreatedTimeAgo = p.DateCreated.GetValueOrDefault().TimeAgo();
+            }
+
             var dsResult = Json(pingPermalinksViewModels.ToDataSourceResult(request));
             return dsResult;
 

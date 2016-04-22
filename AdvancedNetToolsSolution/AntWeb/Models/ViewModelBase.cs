@@ -15,6 +15,8 @@ namespace SmartAdminMvc.Models
 
         public DateTime? DateCreated { get; set; }
 
+        public string DateCreatedTimeAgo { get; set; }
+
         public DateTime? DateModified { get; set; }
     }
 }
