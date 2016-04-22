@@ -66,7 +66,7 @@
 @if (Model != null)
 {
 
-  @Html.Raw((Html.AntCreateStandardPanel("hyellow", "  Round-trip times in ms", "<p>" +
+    @Html.Raw((Html.AntCreateStandardPanel("hyellow", "  Round-trip times in ms", "<p>" +
     Html.Kendo().Grid<PingResponseSummaryViewModel>()
         .Name("pingResultsGrid")
         .Columns(columns =>
@@ -157,7 +157,7 @@
 
     @Html.Raw((Html.AntCreateStandardPanel("horange", " Permalink", "<p>" +
     "permalinks" + "</p>")))
-      
+
 }
 
 @section scripts {
@@ -202,27 +202,41 @@
 
 @*history*@
 
-@Html.Raw((Html.AntCreateStandardPanel("hviolet", "Ping history for current user's IP", "<p>" + 
+@Html.Raw((Html.AntCreateStandardPanel("hviolet", "Ping history for current user's IP", "<p>" +
     Html.Kendo().Grid<PingPermalinkViewModel>().CreatePingPermalinkGrid(Url).ToHtmlString() + "</p>")))
 
-    @if (Model != null)
-    {
-        <script>
-            function getRequestedAddress() {
-                var data =
-                {
-                    address: $("#ip").val()
-                };
-                return data;
-            }
-        </script>
+@if (Model != null)
+{
+    <script>
+        function getRequestedAddress() {
+            var data =
+            {
+                address: $("#ip").val()
+            };
+            return data;
+        }
+               
+    </script>
 
 
-        @Html.Raw((Html.AntCreateStandardPanel("hviolet", " Ping history for" + Model.DestinationAddress, "<p>" +
+        @Html.Raw((Html.AntCreateStandardPanel("hviolet", "Ping history for " + Model.DestinationAddress, "<p>" +
      Html.Kendo().Grid<PingPermalinkViewModel>().CreatePingPermalinkGrid(Url, "getRequestedAddress").ToHtmlString() + "</p>")))
 
+
+
+
+}
+<script>
+    function getAllPermalinks() {
+        var data =
+        {
+            allPermalinks: true
+        };
+        return data;
     }
+</script>
+@Html.Raw((Html.AntCreateStandardPanel("hviolet", "Ping history", "<p>" +
+     Html.Kendo().Grid<PingPermalinkViewModel>().CreatePingPermalinkGrid(Url, "getAllPermalinks").ToHtmlString() + "</p>")))
+<div class="normalheader transition animated fadeIn">
 
-    <div class="normalheader transition animated fadeIn">
-
-    </div>
+</div>

@@ -51,9 +51,9 @@ namespace SmartAdminMvc.Controllers
         public ActionResult GenerateId(PingRequestViewModel prvm)
         {
             string addressToPing = prvm.Ip;
-            Uri uriResult;
-            bool isUri = Uri.TryCreate(prvm.Ip, UriKind.Absolute, out uriResult);
-            //&& (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
+            Uri uriResult;                    
+            bool isUri = Uri.TryCreate(prvm.Ip, UriKind.Absolute, out uriResult)
+            && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps || uriResult.Scheme == Uri.UriSchemeFtp);
             if (isUri)
             {
                 addressToPing = uriResult.Host;
@@ -71,7 +71,7 @@ namespace SmartAdminMvc.Controllers
 
             IPAddress dummy;
             bool isIpAddress = IPAddress.TryParse(prvm.Ip, out dummy);
-            string firstOpenPort = null;
+            string firstOpenPort = "80";
 
             if (!isIpAddress)
             {
@@ -97,7 +97,7 @@ namespace SmartAdminMvc.Controllers
                 }
             }
 
-            if (string.IsNullOrEmpty(firstOpenPort))
+            else //(string.IsNullOrEmpty(firstOpenPort))
             {
                 firstOpenPort = Utils.GetFirstOpenPort(addressToPing);
             }
@@ -190,9 +190,20 @@ namespace SmartAdminMvc.Controllers
                 return Json(pingPermalink.Id);
             }
         }
-        public ActionResult ReadPingPermalinks([DataSourceRequest] DataSourceRequest request, string address)
+        public ActionResult ReadPingPermalinks([DataSourceRequest] DataSourceRequest request, string address, bool? allPermalinks = false)
         {
-            List<PingPermalink> pingPermalinks = GetPermalinksForCurrentUser(address);
+            List<PingPermalink> pingPermalinks;
+            if (!allPermalinks.GetValueOrDefault())
+            {
+                pingPermalinks = GetPermalinksForCurrentUser(address);
+            }
+            else
+            {
+                using (AntDbContext context = new AntDbContext())
+                {
+                    pingPermalinks = context.PingPermalinks.Where(p => p.ShowInHistory == true).OrderByDescending(k => k.Id).Take(100).ToList();
+                }
+            }
 
             var pingPermalinksViewModels = Mapper.Map<List<PingPermalinkViewModel>>(pingPermalinks);
             var dsResult = Json(pingPermalinksViewModels.ToDataSourceResult(request));
