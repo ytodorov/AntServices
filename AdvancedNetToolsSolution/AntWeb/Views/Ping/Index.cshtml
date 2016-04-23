@@ -8,6 +8,18 @@
 
 </div>
 
+@if (Model != null)
+{
+
+    @Html.Raw((Html.AntCreateStandardPanel("hgreen", "Ping report summary",
+    "<p class='pdfExportPage'> Export as pdf <span class='k-icon k-i-pdf'></span>" + "</p>" +
+    "<p>" + "Created on " + Model.DateCreated + "</p>")))
+
+}
+
+
+
+
 <div class="col-lg-12">
     <div class="hpanel hgreen">
         <div class="panel-heading">

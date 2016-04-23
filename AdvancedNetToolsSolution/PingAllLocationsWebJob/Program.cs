@@ -18,13 +18,7 @@ namespace PingAllLocationsWebJob
             Timer timer = new Timer(TimeSpan.FromMinutes(5).TotalMilliseconds);
             timer.Elapsed += Timer_Elapsed;
             timer.Start();
-            PingAllLocations();
-            Console.ReadLine();
-
-            Timer preventWebJobFromIdle = new Timer(TimeSpan.FromMinutes(1.5).TotalMilliseconds);
-            preventWebJobFromIdle.Elapsed += PreventWebJobFromIdle_Elapsed;
-            preventWebJobFromIdle.Start();
-
+            PingAllLocations();          
 
         }
 
@@ -65,7 +59,37 @@ namespace PingAllLocationsWebJob
                     var encodedArgs0 = Uri.EscapeDataString(" 8.8.8.8 --delay 10ms -v1");
                     var res = client.GetStringAsync(urlService).Result;
                     Console.WriteLine($"{sw.ElapsedMilliseconds} {urlService}");
+
+
                 }
+
+                using (HttpClient client = new HttpClient())
+                {
+                    sw = Stopwatch.StartNew();
+                    var encodedArgs0 = Uri.EscapeDataString(" 8.8.8.8  --tcp -p 53 --delay 10ms -v1 -c 1");
+                    string url = $"{urlService}/home/exec?program=nping&args=" + encodedArgs0;
+                    var res = client.GetStringAsync(url).Result;
+                    if (res.Length > 100)
+                    {
+                        res = res.Substring(0, 100);
+                    }
+                    Console.WriteLine($"{sw.ElapsedMilliseconds} nping");
+                }
+                using (HttpClient client = new HttpClient())
+                {
+                    sw = Stopwatch.StartNew();
+                    var encodedArgs0 = Uri.EscapeDataString(" 8.8.8.8 -Pn -sn -n");
+                    string url = $"{urlService}/home/exec?program=nmap&args=" + encodedArgs0;
+                    var res = client.GetStringAsync(url).Result;
+                    if (res.Length > 100)
+                    {
+                        res = res.Substring(0, 100);
+                    }
+                    Console.WriteLine($"{sw.ElapsedMilliseconds} nmap");
+                }
+
+                Console.WriteLine("--------------");
+
             }
         }
     }
