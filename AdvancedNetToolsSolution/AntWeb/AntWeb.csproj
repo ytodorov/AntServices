@@ -124,12 +124,12 @@
       <HintPath>..\packages\Serilog.Sinks.MSSqlServer.3.0.52\lib\net45\Serilog.Sinks.MSSqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="StructureMap, Version=3.0.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\structuremap.3.0.4.125\lib\net40\StructureMap.dll</HintPath>
+    <Reference Include="StructureMap, Version=4.1.3.394, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\structuremap.4.1.3.394\lib\net40\StructureMap.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="StructureMap.Net4, Version=3.0.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\structuremap.3.0.4.125\lib\net40\StructureMap.Net4.dll</HintPath>
+    <Reference Include="StructureMap.Net4, Version=4.1.3.394, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\structuremap.4.1.3.394\lib\net40\StructureMap.Net4.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Data.DataSetExtensions" />
@@ -1433,14 +1433,46 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\HMTLHelperExtensions.cs" />
+    <Compile Include="Infrastructure\ActionFilterRegistry.cs" />
+    <Compile Include="Infrastructure\Alerts\Alert.cs" />
+    <Compile Include="Infrastructure\Alerts\AlertDecoratorResult.cs" />
+    <Compile Include="Infrastructure\Alerts\AlertExtensions.cs" />
     <Compile Include="Infrastructure\Constants.cs" />
+    <Compile Include="Infrastructure\ContainerPerRequestExtensions.cs" />
     <Compile Include="Infrastructure\ControllerConvention.cs" />
+    <Compile Include="Infrastructure\ControllerRegistry.cs" />
+    <Compile Include="Infrastructure\CurrentUser.cs" />
+    <Compile Include="Infrastructure\FailTrackerController.cs" />
+    <Compile Include="Infrastructure\ICurrentUser.cs" />
+    <Compile Include="Infrastructure\IoC.cs" />
+    <Compile Include="Infrastructure\Mapping\IHaveCustomMappings.cs" />
+    <Compile Include="Infrastructure\Mapping\IMapFrom.cs" />
+    <Compile Include="Infrastructure\ModelMetadata\ExtensibleModelMetadataProvider.cs" />
+    <Compile Include="Infrastructure\ModelMetadata\Filters\LabelConventionFilter.cs" />
+    <Compile Include="Infrastructure\ModelMetadata\Filters\ReadOnlyTemplateSelectorFilter.cs" />
+    <Compile Include="Infrastructure\ModelMetadata\Filters\TextAreaByNameFilter.cs" />
+    <Compile Include="Infrastructure\ModelMetadata\Filters\UserIDDropDownByNameFilter.cs" />
+    <Compile Include="Infrastructure\ModelMetadata\Filters\WatermarkConventionFilter.cs" />
+    <Compile Include="Infrastructure\ModelMetadata\IModelMetadataFilter.cs" />
+    <Compile Include="Infrastructure\ModelMetadata\ModelMetadataRegistry.cs" />
+    <Compile Include="Infrastructure\ModelMetadata\RenderAttribute.cs" />
+    <Compile Include="Infrastructure\MvcRegistry.cs" />
+    <Compile Include="Infrastructure\StandardRegistry.cs" />
+    <Compile Include="Infrastructure\StructureMapDependencyResolver.cs" />
     <Compile Include="Infrastructure\StructureMapFilterProvider.cs" />
     <Compile Include="Infrastructure\PingReplyParser.cs" />
     <Compile Include="Infrastructure\PortParser.cs" />
     <Compile Include="Infrastructure\StructureMapDependecyResolver.cs" />
+    <Compile Include="Infrastructure\Tasks\IRunAfterEachRequest.cs" />
+    <Compile Include="Infrastructure\Tasks\IRunAtInit.cs" />
+    <Compile Include="Infrastructure\Tasks\IRunAtStartup.cs" />
+    <Compile Include="Infrastructure\Tasks\IRunOnEachRequest.cs" />
+    <Compile Include="Infrastructure\Tasks\IRunOnError.cs" />
+    <Compile Include="Infrastructure\Tasks\TaskRegistry.cs" />
     <Compile Include="Infrastructure\TraceRouteParser.cs" />
+    <Compile Include="Infrastructure\TransactionPerRequest.cs" />
     <Compile Include="Infrastructure\Utils.cs" />
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AddressHistoryViewModel.cs" />
     <Compile Include="Models\IpLocationViewModel.cs" />
     <Compile Include="Models\PermalinkBaseViewModel.cs" />

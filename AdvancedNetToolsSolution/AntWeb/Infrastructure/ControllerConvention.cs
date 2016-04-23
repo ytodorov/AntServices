@@ -1,20 +1,34 @@
-﻿//using StructureMap.Graph;
-//using StructureMap.Pipeline;
-//using StructureMap.TypeRules;
-//using System;
-//using StructureMap.Configuration.DSL;
-//using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
+using StructureMap.Configuration.DSL;
+using StructureMap.Graph;
+using StructureMap.Pipeline;
+using StructureMap.TypeRules;
+using StructureMap;
+using StructureMap.Graph.Scanning;
 
-//namespace SmartAdminMvc.Infrastructure
-//{
-//    public class ControllerConvention : IRegistrationConvention
-//    {
-//        public void Process(Type type, Registry registry)
-//        {
-//            if(type.CanBeCastTo(typeof(Controller)) && !type.IsAbstract)
-//            {
-//                registry.For(type).LifecycleIs(new UniquePerRequestLifecycle());
-//            }
-//        }
-//    }
-//}
+namespace FailTracker.Web.Infrastructure
+{
+	public class ControllerConvention : IRegistrationConvention
+	{
+		//public void Process(Type type, Registry registry)
+		//{
+		//	if (type.CanBeCastTo(typeof (Controller)) && !type.IsAbstract)
+		//	{
+		//		registry.For(type).LifecycleIs(new UniquePerRequestLifecycle());
+		//	}
+		//}
+
+        public void ScanTypes(TypeSet types, Registry registry)
+        {
+            var allTypes = types.AllTypes();
+            foreach (var type in allTypes)
+            {
+                if (type.CanBeCastTo(typeof(Controller)) && !type.IsAbstract)
+                {
+                    registry.For(type).LifecycleIs(new UniquePerRequestLifecycle());
+                }
+            }
+        }
+    }
+}

@@ -49,7 +49,7 @@ namespace SmartAdminMvc.Controllers
         }
 
         [HttpPost]
-        public ActionResult GenerateId(PingRequestViewModel prvm)
+        public ActionResult GenerateId(PingRequestViewModel prvm, AntDbContext context)
         {
             string addressToPing = prvm.Ip;
             Uri uriResult;                    
@@ -171,7 +171,7 @@ namespace SmartAdminMvc.Controllers
 
             // Save to Db
 
-            using (AntDbContext context = new AntDbContext())
+            //using (AntDbContext context = new AntDbContext())
             {
                 PingPermalink pingPermalink = new PingPermalink();
                 pingPermalink.ShowInHistory = prvm.ShowInHistory;

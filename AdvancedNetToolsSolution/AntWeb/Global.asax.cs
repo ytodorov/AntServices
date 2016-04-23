@@ -3,10 +3,14 @@
 using AntDal;
 using AntDal.Entities;
 using AutoMapper;
+using FailTracker.Web.Infrastructure;
+using FailTracker.Web.Infrastructure.ModelMetadata;
+using FailTracker.Web.Infrastructure.Tasks;
 using Serilog;
 using Serilog.Sinks.MSSqlServer;
 using SmartAdminMvc.App_Start;
 using SmartAdminMvc.Infrastructure;
+using SmartAdminMvc.Migrations;
 using SmartAdminMvc.Models;
 using StructureMap;
 using StructureMap.Graph;
@@ -14,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
+using System.Data.Entity;
 using System.Diagnostics;
 using System.Net.Http;
 using System.Timers;
@@ -28,17 +33,17 @@ namespace SmartAdminMvc
 {
     public class MvcApplication : HttpApplication
     {
-        //public IContainer Container
-        //{
-        //    get
-        //    {
-        //        return (IContainer)HttpContext.Current.Items["_Container"];
-        //    }
-        //    set
-        //    {
-        //        HttpContext.Current.Items["_Container"] = value;
-        //    }
-        //}
+        public IContainer Container
+        {
+            get
+            {
+                return (IContainer)HttpContext.Current.Items["_Container"];
+            }
+            set
+            {
+                HttpContext.Current.Items["_Container"] = value;
+            }
+        }
 
         protected void Application_Start()
         {
@@ -48,19 +53,63 @@ namespace SmartAdminMvc
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             MappingConfig.RegisterMaps();
-            //PreventAppsFromSleep();
-            
-        }
-        ////public void Application_BeginRequest()
-        ////{
-        ////    Container = ObjectFactory.Container.GetNestedContainer();
-        ////}
 
-        ////public void Application_EndRequest()
-        ////{
-        ////    Container.Dispose();
-        ////    Container = null; 
-        ////}
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<AntDbContext, Configuration>());
+
+            DependencyResolver.SetResolver(
+                new StructureMapDependencyResolver(() => Container ?? IoC.Container));
+
+            IoC.Container.Configure(cfg =>
+            {
+                cfg.AddRegistry(new StandardRegistry());
+                cfg.AddRegistry(new ControllerRegistry());
+                cfg.AddRegistry(new ActionFilterRegistry(
+                    () => Container ?? IoC.Container));
+                cfg.AddRegistry(new MvcRegistry());
+                cfg.AddRegistry(new TaskRegistry());
+                cfg.AddRegistry(new ModelMetadataRegistry());
+            });
+
+            using (var container = IoC.Container.GetNestedContainer())
+            {
+                foreach (var task in container.GetAllInstances<IRunAtInit>())
+                {
+                    task.Execute();
+                }
+
+                foreach (var task in container.GetAllInstances<IRunAtStartup>())
+                {
+                    task.Execute();
+                }
+            }
+
+        }
+        public void Application_BeginRequest()
+        {
+            Container = IoC.Container.GetNestedContainer();
+
+            foreach (var task in Container.GetAllInstances<IRunOnEachRequest>())
+            {
+                task.Execute();
+            }
+        }
+
+        public void Application_EndRequest()
+        {
+            try
+            {
+                foreach (var task in
+                    Container.GetAllInstances<IRunAfterEachRequest>())
+                {
+                    task.Execute();
+                }
+            }
+            finally
+            {
+                Container.Dispose();
+                Container = null;
+            }
+        }
 
         protected void Application_Error()
         {
@@ -80,14 +129,10 @@ namespace SmartAdminMvc
                 context.ErrorLoggings.Add(el);
                 context.SaveChanges();
             }
-            //    var log = new LoggerConfiguration()
-            //        .WriteTo.MSSqlServer(connectionString: @"Server=Alex-PC\SQLEXPRESS;Database=Ant;user=sa;password=1510alex;MultipleActiveResultSets=true;", tableName: "ErrorLoggings")
-            //        .CreateLogger();
-            //}
-            
-            //log.("@{Title}", ex.Message);
-            //log.Information("@{Description}", ex.StackTrace);
-            //log.Information("@{IpAddress}", ex.Data);
+            foreach (var task in Container.GetAllInstances<IRunOnError>())
+            {
+                task.Execute();
+            }
         }
 
         private void PreventAppsFromSleep()
