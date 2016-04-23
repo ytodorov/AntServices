@@ -16,27 +16,21 @@
         </button>
         <div class="collapse mobile-navbar" id="mobile-collapse">
             <ul class="nav navbar-nav" style="font-size:xx-large">
-                @*<li title="Pdf">
-                    <a href="javascript:void()" id="pdfExportPage" target="_blank"><i class="fa fa-file-pdf-o"></i>Pdf</a>
-                </li>*@
-                <li  title="Follow us on Facebook">
-                    <a href="#" target="_blank"><i class="fa fa-facebook-square"></i> Follow us on Facebook</a>
+                <li title="Pdf">
+                    <a href="javascript:void()" class="pdfExportPage" target="_blank"><i class="fa fa-file-pdf-o"></i>Pdf</a>
                 </li>
-                <li title="Follow us on Twitter">
-                    <a href="#" target="_blank"><i class="fa fa-twitter-square"></i> Follow us on Twitter</a>
-                </li>
-                <li title="Follow us on Google+">
-                    <a href="#" target="_blank"><i class="fa fa-google-plus-square"></i> Follow us on Google+</a>
-                </li>
+                <li>
+                    <div class="addthis_horizontal_follow_toolbox"></div>
+                </li>               
             </ul>
         </div>
     </div>
     <div class="navbar-right">
         <ul class="nav navbar-nav no-borders">
             <li title="Pdf">
-                <a id="pdfExportPage" ><i class="fa fa-file-pdf-o"></i></a>
+                <a class="pdfExportPage"><i class="fa fa-file-pdf-o"></i></a>
             </li>
-            <li title="Png">
+            @*<li title="Png">
                 <a id="pngExportPage"><i class="fa fa-file-image-o"></i></a>
             </li>
             <li title="Svg">
@@ -50,6 +44,13 @@
             </li>
             <li title="Follow us on Google+">
                 <a href="#" target="_blank"><i class="fa fa-google-plus-square" ></i></a>
+            </li>*@
+            <li>
+                <!-- Go to www.addthis.com/dashboard to customize your tools -->
+                <div class="addthis_horizontal_follow_toolbox"></div>
+            </li>
+            <li>
+                <span> &nbsp; &nbsp; &nbsp;</span>
             </li>
         </ul>
     </div>

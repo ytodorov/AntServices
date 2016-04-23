@@ -104,7 +104,7 @@ $(window).ready(function myfunction() {
 
     }
     // export pdf
-    $("#pdfExportPage").click(function () {
+    $(".pdfExportPage").click(function () {
         debugger;
         // Convert the DOM element to a drawing using kendo.drawing.drawDOM
         kendo.drawing.drawDOM($("#divBody"))
@@ -125,39 +125,39 @@ $(window).ready(function myfunction() {
         });            
     });
 
-    $("#pngExportPage").click(function () {
-        // Convert the DOM element to a drawing using kendo.drawing.drawDOM
-        kendo.drawing.drawDOM($("#divBody"))
-        .then(function (group) {
-            // Render the result as a PNG image
-            return kendo.drawing.exportImage(group);
-        })
-        .done(function (data) {
-            // Save the image file
-            kendo.saveAs({
-                dataURI: data,
-                fileName: "ToolsForNet" + new Date().getDate() + ".png",
-                proxyURL: "@Url.Action('Pdf', 'Export')"
-            });
-        });
-    });
+    //$("#pngExportPage").click(function () {
+    //    // Convert the DOM element to a drawing using kendo.drawing.drawDOM
+    //    kendo.drawing.drawDOM($("#divBody"))
+    //    .then(function (group) {
+    //        // Render the result as a PNG image
+    //        return kendo.drawing.exportImage(group);
+    //    })
+    //    .done(function (data) {
+    //        // Save the image file
+    //        kendo.saveAs({
+    //            dataURI: data,
+    //            fileName: "ToolsForNet" + new Date().getDate() + ".png",
+    //            proxyURL: "@Url.Action('Pdf', 'Export')"
+    //        });
+    //    });
+    //});
 
-    $("#svgExportPage").click(function () {
-        // Convert the DOM element to a drawing using kendo.drawing.drawDOM
-        kendo.drawing.drawDOM($("#divBody"))
-        .then(function (group) {
-            // Render the result as a SVG document
-            return kendo.drawing.exportSVG(group);
-        })
-        .done(function (data) {
-            // Save the SVG document
-            kendo.saveAs({
-                dataURI: data,
-                fileName: "ToolsForNet" + new Date().getDate() + ".svg",
-                proxyURL: "@Url.Action('Pdf', 'Export')"
-            });
-        });
-    });
+    //$("#svgExportPage").click(function () {
+    //    // Convert the DOM element to a drawing using kendo.drawing.drawDOM
+    //    kendo.drawing.drawDOM($("#divBody"))
+    //    .then(function (group) {
+    //        // Render the result as a SVG document
+    //        return kendo.drawing.exportSVG(group);
+    //    })
+    //    .done(function (data) {
+    //        // Save the SVG document
+    //        kendo.saveAs({
+    //            dataURI: data,
+    //            fileName: "ToolsForNet" + new Date().getDate() + ".svg",
+    //            proxyURL: "@Url.Action('Pdf', 'Export')"
+    //        });
+    //    });
+    //});
 
 
 })

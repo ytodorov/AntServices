@@ -212,7 +212,7 @@ namespace SmartAdminMvc.Infrastructure
                 position: {locationNamesInMap[i]},
                 map: map,
                 icon: pinRedImage,
-                title: '{i}. {ips.ElementAt(i)} {locations[i].CityName} {locations[i].RegionName} {locations[i].CountryName}'
+                title: '{i}. {ips.ElementAt(i)} {locations[i].CityName.Replace("'", "&quot;")} {locations[i].RegionName.Replace("'", "&quot;")} {locations[i].CountryName.Replace("'", "&quot;")}'
                 }});");
                 }
                 else
@@ -221,7 +221,7 @@ namespace SmartAdminMvc.Infrastructure
                 position: {locationNamesInMap[i]},
                 map: map,
                 icon: pinGreenImage,
-                title: '{i}. {ips.ElementAt(i)} {locations[i].CityName} {locations[i].RegionName} {locations[i].CountryName}'
+                title: '{i}. {ips.ElementAt(i)} {locations[i].CityName.Replace("'", "&quot;")} {locations[i].RegionName.Replace("'", "&quot;")} {locations[i].CountryName.Replace("'", "&quot;")}'
                 }});");
                                         
                 }
@@ -229,7 +229,7 @@ namespace SmartAdminMvc.Infrastructure
                 string infoWindowContentHtml;
 
                 var infowindow = $@" var {infoWindowsNamesInMap[i]} = new google.maps.InfoWindow({{
-    content: '{i}. {ips.ElementAt(i)} {locations[i].CityName} {locations[i].RegionName} {locations[i].CountryName} Km: {distanceKm}, Miles: {distanceMiles}',
+    content: '{i}. {ips.ElementAt(i)} {locations[i].CityName.Replace("'", "&quot;")} {locations[i].RegionName.Replace("'", "&quot;")} {locations[i].CountryName.Replace("'", "&quot;")} Km: {distanceKm}, Miles: {distanceMiles}',
     maxWidth: 200
   }});";
                 sb.Append(infowindow);
