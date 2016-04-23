@@ -11,10 +11,12 @@
 @if (Model != null)
 {
     @Html.Raw((Html.AntCreateStandardPanel("hgreen", "Ping report summary",
-    "<p class='pdfExportPage'>Export as pdf: <span class='k-icon k-i-pdf'></span>" + "</p>" +
+    "<div class='text-center'>" +
+    "<a class='pdfExportPage'>Download as PDF" + "</a>" +
     "<p>" + "Created on: " + Model.DateCreated + "</p>" +
-    "<p>" + "Permalink: " + Model.PermalinkAddress + "</p>" +
-    "<p>" + "Share: <div class='addthis_sharing_toolbox'></div></p>")))
+    "<p>" + "Permalink: <a href='" + Context.Request.Url.ToString() + "' target='_blank'>" + Context.Request.Url.ToString() + "</a></p>" +
+    "<p>" + "<div class='addthis_sharing_toolbox'></div></p>" +
+    "<div>")))
 
 }
 
@@ -208,7 +210,7 @@
                             eval(gmData);
                         }
                     });
-                }, 500)
+                }, 1)
 
 
             </script>

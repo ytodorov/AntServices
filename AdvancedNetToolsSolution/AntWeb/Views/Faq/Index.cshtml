@@ -3,80 +3,70 @@
     ViewBag.MetaDescription = "Faq";
 }
 
-<div class="content animate-panel">
-
-
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="hpanel">
-                <div class="panel-body">
-                    <div class="">Frequently asked questions. Find the answer or contact with us on support email.</div>
-                    <div class="m-t-sm">
-                        <div class="input-group">
-                            <input class="form-control" type="text" placeholder="Search question..">
-                            <div class="input-group-btn">
-                                <button class="btn btn-default"><i class="fa fa-search"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+<div class="content">
 
     <div class="row">
         <div class="col-lg-12">
             <div class="hpanel panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                <div class="panel-body">
-                    <h4 class="m-t-none m-b-none">Ping FAQs</h4>
+                <div class="panel-body text-center">
+                    <h4 class="m-t-none m-b-none">Ping FAQs (4)</h4>
                     <small class="text-muted">Questions regarding <a href="~/ping">ping tool</a>.</small>
                 </div>
                 <div class="panel-body">
                     <a data-toggle="collapse" data-parent="#accordion" href="#q1" aria-expanded="true">
                         <i class="fa fa-chevron-down pull-right text-muted"></i>
-                        Where can I purchase Homer theme ?
+                       1. What protocol is used for ping probes?
                     </a>
                     <div id="q1" class="panel-collapse collapse">
-                        <hr>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal.
+                        <hr>We use TCP protocol for pings, NOT the ICMP protocol.
                     </div>
                 </div>
                 <div class="panel-body">
                     <a data-toggle="collapse" data-parent="#accordion" href="#q2" aria-expanded="true">
                         <i class="fa fa-chevron-down pull-right text-muted"></i>
-                        Many desktop publishing packages ?
+                      2.  Which TCP port is used for ping probes.
                     </a>
                     <div id="q2" class="panel-collapse collapse">
-                        <hr>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal.
+                        <hr>It depends on the ping destination address. There are two cases:
+                        <ul>
+                            <li>
+                                The destination address is IP address. In this case we use the first open port.
+                            </li>
+                            <li>
+                                The destination address is URL address. In this case we determine the port from the URL. If it begins with http we use
+                                port 80, if it begins with https - 443, ftp - 21 and so on. If the URL does not have a prefix we use port 80.
+                            </li>
+                        </ul>
                     </div>
                 </div>
                 <div class="panel-body">
                     <a data-toggle="collapse" data-parent="#accordion" href="#q3" aria-expanded="true">
                         <i class="fa fa-chevron-down pull-right text-muted"></i>
-                        Lorem Ipsum available, but the majority have ?
+                        3. How many ping probes are sent to the destination address?
                     </a>
                     <div id="q3" class="panel-collapse collapse">
-                        <hr>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal.
+                        <hr>We send exactly 5 probes to the destination address.
                     </div>
                 </div>
                 <div class="panel-body">
                     <a data-toggle="collapse" data-parent="#accordion" href="#q4" aria-expanded="true">
                         <i class="fa fa-chevron-down pull-right text-muted"></i>
-                        The generated Lorem Ipsum is therefore always ?
+                        4. How long is the delay between each ping probe.
                     </a>
                     <div id="q4" class="panel-collapse collapse">
-                        <hr>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal.
+                        <hr>The delay between each ping probe is exactly 50 milliseconds.
                     </div>
                 </div>
-                <div class="panel-body">
+                @*<div class="panel-body">
                     <a data-toggle="collapse" data-parent="#accordion" href="#q5" aria-expanded="true">
                         <i class="fa fa-chevron-down pull-right text-muted"></i>
-                        College in Virginia, looked up one of ?
+                        5. How many locations are used simultaneously for ping.
                     </a>
                     <div id="q5" class="panel-collapse collapse">
-                        <hr>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal.
+                        <hr>We use 10 locations distributed all over th
                     </div>
-                </div>
-                <div class="panel-body">
+                </div>*@
+                @*<div class="panel-body">
                     <a data-toggle="collapse" data-parent="#accordion" href="#q6" aria-expanded="true">
                         <i class="fa fa-chevron-down pull-right text-muted"></i>
                         Lorem Ipsum is simply dummy ?
@@ -84,8 +74,8 @@
                     <div id="q6" class="panel-collapse collapse">
                         <hr>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal.
                     </div>
-                </div>
-                <div class="panel-body">
+                </div>*@
+                @*<div class="panel-body">
                     <a data-toggle="collapse" data-parent="#accordion" href="#q7" aria-expanded="true">
                         <i class="fa fa-chevron-down pull-right text-muted"></i>
                         The standard chunk of Lorem Ipsum used since ?
@@ -93,8 +83,8 @@
                     <div id="q7" class="panel-collapse collapse">
                         <hr>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal.
                     </div>
-                </div>
-                <div class="panel-body">
+                </div>*@
+                @*<div class="panel-body">
                     <a data-toggle="collapse" data-parent="#accordion" href="#q8" aria-expanded="true">
                         <i class="fa fa-chevron-down pull-right text-muted"></i>
                         Many desktop publishing ?
@@ -102,8 +92,8 @@
                     <div id="q8" class="panel-collapse collapse">
                         <hr>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal.
                     </div>
-                </div>
-                <div class="panel-body">
+                </div>*@
+                @*<div class="panel-body">
                     <a data-toggle="collapse" data-parent="#accordion" href="#q9" aria-expanded="true">
                         <i class="fa fa-chevron-down pull-right text-muted"></i>
                         Cicero are also reproduced in their exact original form, accompanied ?
@@ -111,7 +101,7 @@
                     <div id="q9" class="panel-collapse collapse">
                         <hr>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal.
                     </div>
-                </div>
+                </div>*@
             </div>
         </div>
      
