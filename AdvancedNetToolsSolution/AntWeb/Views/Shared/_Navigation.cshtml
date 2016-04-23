@@ -4,27 +4,24 @@
             <a href="@Url.Action("Index", "Home")">
                 <span class="text-success pull-left"><i class="pe-7s-home" style="font-size:large"></i></span>&nbsp;
                 <span class="nav-label">Home</span>
-
             </a>
         </li>
         <li class="@Html.IsSelected(action: "Index")">
             <a href="@Url.Action("Index", "Ping")">
                 <span class="text-success pull-left"><i class="pe-7s-sun" style="font-size:large"></i></span>&nbsp;
                 <span class="nav-label">Ping</span>
-
             </a>
         </li>
-        <li class="@Html.IsSelected(action: "Index")">
+        @*<li class="@Html.IsSelected(action: "Index")">
             <a href="javascript:void()">
                 <span class="text-success pull-left"><i class="pe-7s-science" style="font-size:large"></i></span>&nbsp;
                 <span class="nav-label">TraceRoute</span>
             </a>
-        </li>
+        </li>*@
         <li class="@Html.IsSelected(action: "Index")">
             <a href="@Url.Action("Index", "Faq")">
                 <span class="text-success pull-left"><i class="pe-7s-chat" style="font-size:large"></i></span>&nbsp;
                 <span class="nav-label">FAQ</span>
-              
             </a>
         </li>
         <li class="@Html.IsSelected(action: "Index")">
