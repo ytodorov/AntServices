@@ -15,7 +15,7 @@
     "<p>" + "Created on: " + Model.DateCreated + "</p>" +
     "<p>" + "Permalink: " + Model.PermalinkAddress + "</p>" +
     "<p>" + "Share: <div class='addthis_sharing_toolbox'></div></p>")))
-   
+
 }
 
 
@@ -44,8 +44,8 @@
               .Transport(transport => transport
                 .Read(read =>
                 {
-        read.Action("ReadAddressesToPing", "Ping");
-    }))
+                    read.Action("ReadAddressesToPing", "Ping");
+                }))
                 .ServerFiltering(false)
                 ).Deferred()
                 )
@@ -77,9 +77,9 @@
 </div>
 
 @if (Model != null)
-    {
+{
 
-        @Html.Raw((Html.AntCreateStandardPanel("hyellow", "  Round-trip times in ms", "<p>" +
+    @Html.Raw((Html.AntCreateStandardPanel("hyellow", "  Round-trip times in ms", "<p>" +
         Html.Kendo().Grid<PingResponseSummaryViewModel>()
             .Name("pingResultsGrid")
             .Columns(columns =>
@@ -116,9 +116,9 @@
 }
 
 @if (Model != null)
-    {
+{
 
-        @Html.Raw((Html.AntCreateStandardPanel("hred", "Ping chart", "<p>" +
+    @Html.Raw((Html.AntCreateStandardPanel("hred", "Ping chart", "<p>" +
         Html.Kendo().Chart(Model.PingResponseSummaries.OrderBy(s => s.AvgRtt)).Theme("metro")
             .Name("pingResultsChart")
             .Legend(legend => legend
@@ -147,7 +147,7 @@
 }
 
 @if (Model != null)
-    {
+{
 
     <div class="col-lg-12">
         <div class="hpanel hblue">
@@ -165,71 +165,75 @@
     </div>
 
 }
-@*@if (Model != null)
-{
+    @*@if (Model != null)
+        {
 
-    @Html.Raw((Html.AntCreateStandardPanel("horange", " Permalink", "<p>" +
-    "permalinks" + "</p>")))
+            @Html.Raw((Html.AntCreateStandardPanel("horange", " Permalink", "<p>" +
+            "permalinks" + "</p>")))
 
-}*@
+        }*@
 
-@section scripts {
-    <script>
-        $(window).ready(function myfunction() {
-            // Toastr options
-            toastr.options = {
-                "debug": false,
-                "newestOnTop": false,
-                "positionClass": "toast-top-center",
-                "closeButton": true,
-                "toastClass": "animated fadeInDown",
-            };
-            $('#btnSend').click(function (e) {
-                toastr.success('Success - Email was successfully sent.');
-                e.preventDefault();
-                $("#iconSendEmail").click();
+    @section scripts {
+        <script>
+            $(window).ready(function myfunction() {
+                // Toastr options
+                toastr.options = {
+                    "debug": false,
+                    "newestOnTop": false,
+                    "positionClass": "toast-top-center",
+                    "closeButton": true,
+                    "toastClass": "animated fadeInDown",
+                };
+                $('#btnSend').click(function (e) {
+                    toastr.success('Success - Email was successfully sent.');
+                    e.preventDefault();
+                    $("#iconSendEmail").click();
+                });
             });
-        });
 
-    </script>
+        </script>
+
+        @if (Model != null)
+    {
+            <script>
+
+                setTimeout(function f() {
+                    var permalinkId = '@Model.Id';
+                    $.ajax({
+                        method: "POST",
+                        url: "/home/googlemapfromips",
+                        data: { permalinkId: permalinkId },
+                        success: function f(gmData) {
+                            $("#map").height("300px");
+                            eval(gmData);
+                        }
+                    });
+                }, 500)
+
+
+            </script>
+        }
+        <script src="~/Scripts/viewsJS/pingIndex.js"></script>
+
+    }
+
+    @*history*@
+
+    @Html.Raw((Html.AntCreateStandardPanel("hviolet", "Ping history for current user's IP", "<p>" +
+    Html.Kendo().Grid<PingPermalinkViewModel>().CreatePingPermalinkGrid(Url).ToHtmlString() + "</p>")))
 
     @if (Model != null)
     {
         <script>
-            var permalinkId = '@Model.Id';
+            function getRequestedAddress() {
+                var data =
+                {
+                    address: $("#ip").val()
+                };
+                return data;
+            }
 
-            $.ajax({
-                method: "POST",
-                url: "/home/googlemapfromips",
-                data: { permalinkId: permalinkId },
-                success: function f(gmData) {
-                    $("#map").height("300px");
-                    eval(gmData);
-                }
-            });
         </script>
-    }
-    <script src="~/Scripts/viewsJS/pingIndex.js"></script>
-
-}
-
-@*history*@
-
-@Html.Raw((Html.AntCreateStandardPanel("hviolet", "Ping history for current user's IP", "<p>" +
-    Html.Kendo().Grid<PingPermalinkViewModel>().CreatePingPermalinkGrid(Url).ToHtmlString() + "</p>")))
-
-@if (Model != null)
-{
-    <script>
-        function getRequestedAddress() {
-            var data =
-            {
-                address: $("#ip").val()
-            };
-            return data;
-        }
-               
-    </script>
 
 
         @Html.Raw((Html.AntCreateStandardPanel("hviolet", "Ping history for " + Model.DestinationAddress, "<p>" +
@@ -238,18 +242,18 @@
 
 
 
-}
-<script>
-    function getAllPermalinks() {
-        var data =
-        {
-            allPermalinks: true
-        };
-        return data;
     }
-</script>
-@Html.Raw((Html.AntCreateStandardPanel("hviolet", "Ping history for the last 100 pings", "<p>" +
+    <script>
+        function getAllPermalinks() {
+            var data =
+            {
+                allPermalinks: true
+            };
+            return data;
+        }
+    </script>
+    @Html.Raw((Html.AntCreateStandardPanel("hviolet", "Ping history for the last 100 pings", "<p>" +
      Html.Kendo().Grid<PingPermalinkViewModel>().CreatePingPermalinkGrid(Url, "getAllPermalinks").ToHtmlString() + "</p>")))
-<div class="normalheader transition animated fadeIn">
+    <div class="normalheader transition animated fadeIn">
 
-</div>
+    </div>
