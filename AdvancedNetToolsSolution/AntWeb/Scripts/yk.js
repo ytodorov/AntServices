@@ -120,7 +120,7 @@ $(window).ready(function myfunction() {
             kendo.saveAs({
                 dataURI: data,
                 fileName: "ToolsForNet" + new Date().getDate() + ".pdf",
-                proxyURL: "@Url.Action('Pdf', 'Export')"
+                proxyURL: "~/pdf/export"
             });
         });            
     });

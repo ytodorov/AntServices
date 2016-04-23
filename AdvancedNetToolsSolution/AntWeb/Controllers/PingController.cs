@@ -106,24 +106,7 @@ namespace SmartAdminMvc.Controllers
             List<PingResponseSummaryViewModel> list = new List<PingResponseSummaryViewModel>();
             List<Task<string>> tasks = new List<Task<string>>();
             List<HttpClient> clients = new List<HttpClient>();
-            //string firstOpenPort = "80";
-            //using (var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
-            //{
-            //    try
-            //    {
-            //        socket.SendTimeout = 500;
-            //        socket.ReceiveTimeout = 500;
-            //        socket.Connect(prvm.Ip, 80);
-            //        socket.Close();
-            //    }
-            //    catch (SocketException ex)
-            //    {
-            //        firstOpenPort = Utils.GetFirstOpenPort(prvm.Ip);
-            //    }
-            //}
-
-            //string firstOpenPort = Utils.GetFirstOpenPort(prvm.Ip);
-
+           
             if (string.IsNullOrEmpty(firstOpenPort))
             {
                 var result = new { error = "Invalid address for ping" };
@@ -169,10 +152,7 @@ namespace SmartAdminMvc.Controllers
             }
 
 
-            // Save to Db
-
-            //using (AntDbContext context = new AntDbContext())
-            {
+          
                 PingPermalink pingPermalink = new PingPermalink();
                 pingPermalink.ShowInHistory = prvm.ShowInHistory;
                 pingPermalink.UserCreatedIpAddress = Request.UserHostAddress;
@@ -189,7 +169,7 @@ namespace SmartAdminMvc.Controllers
                 context.SaveChanges();
 
                 return Json(pingPermalink.Id);
-            }
+            
         }
         public ActionResult ReadPingPermalinks([DataSourceRequest] DataSourceRequest request, string address, bool? allPermalinks = false)
         {
