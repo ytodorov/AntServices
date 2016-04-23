@@ -10,11 +10,12 @@
 
 @if (Model != null)
 {
-
     @Html.Raw((Html.AntCreateStandardPanel("hgreen", "Ping report summary",
-    "<p class='pdfExportPage'> Export as pdf <span class='k-icon k-i-pdf'></span>" + "</p>" +
-    "<p>" + "Created on " + Model.DateCreated + "</p>")))
-
+    "<p class='pdfExportPage'>Export as pdf: <span class='k-icon k-i-pdf'></span>" + "</p>" +
+    "<p>" + "Created on: " + Model.DateCreated + "</p>" +
+    "<p>" + "Permalink: " + Model.PermalinkAddress + "</p>" +
+    "<p>" + "Share: <div class='addthis_sharing_toolbox'></div></p>")))
+   
 }
 
 
@@ -43,8 +44,8 @@
               .Transport(transport => transport
                 .Read(read =>
                 {
-                    read.Action("ReadAddressesToPing", "Ping");
-                }))
+        read.Action("ReadAddressesToPing", "Ping");
+    }))
                 .ServerFiltering(false)
                 ).Deferred()
                 )
@@ -76,77 +77,77 @@
 </div>
 
 @if (Model != null)
-{
+    {
 
-    @Html.Raw((Html.AntCreateStandardPanel("hyellow", "  Round-trip times in ms", "<p>" +
-    Html.Kendo().Grid<PingResponseSummaryViewModel>()
-        .Name("pingResultsGrid")
-        .Columns(columns =>
-        {
-            columns.Bound(c => c.SourceHostName).Title("Origin");
-            columns.Bound(c => c.DestinationIpAddress).Title("Dest");
-            if (!Model.IsDestinationIpAddress)
+        @Html.Raw((Html.AntCreateStandardPanel("hyellow", "  Round-trip times in ms", "<p>" +
+        Html.Kendo().Grid<PingResponseSummaryViewModel>()
+            .Name("pingResultsGrid")
+            .Columns(columns =>
             {
-                columns.Bound(c => c.DestinationHostName).Title("Host");
-            }
+                columns.Bound(c => c.SourceHostName).Title("Origin");
+                columns.Bound(c => c.DestinationIpAddress).Title("Dest");
+                if (!Model.IsDestinationIpAddress)
+                {
+                    columns.Bound(c => c.DestinationHostName).Title("Host");
+                }
 
-            columns.Bound(c => c.MaxRtt).Title("Max");
-            columns.Bound(t => t.AvgRtt).Title("Avg").Format("{0:n0}");
-            columns.Bound(c => c.MinRtt).Title("Min");
-        })
-        .Scrollable(s => s.Enabled(false))
-        .ToolBar(t =>
-        {
-            t.Excel().Text(string.Empty);
-            t.Pdf().Text(string.Empty);
-        })
-        .Excel(e => e.AllPages(true).FileName("pingExportHistory(www.toolsfornet.com).xlsx").ProxyURL(Url.Action("Excel", "Export")))
-        .Pdf(e => e.AllPages().FileName("pingExportHistory(www.toolsfornet.com).pdf").ProxyURL(Url.Action("Pdf", "Export")))
-        .DataSource(dataSource => dataSource
-            .Ajax()
-            .Sort(s => s.Add(ss => ss.AvgRtt))
-            .ServerOperation(false)
+                columns.Bound(c => c.MaxRtt).Title("Max");
+                columns.Bound(t => t.AvgRtt).Title("Avg").Format("{0:n0}");
+                columns.Bound(c => c.MinRtt).Title("Min");
+            })
+            .Scrollable(s => s.Enabled(false))
+            .ToolBar(t =>
+            {
+                t.Excel().Text(string.Empty);
+                t.Pdf().Text(string.Empty);
+            })
+            .Excel(e => e.AllPages(true).FileName("pingExportHistory(www.toolsfornet.com).xlsx").ProxyURL(Url.Action("Excel", "Export")))
+            .Pdf(e => e.AllPages().FileName("pingExportHistory(www.toolsfornet.com).pdf").ProxyURL(Url.Action("Pdf", "Export")))
+            .DataSource(dataSource => dataSource
+                .Ajax()
+                .Sort(s => s.Add(ss => ss.AvgRtt))
+                .ServerOperation(false)
 
-        )
-        .Sortable()
-        .BindTo(Model?.PingResponseSummaries)
-        .Deferred().ToHtmlString() + "</p>")))
+            )
+            .Sortable()
+            .BindTo(Model?.PingResponseSummaries)
+            .Deferred().ToHtmlString() + "</p>")))
 
 }
 
 @if (Model != null)
-{
+    {
 
-    @Html.Raw((Html.AntCreateStandardPanel("hred", "Ping chart", "<p>" +
-    Html.Kendo().Chart(Model.PingResponseSummaries.OrderBy(s => s.AvgRtt)).Theme("metro")
-        .Name("pingResultsChart")
-        .Legend(legend => legend
-            .Position(ChartLegendPosition.Top)
-        )
+        @Html.Raw((Html.AntCreateStandardPanel("hred", "Ping chart", "<p>" +
+        Html.Kendo().Chart(Model.PingResponseSummaries.OrderBy(s => s.AvgRtt)).Theme("metro")
+            .Name("pingResultsChart")
+            .Legend(legend => legend
+                .Position(ChartLegendPosition.Top)
+            )
 
-        .Series(series =>
-        {
-            series.Column(model => model.MaxRtt).Name("MaxRtt");
-            series.Column(model => model.AvgRtt).Name("AvgRtt");
-            series.Column(model => model.MinRtt).Name("MinRtt");
-        })
-        .CategoryAxis(axis => axis
-            .Categories(model => model.SourceHostName)
-            .Labels(labels => labels.Rotation(-90))
-            .MajorGridLines(lines => lines.Visible(false))
-        )
-        .ValueAxis(axis => axis.Numeric()
-            .Labels(labels => labels.Format("{0:N0}"))
-            .Line(line => line.Visible(false))
-        )
-        .Tooltip(tooltip => tooltip
-            .Visible(true)
-            .Format("{0:N0}")
-        ).Deferred().ToHtmlString() + "</p>")))
+            .Series(series =>
+            {
+                series.Column(model => model.MaxRtt).Name("MaxRtt");
+                series.Column(model => model.AvgRtt).Name("AvgRtt");
+                series.Column(model => model.MinRtt).Name("MinRtt");
+            })
+            .CategoryAxis(axis => axis
+                .Categories(model => model.SourceHostName)
+                .Labels(labels => labels.Rotation(-90))
+                .MajorGridLines(lines => lines.Visible(false))
+            )
+            .ValueAxis(axis => axis.Numeric()
+                .Labels(labels => labels.Format("{0:N0}"))
+                .Line(line => line.Visible(false))
+            )
+            .Tooltip(tooltip => tooltip
+                .Visible(true)
+                .Format("{0:N0}")
+            ).Deferred().ToHtmlString() + "</p>")))
 }
 
 @if (Model != null)
-{
+    {
 
     <div class="col-lg-12">
         <div class="hpanel hblue">
@@ -164,13 +165,13 @@
     </div>
 
 }
-@if (Model != null)
+@*@if (Model != null)
 {
 
     @Html.Raw((Html.AntCreateStandardPanel("horange", " Permalink", "<p>" +
     "permalinks" + "</p>")))
 
-}
+}*@
 
 @section scripts {
     <script>

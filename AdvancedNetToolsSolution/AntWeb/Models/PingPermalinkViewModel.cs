@@ -38,6 +38,13 @@ namespace SmartAdminMvc.Models
                     {
                         urlOrIpString = "ip";
                     }
+
+                    //Uri helper;
+                    //if(Uri.TryCreate(fullRootUrl, UriKind.Absolute, out helper))
+                    //{
+                    //    fullRootUrl = helper.Host;
+                    //}
+
                     result = $"{fullRootUrl}/ping?{urlOrIpString}={DestinationAddress}&id={Id}";
                     return result;
                 }
