@@ -204,8 +204,19 @@ namespace SmartAdminMvc.Infrastructure
                 new google.maps.Point(10, 34));";
             sb.AppendLine(redColorPing);
 
+           
+
+           
+
+
+
             for (int i = 0; i < ips.Count(); i++)
             {
+                StringBuilder sbMarkerWindowHtml = new StringBuilder();
+                sbMarkerWindowHtml.Append($@"<font size=""2"" color=""#057CBE"">IP:&nbsp;</font> {ips.ElementAt(i)} <br /><font size=""2"" color=""#057CBE"">CITY:&nbsp;</font> {locations[i].CityName.Replace("'", "&quot;")} <br /><font size=""2"" color=""#057CBE"">COUNTRY:&nbsp;</font> {locations[i].CountryName.Replace("'", "&quot;")}");
+
+                string markerWindowHtml = sbMarkerWindowHtml.ToString(); ;
+
                 double distanceKm = 0;
                 double distanceMiles = 0;
                 if (i%2 == 0)
@@ -222,7 +233,7 @@ namespace SmartAdminMvc.Infrastructure
                 position: {locationNamesInMap[i]},
                 map: map,
                 icon: pinRedImage,
-                title: '{i}. {ips.ElementAt(i)} {locations[i].CityName.Replace("'", "&quot;")} {locations[i].RegionName.Replace("'", "&quot;")} {locations[i].CountryName.Replace("'", "&quot;")}'
+                title: '{markerWindowHtml}'
                 }});");
                 }
                 else
@@ -231,7 +242,7 @@ namespace SmartAdminMvc.Infrastructure
                 position: {locationNamesInMap[i]},
                 map: map,
                 icon: pinGreenImage,
-                title: '{i}. {ips.ElementAt(i)} {locations[i].CityName.Replace("'", "&quot;")} {locations[i].RegionName.Replace("'", "&quot;")} {locations[i].CountryName.Replace("'", "&quot;")}'
+                title: '{markerWindowHtml}'
                 }});");
                                         
                 }
@@ -239,7 +250,7 @@ namespace SmartAdminMvc.Infrastructure
                 string infoWindowContentHtml;
 
                 var infowindow = $@" var {infoWindowsNamesInMap[i]} = new google.maps.InfoWindow({{
-    content: '{i}. {ips.ElementAt(i)} {locations[i].CityName.Replace("'", "&quot;")} {locations[i].RegionName.Replace("'", "&quot;")} {locations[i].CountryName.Replace("'", "&quot;")} Km: {distanceKm}, Miles: {distanceMiles}',
+    content: '{markerWindowHtml}',
     maxWidth: 200
   }});";
                 sb.Append(infowindow);
