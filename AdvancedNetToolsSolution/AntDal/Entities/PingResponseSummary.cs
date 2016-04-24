@@ -22,6 +22,12 @@ namespace AntDal.Entities
 
         public double? AvgRtt { get; set; }
 
+        public int? PacketsSent { get; set; }
+        public int? PacketsReceived { get; set; }
+
+        public double? Latency { get; set; }
+
+
         public int? PingPermalinkId { get; set; }
         public virtual PingPermalink PingPermalink { get; set; }
     }

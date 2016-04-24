@@ -81,7 +81,7 @@
 @if (Model != null)
 {
 
-    @Html.Raw((Html.AntCreateStandardPanel("hyellow", "  Round-trip times in ms", "<p>" +
+    @Html.Raw((Html.AntCreateStandardPanel("hyellow", "Table: Round-trip times and latencies in ms.", "<p>" +
         Html.Kendo().Grid<PingResponseSummaryViewModel>()
             .Name("pingResultsGrid")
             .Columns(columns =>
@@ -96,6 +96,9 @@
                 columns.Bound(c => c.MaxRtt).Title("Max");
                 columns.Bound(t => t.AvgRtt).Title("Avg").Format("{0:n0}");
                 columns.Bound(c => c.MinRtt).Title("Min");
+                columns.Bound(c => c.PacketsSent).Title("Sent");
+                columns.Bound(c => c.PacketsReceived).Title("Received");
+                columns.Bound(c => c.Latency).Title("Latency");
             })
             .Scrollable(s => s.Enabled(false))
             .ToolBar(t =>
@@ -120,7 +123,7 @@
 @if (Model != null)
 {
 
-    @Html.Raw((Html.AntCreateStandardPanel("hred", "Ping chart", "<p>" +
+    @Html.Raw((Html.AntCreateStandardPanel("hred", "Chart: Round-trip times and latencies in ms.", "<p>" +
         Html.Kendo().Chart(Model.PingResponseSummaries.OrderBy(s => s.AvgRtt)).Theme("metro")
             .Name("pingResultsChart")
             .Legend(legend => legend
@@ -129,9 +132,10 @@
 
             .Series(series =>
             {
-                series.Column(model => model.MaxRtt).Name("MaxRtt");
-                series.Column(model => model.AvgRtt).Name("AvgRtt");
-                series.Column(model => model.MinRtt).Name("MinRtt");
+                series.Column(model => model.MaxRtt).Name("Max");
+                series.Column(model => model.AvgRtt).Name("Avg");
+                series.Column(model => model.MinRtt).Name("Min");
+                series.Column(model => model.Latency).Name("Latency");
             })
             .CategoryAxis(axis => axis
                 .Categories(model => model.SourceHostName)

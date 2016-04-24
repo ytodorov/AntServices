@@ -322,6 +322,7 @@ namespace SmartAdminMvc.Infrastructure
 
 
 
+
         public static string GetIpAddressFromHostName(string hostName, string locationOfDeployedService)
         {
             using (HttpClient client = new HttpClient())
@@ -391,6 +392,49 @@ namespace SmartAdminMvc.Infrastructure
             }
 
         }
+
+        public static string CheckIfHostIsUp(string ipOrHostName)
+        {
+            string errorMessage = null;
+            // Проверяваме дали изобщо може да достъпим адреса;
+            using (HttpClient client = new HttpClient())
+            {
+                var encodedArgs0 = Uri.EscapeDataString($"{ipOrHostName} -sn -Pn -n");
+                string url = $"http://ants-neu.cloudapp.net/home/exec?program=nmap&args=" + encodedArgs0;
+                var res = client.GetStringAsync(url).Result;
+                if (!res.Contains("Host is up."))
+                {
+                    errorMessage = $"'{ipOrHostName}' is invalid address or host is down!";
+                }
+            }
+
+            return errorMessage;
+        }
+
+
+        //        Starting Nmap 7.01 ( https://nmap.org ) at 2016-04-24 13:55 FLE Summer Time
+        //Nmap scan report for data.bg (195.149.248.130)
+        //Host is up(0.0040s latency).
+        //Nmap done: 1 IP address(1 host up) scanned in 0.38 seconds
+        public static double ParseLatencyString(string latencyString)
+        {
+            var lines = latencyString.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+            string latencyLine = lines.FirstOrDefault(l => l.StartsWith("Host is up"));
+            string latency = latencyLine
+                .Replace("Host is up", string.Empty)
+                .Replace("(", string.Empty)
+                .Replace(").", string.Empty)
+                .Replace("s", string.Empty)
+                .Replace("latency", string.Empty)
+                .Replace(" ", string.Empty);
+
+
+            double result = 0;
+            double.TryParse(latency, NumberStyles.Any, CultureInfo.InvariantCulture, out result);
+            result = result * 1000; // Calculate milliseconds
+            return result;
+        }
+
 
         public static class GeoCodeCalc
         {

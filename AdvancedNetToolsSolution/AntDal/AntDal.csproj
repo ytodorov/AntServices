@@ -62,12 +62,28 @@
     <Compile Include="Entities\PingSuccess.cs" />
     <Compile Include="Entities\PortResponseSummary.cs" />
     <Compile Include="Entities\PortPermalink.cs" />
+    <Compile Include="Migrations\201604240916204_AddLostField.cs" />
+    <Compile Include="Migrations\201604240916204_AddLostField.Designer.cs">
+      <DependentUpon>201604240916204_AddLostField.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201604241102432_AddMoreFields.cs" />
+    <Compile Include="Migrations\201604241102432_AddMoreFields.Designer.cs">
+      <DependentUpon>201604241102432_AddMoreFields.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201604240916204_AddLostField.resx">
+      <DependentUpon>201604240916204_AddLostField.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201604241102432_AddMoreFields.resx">
+      <DependentUpon>201604241102432_AddMoreFields.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

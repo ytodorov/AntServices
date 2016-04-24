@@ -60,11 +60,15 @@ namespace SmartAdminMvc.Controllers
                 addressToPing = uriResult.Host;
             }
 
+            var urls = Utils.GetDeployedServicesUrlAddresses.ToList();
+            
+            var errorMessage = Utils.CheckIfHostIsUp(addressToPing);
+            if (!string.IsNullOrEmpty(errorMessage))
+            {
+                var result = new { error = errorMessage };
+                return Json(result);
+            }
 
-
-
-
-            prvm.DelayBetweenPings = 200; // 200 is more successfull
             if (string.IsNullOrEmpty(prvm.Ip))
             {
                 return Json(string.Empty);
@@ -104,37 +108,49 @@ namespace SmartAdminMvc.Controllers
             }
 
             List<PingResponseSummaryViewModel> list = new List<PingResponseSummaryViewModel>();
-            List<Task<string>> tasks = new List<Task<string>>();
+            List<Task<string>> tasksForPings = new List<Task<string>>();
+            List<Task<string>> tasksForLatencies = new List<Task<string>>();
             List<HttpClient> clients = new List<HttpClient>();
-           
+
+          
+
             if (string.IsNullOrEmpty(firstOpenPort))
             {
-                var result = new { error = "Invalid address for ping" };
+                var result = new { error = $"Host '{addressToPing}' has no open TCP ports!" };
                 return Json(result);
             }
 
-            var urls = Utils.GetDeployedServicesUrlAddresses.ToList();
+        
 
             for (int i = 0; i < urls.Count; i++)
             {
-
                 HttpClient client = new HttpClient();
                 clients.Add(client);
                 var encodedArgs = Uri.EscapeDataString($"--tcp -p  {firstOpenPort} --delay 50ms -v1 {addressToPing} -c 5");
                 var urlWithArgs = urls[i] + "/home/exec?program=nping&args=" + encodedArgs;
                 Task<string> task = client.GetStringAsync(urlWithArgs);
-                tasks.Add(task);
+                tasksForPings.Add(task);
             }
 
-            Task.WaitAll(tasks.ToArray());
+            for (int i = 0; i < urls.Count; i++)
+            {
+                HttpClient client = new HttpClient();
+                clients.Add(client);
+                var encodedArgs = Uri.EscapeDataString($"-sn -n {addressToPing}");
+                var urlWithArgs = urls[i] + "/home/exec?program=nmap&args=" + encodedArgs;
+                Task<string> task = client.GetStringAsync(urlWithArgs);
+                tasksForLatencies.Add(task);
+            }
+
+            Task.WaitAll(tasksForPings.ToArray().Union(tasksForLatencies).ToArray());
 
             bool isUserRequestedAddressIp = false;
             IPAddress dummy1;
             isUserRequestedAddressIp = IPAddress.TryParse(addressToPing, out dummy1);
 
-            for (int i = 0; i < tasks.Count; i++)
+            for (int i = 0; i < tasksForPings.Count; i++)
             {
-                var summary = PingReplyParser.ParseSummary(tasks[i].Result);
+                var summary = PingReplyParser.ParseSummary(tasksForPings[i].Result);
                 string sourceIp = Utils.HotstNameToIp[urls[i]];
                 summary.SourceIpAddress = sourceIp;
                 summary.SourceHostName = Utils.HotstNameToAzureLocation[urls[i]];
@@ -142,11 +158,15 @@ namespace SmartAdminMvc.Controllers
                 {
                     summary.DestinationHostName = addressToPing;
                     summary.DestinationIpAddress = summary.DestinationIpAddress; //Utils.GetIpAddressFromHostName(prvm.Ip, urls[i]);
+
+                  
                 }
                 else
                 {
                     summary.DestinationIpAddress = addressToPing;
                 }
+                var latenceyString = tasksForLatencies[i].Result;
+                summary.Latency = Utils.ParseLatencyString(latenceyString);
                 list.Add(summary);
                 clients[i].Dispose();
             }

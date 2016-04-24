@@ -34,13 +34,13 @@ namespace SmartAdminMvc.Models
 
         public double? AvgRtt { get; set; }
 
-        public int PacketsCountSent { get; set; }
+        public int? PacketsSent { get; set; }
 
         public int PacketsBytesSent { get; set; }
 
         public int PacketsCountReceived { get; set; }
 
-        public int PacketsBytesReceived { get; set; }
+        public int? PacketsReceived { get; set; }
 
         public int PacketsCountLost { get; set; }
 
@@ -59,6 +59,9 @@ namespace SmartAdminMvc.Models
         public double RxBytesPerSecond { get; set; }
 
         public double RxPacketsPerSecond { get; set; }
+
+        public double? Latency { get; set; }
+
 
 
     }

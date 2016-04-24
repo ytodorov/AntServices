@@ -53,6 +53,26 @@ namespace SmartAdminMvc.Infrastructure
                 result.AvgRtt = avgRtt;
             }
 
+
+            var secondLine = lines.First(s => s.StartsWith("raw", StringComparison.InvariantCultureIgnoreCase));
+
+            if (!string.IsNullOrEmpty(secondLine))
+            {
+                var timesAndEmptyStrings = secondLine.Replace("Raw packets sent:", string.Empty)
+                    .Replace("Min rtt:", string.Empty)
+                    .Replace("Avg rtt:", string.Empty)
+                    .Replace("|", string.Empty)
+                    .Replace("ms", string.Empty);
+
+
+                var times = timesAndEmptyStrings.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+
+                int packetsSent = int.Parse(times[0], CultureInfo.InvariantCulture);
+                int packetsReceived = int.Parse(times[3], CultureInfo.InvariantCulture);
+                result.PacketsSent = packetsSent;
+                result.PacketsReceived = packetsReceived;
+            }
+
             var thirdLine = lines.First(s => s.StartsWith("Tx", StringComparison.InvariantCultureIgnoreCase));
             
             if (!string.IsNullOrEmpty(thirdLine))

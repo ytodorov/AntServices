@@ -19,7 +19,7 @@ namespace UnitTests
             using (HttpClient client = new HttpClient())
             {
 
-                var encodedArgs0 = Uri.EscapeDataString(" 8.8.8.8 --delay 10ms -v1");
+                var encodedArgs0 = Uri.EscapeDataString(" 8.8.8.8 --tcp -p 53 --delay 200ms -v1");
                 string url = "http://ants-je.cloudapp.net/home/exec?program=nping&args=" + encodedArgs0;
                 var res = client.GetStringAsync(url).Result;
 
@@ -44,6 +44,25 @@ namespace UnitTests
 
 
                 }
+
+                var secondLine = lines.First(s => s.StartsWith("raw", StringComparison.InvariantCultureIgnoreCase));
+
+                if (!string.IsNullOrEmpty(secondLine))
+                {
+                    var timesAndEmptyStrings = secondLine.Replace("Raw packets sent:", string.Empty)
+                        .Replace("Min rtt:", string.Empty)
+                        .Replace("Avg rtt:", string.Empty)
+                        .Replace("|", string.Empty)
+                        .Replace("ms", string.Empty);
+
+
+                    var times = timesAndEmptyStrings.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+
+                    double packetsSent = double.Parse(times[0], CultureInfo.InvariantCulture);
+                    double packetsReceived = double.Parse(times[3], CultureInfo.InvariantCulture);
+                    
+                }
+
 
                 var thirdLine = lines.First(s => s.StartsWith("Tx", StringComparison.InvariantCultureIgnoreCase));
 
