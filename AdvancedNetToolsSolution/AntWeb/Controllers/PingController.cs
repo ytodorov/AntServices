@@ -52,7 +52,7 @@ namespace SmartAdminMvc.Controllers
         public ActionResult GenerateId(PingRequestViewModel prvm, AntDbContext context)
         {
             string addressToPing = prvm.Ip;
-            Uri uriResult;                    
+            Uri uriResult;
             bool isUri = Uri.TryCreate(prvm.Ip, UriKind.Absolute, out uriResult)
             && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps || uriResult.Scheme == Uri.UriSchemeFtp);
             if (isUri)
@@ -61,7 +61,7 @@ namespace SmartAdminMvc.Controllers
             }
 
             var urls = Utils.GetDeployedServicesUrlAddresses.ToList();
-            
+
             var errorMessage = Utils.CheckIfHostIsUp(addressToPing);
             if (!string.IsNullOrEmpty(errorMessage))
             {
@@ -112,7 +112,7 @@ namespace SmartAdminMvc.Controllers
             List<Task<string>> tasksForLatencies = new List<Task<string>>();
             List<HttpClient> clients = new List<HttpClient>();
 
-          
+
 
             if (string.IsNullOrEmpty(firstOpenPort))
             {
@@ -120,7 +120,7 @@ namespace SmartAdminMvc.Controllers
                 return Json(result);
             }
 
-        
+
 
             for (int i = 0; i < urls.Count; i++)
             {
@@ -136,7 +136,7 @@ namespace SmartAdminMvc.Controllers
             {
                 HttpClient client = new HttpClient();
                 clients.Add(client);
-                var encodedArgs = Uri.EscapeDataString($"-sn -n {addressToPing}");
+                var encodedArgs = Uri.EscapeDataString($"-sn -n -Pn {addressToPing}");
                 var urlWithArgs = urls[i] + "/home/exec?program=nmap&args=" + encodedArgs;
                 Task<string> task = client.GetStringAsync(urlWithArgs);
                 tasksForLatencies.Add(task);
@@ -158,8 +158,6 @@ namespace SmartAdminMvc.Controllers
                 {
                     summary.DestinationHostName = addressToPing;
                     summary.DestinationIpAddress = summary.DestinationIpAddress; //Utils.GetIpAddressFromHostName(prvm.Ip, urls[i]);
-
-                  
                 }
                 else
                 {
@@ -168,28 +166,32 @@ namespace SmartAdminMvc.Controllers
                 var latenceyString = tasksForLatencies[i].Result;
                 summary.Latency = Utils.ParseLatencyString(latenceyString);
                 list.Add(summary);
-                clients[i].Dispose();
+            }
+
+            foreach (var client in clients)
+            {
+                client.Dispose();
             }
 
 
-          
-                PingPermalink pingPermalink = new PingPermalink();
-                pingPermalink.ShowInHistory = prvm.ShowInHistory;
-                pingPermalink.UserCreatedIpAddress = Request.UserHostAddress;
-                pingPermalink.DestinationAddress = prvm.Ip;
-                pingPermalink.UserCreated = Request.UserHostAddress;
-                pingPermalink.UserModified = Request.UserHostAddress;
-                pingPermalink.DateCreated = DateTime.Now;
-                pingPermalink.DateModified = DateTime.Now;
 
-                List<PingResponseSummary> pr = Mapper.Map<List<PingResponseSummary>>(list);
+            PingPermalink pingPermalink = new PingPermalink();
+            pingPermalink.ShowInHistory = prvm.ShowInHistory;
+            pingPermalink.UserCreatedIpAddress = Request.UserHostAddress;
+            pingPermalink.DestinationAddress = prvm.Ip;
+            pingPermalink.UserCreated = Request.UserHostAddress;
+            pingPermalink.UserModified = Request.UserHostAddress;
+            pingPermalink.DateCreated = DateTime.Now;
+            pingPermalink.DateModified = DateTime.Now;
 
-                pingPermalink.PingResponseSummaries.AddRange(pr);
-                context.PingPermalinks.Add(pingPermalink);
-                context.SaveChanges();
+            List<PingResponseSummary> pr = Mapper.Map<List<PingResponseSummary>>(list);
 
-                return Json(pingPermalink.Id);
-            
+            pingPermalink.PingResponseSummaries.AddRange(pr);
+            context.PingPermalinks.Add(pingPermalink);
+            context.SaveChanges();
+
+            return Json(pingPermalink.Id);
+
         }
         public ActionResult ReadPingPermalinks([DataSourceRequest] DataSourceRequest request, string address, bool? allPermalinks = false)
         {
@@ -243,7 +245,7 @@ namespace SmartAdminMvc.Controllers
                 }
             }
             list = list.OrderBy(l => l.Order).ToList();
-           return Json(list, JsonRequestBehavior.AllowGet);
+            return Json(list, JsonRequestBehavior.AllowGet);
         }
 
         private List<PingPermalink> GetPermalinksForCurrentUser(string address)

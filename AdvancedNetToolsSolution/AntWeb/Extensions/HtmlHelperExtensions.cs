@@ -57,7 +57,7 @@ namespace SmartAdminMvc.Extensions
     t.Excel().Text(string.Empty);
     t.Pdf().Text(string.Empty);
 })
-.Excel(e => e.FileName("pingExport(www.toolsfornet.com).xlsx").ProxyURL(urlHelper.Action("Excel", "Export")))
+.Excel(e => e.AllPages(true).FileName("pingExport(www.toolsfornet.com).xlsx").ProxyURL(urlHelper.Action("Excel", "Export")))
 .Pdf(e => e.AllPages().FileName("pingExport(www.toolsfornet.com).pdf").ProxyURL(urlHelper.Action("Pdf", "Export")))
 .Pageable()
 .Sortable()
