@@ -117,10 +117,12 @@ $(window).ready(function myfunction() {
         })
         .done(function (data) {
             // Save the PDF file
+            debugger;
+
             kendo.saveAs({
                 dataURI: data,
                 fileName: "ToolsForNet" + new Date().getDate() + ".pdf",
-                proxyURL: "~/pdf/export"
+                proxyURL: window.location.origin + "/pdf/export"
             });
         });            
     });

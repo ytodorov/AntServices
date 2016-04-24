@@ -186,9 +186,19 @@ namespace SmartAdminMvc.Infrastructure
             sb.AppendLine(greenColorPin);
 
 
-            string redColorPing = @"
+            //string redColorPing = @"
+            //var pinRedColor = 'FF0000';
+            //var pinRedImage = new google.maps.MarkerImage('http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|' + pinRedColor,
+            //    new google.maps.Size(21, 34),
+            //    new google.maps.Point(0, 0),
+            //    new google.maps.Point(10, 34));";
+            //sb.AppendLine(redColorPing);
+
+            string hostAddress = HttpContext.Current.Request.Url.AbsoluteUri.Replace(HttpContext.Current.Request.Url.LocalPath, string.Empty);
+
+            string redColorPing = $@"
             var pinRedColor = 'FF0000';
-            var pinRedImage = new google.maps.MarkerImage('http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|' + pinRedColor,
+            var pinRedImage = new google.maps.MarkerImage('{hostAddress}/content/img/pinRedColor.png',
                 new google.maps.Size(21, 34),
                 new google.maps.Point(0, 0),
                 new google.maps.Point(10, 34));";

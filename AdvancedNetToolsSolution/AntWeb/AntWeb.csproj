@@ -354,6 +354,8 @@
     <Content Include="Content\img\pattern\tileable_wood_texture-xs.png" />
     <Content Include="Content\img\pattern\tileable_wood_texture.png" />
     <Content Include="Content\img\pin.png" />
+    <Content Include="Content\img\pinGreenColor.png" />
+    <Content Include="Content\img\pinRedColor.png" />
     <Content Include="Content\img\plus.png" />
     <Content Include="Content\img\realestate\1.png" />
     <Content Include="Content\img\realestate\2.png" />
