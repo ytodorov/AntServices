@@ -240,7 +240,7 @@ namespace SmartAdminMvc.Infrastructure
                 position: {locationNamesInMap[i]},
                 map: map,
                 icon: pinRedImage,
-                title: '{markerWindowHtml}'
+                title: 'Left click to show info window.'
                 }});");
                 }
                 else
@@ -249,21 +249,22 @@ namespace SmartAdminMvc.Infrastructure
                 position: {locationNamesInMap[i]},
                 map: map,
                 icon: pinGreenImage,
-                title: '{markerWindowHtml}'
+                title: 'Left click to show info window.'
                 }});");
                                         
                 }
 
                 string infoWindowContentHtml;
 
-                var infowindow = $@" var {infoWindowsNamesInMap[i]} = new google.maps.InfoWindow({{
+                var infowindow = $@" var infowindow = new google.maps.InfoWindow({{
     content: '{markerWindowHtml}',
     maxWidth: 200
   }});";
                 sb.Append(infowindow);
 
                 var markerWithInfoWindow = $@" {markerNamesInMap[i]}.addListener('click', function() {{
-    {infoWindowsNamesInMap[i]}.open(map, {markerNamesInMap[i]});
+ infowindow.setContent('{markerWindowHtml}');
+   infowindow.open(map, this);
   }});";
 
                 sb.Append(markerWithInfoWindow);
