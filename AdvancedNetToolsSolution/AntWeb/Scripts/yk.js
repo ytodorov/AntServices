@@ -111,7 +111,9 @@ $(window).ready(function myfunction() {
     }
     // export pdf
     $(".pdfExportPage").click(function () {
-        debugger;
+        // Тук скриваме и след това показваме някои части, които пречат на хубаво генериран експорт
+        $("#divFooter").hide();
+        $(".addthis_sharing_toolbox").hide();
         // Convert the DOM element to a drawing using kendo.drawing.drawDOM
         kendo.drawing.drawDOM($("#divBody"))
         .then(function (group) {
@@ -130,7 +132,10 @@ $(window).ready(function myfunction() {
                 fileName: "ToolsForNet" + new Date().getDate() + ".pdf",
                 proxyURL: window.location.origin + "/export/pdf"
             });
-        });            
+            $("#divFooter").show();
+            $(".addthis_sharing_toolbox").show();
+        });
+
     });
 
     //$("#pngExportPage").click(function () {
