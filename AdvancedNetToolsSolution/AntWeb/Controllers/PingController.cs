@@ -136,7 +136,7 @@ namespace SmartAdminMvc.Controllers
             {
                 HttpClient client = new HttpClient();
                 clients.Add(client);
-                var encodedArgs = Uri.EscapeDataString($"-sn -n -Pn {addressToPing}");
+                var encodedArgs = Uri.EscapeDataString($"-sn -n {addressToPing}"); // Точно тези са аргументите, -sn -n
                 var urlWithArgs = urls[i] + "/home/exec?program=nmap&args=" + encodedArgs;
                 Task<string> task = client.GetStringAsync(urlWithArgs);
                 tasksForLatencies.Add(task);
@@ -230,7 +230,7 @@ namespace SmartAdminMvc.Controllers
             foreach (var pp in pingPermalinks)
             {
                 AddressHistoryViewModel ahvm = new AddressHistoryViewModel() { Name = pp.DestinationAddress, Category = "History", Order = 1 };
-                if (!list.Any(l => l.Name.Equals(ahvm.Name)))
+                if (!list.Any(l => l.Name.Equals(ahvm.Name, StringComparison.InvariantCultureIgnoreCase)))
                 {
                     list.Add(ahvm);
                 }
@@ -239,7 +239,7 @@ namespace SmartAdminMvc.Controllers
             foreach (string topSite in Utils.TopSitesGlobal)
             {
                 AddressHistoryViewModel ahvm = new AddressHistoryViewModel() { Name = topSite, Category = "Top sites", Order = 2 };
-                if (!list.Any(l => l.Name.Equals(ahvm.Name)))
+                if (!list.Any(l => l.Name.Equals(ahvm.Name, StringComparison.InvariantCultureIgnoreCase)))
                 {
                     list.Add(ahvm);
                 }
