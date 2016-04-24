@@ -212,17 +212,7 @@ namespace SmartAdminMvc.Infrastructure
 
             for (int i = 0; i < ips.Count(); i++)
             {
-                string timeAvg = string.Empty;
-
-                if (i % 2 == 0)
-                {
-                    timeAvg = @"<font size=""2"" color=""#057CBE"">TIME AVG:&nbsp;</font>" + Math.Round(pingSummaries[i / 2].AvgRtt.GetValueOrDefault(), 0).ToString() + "ms.<br />";
-                }
-
-                StringBuilder sbMarkerWindowHtml = new StringBuilder();
-                sbMarkerWindowHtml.Append($@"<font size=""2"" color=""#057CBE"">IP:&nbsp;</font> {ips.ElementAt(i)} <br />{timeAvg}<font size=""2"" color=""#057CBE"">CITY:&nbsp;</font> {locations[i].CityName.Replace("'", "&quot;")} <br /><font size=""2"" color=""#057CBE"">COUNTRY:&nbsp;</font> {locations[i].CountryName.Replace("'", "&quot;")}");
-
-                string markerWindowHtml = sbMarkerWindowHtml.ToString(); ;
+               
 
                 double distanceKm = 0;
                 double distanceMiles = 0;
@@ -253,6 +243,19 @@ namespace SmartAdminMvc.Infrastructure
                 }});");
                                         
                 }
+
+                string timeAvg = string.Empty;
+                string distance = string.Empty;
+                if (i % 2 == 0)
+                {
+                    timeAvg = @"<font size=""2"" color=""#057CBE"">TIME AVG:&nbsp;</font>" + Math.Round(pingSummaries[i / 2].AvgRtt.GetValueOrDefault(), 0).ToString() + "ms.<br />";
+                    distance = @"<font size=""2"" color=""#057CBE"">DISTANCE:&nbsp;</font>" + distanceKm.ToString() + "km./" + distanceMiles +"mi.<br />";
+                }
+
+                StringBuilder sbMarkerWindowHtml = new StringBuilder();
+                sbMarkerWindowHtml.Append($@"<font size=""2"" color=""#057CBE"">IP:&nbsp;</font> {ips.ElementAt(i)} <br />{timeAvg}{distance}<font size=""2"" color=""#057CBE"">CITY:&nbsp;</font> {locations[i].CityName.Replace("'", "&quot;")} <br /><font size=""2"" color=""#057CBE"">COUNTRY:&nbsp;</font> {locations[i].CountryName.Replace("'", "&quot;")}");
+
+                string markerWindowHtml = sbMarkerWindowHtml.ToString(); ;
 
                 string infoWindowContentHtml;
 
