@@ -6,6 +6,7 @@ using AntDal;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using AntDal.Entities;
 
 namespace SmartAdminMvc.Controllers
 {
@@ -42,10 +43,8 @@ namespace SmartAdminMvc.Controllers
         }
 
         [HttpPost]
-        public string GoogleMapFromIps(int? permalinkId)
+        public string GoogleMapFromIps(int? permalinkId, AntDbContext context)
         {
-            using (AntDbContext context = new AntDbContext())
-            {
                 AntDal.Entities.PingPermalink pingPermalink = context.PingPermalinks.Include(path => path.PingResponseSummaries).FirstOrDefault(p => p.Id == permalinkId);
 
                 var ipAddresses = new List<string>();
@@ -55,9 +54,8 @@ namespace SmartAdminMvc.Controllers
                     ipAddresses.Add(prs.DestinationIpAddress);
                 }
                 Response.ContentType = "text/plain; charset=utf-8";
-                string gmString = Utils.GetGoogleMapsString(ipAddresses, starLine: true);
+                string gmString = Utils.GetGoogleMapsString(ipAddresses, pingPermalink.PingResponseSummaries, starLine: true);
                 return gmString;
-            }
         }
 
     }

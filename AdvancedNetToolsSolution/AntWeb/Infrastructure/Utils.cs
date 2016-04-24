@@ -134,7 +134,7 @@ namespace SmartAdminMvc.Infrastructure
             return result;
         }
 
-        public static string GetGoogleMapsString(IEnumerable<string> ips, bool starLine = true)
+        public static string GetGoogleMapsString(IEnumerable<string> ips, List<PingResponseSummary> pingSummaries = null,  bool starLine = true)
         {
             ips = ips.Where(m => !string.IsNullOrEmpty(m));
 
@@ -212,8 +212,15 @@ namespace SmartAdminMvc.Infrastructure
 
             for (int i = 0; i < ips.Count(); i++)
             {
+                string timeAvg = string.Empty;
+
+                if (i % 2 == 0)
+                {
+                    timeAvg = @"<font size=""2"" color=""#057CBE"">TIME AVG:&nbsp;</font>" + Math.Round(pingSummaries[i / 2].AvgRtt.GetValueOrDefault(), 0).ToString() + "ms.<br />";
+                }
+
                 StringBuilder sbMarkerWindowHtml = new StringBuilder();
-                sbMarkerWindowHtml.Append($@"<font size=""2"" color=""#057CBE"">IP:&nbsp;</font> {ips.ElementAt(i)} <br /><font size=""2"" color=""#057CBE"">CITY:&nbsp;</font> {locations[i].CityName.Replace("'", "&quot;")} <br /><font size=""2"" color=""#057CBE"">COUNTRY:&nbsp;</font> {locations[i].CountryName.Replace("'", "&quot;")}");
+                sbMarkerWindowHtml.Append($@"<font size=""2"" color=""#057CBE"">IP:&nbsp;</font> {ips.ElementAt(i)} <br />{timeAvg}<font size=""2"" color=""#057CBE"">CITY:&nbsp;</font> {locations[i].CityName.Replace("'", "&quot;")} <br /><font size=""2"" color=""#057CBE"">COUNTRY:&nbsp;</font> {locations[i].CountryName.Replace("'", "&quot;")}");
 
                 string markerWindowHtml = sbMarkerWindowHtml.ToString(); ;
 
