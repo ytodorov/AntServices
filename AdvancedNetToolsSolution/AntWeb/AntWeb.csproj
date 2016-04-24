@@ -204,10 +204,6 @@
     <Content Include="Content\css\font-awesome.min.css" />
     <Content Include="Content\css\invoice.min.css" />
     <Content Include="Content\css\lockscreen.min.css" />
-    <Content Include="Content\css\smartadmin-production-plugins.min.css" />
-    <Content Include="Content\css\smartadmin-production.min.css" />
-    <Content Include="Content\css\smartadmin-rtl.min.css" />
-    <Content Include="Content\css\smartadmin-skins.min.css" />
     <None Include="Content\css\your_style.less" />
     <Content Include="Content\css\your_style.css" />
     <Content Include="Content\css\your_style.min.css">
