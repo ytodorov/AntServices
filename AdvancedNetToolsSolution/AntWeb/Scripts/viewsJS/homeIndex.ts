@@ -22,7 +22,7 @@
 
     //var japanLatLng = { lat: 42.6975, lng: 23.3242 };
 
-
+    // TODO: google.maps aren't recognized
 //    var map = new google.maps.Map(document.getElementById('map'), {
 //        zoom: 2,
 //        center: dublinLatLng
