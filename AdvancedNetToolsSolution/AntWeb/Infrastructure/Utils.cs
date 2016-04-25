@@ -26,15 +26,20 @@ namespace SmartAdminMvc.Infrastructure
             // накрая в TopSitesGlobal трябва да има 1000 сайта
             TopSitesGlobal = new List<string>();
 
-            using (System.IO.StreamReader sr = new System.IO.StreamReader(System.Web.Hosting.HostingEnvironment.MapPath("~/Misc/TopSites.txt")))
+            var path = System.Web.Hosting.HostingEnvironment.MapPath("~/Misc/TopSites.txt");
+
+            if (!string.IsNullOrEmpty(path))
             {
-                while (!sr.EndOfStream)
+                using (System.IO.StreamReader sr = new System.IO.StreamReader(path))
                 {
-                    string splitMe = sr.ReadLine();
-                    string[] rowsSplits = splitMe.Split(new char[] { ',' });
-                    if (rowsSplits.Length == 2)
+                    while (!sr.EndOfStream)
                     {
-                        TopSitesGlobal.Add(rowsSplits[1]);
+                        string splitMe = sr.ReadLine();
+                        string[] rowsSplits = splitMe.Split(new char[] { ',' });
+                        if (rowsSplits.Length == 2)
+                        {
+                            TopSitesGlobal.Add(rowsSplits[1]);
+                        }
                     }
                 }
             }
@@ -53,19 +58,27 @@ namespace SmartAdminMvc.Infrastructure
                 "http://ants-wus.cloudapp.net" // "13.93.211.38"
             };
 
-            HotstNameToIp = new Dictionary<string, string>()
-        {
-            {  "http://ants-ea.cloudapp.net", "40.83.125.9" },
-            {  "http://ants-je.cloudapp.net", "13.71.155.140" },
-            {  "http://ants-sea.cloudapp.net", "13.76.100.42" },
-            {  "http://ant-cus.cloudapp.net", "52.165.26.10" },
-            {  "http://ant-jw.cloudapp.net", "40.74.137.95" },
-            {  "http://ants-eus.cloudapp.net", "13.90.212.72" },
-            {  "http://ants-neu.cloudapp.net", "13.74.188.161" },
-            {  "http://ants-scus.cloudapp.net", "104.214.70.79" },
-            {  "http://ants-weu.cloudapp.net", "104.46.38.89" },
-            {  "http://ants-wus.cloudapp.net" , "13.93.211.38"}
-        };
+            // Това е защото гасим и палим виртуалните машини през нощта за да спестим някой лев
+            HotstNameToIp = new Dictionary<string, string>();
+            foreach (string url in GetDeployedServicesUrlAddresses)
+            {
+                string ip = Utils.GetIpAddressFromHostName(url.Replace("http://", string.Empty), "http://ants-neu.cloudapp.net");
+                HotstNameToIp.Add(url, ip);
+            }
+
+        //    HotstNameToIp = new Dictionary<string, string>()
+        //{
+        //    {  "http://ants-ea.cloudapp.net", "40.83.125.9" },
+        //    {  "http://ants-je.cloudapp.net", "13.71.155.140" },
+        //    {  "http://ants-sea.cloudapp.net", "13.76.100.42" },
+        //    {  "http://ant-cus.cloudapp.net", "52.165.26.10" },
+        //    {  "http://ant-jw.cloudapp.net", "40.74.137.95" },
+        //    {  "http://ants-eus.cloudapp.net", "13.90.212.72" },
+        //    {  "http://ants-neu.cloudapp.net", "13.74.188.161" },
+        //    {  "http://ants-scus.cloudapp.net", "104.214.70.79" },
+        //    {  "http://ants-weu.cloudapp.net", "104.46.38.89" },
+        //    {  "http://ants-wus.cloudapp.net" , "13.93.211.38"}
+        //};
             HotstNameToAzureLocation = new Dictionary<string, string>()
             {
                 

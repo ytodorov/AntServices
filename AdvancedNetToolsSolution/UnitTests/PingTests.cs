@@ -112,16 +112,19 @@ namespace UnitTests
         public void MeasurePingTimings()
         {
             List<long> timings = new List<long>();
-            foreach (var urlService in SmartAdminMvc.Infrastructure.Utils.GetDeployedServicesUrlAddresses)
+            List<string> results = new List<string>();
+            var addresses = SmartAdminMvc.Infrastructure.Utils.GetDeployedServicesUrlAddresses;//.Skip(1).ToList();
+            foreach (var urlService in addresses)
             {
                 Stopwatch sw = Stopwatch.StartNew();
 
                 using (HttpClient client = new HttpClient())
                 {
 
-                    var encodedArgs0 = Uri.EscapeDataString(" 8.8.8.8 --delay 10ms -v1");
+                    var encodedArgs0 = Uri.EscapeDataString(" 8.8.8.8 --tcp -p 53 --delay 10ms -v1");
                     string url = $"{urlService}/home/exec?program=nping&args=" + encodedArgs0;
                     var res = client.GetStringAsync(url).Result;
+                    results.Add(res);
                 }
                 timings.Add(sw.ElapsedMilliseconds);
             }
