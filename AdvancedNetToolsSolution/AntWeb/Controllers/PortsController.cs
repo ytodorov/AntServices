@@ -46,10 +46,10 @@ namespace SmartAdminMvc.Controllers
 
             using (HttpClient client = new HttpClient())
             {                
-                var encodedArgs0 = Uri.EscapeDataString($"-T5 --top-ports 1000 -Pn {ip}");
+                string encodedArgs0 = Uri.EscapeDataString($"-T5 --top-ports 1000 -Pn {ip}");
                 string url = "http://ants-neu.cloudapp.net/home/exec?program=nmap&args=" + encodedArgs0;
 
-                var portSummary = client.GetStringAsync(url).Result;
+                string portSummary = client.GetStringAsync(url).Result;
 
                 List<PortResponseSummaryViewModel> portViewModels = PortParser.ParseSummary(portSummary);
 
@@ -62,7 +62,7 @@ namespace SmartAdminMvc.Controllers
 
                 using (AntDbContext context = new AntDbContext())
                 {
-                    PortPermalink pp = new PortPermalink();
+                    var pp = new PortPermalink();
                     pp.ShowInHistory =showInHistory;
                     pp.UserCreatedIpAddress = Request.UserHostAddress;
                     pp.DestinationAddress = ip;

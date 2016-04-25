@@ -16,12 +16,12 @@ namespace UnitTests
         public void GetIpAddressFromHostNameTest()
         {
             List<string> locations = Utils.GetDeployedServicesUrlAddresses;
-            List<string> results = new List<string>();
+            var results = new List<string>();
             foreach (string location in locations)
             {
-                var result = Utils.GetIpAddressFromHostName("google.com", location);
+                string result = Utils.GetIpAddressFromHostName(hostName: "google.com", locationOfDeployedService: location);
                 IPAddress dummy;
-                var isIpv4ParseSuccessfull = IPAddress.TryParse(result, out dummy);
+                bool isIpv4ParseSuccessfull = IPAddress.TryParse(result, out dummy);
                 Assert.True(isIpv4ParseSuccessfull);
 
                 results.Add(result);
@@ -34,14 +34,14 @@ namespace UnitTests
         private void PingUrlsSoTheyDontSleep()
         {
             List<string> urls = Utils.GetDeployedServicesUrlAddresses;
-            urls.Add("http://ant-ne.azurewebsites.net");
+            urls.Add(item: "http://ant-ne.azurewebsites.net");
             foreach (string url in urls)
             {
                 using (HttpClient client = new HttpClient())
                 {
                     try
                     {
-                        var tracerouteSummary = client.GetStringAsync(url).Result;
+                        string tracerouteSummary = client.GetStringAsync(url).Result;
                     }
                     catch
                     {

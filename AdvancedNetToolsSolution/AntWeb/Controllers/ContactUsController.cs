@@ -5,7 +5,9 @@ using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
 
+#pragma warning disable JustCode_NamingConventions // Naming conventions inconsistency
 namespace Homer_MVC.Controllers
+#pragma warning restore JustCode_NamingConventions // Naming conventions inconsistency
 {
     public class ContactUsController : Controller
     {
@@ -18,10 +20,10 @@ namespace Homer_MVC.Controllers
         {
             if (senderName != "" && senderMail != "" && emailBody != "")
             {
-                MailMessage mailMsg = new MailMessage();
+                var mailMsg = new MailMessage();
 
                 // To
-                mailMsg.To.Add(new MailAddress("tfn@ytodorov.com", "YT"));
+                mailMsg.To.Add(new MailAddress(address: "tfn@ytodorov.com", displayName: "YT"));
                 // From
                 mailMsg.From = new MailAddress(senderMail, senderName);
 
@@ -30,9 +32,9 @@ namespace Homer_MVC.Controllers
                 mailMsg.Body = emailBody;
 
                 // Init SmtpClient and send
-                SmtpClient smtpClient = new SmtpClient("smtp.sendgrid.net", Convert.ToInt32(587));
+                var smtpClient = new SmtpClient(host: "smtp.sendgrid.net", port: Convert.ToInt32(value: 587));
                 //smtpClient.EnableSsl = true;
-                System.Net.NetworkCredential credentials = new System.Net.NetworkCredential("ytodorov@ytodorov.com", "17");
+                var credentials = new System.Net.NetworkCredential(userName: "ytodorov@ytodorov.com", password: "17");
                 smtpClient.Credentials = credentials;
 
                 smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;

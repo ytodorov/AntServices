@@ -21,7 +21,7 @@ namespace FailTracker.Web.Infrastructure
 
         public void ScanTypes(TypeSet types, Registry registry)
         {
-            var allTypes = types.AllTypes();
+            System.Collections.Generic.IEnumerable<Type> allTypes = types.AllTypes();
             foreach (var type in allTypes)
             {
                 if (type.CanBeCastTo(typeof(Controller)) && !type.IsAbstract)

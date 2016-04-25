@@ -19,15 +19,14 @@ namespace FailTracker.Web.Infrastructure.ModelMetadata.Filters
 		private string GetStringWithSpaces(string input)
 		{
 			return Regex.Replace(
-			   input,
-			   "(?<!^)" +
-			   "(" +
-			   "  [A-Z][a-z] |" +
-			   "  (?<=[a-z])[A-Z] |" +
-			   "  (?<![A-Z])[A-Z]$" +
-			   ")",
-			   " $1",
-			   RegexOptions.IgnorePatternWhitespace);
+               input, "(?<!^)" +
+               "(" +
+               "  [A-Z][a-z] |" +
+               "  (?<=[a-z])[A-Z] |" +
+               "  (?<![A-Z])[A-Z]$" +
+               ")",
+               replacement: " $1",
+               options: RegexOptions.IgnorePatternWhitespace);
 		}
 	}
 }

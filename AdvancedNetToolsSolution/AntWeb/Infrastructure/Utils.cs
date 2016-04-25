@@ -26,7 +26,7 @@ namespace SmartAdminMvc.Infrastructure
             // накрая в TopSitesGlobal трябва да има 1000 сайта
             TopSitesGlobal = new List<string>();
 
-            var path = System.Web.Hosting.HostingEnvironment.MapPath("~/Misc/TopSites.txt");
+            string path = System.Web.Hosting.HostingEnvironment.MapPath(virtualPath: "~/Misc/TopSites.txt");
 
             if (!string.IsNullOrEmpty(path))
             {
@@ -62,7 +62,7 @@ namespace SmartAdminMvc.Infrastructure
             HotstNameToIp = new Dictionary<string, string>();
             foreach (string url in GetDeployedServicesUrlAddresses)
             {
-                string ip = Utils.GetIpAddressFromHostName(url.Replace("http://", string.Empty), "http://ants-neu.cloudapp.net");
+                string ip = Utils.GetIpAddressFromHostName(url.Replace(oldValue: "http://", newValue: string.Empty), locationOfDeployedService: "http://ants-neu.cloudapp.net");
                 HotstNameToIp.Add(url, ip);
             }
 
@@ -115,11 +115,11 @@ namespace SmartAdminMvc.Infrastructure
             //}
             using (AntDbContext context = new AntDbContext())
             {
-                var ipLocation = context.IpLocations.Where(ip => ip.IpAddress == ipOrHostName).FirstOrDefault();
+                IpLocation ipLocation = context.IpLocations.Where(ip => ip.IpAddress == ipOrHostName).FirstOrDefault();
                 if (ipLocation != null)
                 {
-                    var IpLocationViewModel = Mapper.Map<IpLocationViewModel>(ipLocation);
-                    return IpLocationViewModel;
+                    IpLocationViewModel ipLocationViewModel = Mapper.Map<IpLocationViewModel>(ipLocation);
+                    return ipLocationViewModel;
                 }
                 else
                 {
@@ -130,8 +130,8 @@ namespace SmartAdminMvc.Infrastructure
                         string url = $"http://api.ipinfodb.com/v3/ip-city/?key={apiKey}&ip={ipOrHostName}&format=json";
                         string result = client.GetStringAsync(url).Result;
 
-                        var ipLocationViewModel = JsonConvert.DeserializeObject<IpLocationViewModel>(result);
-                        var ipLocationToSaveInDb = Mapper.Map<IpLocation>(ipLocationViewModel);
+                        IpLocationViewModel ipLocationViewModel = JsonConvert.DeserializeObject<IpLocationViewModel>(result);
+                        IpLocation ipLocationToSaveInDb = Mapper.Map<IpLocation>(ipLocationViewModel);
                         context.IpLocations.Add(ipLocationToSaveInDb);
                         context.SaveChanges();
                         return ipLocationViewModel;
@@ -142,7 +142,9 @@ namespace SmartAdminMvc.Infrastructure
 
         public static string RandomString(int length)
         {
+#pragma warning disable JustCode_NamingConventions // Naming conventions inconsistency
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+#pragma warning restore JustCode_NamingConventions // Naming conventions inconsistency
             var result = new string(Enumerable.Repeat(chars, length).Select(s => s[RandomNumberGenerator.Next(s.Length)]).ToArray());
             return result;
         }
@@ -151,14 +153,14 @@ namespace SmartAdminMvc.Infrastructure
         {
             ips = ips.Where(m => !string.IsNullOrEmpty(m));
 
-            List<IpLocationViewModel> locations = new List<IpLocationViewModel>();
-            List<string> locationNamesInMap = new List<string>();
-            List<string> markerNamesInMap = new List<string>();
-            List<string> infoWindowsNamesInMap = new List<string>();
+            var locations = new List<IpLocationViewModel>();
+            var locationNamesInMap = new List<string>();
+            var markerNamesInMap = new List<string>();
+            var infoWindowsNamesInMap = new List<string>();
 
             for (int i = 0; i < ips.Count(); i++)
             {
-                var currLocation = GetLocationDataForIp(ips.ElementAt(i));
+                IpLocationViewModel currLocation = GetLocationDataForIp(ips.ElementAt(i));
 
                 locations.Add(currLocation);
                 locationNamesInMap.Add("latLng" + i);
@@ -167,7 +169,7 @@ namespace SmartAdminMvc.Infrastructure
             }
 
 
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
 
 
             for (int i = 0; i < ips.Count(); i++)
@@ -186,7 +188,7 @@ namespace SmartAdminMvc.Infrastructure
             }});");
 
             string fullRootUrl = HttpContext.Current?.Request.Url.OriginalString.Replace(HttpContext.Current?.Request.Url.LocalPath, string.Empty);
-            if (!HttpContext.Current.Request.Url.ToString().Contains("localhost"))
+            if (!HttpContext.Current.Request.Url.ToString().Contains(value: "localhost"))
             {
                 fullRootUrl = fullRootUrl.Replace(":" + HttpContext.Current?.Request.Url.Port, string.Empty);
             }
@@ -233,10 +235,10 @@ namespace SmartAdminMvc.Infrastructure
                 {
                    distanceKm = GeoCodeCalc.CalcDistance(locations[i].Latitude.GetValueOrDefault(), locations[i].Longitude.GetValueOrDefault(),
                        locations[i + 1].Latitude.GetValueOrDefault(), locations[i + 1].Longitude.GetValueOrDefault());
-                    distanceKm = Math.Round(distanceKm, 0);
+                    distanceKm = Math.Round(distanceKm, digits: 0);
                     distanceMiles = GeoCodeCalc.CalcDistance(locations[i].Latitude.GetValueOrDefault(), locations[i].Longitude.GetValueOrDefault(),
                        locations[i + 1].Latitude.GetValueOrDefault(), locations[i + 1].Longitude.GetValueOrDefault(), GeoCodeCalcMeasurement.Miles);
-                    distanceMiles = Math.Round(distanceMiles, 0);
+                    distanceMiles = Math.Round(distanceMiles, digits: 0);
 
 
                     sb.AppendLine($@"var {markerNamesInMap[i]} = new google.maps.Marker({{
@@ -261,24 +263,24 @@ namespace SmartAdminMvc.Infrastructure
                 string distance = string.Empty;
                 if (i % 2 == 0)
                 {
-                    timeAvg = @"<font size=""2"" color=""#057CBE"">TIME AVG:&nbsp;</font>" + Math.Round(pingSummaries[i / 2].AvgRtt.GetValueOrDefault(), 0).ToString() + "ms.<br />";
+                    timeAvg = @"<font size=""2"" color=""#057CBE"">TIME AVG:&nbsp;</font>" + Math.Round(pingSummaries[i / 2].AvgRtt.GetValueOrDefault(), digits: 0).ToString() + "ms.<br />";
                     distance = @"<font size=""2"" color=""#057CBE"">DISTANCE:&nbsp;</font>" + distanceKm.ToString() + "km./" + distanceMiles +"mi.<br />";
                 }
 
-                StringBuilder sbMarkerWindowHtml = new StringBuilder();
-                sbMarkerWindowHtml.Append($@"<font size=""2"" color=""#057CBE"">IP:&nbsp;</font> {ips.ElementAt(i)} <br />{timeAvg}{distance}<font size=""2"" color=""#057CBE"">CITY:&nbsp;</font> {locations[i].CityName.Replace("'", "&quot;")} <br /><font size=""2"" color=""#057CBE"">COUNTRY:&nbsp;</font> {locations[i].CountryName.Replace("'", "&quot;")}");
+                var sbMarkerWindowHtml = new StringBuilder();
+                sbMarkerWindowHtml.Append($@"<font size=""2"" color=""#057CBE"">IP:&nbsp;</font> {ips.ElementAt(i)} <br />{timeAvg}{distance}<font size=""2"" color=""#057CBE"">CITY:&nbsp;</font> {locations[i].CityName.Replace(oldValue: "'", newValue: "&quot;")} <br /><font size=""2"" color=""#057CBE"">COUNTRY:&nbsp;</font> {locations[i].CountryName.Replace(oldValue: "'", newValue: "&quot;")}");
 
                 string markerWindowHtml = sbMarkerWindowHtml.ToString(); ;
 
-                string infoWindowContentHtml;
+                //string infoWindowContentHtml; -> never used
 
-                var infowindow = $@" var infowindow = new google.maps.InfoWindow({{
+                string infowindow = $@" var infowindow = new google.maps.InfoWindow({{
     content: '{markerWindowHtml}',
     maxWidth: 200
   }});";
                 sb.Append(infowindow);
 
-                var markerWithInfoWindow = $@" {markerNamesInMap[i]}.addListener('click', function() {{
+                string markerWithInfoWindow = $@" {markerNamesInMap[i]}.addListener('click', function() {{
  infowindow.setContent('{markerWindowHtml}');
    infowindow.open(map, this);
   }});";
@@ -286,19 +288,19 @@ namespace SmartAdminMvc.Infrastructure
                 sb.Append(markerWithInfoWindow);
             }
 
-            StringBuilder locationStringsForPolyline = new StringBuilder();
+            var locationStringsForPolyline = new StringBuilder();
             for (int i = 0; i < locationNamesInMap.Count; i++)
             {
                 locationStringsForPolyline.Append(locationNamesInMap[i]);
                 if (i != locationNamesInMap.Count - 1)
                 {
-                    locationStringsForPolyline.AppendLine(",");
+                    locationStringsForPolyline.AppendLine(value: ",");
                 }
             }
 
             // Define a symbol using a predefined path (an arrow)
             // supplied by the Google Maps JavaScript API.
-            sb.Append(@" var lineSymbol = {
+            sb.Append(value: @" var lineSymbol = {
     path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW
   };");
 
@@ -357,7 +359,7 @@ namespace SmartAdminMvc.Infrastructure
                 sb.AppendLine(polyline);
             }
 
-            sb.AppendLine(" $('#map').width('100%');");
+            sb.AppendLine(value: " $('#map').width('100%');");
             string finalResult = sb.ToString();
 
             return finalResult;
@@ -373,16 +375,16 @@ namespace SmartAdminMvc.Infrastructure
             using (HttpClient client = new HttpClient())
             {
 
-                var encodedArgs0 = Uri.EscapeDataString($"{hostName} -n -sn -Pn");
+                string encodedArgs0 = Uri.EscapeDataString($"{hostName} -n -sn -Pn");
                 string url = $"{locationOfDeployedService}/home/exec?program=nmap&args=" + encodedArgs0;
-                var res = client.GetStringAsync(url).Result;
+                string res = client.GetStringAsync(url).Result;
 
-                var lines = res.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
-                string ipLine = lines.FirstOrDefault(l => l.StartsWith("Nmap scan report"));
+                string[] lines = res.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+                string ipLine = lines.FirstOrDefault(l => l.StartsWith(value: "Nmap scan report"));
                 if (ipLine != null)
                 {
-                    int lastIndexOfOpen = ipLine.LastIndexOf("(");
-                    int lastIndexOfClose = ipLine.LastIndexOf(")");
+                    int lastIndexOfOpen = ipLine.LastIndexOf(value: "(");
+                    int lastIndexOfClose = ipLine.LastIndexOf(value: ")");
                     int ipLength = lastIndexOfClose - lastIndexOfOpen;
                     string ip = ipLine.Substring(lastIndexOfOpen + 1, ipLength - 1);
                     return ip;
@@ -394,13 +396,13 @@ namespace SmartAdminMvc.Infrastructure
         public static bool IsValidIpOrUrl(string ipOrUrlToTest)
         {
             IPAddress dummy;
-            var isIpAddress = IPAddress.TryParse(ipOrUrlToTest, out dummy);
+            bool isIpAddress = IPAddress.TryParse(ipOrUrlToTest, out dummy);
             if (isIpAddress)
             {
                 return true;
             }
             Uri uriDummy;
-            var isValidUri = Uri.TryCreate(ipOrUrlToTest, UriKind.Absolute, out uriDummy);
+            bool isValidUri = Uri.TryCreate(ipOrUrlToTest, UriKind.Absolute, out uriDummy);
             if (isValidUri)
             {
                 return true;
@@ -420,12 +422,12 @@ namespace SmartAdminMvc.Infrastructure
             using (HttpClient client = new HttpClient())
             {
                 //Note: Host seems down. If it is really up, but blocking our ping probes, try -Pn
-                var encodedArgs0 = Uri.EscapeDataString($"-T5 --top-ports 1000 -Pn {ipOrHostName}");
+                string encodedArgs0 = Uri.EscapeDataString($"-T5 --top-ports 1000 -Pn {ipOrHostName}");
                 string url = "http://ants-neu.cloudapp.net/home/exec?program=nmap&args=" + encodedArgs0;
-                var portSummary = client.GetStringAsync(url).Result;
+                string portSummary = client.GetStringAsync(url).Result;
 
                 List<PortResponseSummaryViewModel> portViewModels = PortParser.ParseSummary(portSummary);
-                var firstOpen = portViewModels.FirstOrDefault(p => p.State.Equals("open"));
+                PortResponseSummaryViewModel firstOpen = portViewModels.FirstOrDefault(p => p.State.Equals(value: "open"));
                 string result = string.Empty;
                 if (firstOpen != null)
                 {
@@ -444,10 +446,10 @@ namespace SmartAdminMvc.Infrastructure
             // Проверяваме дали изобщо може да достъпим адреса;
             using (HttpClient client = new HttpClient())
             {
-                var encodedArgs0 = Uri.EscapeDataString($"{ipOrHostName} -sn -Pn -n");
+                string encodedArgs0 = Uri.EscapeDataString($"{ipOrHostName} -sn -Pn -n");
                 string url = $"http://ants-neu.cloudapp.net/home/exec?program=nmap&args=" + encodedArgs0;
-                var res = client.GetStringAsync(url).Result;
-                if (!res.Contains("Host is up."))
+                string res = client.GetStringAsync(url).Result;
+                if (!res.Contains(value: "Host is up."))
                 {
                     errorMessage = $"'{ipOrHostName}' is invalid address or host is down!";
                 }
@@ -463,15 +465,15 @@ namespace SmartAdminMvc.Infrastructure
         //Nmap done: 1 IP address(1 host up) scanned in 0.38 seconds
         public static double ParseLatencyString(string latencyString)
         {
-            var lines = latencyString.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
-            string latencyLine = lines.FirstOrDefault(l => l.StartsWith("Host is up"));
+            string[] lines = latencyString.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+            string latencyLine = lines.FirstOrDefault(l => l.StartsWith(value: "Host is up"));
             string latency = latencyLine
-                .Replace("Host is up", string.Empty)
-                .Replace("(", string.Empty)
-                .Replace(").", string.Empty)
-                .Replace("s", string.Empty)
-                .Replace("latency", string.Empty)
-                .Replace(" ", string.Empty);
+                .Replace(oldValue: "Host is up", newValue: string.Empty)
+                .Replace(oldValue: "(", newValue: string.Empty)
+                .Replace(oldValue: ").", newValue: string.Empty)
+                .Replace(oldValue: "s", newValue: string.Empty)
+                .Replace(oldValue: "latency", newValue: string.Empty)
+                .Replace(oldValue: " ", newValue: string.Empty);
 
 
             double result = 0;
@@ -481,7 +483,9 @@ namespace SmartAdminMvc.Infrastructure
         }
 
 
+#pragma warning disable JustCode_CSharp_InnerTypeFileNameMismatch // Inner types not matching file names
         public static class GeoCodeCalc
+#pragma warning restore JustCode_CSharp_InnerTypeFileNameMismatch // Inner types not matching file names
         {
             public const double EarthRadiusInMiles = 3956.0;
             public const double EarthRadiusInKilometers = 6367.0;
@@ -502,7 +506,7 @@ namespace SmartAdminMvc.Infrastructure
                 {
                     radius = GeoCodeCalc.EarthRadiusInKilometers;
                 }
-                var result = radius * 2 * Math.Asin(Math.Min(1, Math.Sqrt((Math.Pow(Math.Sin((DiffRadian(lat1, lat2)) / 2.0), 2.0) + Math.Cos(ToRadian(lat1)) * Math.Cos(ToRadian(lat2)) * Math.Pow(Math.Sin((DiffRadian(lng1, lng2)) / 2.0), 2.0)))));
+                double result = radius * 2 * Math.Asin(Math.Min(val1: 1, val2: Math.Sqrt((Math.Pow(Math.Sin((DiffRadian(lat1, lat2)) / 2.0), y: 2.0)+ Math.Cos(ToRadian(lat1)) * Math.Cos(ToRadian(lat2)) * Math.Pow(Math.Sin((DiffRadian(lng1, lng2)) / 2.0), y: 2.0)))));
                 return result;
             }
            

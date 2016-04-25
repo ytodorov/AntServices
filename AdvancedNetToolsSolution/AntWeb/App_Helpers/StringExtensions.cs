@@ -31,7 +31,7 @@ namespace SmartAdminMvc
         /// <returns></returns>
         public static string UnDash(this string value)
         {
-            return (value ?? string.Empty).Replace("-", string.Empty);
+            return (value ?? string.Empty).Replace(oldValue: "-", newValue: string.Empty);
         }
     }
 }

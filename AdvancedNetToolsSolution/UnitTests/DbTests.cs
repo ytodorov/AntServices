@@ -20,7 +20,7 @@ namespace UnitTests
             //adc.PingPermalinks.Add(new PingPermalink() { DestinationAddress = "test" });
             //adc.SaveChanges();
 
-            PingResponseSummary pr = new PingResponseSummary();
+            var pr = new PingResponseSummary();
             pr.AvgRtt = 12;
             pr.MinRtt = 566;
             pr.MaxRtt = 1241313;

@@ -15,7 +15,7 @@ namespace UnitTests
         [InlineData("https://aa.com")]
         public void TestForValidUrlTest(string uriName)
         {
-            if (!uriName.Trim().StartsWith("http") && !uriName.Trim().StartsWith("https") && !uriName.Trim().StartsWith("ftp"))
+            if (!uriName.Trim().StartsWith(value: "http")&& !uriName.Trim().StartsWith(value: "https")&& !uriName.Trim().StartsWith(value: "ftp"))
             {
                 uriName = "http://" + uriName.Trim();
             }

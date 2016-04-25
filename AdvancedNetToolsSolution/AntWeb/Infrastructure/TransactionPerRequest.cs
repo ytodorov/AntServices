@@ -8,10 +8,12 @@ namespace FailTracker.Web.Infrastructure
 	public class TransactionPerRequest :
 		IRunOnEachRequest, IRunOnError, IRunAfterEachRequest
 	{
-		private readonly AntDbContext _dbContext;
-		private readonly HttpContextBase _httpContext;
+#pragma warning disable JustCode_NamingConventions // Naming conventions inconsistency
+        private readonly AntDbContext _dbContext;
+        private readonly HttpContextBase _httpContext;
+#pragma warning restore JustCode_NamingConventions // Naming conventions inconsistency
 
-		public TransactionPerRequest(AntDbContext dbContext,
+        public TransactionPerRequest(AntDbContext dbContext,
 			HttpContextBase httpContext)
 		{
 			_dbContext = dbContext;

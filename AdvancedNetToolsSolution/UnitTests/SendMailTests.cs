@@ -18,20 +18,20 @@ namespace UnitTests
 
             try
             {
-                MailMessage mailMsg = new MailMessage();
+                var mailMsg = new MailMessage();
 
                 // To
-                mailMsg.To.Add(new MailAddress("test@ytodorov.com"));
+                mailMsg.To.Add(new MailAddress(address: "test@ytodorov.com"));
 
                 // From
-                mailMsg.From = new MailAddress("ytodorov@ytodorov.com", "Dancho");
+                mailMsg.From = new MailAddress(address: "ytodorov@ytodorov.com", displayName: "Dancho");
                 string html = @"<p>html body</p>";
                 // Subject and multipart/alternative Body
                 mailMsg.Subject = "Test";
-                mailMsg.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(html, null, MediaTypeNames.Text.Html));
+                mailMsg.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(html, contentEncoding: null, mediaType: MediaTypeNames.Text.Html));
                 
                 // Init SmtpClient and send
-                SmtpClient smtpClient = new SmtpClient("smtp.sendgrid.net", Convert.ToInt32(587));
+                var smtpClient = new SmtpClient(host: "smtp.sendgrid.net", port: Convert.ToInt32(value: 587));
                 string userName = ConfigurationManager.AppSettings["smtpUserName"];
                 string password = ConfigurationManager.AppSettings["smtpPassword"];
                 System.Net.NetworkCredential credentials = new System.Net.NetworkCredential(userName, password);

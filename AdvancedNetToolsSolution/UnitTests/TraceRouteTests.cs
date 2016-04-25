@@ -22,10 +22,10 @@ namespace UnitTests
             TraceRouteReplyViewModel result = TraceRouteParser.ParseSingleLine(line);
 
             Assert.NotNull(result);
-            Assert.Equal(7, result.Hop);
-            Assert.Equal(34, result.Rtt);
-            Assert.Equal("104.44.4.138", result.Ip);
-            Assert.Equal("be-9-0.ibr01.dub30.ntwk.msn.net", result.AddressName);
+            Assert.Equal(expected: 7, actual: result.Hop);
+            Assert.Equal(expected: 34, actual: result.Rtt);
+            Assert.Equal(expected: "104.44.4.138", actual: result.Ip);
+            Assert.Equal(expected: "be-9-0.ibr01.dub30.ntwk.msn.net", actual: result.AddressName);
 
         }
 
@@ -56,9 +56,9 @@ namespace UnitTests
 
             using (HttpClient client = new HttpClient())
             {
-                var encodedArgs = Uri.EscapeDataString($"--traceroute {ip} -sn -T5");
+                string encodedArgs = Uri.EscapeDataString($"--traceroute {ip} -sn -T5");
                 string url = "http://antnortheu.cloudapp.net/home/exec?program=nmap&args=" + encodedArgs;
-                var traceStringToParse = client.GetStringAsync(url).Result;
+                string traceStringToParse = client.GetStringAsync(url).Result;
 
                 List<TraceRouteReplyViewModel> traceRouteViewModels = TraceRouteParser.ParseSummary(traceStringToParse);
 

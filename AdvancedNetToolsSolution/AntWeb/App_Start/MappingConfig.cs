@@ -6,7 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
+#pragma warning disable JustCode_NamingConventions // Naming conventions inconsistency
 namespace SmartAdminMvc.App_Start
+#pragma warning restore JustCode_NamingConventions // Naming conventions inconsistency
 {
     public static class MappingConfig
     {

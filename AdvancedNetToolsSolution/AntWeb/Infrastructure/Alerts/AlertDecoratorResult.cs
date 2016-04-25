@@ -17,7 +17,7 @@ namespace FailTracker.Web.Infrastructure.Alerts
 
 		public override void ExecuteResult(ControllerContext context)
 		{
-			var alerts = context.Controller.TempData.GetAlerts();
+			System.Collections.Generic.List<Alert> alerts = context.Controller.TempData.GetAlerts();
 			alerts.Add(new Alert(AlertClass, Message));
 			InnerResult.ExecuteResult(context);
 		}

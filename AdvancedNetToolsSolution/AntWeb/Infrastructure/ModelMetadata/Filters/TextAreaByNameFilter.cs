@@ -5,8 +5,10 @@ namespace FailTracker.Web.Infrastructure.ModelMetadata.Filters
 {
 	public class TextAreaByNameFilter : IModelMetadataFilter
 	{
-		private static readonly HashSet<string> TextAreaFieldNames =
-				new HashSet<string>
+#pragma warning disable JustCode_NamingConventions // Naming conventions inconsistency
+        private static readonly HashSet<string> TextAreaFieldNames =
+#pragma warning restore JustCode_NamingConventions // Naming conventions inconsistency
+                new HashSet<string>
 						{
 							"body",
 							"comments"

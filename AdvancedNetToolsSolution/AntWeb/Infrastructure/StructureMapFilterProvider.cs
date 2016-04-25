@@ -7,18 +7,20 @@ namespace FailTracker.Web.Infrastructure
 {
 	public class StructureMapFilterProvider : FilterAttributeFilterProvider
 	{
-		private readonly Func<IContainer> _container;
+#pragma warning disable JustCode_NamingConventions // Naming conventions inconsistency
+        private readonly Func<IContainer> _container;
+#pragma warning restore JustCode_NamingConventions // Naming conventions inconsistency
 
-		public StructureMapFilterProvider(Func<IContainer> container)
+        public StructureMapFilterProvider(Func<IContainer> container)
 		{
 			_container = container;
 		}
 
 		public override IEnumerable<Filter> GetFilters(ControllerContext controllerContext, ActionDescriptor actionDescriptor)
 		{
-			var filters = base.GetFilters(controllerContext, actionDescriptor);
+			IEnumerable<Filter> filters = base.GetFilters(controllerContext, actionDescriptor);
 
-			var container = _container();
+			IContainer container = _container();
 
 			foreach (var filter in filters)
 			{

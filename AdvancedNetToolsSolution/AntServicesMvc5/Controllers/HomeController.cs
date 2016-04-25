@@ -34,26 +34,26 @@ namespace AntServicesMvc5.Controllers
         public string GetClientIp()
         {
             Response.ContentType = "text/plain; charset=utf-8";
-            var result = Request.UserHostAddress;
+            string result = Request.UserHostAddress;
             return result;
         }
 
         public string Exec(string program, string args)
         {
             Response.ContentType = "text/plain; charset=utf-8";
-            if (!program.EndsWith(".exe"))
+            if (!program.EndsWith(value: ".exe"))
             {
                 program += ".exe";
             }
 
             try
             {
-                var allFiles = Directory.GetFiles(HostingEnvironment.ApplicationPhysicalPath, "*.*", SearchOption.AllDirectories);
-                var programFullPath = allFiles.FirstOrDefault(f => Path.GetFileName(f).ToLower().Equals(program.ToLower()));
+                string[] allFiles = Directory.GetFiles(HostingEnvironment.ApplicationPhysicalPath, searchPattern: "*.*", searchOption: SearchOption.AllDirectories);
+                string programFullPath = allFiles.FirstOrDefault(f => Path.GetFileName(f).ToLower().Equals(program.ToLower()));
                 if (!string.IsNullOrEmpty(programFullPath))
                 {
 
-                    Process p = new Process();
+                    var p = new Process();
                     p.StartInfo.FileName = programFullPath;
                     p.StartInfo.Arguments = args;
                     p.StartInfo.RedirectStandardOutput = true;
@@ -64,7 +64,7 @@ namespace AntServicesMvc5.Controllers
                     p.StartInfo.ErrorDialog = false;
 
                     p.Start();
-                    p.WaitForExit(10000);
+                    p.WaitForExit(milliseconds: 10000);
 
                     string result = p.StandardOutput.ReadToEnd();
                     string error = p.StandardError.ReadToEnd();

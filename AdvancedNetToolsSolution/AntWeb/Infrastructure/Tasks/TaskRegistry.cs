@@ -11,7 +11,7 @@ namespace FailTracker.Web.Infrastructure.Tasks
 			Scan(scan =>
 			{
 				scan.AssembliesFromApplicationBaseDirectory(
-					a => a.FullName.StartsWith("SmartAdminMvc"));
+					a => a.FullName.StartsWith(value: "SmartAdminMvc"));
 				scan.AddAllTypesOf<IRunAtInit>();
 				scan.AddAllTypesOf<IRunAtStartup>();
 				scan.AddAllTypesOf<IRunOnEachRequest>();

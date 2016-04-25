@@ -8,9 +8,11 @@ namespace FailTracker.Web.Infrastructure.ModelMetadata
 	public class ExtensibleModelMetadataProvider
 		: DataAnnotationsModelMetadataProvider
 	{
-		private readonly IModelMetadataFilter[] _metadataFilters;
+#pragma warning disable JustCode_NamingConventions // Naming conventions inconsistency
+        private readonly IModelMetadataFilter[] _metadataFilters;
+#pragma warning restore JustCode_NamingConventions // Naming conventions inconsistency
 
-		public ExtensibleModelMetadataProvider(
+        public ExtensibleModelMetadataProvider(
 			IModelMetadataFilter[] metadataFilters)
 		{
 			_metadataFilters = metadataFilters;
@@ -23,7 +25,7 @@ namespace FailTracker.Web.Infrastructure.ModelMetadata
 			Type modelType,
 			string propertyName)
 		{
-			var metadata = base.CreateMetadata(
+			System.Web.Mvc.ModelMetadata metadata = base.CreateMetadata(
 				attributes,
 				containerType,
 				modelAccessor,

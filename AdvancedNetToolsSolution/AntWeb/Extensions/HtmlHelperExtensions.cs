@@ -44,34 +44,34 @@ namespace SmartAdminMvc.Extensions
         public static GridBuilder<PingPermalinkViewModel> CreatePingPermalinkGrid
             (this GridBuilder<PingPermalinkViewModel> builder, UrlHelper urlHelper, string readDataJavascriptMethodName = null)
         {
-            builder.Name("gridName" + Utils.RandomString(10))
+            builder.Name("gridName" + Utils.RandomString(length: 10))
 .Columns(columns =>
 {
-    columns.Bound(c => c.DestinationAddress).Title("Address");
-    columns.Bound(c => c.PermalinkAddress).Title("Permalink").ClientTemplate("<a href='#: data.PermalinkAddress #'>#: data.PermalinkAddress #</a>");
-    columns.Bound(c => c.DateCreatedTimeAgo).Title("Created on");//.Format("{0:u}");
+    columns.Bound(c => c.DestinationAddress).Title(text: "Address");
+    columns.Bound(c => c.PermalinkAddress).Title(text: "Permalink").ClientTemplate(value: "<a href='#: data.PermalinkAddress #'>#: data.PermalinkAddress #</a>");
+    columns.Bound(c => c.DateCreatedTimeAgo).Title(text: "Created on");//.Format("{0:u}");
 })
-.Scrollable(s => s.Enabled(false))
+.Scrollable(s => s.Enabled(value: false))
 .ToolBar(t =>
 {
     t.Excel().Text(string.Empty);
     t.Pdf().Text(string.Empty);
 })
-.Excel(e => e.AllPages(true).FileName("pingExport(www.toolsfornet.com).xlsx").ProxyURL(urlHelper.Action("Excel", "Export")))
-.Pdf(e => e.AllPages().FileName("pingExport(www.toolsfornet.com).pdf").ProxyURL(urlHelper.Action("Pdf", "Export")))
+.Excel(e => e.AllPages(allPages: true).FileName(fileName: "pingExport(www.toolsfornet.com).xlsx").ProxyURL(urlHelper.Action(actionName: "Excel", controllerName: "Export")))
+.Pdf(e => e.AllPages().FileName(fileName: "pingExport(www.toolsfornet.com).pdf").ProxyURL(urlHelper.Action(actionName: "Pdf", controllerName: "Export")))
 .Pageable()
 .Sortable()
-.Filterable(f => f.Extra(false))
+.Filterable(f => f.Extra(value: false))
 .DataSource(dataSource =>
 {
-    var ajaxDatasource = dataSource
+    AjaxDataSourceBuilder<PingPermalinkViewModel> ajaxDatasource = dataSource
       .Ajax()
       .Sort(s => s.Add(ss => ss.DateCreated).Descending())
-      .ServerOperation(false)
+      .ServerOperation(enabled: false)
       
       .Read(r =>
       {
-          var cub = r.Action("ReadPingPermalinks", "Ping");
+          CrudOperationBuilder cub = r.Action(actionName: "ReadPingPermalinks", controllerName: "Ping");
           if (!string.IsNullOrEmpty(readDataJavascriptMethodName))
           {
               cub.Data(readDataJavascriptMethodName);
@@ -79,11 +79,11 @@ namespace SmartAdminMvc.Extensions
       });
     if (HttpContext.Current.Request.Browser.IsMobileDevice)
     {
-        ajaxDatasource.PageSize(5);
+        ajaxDatasource.PageSize(pageSize: 5);
     }
     else
     {
-        ajaxDatasource.PageSize(10);
+        ajaxDatasource.PageSize(pageSize: 10);
     }
 }
 );

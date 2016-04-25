@@ -10,7 +10,7 @@ namespace FailTracker.Web.Infrastructure.ModelMetadata.Filters
 		{
 			if (!string.IsNullOrEmpty(metadata.PropertyName) &&
 				string.IsNullOrEmpty(metadata.DataTypeName) &&
-				metadata.PropertyName.ToLower().Contains("assignedto"))
+				metadata.PropertyName.ToLower().Contains(value: "assignedto"))
 			{
 				metadata.DataTypeName = "UserID";
 			}

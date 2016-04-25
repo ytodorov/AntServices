@@ -20,7 +20,7 @@ namespace SmartAdminMvc.Models
             get
             {
                 string result = $"From {SourceIpAddress} ({SourceHostName}) To {DestinationIpAddress}";
-                if (string.IsNullOrEmpty(""))
+                if (string.IsNullOrEmpty(value: ""))
                 {
                     result += $"({DestinationHostName})";
                 }

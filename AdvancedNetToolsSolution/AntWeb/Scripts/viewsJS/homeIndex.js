@@ -16,10 +16,11 @@
     var saoPauloLatLng = { lat: -23.54317, lng: -46.62918 };
     var iowaLatLng = { lat: 41.878, lng: -93.0977 };
 
-    var eastUSLatLng = { lat: 42.6975, lng: 23.3242 };
-    var westUSLatLng = { lat: 42.6975, lng: 23.3242 };
+    //unused
+    //var eastUSLatLng = { lat: 42.6975, lng: 23.3242 };
+    //var westUSLatLng = { lat: 42.6975, lng: 23.3242 };
 
-    var japanLatLng = { lat: 42.6975, lng: 23.3242 };
+    //var japanLatLng = { lat: 42.6975, lng: 23.3242 };
 
 
     var map = new google.maps.Map(document.getElementById('map'), {

@@ -14,7 +14,9 @@ namespace SmartAdminMvc
 {
     public static class HtmlHelperExtensions
     {
+#pragma warning disable JustCode_NamingConventions // Naming conventions inconsistency
         private static string _displayVersion;
+#pragma warning restore JustCode_NamingConventions // Naming conventions inconsistency
 
         /// <summary>
         ///     Retrieves a non-HTML encoded string containing the assembly version as a formatted string.
@@ -48,13 +50,13 @@ namespace SmartAdminMvc
         /// <returns>A HtmlString containing the given attribute value; otherwise an empty string.</returns>
         public static IHtmlString RouteIf(this HtmlHelper helper, string value, string attribute)
         {
-            var currentController =
+            string currentController =
                 (helper.ViewContext.RequestContext.RouteData.Values["controller"] ?? string.Empty).ToString().UnDash();
-            var currentAction =
+            string currentAction =
                 (helper.ViewContext.RequestContext.RouteData.Values["action"] ?? string.Empty).ToString().UnDash();
 
-            var hasController = value.Equals(currentController, StringComparison.InvariantCultureIgnoreCase);
-            var hasAction = value.Equals(currentAction, StringComparison.InvariantCultureIgnoreCase);
+            bool hasController = value.Equals(currentController, StringComparison.InvariantCultureIgnoreCase);
+            bool hasAction = value.Equals(currentAction, StringComparison.InvariantCultureIgnoreCase);
 
             return hasAction || hasController ? new HtmlString(attribute) : new HtmlString(string.Empty);
         }
@@ -68,7 +70,7 @@ namespace SmartAdminMvc
         /// <param name="appSetting">The key value of the entry point to look for.</param>
         public static void RenderPartialIf(this HtmlHelper htmlHelper, string partialViewName, string appSetting)
         {
-            var setting = Settings.GetValue<bool>(appSetting);
+            bool setting = Settings.GetValue<bool>(appSetting);
 
             htmlHelper.RenderPartialIf(partialViewName, setting);
         }
@@ -105,8 +107,8 @@ namespace SmartAdminMvc
         /// <returns></returns>
         public static IHtmlString Copyright(this HtmlHelper helper)
         {
-            var copyright =
-                string.Format("{0} &copy; {1} {2}", helper.AssemblyVersion(), DateTime.Now.Year, Settings.Company)
+            string copyright =
+                string.Format(format: "{0} &copy; {1} {2}", arg0: helper.AssemblyVersion(), arg1: DateTime.Now.Year, arg2: Settings.Company)
                     .Trim();
 
             return helper.Raw(copyright);
@@ -114,11 +116,10 @@ namespace SmartAdminMvc
 
         private static void SetDisplayVersion()
         {
-            var version = Assembly.GetExecutingAssembly().GetName().Version;
+            Version version = Assembly.GetExecutingAssembly().GetName().Version;
 
             _displayVersion =
-                string.Format("{4} {0}.{1}.{2} (build {3})", version.Major, version.Minor, version.Build,
-                    version.Revision, Settings.Project).Trim();
+                string.Format(format: "{4} {0}.{1}.{2} (build {3})", args: new object[] { version.Major, version.Minor, version.Build, version.Revision, Settings.Project }).Trim();
         }
 
         /// <summary>
@@ -136,16 +137,16 @@ namespace SmartAdminMvc
 
             var sb = new StringBuilder();
 
-            sb.AppendFormat("<div class=\"alert alert-{0} alert-block\">", alertType);
-            sb.Append("<button class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">&times;</button>");
+            sb.AppendFormat(format: "<div class=\"alert alert-{0} alert-block\">", arg0: alertType);
+            sb.Append(value: "<button class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">&times;</button>");
 
             if (!heading.IsNullOrWhiteSpace())
             {
-                sb.AppendFormat("<h4 class=\"alert-heading\">{0}</h4>", heading);
+                sb.AppendFormat(format: "<h4 class=\"alert-heading\">{0}</h4>", arg0: heading);
             }
 
             sb.Append(htmlHelper.ValidationSummary());
-            sb.Append("</div>");
+            sb.Append(value: "</div>");
 
             return new HtmlString(sb.ToString());
         }

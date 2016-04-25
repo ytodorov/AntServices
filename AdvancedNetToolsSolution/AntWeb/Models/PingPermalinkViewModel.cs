@@ -15,7 +15,7 @@ namespace SmartAdminMvc.Models
             get
             {
                 IPAddress dummy;
-                var isIpAddress = IPAddress.TryParse(DestinationAddress, out dummy);
+                bool isIpAddress = IPAddress.TryParse(DestinationAddress, out dummy);
                 return isIpAddress;
             }
         }
@@ -29,7 +29,7 @@ namespace SmartAdminMvc.Models
                 if (HttpContext.Current?.Request != null)
                 {
                     string fullRootUrl = HttpContext.Current?.Request.Url.OriginalString.Replace(HttpContext.Current?.Request.Url.LocalPath, string.Empty);
-                    if (!HttpContext.Current.Request.Url.ToString().Contains("localhost"))
+                    if (!HttpContext.Current.Request.Url.ToString().Contains(value: "localhost"))
                     {
                         fullRootUrl = fullRootUrl.Replace(":" + HttpContext.Current?.Request.Url.Port, string.Empty);
                     }

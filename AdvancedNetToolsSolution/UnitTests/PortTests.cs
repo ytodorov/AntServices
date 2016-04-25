@@ -20,10 +20,10 @@ namespace UnitTests
             PortResponseSummaryViewModel result = PortParser.ParseSingleLine(line);
 
             Assert.NotNull(result);
-            Assert.Equal(22, result.PortNumber);
-            Assert.Equal("tcp", result.Protocol);
-            Assert.Equal("filtered", result.State);
-            Assert.Equal("ssh", result.Service);
+            Assert.Equal(expected: 22, actual: result.PortNumber);
+            Assert.Equal(expected: "tcp", actual: result.Protocol);
+            Assert.Equal(expected: "filtered", actual: result.State);
+            Assert.Equal(expected: "ssh", actual: result.Service);
 
         }
 
@@ -45,9 +45,9 @@ namespace UnitTests
             using (HttpClient client = new HttpClient())
             {
 
-                var encodedArgs0 = Uri.EscapeDataString("-T4 -F www.dir.bg");
+                string encodedArgs0 = Uri.EscapeDataString(stringToEscape: "-T4 -F www.dir.bg");
                 string url = "http://antnortheu.cloudapp.net/home/exec?program=nmap&args=" + encodedArgs0;
-                var portSummary = client.GetStringAsync(url).Result;
+                string portSummary = client.GetStringAsync(url).Result;
 
                 List<PortResponseSummaryViewModel> portViewModels = PortParser.ParseSummary(portSummary);
                 

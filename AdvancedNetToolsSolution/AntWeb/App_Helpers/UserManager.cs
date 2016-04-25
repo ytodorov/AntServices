@@ -10,9 +10,11 @@ namespace SmartAdminMvc
 {
     public class UserManager : UserManager<IdentityUser>
     {
+#pragma warning disable JustCode_NamingConventions // Naming conventions inconsistency
         private static readonly UserStore<IdentityUser> UserStore = new UserStore<IdentityUser>();
-        private static readonly UserManager Instance = new UserManager();
 
+        private static readonly UserManager Instance = new UserManager();
+#pragma warning restore JustCode_NamingConventions // Naming conventions inconsistency
         private UserManager()
             : base(UserStore)
         {
@@ -24,7 +26,7 @@ namespace SmartAdminMvc
             //
             //  - Override default password length requirement (6) with a length of 4
             //  - Override user name requirements to allow spaces and dots
-            var passwordValidator = new MinimumLengthValidator(4);
+            var passwordValidator = new MinimumLengthValidator(requiredLength: 4);
             var userValidator = new UserValidator<IdentityUser, string>(Instance)
             {
                 AllowOnlyAlphanumericUserNames = false,

@@ -5,13 +5,15 @@ using System.Web.Mvc.Html;
 
 namespace SmartAdminMvc
 {
+#pragma warning disable JustCode_NamingConventions // Naming conventions inconsistency
     public static class HMTLHelperExtensions
+#pragma warning restore JustCode_NamingConventions // Naming conventions inconsistency
     {
         public static string IsSelected(this HtmlHelper html, string controller = null, string action = null)
         {
             string cssClass = "active";
-            string currentAction = (string)html.ViewContext.RouteData.Values["action"];
-            string currentController = (string)html.ViewContext.RouteData.Values["controller"];
+            var currentAction = (string)html.ViewContext.RouteData.Values["action"];
+            var currentController = (string)html.ViewContext.RouteData.Values["controller"];
 
             if (String.IsNullOrEmpty(controller))
                 controller = currentController;
@@ -25,7 +27,7 @@ namespace SmartAdminMvc
 
         public static string PageClass(this HtmlHelper html)
         {
-            string currentAction = (string)html.ViewContext.RouteData.Values["action"];
+            var currentAction = (string)html.ViewContext.RouteData.Values["action"];
             return currentAction;
         }
 

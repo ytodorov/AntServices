@@ -11,7 +11,7 @@ namespace SmartAdminMvc.Controllers
         [HttpPost]
         public ActionResult Excel(string contentType, string base64, string fileName)
         {
-            var fileContents = Convert.FromBase64String(base64);
+            byte[] fileContents = Convert.FromBase64String(base64);
 
             return File(fileContents, contentType, fileName);
         }
@@ -19,7 +19,7 @@ namespace SmartAdminMvc.Controllers
         [HttpPost]
         public ActionResult Pdf(string contentType, string base64, string fileName)
         {
-            var fileContents = Convert.FromBase64String(base64);
+            byte[] fileContents = Convert.FromBase64String(base64);
 
             return File(fileContents, contentType, fileName);
         }

@@ -19,22 +19,22 @@ namespace FailTracker.Web.Infrastructure.Alerts
 
 		public static ActionResult WithSuccess(this ActionResult result, string message)
 		{
-			return new AlertDecoratorResult(result, "alert-success", message);
+			return new AlertDecoratorResult(result, alertClass: "alert-success", message: message);
 		}
 
 		public static ActionResult WithInfo(this ActionResult result, string message)
 		{
-			return new AlertDecoratorResult(result, "alert-info", message);
+			return new AlertDecoratorResult(result, alertClass: "alert-info", message: message);
 		}
 
 		public static ActionResult WithWarning(this ActionResult result, string message)
 		{
-			return new AlertDecoratorResult(result, "alert-warning", message);
+			return new AlertDecoratorResult(result, alertClass: "alert-warning", message: message);
 		}
 
 		public static ActionResult WithError(this ActionResult result, string message)
 		{
-			return new AlertDecoratorResult(result, "alert-danger", message);
+			return new AlertDecoratorResult(result, alertClass: "alert-danger", message: message);
 		}
 	}
 }

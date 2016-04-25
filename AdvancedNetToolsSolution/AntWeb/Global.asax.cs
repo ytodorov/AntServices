@@ -31,7 +31,9 @@ using System.Web.Routing;
 
 namespace SmartAdminMvc
 {
+#pragma warning disable JustCode_CSharp_TypeFileNameMismatch // Types not matching file names
     public class MvcApplication : HttpApplication
+#pragma warning restore JustCode_CSharp_TypeFileNameMismatch // Types not matching file names
     {
         public IContainer Container
         {
@@ -116,7 +118,7 @@ namespace SmartAdminMvc
             Exception ex = Server.GetLastError();
             using (AntDbContext context = new AntDbContext())
             {
-                ErrorLogging el = new ErrorLogging();
+                var el = new ErrorLogging();
                 el.Message = ex.Message;
                 el.StackTrace = ex.StackTrace.ToString();
                 el.Data = ex.Data.ToString();
@@ -137,7 +139,7 @@ namespace SmartAdminMvc
 
         private void PreventAppsFromSleep()
         {
-            Timer timer = new Timer(TimeSpan.FromMinutes(1).TotalMilliseconds);
+            var timer = new Timer(TimeSpan.FromMinutes(value: 1).TotalMilliseconds);
             timer.Start();
             timer.Elapsed += PingUrlsSoTheyDontSleep;
         }
@@ -145,20 +147,20 @@ namespace SmartAdminMvc
         private void PingUrlsSoTheyDontSleep(object sender, ElapsedEventArgs e)
         {
             List<string> urls = Utils.GetDeployedServicesUrlAddresses;
-            urls.Add("http://ant-ne.azurewebsites.net");
-            Stopwatch stopWatch = new Stopwatch();
+            urls.Add(item: "http://ant-ne.azurewebsites.net");
+            var stopWatch = new Stopwatch();
             foreach (string url in urls)
             {
                 using (AntDbContext context = new AntDbContext())
                 {
-                    PingSuccess ps = new PingSuccess();
+                    var ps = new PingSuccess();
 
                     using (HttpClient client = new HttpClient())
                     {
                         try
                         {
                             stopWatch.Start();
-                             var tracerouteSummary = client.GetStringAsync(url).Result;
+                             string tracerouteSummary = client.GetStringAsync(url).Result;
                             ps.Successful = true;
                             ps.IpAddress = url;
                             stopWatch.Stop();

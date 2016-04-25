@@ -24,7 +24,7 @@ namespace SmartAdminMvc.Controllers
         {
             if (id == 123)
             {
-               var result =  MemoryCache.Default.Get("123") as string;
+               var result =  MemoryCache.Default.Get(key: "123")as string;
                 return View(model: result);
             }
             return View();
@@ -34,13 +34,13 @@ namespace SmartAdminMvc.Controllers
         {
             using (HttpClient client = new HttpClient())
             {
-                var encodedArgs = Uri.EscapeDataString($" --traceroute -sn -n {ip}");
+                string encodedArgs = Uri.EscapeDataString($" --traceroute -sn -n {ip}");
                 string url = "http://ants-neu.cloudapp.net/home/exec?program=nmap&args=" + encodedArgs;
-                var tracerouteSummary = client.GetStringAsync(url).Result;
+                string tracerouteSummary = client.GetStringAsync(url).Result;
 
                 List<TraceRouteReplyViewModel> list = TraceRouteParser.ParseSummary(tracerouteSummary);
 
-                var dsResult = Json(list.ToDataSourceResult(request));
+                JsonResult dsResult = Json(list.ToDataSourceResult(request));
                 return dsResult;
             }
         }
@@ -50,7 +50,7 @@ namespace SmartAdminMvc.Controllers
         {
             string resultHtml = resultHtmlBase64.Base64Decode();
 
-            MemoryCache.Default.Add("123", resultHtml, null);
+            MemoryCache.Default.Add(key: "123", value: resultHtml, policy: null);
 
             return new EmptyResult();
         }

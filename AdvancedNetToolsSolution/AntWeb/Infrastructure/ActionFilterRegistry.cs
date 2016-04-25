@@ -16,7 +16,7 @@ namespace FailTracker.Web.Infrastructure
 			Policies.SetAllProperties(x =>
 				x.Matching(p =>
 					p.DeclaringType.CanBeCastTo(typeof(ActionFilterAttribute)) &&
-					p.DeclaringType.Namespace.StartsWith("FailTracker") &&
+					p.DeclaringType.Namespace.StartsWith(value: "FailTracker")&&
 					!p.PropertyType.IsPrimitive &&
 					p.PropertyType != typeof(string)));
 		}

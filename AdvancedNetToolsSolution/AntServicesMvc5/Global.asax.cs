@@ -8,7 +8,9 @@ using System.Web.Routing;
 
 namespace AntServicesMvc5
 {
+#pragma warning disable JustCode_CSharp_TypeFileNameMismatch // Types not matching file names
     public class MvcApplication : System.Web.HttpApplication
+#pragma warning restore JustCode_CSharp_TypeFileNameMismatch // Types not matching file names
     {
         protected void Application_Start()
         {

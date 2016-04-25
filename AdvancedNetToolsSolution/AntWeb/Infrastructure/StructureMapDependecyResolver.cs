@@ -8,7 +8,9 @@ namespace SmartAdminMvc.Infrastructure
 {
     public class StructureMapDependecyResolver : IDependencyResolver
     {
+#pragma warning disable JustCode_NamingConventions // Naming conventions inconsistency
         private readonly Func<IContainer> _containerFactory;
+#pragma warning restore JustCode_NamingConventions // Naming conventions inconsistency
 
         public StructureMapDependecyResolver(Func<IContainer> containerFactory)
         {
@@ -22,7 +24,7 @@ namespace SmartAdminMvc.Infrastructure
                 return null;
             }
 
-            var container = _containerFactory();
+            IContainer container = _containerFactory();
 
             return serviceType.IsAbstract || serviceType.IsInterface
                 ? container.TryGetInstance(serviceType)

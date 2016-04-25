@@ -8,9 +8,11 @@ namespace FailTracker.Web.Infrastructure
 {
 	public class StructureMapDependencyResolver : IDependencyResolver
 	{
-		private readonly Func<IContainer> _factory;
+#pragma warning disable JustCode_NamingConventions // Naming conventions inconsistency
+        private readonly Func<IContainer> _factory;
+#pragma warning restore JustCode_NamingConventions // Naming conventions inconsistency
 
-		public StructureMapDependencyResolver(Func<IContainer> factory)
+        public StructureMapDependencyResolver(Func<IContainer> factory)
 		{
 			_factory = factory;
 		}
@@ -22,7 +24,7 @@ namespace FailTracker.Web.Infrastructure
 				return null;
 			}
 
-			var factory = _factory();
+			IContainer factory = _factory();
 
 			return serviceType.IsAbstract || serviceType.IsInterface
 				? factory.TryGetInstance(serviceType)

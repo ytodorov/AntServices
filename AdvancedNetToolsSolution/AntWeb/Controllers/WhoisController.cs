@@ -16,7 +16,7 @@ namespace SmartAdminMvc.Controllers
             using (HttpClient client = new HttpClient())
             {
                 string url = "http://ants-neu.cloudapp.net/home/exec?program=whois&args=8.8.8.8";
-                var res = client.GetStringAsync(url).Result;
+                string res = client.GetStringAsync(url).Result;
 
                 return View(model: res);
             }
