@@ -523,6 +523,7 @@
     <Content Include="Icons\pe-icon-7-stroke\fonts\Pe-icon-7-stroke.woff" />
     <None Include="Properties\PublishProfiles\SmartAdmin - Release.pubxml" />
     <None Include="Properties\PublishProfiles\SmartAdmin - Debug.pubxml" />
+    <Content Include="robots.txt" />
     <Content Include="Scripts\app.config.js" />
     <Content Include="Scripts\app.min.js" />
     <Content Include="Scripts\bootstrap\bootstrap.min.js" />
