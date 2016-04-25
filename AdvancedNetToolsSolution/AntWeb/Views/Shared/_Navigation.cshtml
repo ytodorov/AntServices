@@ -1,13 +1,13 @@
 ﻿<div id="navigation">
     <ul class="nav metismenu" id="side-menu">
         <li class="@Html.IsSelected(action: "Index")">
-            <a href="@Url.Action("Index", "Home")">
+            <a href="@Url.Action("Index", "Home")" title="Home">
                 <span class="text-success pull-left"><i class="pe-7s-home" style="font-size:large"></i></span>&nbsp;
                 <span class="nav-label">Home</span>
             </a>
         </li>
         <li class="@Html.IsSelected(action: "Index")">
-            <a href="@Url.Action("Index", "Ping")">
+            <a href="@Url.Action("Index", "Ping")" title="Ping">
                 <span class="text-success pull-left"><i class="pe-7s-sun" style="font-size:large"></i></span>&nbsp;
                 <span class="nav-label">Ping</span>
             </a>
@@ -19,13 +19,13 @@
             </a>
         </li>*@
         <li class="@Html.IsSelected(action: "Index")">
-            <a href="@Url.Action("Index", "Faq")">
+            <a href="@Url.Action("Index", "Faq")" title="FAQs">
                 <span class="text-success pull-left"><i class="pe-7s-chat" style="font-size:large"></i></span>&nbsp;
-                <span class="nav-label">FAQ</span>
+                <span class="nav-label">FAQs</span>
             </a>
         </li>
         <li class="@Html.IsSelected(action: "Index")">
-            <a href="@Url.Action("Index", "ContactUs")">
+            <a href="@Url.Action("Index", "ContactUs")" title="Contact Us">
                 <span class="text-success pull-left"><i class="pe-7s-mail" style="font-size:large"></i></span>&nbsp;
                 <span class="nav-label">Contact Us</span>              
             </a>
