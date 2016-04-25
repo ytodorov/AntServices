@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Net.Mail;
 using System.Net.Mime;
@@ -31,7 +32,9 @@ namespace UnitTests
                 
                 // Init SmtpClient and send
                 SmtpClient smtpClient = new SmtpClient("smtp.sendgrid.net", Convert.ToInt32(587));
-                System.Net.NetworkCredential credentials = new System.Net.NetworkCredential("ytodorov@ytodorov.com", "123x4567");
+                string userName = ConfigurationManager.AppSettings["smtpUserName"];
+                string password = ConfigurationManager.AppSettings["smtpPassword"];
+                System.Net.NetworkCredential credentials = new System.Net.NetworkCredential(userName, password);
                 smtpClient.Credentials = credentials;
                 smtpClient.Send(mailMsg);
 
