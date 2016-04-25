@@ -973,6 +973,7 @@
     <Content Include="Scripts\viewsJS\homeIndex.js" />
     <Content Include="Scripts\viewsJS\pingIndex.js" />
     <Content Include="Scripts\yk.js" />
+    <Content Include="sitemap.xml" />
     <Content Include="Vendor\animate.css\animate.css" />
     <Content Include="Vendor\animate.css\animate.min.css" />
     <Content Include="Vendor\animate.css\Gruntfile.js" />
