@@ -41,8 +41,25 @@ function resizeGrids() {
 
 $(document).ready(function docReady() {
 
-    //Това скрива лявото меню като се зареди началната страница
-    $(".header-link").click();
+    var isMenuVisible = $.cookie('isMenuVisible');
+    debugger;
+    if (isMenuVisible != null) {
+        var $body = $("body");
+        if (isMenuVisible !== "false") {
+            $body.removeClass("hide-sidebar");
+        }
+        else {
+            $body.addClass("hide-sidebar");
+        }
+    }
+
+    $(".header-link").click(function myfunction() {
+        debugger;
+        // скрито ли е менюто
+        var isMenuVisible = $("body.hide-sidebar").length == 0;
+        $.cookie('isMenuVisible', isMenuVisible);
+    })
+
 })
 
 $(window).ready(function myfunction() {

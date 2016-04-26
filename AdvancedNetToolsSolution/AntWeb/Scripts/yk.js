@@ -33,8 +33,23 @@ function resizeGrids() {
     }
 }
 $(document).ready(function docReady() {
-    //Това скрива лявото меню като се зареди началната страница
-    $(".header-link").click();
+    var isMenuVisible = $.cookie('isMenuVisible');
+    debugger;
+    if (isMenuVisible != null) {
+        var $body = $("body");
+        if (isMenuVisible !== "false") {
+            $body.removeClass("hide-sidebar");
+        }
+        else {
+            $body.addClass("hide-sidebar");
+        }
+    }
+    $(".header-link").click(function myfunction() {
+        debugger;
+        // скрито ли е менюто
+        var isMenuVisible = $("body.hide-sidebar").length == 0;
+        $.cookie('isMenuVisible', isMenuVisible);
+    });
 });
 $(window).ready(function myfunction() {
     //заради менюто което се премахва на малък екран. Важно е да е около 200, защото лявото меню се скрива след определено време и то трябва да мине за да се преначертае графиката отново
@@ -84,63 +99,65 @@ $(window).ready(function myfunction() {
     }
     // TODO: kendo.drawing gives an error
     // export pdf
-    $(".pdfexportpage").click(function () {
-        // тук скриваме и след това показваме някои части, които пречат на хубаво генериран експорт
-        $("#divfooter").hide();
-        $(".addthis_sharing_toolbox").hide();
-        // convert the dom element to a drawing using kendo.drawing.drawdom
-        kendo.drawing.drawdom($("#divbody"))
-            .then(function (group) {
-                // render the result as a pdf file
-                return kendo.drawing.exportpdf(group, {
-                    papersize: "auto",
-                    margin: { left: "1cm", top: "1cm", right: "1cm", bottom: "1cm" }
-                });
-            })
-            .done(function (data) {
-                // save the pdf file
-                debugger;
-                kendo.saveas({
-                    datauri: data,
-                    filename: "toolsfornet" + new date().getdate() + ".pdf",
-                    proxyurl: window.location.origin + "/export/pdf"
-                });
-                $("#divfooter").show();
-                $(".addthis_sharing_toolbox").show();
-            });
-    });
-    $("#pngexportpage").click(function () {
-        // convert the dom element to a drawing using kendo.drawing.drawdom
-        kendo.drawing.drawdom($("#divbody"))
-        .then(function (group) {
-            // render the result as a png image
-            return kendo.drawing.exportimage(group);
-        })
-        .done(function (data) {
-            // save the image file
-            kendo.saveas({
-                datauri: data,
-                filename: "toolsfornet" + new date().getdate() + ".png",
-                proxyurl: "@url.action('pdf', 'export')"
-            });
-        });
-    });
-    $("#svgexportpage").click(function () {
-        // convert the dom element to a drawing using kendo.drawing.drawdom
-        kendo.drawing.drawdom($("#divbody"))
-        .then(function (group) {
-            // render the result as a svg document
-            return kendo.drawing.exportsvg(group);
-        })
-        .done(function (data) {
-            // save the svg document
-            kendo.saveas({
-                datauri: data,
-                filename: "toolsfornet" + new date().getdate() + ".svg",
-                proxyurl: "@url.action('pdf', 'export')"
-            });
-        });
-    });
+    //$(".pdfexportpage").click(function () {
+    //    // тук скриваме и след това показваме някои части, които пречат на хубаво генериран експорт
+    //    $("#divfooter").hide();
+    //    $(".addthis_sharing_toolbox").hide();
+    //    // convert the dom element to a drawing using kendo.drawing.drawdom
+    //    kendo.drawing.drawDOM($("#divbody"))
+    //        .then(function (group) {
+    //            // render the result as a pdf file
+    //            return kendo.drawing.exportPDF(group, {
+    //                paperSize: "auto",
+    //                margin: { left: "1cm", top: "1cm", right: "1cm", bottom: "1cm" }
+    //            });
+    //        })
+    //        .done(function (data) {
+    //            // save the pdf file
+    //            debugger;
+    //            kendo.saveAs({
+    //                datauri: data,
+    //                filename: "toolsfornet" + new Date().getDate() + ".pdf",
+    //                proxyurl: window.location.origin + "/export/pdf"
+    //            });
+    //            $("#divfooter").show();
+    //            $(".addthis_sharing_toolbox").show();
+    //        });
+    //});
+    //$("#pngexportpage").click(function () {
+    //    // convert the dom element to a drawing using kendo.drawing.drawdom
+    //    var draw = kendo.drawing;
+    //    draw.drawDOM($("#divbody"))
+    //    .then(function (group) {
+    //        // render the result as a png image
+    //        return draw.exportImage(group);
+    //    })
+    //    .done(function (data) {
+    //        // save the image file
+    //        kendo.saveAs({
+    //            datauri: data,
+    //            filename: "toolsfornet" + new Date().getDate() + ".png",
+    //            proxyurl: "@url.action('pdf', 'export')"
+    //        });
+    //    });
+    //});
+    //$("#svgexportpage").click(function () {
+    //    // convert the dom element to a drawing using kendo.drawing.drawdom
+    //    var draw = kendo.drawing;
+    //    draw.drawDOM($("#divbody"))
+    //    .then(function (group) {
+    //        // render the result as a svg document
+    //        return draw.exportSVG(group);
+    //    })
+    //    .done(function (data) {
+    //        // save the svg document
+    //        kendo.saveAs({
+    //            datauri: data,
+    //            filename: "toolsfornet" + new Date().getDate() + ".svg",
+    //            proxyurl: "@url.action('pdf', 'export')"
+    //        });
+    //    });
+    //});
 });
 $.ajaxSetup({
     error: function (XMLHttpRequest, textStatus, errorThrown) {
