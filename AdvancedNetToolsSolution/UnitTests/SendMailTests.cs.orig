@@ -31,10 +31,15 @@ namespace UnitTests
                 mailMsg.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(html, contentEncoding: null, mediaType: MediaTypeNames.Text.Html));
                 
                 // Init SmtpClient and send
-                var smtpClient = new SmtpClient(host: "smtp.sendgrid.net", port: Convert.ToInt32(value: 587));
+<<<<<<< ee73de88a86105a47cd6022f3987234024016e85
+                SmtpClient smtpClient = new SmtpClient("smtp.sendgrid.net", Convert.ToInt32(587));
                 string userName = ConfigurationManager.AppSettings["smtpUserName"];
                 string password = ConfigurationManager.AppSettings["smtpPassword"];
-                var credentials = new System.Net.NetworkCredential(userName, password);
+                System.Net.NetworkCredential credentials = new System.Net.NetworkCredential(userName, password);
+=======
+                var smtpClient = new SmtpClient(host: "smtp.sendgrid.net", port: Convert.ToInt32(value: 587));
+                var credentials = new System.Net.NetworkCredential(userName: "ytodorov@ytodorov.com", password: "123x4567");
+>>>>>>> Sooo...after full day of silence all warnings fixed created tsconfig, yk.ts, homeIndex.ts and pingIndex.ts. Site works correctly on the local machine. Code with errors is commented. Help needed.
                 smtpClient.Credentials = credentials;
                 smtpClient.Send(mailMsg);
 

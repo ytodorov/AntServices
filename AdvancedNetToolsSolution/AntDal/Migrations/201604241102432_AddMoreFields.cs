@@ -7,12 +7,12 @@ namespace AntDal.Migrations
     {
         public override void Up()
         {
-            AddColumn("dbo.PingResponseSummaries", "Latency", c => c.Double());
+            AddColumn(table: "dbo.PingResponseSummaries", name: "Latency", columnAction: c => c.Double());
         }
         
         public override void Down()
         {
-            DropColumn("dbo.PingResponseSummaries", "Latency");
+            DropColumn(table: "dbo.PingResponseSummaries", name: "Latency");
         }
     }
 }

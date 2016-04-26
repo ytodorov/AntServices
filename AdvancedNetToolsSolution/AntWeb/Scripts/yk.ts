@@ -111,64 +111,68 @@ $(window).ready(function myfunction() {
     }
     // TODO: kendo.drawing gives an error
     // export pdf
-    //$(".pdfExportPage").click(function () {
-    //    // Тук скриваме и след това показваме някои части, които пречат на хубаво генериран експорт
-    //    $("#divFooter").hide();
+    //$(".pdfexportpage").click(function () {
+    //    // тук скриваме и след това показваме някои части, които пречат на хубаво генериран експорт
+    //    $("#divfooter").hide();
     //    $(".addthis_sharing_toolbox").hide();
-    //    // Convert the DOM element to a drawing using kendo.drawing.drawDOM
-    //    kendo.drawing.drawDOM($("#divBody"))
+    //    // convert the dom element to a drawing using kendo.drawing.drawdom
+    //    kendo.drawing.drawDOM($("#divbody"))
     //        .then(function (group) {
-    //            // Render the result as a PDF file
+    //            // render the result as a pdf file
     //            return kendo.drawing.exportPDF(group, {
     //                paperSize: "auto",
     //                margin: { left: "1cm", top: "1cm", right: "1cm", bottom: "1cm" }
     //            });
     //        })
     //        .done(function (data) {
-    //            // Save the PDF file
+    //            // save the pdf file
     //            debugger;
 
     //            kendo.saveAs({
-    //                dataURI: data,
-    //                fileName: "ToolsForNet" + new Date().getDate() + ".pdf",
-    //                proxyURL: window.location.origin + "/export/pdf"
+    //                datauri: data,
+    //                filename: "toolsfornet" + new Date().getDate() + ".pdf",
+    //                proxyurl: window.location.origin + "/export/pdf"
     //            });
-    //            $("#divFooter").show();
+    //            $("#divfooter").show();
     //            $(".addthis_sharing_toolbox").show();
     //        });
 
     //});
 
-    //$("#pngExportPage").click(function () {
-    //    // Convert the DOM element to a drawing using kendo.drawing.drawDOM
-    //    kendo.drawing.drawDOM($("#divBody"))
+    //$("#pngexportpage").click(function () {
+    //    // convert the dom element to a drawing using kendo.drawing.drawdom
+    //    var draw = kendo.drawing;
+
+    //    draw.drawDOM($("#divbody"))
     //    .then(function (group) {
-    //        // Render the result as a PNG image
-    //        return kendo.drawing.exportImage(group);
+    //        // render the result as a png image
+    //        return draw.exportImage(group);
     //    })
     //    .done(function (data) {
-    //        // Save the image file
+    //        // save the image file
     //        kendo.saveAs({
-    //            dataURI: data,
-    //            fileName: "ToolsForNet" + new Date().getDate() + ".png",
-    //            proxyURL: "@Url.Action('Pdf', 'Export')"
+    //            datauri: data,
+    //            filename: "toolsfornet" + new Date().getDate() + ".png",
+    //            proxyurl: "@url.action('pdf', 'export')"
     //        });
     //    });
     //});
 
-    //$("#svgExportPage").click(function () {
-    //    // Convert the DOM element to a drawing using kendo.drawing.drawDOM
-    //    kendo.drawing.drawDOM($("#divBody"))
+    //$("#svgexportpage").click(function () {
+
+    //    // convert the dom element to a drawing using kendo.drawing.drawdom
+    //    var draw = kendo.drawing;
+    //    draw.drawDOM($("#divbody"))
     //    .then(function (group) {
-    //        // Render the result as a SVG document
-    //        return kendo.drawing.exportSVG(group);
+    //        // render the result as a svg document
+    //        return draw.exportSVG(group);
     //    })
     //    .done(function (data) {
-    //        // Save the SVG document
+    //        // save the svg document
     //        kendo.saveAs({
-    //            dataURI: data,
-    //            fileName: "ToolsForNet" + new Date().getDate() + ".svg",
-    //            proxyURL: "@Url.Action('Pdf', 'Export')"
+    //            datauri: data,
+    //            filename: "toolsfornet" + new Date().getDate() + ".svg",
+    //            proxyurl: "@url.action('pdf', 'export')"
     //        });
     //    });
     //});

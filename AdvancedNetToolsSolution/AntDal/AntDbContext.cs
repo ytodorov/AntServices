@@ -9,7 +9,7 @@ namespace AntDal
     public class AntDbContext : DbContext
     {        
         public AntDbContext()
-            : base("name=AntModel")
+            : base(nameOrConnectionString: "name=AntModel")
         {
             //Database.SetInitializer<AntDbContext>(new DropCreateDatabaseIfModelChanges<AntDbContext>());
             Configuration.ProxyCreationEnabled = false;
