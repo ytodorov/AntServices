@@ -1,0 +1,26 @@
+﻿@model ErrorLoggingViewModel
+
+@{
+    ViewBag.Title = "| Error";
+    ViewBag.MetaDescription = "Free distributed web-based ping service. Pings simultaneously from many locations to check if a host is online and measure round-trip times.";
+}
+<div class="row text-center">
+    <div class="col-lg-12 text-primary">
+        <h1><span>Errors</span></h1>
+    </div>
+</div>
+@if (Model != null)
+{
+    @Html.Raw((Html.AntCreateStandardPanel("hgreen", "Error logging summary",
+    "<div class='text-center'>" +
+    "<a class='pdfExportPage'>Download as PDF" + "</a>" +
+    "<p>" + "Created on: " + Model.DateCreated + "</p>" +
+    "<p>" + "Permalink: <a href='" + Context.Request.Url.ToString() + "' target='_blank'>" + Context.Request.Url.ToString() + "</a></p>" +
+    "<p>" + "<div class='addthis_sharing_toolbox'></div></p>" +
+    "<div>")))
+
+}
+    @*history*@
+
+    @Html.Raw((Html.AntCreateStandardPanel("hviolet", "Error history for current user's IP", "<p>" +
+    Html.Kendo().Grid<ErrorLoggingViewModel>().CreateErrorLoggingGrid(Url).ToHtmlString() + "</p>")))

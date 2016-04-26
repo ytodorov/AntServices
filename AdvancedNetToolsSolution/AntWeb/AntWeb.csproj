@@ -1396,6 +1396,7 @@
     <Content Include="Views\Shared\Error404.cshtml" />
     <Content Include="Views\Faq\Index.cshtml" />
     <Content Include="tsconfig.json" />
+    <Content Include="Views\ErrorLogging\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1421,6 +1422,7 @@
     <Compile Include="App_Helpers\Settings.cs" />
     <Compile Include="Controllers\ContactUsController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\ErrorLoggingController.cs" />
     <Compile Include="Controllers\ExportController.cs" />
     <Compile Include="Controllers\FaqController.cs" />
     <Compile Include="Controllers\InterfaceController.cs" />
@@ -1483,6 +1485,8 @@
     <Compile Include="Infrastructure\Utils.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AddressHistoryViewModel.cs" />
+    <Compile Include="Models\ErrorBaseViewModel.cs" />
+    <Compile Include="Models\ErrorLoggingViewModel.cs" />
     <Compile Include="Models\IpLocationViewModel.cs" />
     <Compile Include="Models\PermalinkBaseViewModel.cs" />
     <Compile Include="Models\PingPermalinkViewModel.cs" />

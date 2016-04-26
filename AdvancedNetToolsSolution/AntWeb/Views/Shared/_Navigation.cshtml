@@ -30,6 +30,12 @@
                 <span class="nav-label">Contact Us</span>              
             </a>
         </li>
+        <li class="@Html.IsSelected(action: "Index")">
+            <a href="@Url.Action("Index", "ErrorLogging")" title="Errors">
+                <span class="text-success pull-left"><i class="pe-7s-mail" style="font-size:large"></i></span>&nbsp;
+                <span class="nav-label">Errors</span>
+            </a>
+        </li>
     </ul>
 </div>
 

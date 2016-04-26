@@ -92,5 +92,55 @@ namespace SmartAdminMvc.Extensions
 builder.Deferred();
             return builder;
         }
+
+        public static GridBuilder<ErrorLoggingViewModel> CreateErrorLoggingGrid
+            (this GridBuilder<ErrorLoggingViewModel> builder, UrlHelper urlHelper, string readDataJavascriptMethodName = null)
+        {
+            builder.Name("gridName" + Utils.RandomString(length: 10))
+.Columns(columns =>
+{
+    columns.Bound(c => c.DestinationAddress).Title(text: "Address");
+    columns.Bound(c => c.ErrorLogAddress).Title(text: "Error").ClientTemplate(value: "<a href='#: data.ErrorLogAddress #'>#: data.ErrorLogAddress #</a>");
+    columns.Bound(c => c.DateCreatedTimeAgo).Title(text: "Created on");//.Format("{0:u}");
+})
+.Scrollable(s => s.Enabled(value: false))
+.ToolBar(t =>
+{
+    t.Excel().Text(string.Empty);
+    t.Pdf().Text(string.Empty);
+})
+.Excel(e => e.AllPages(allPages: true).FileName(fileName: "errorLog(www.toolsfornet.com).xlsx").ProxyURL(urlHelper.Action(actionName: "Excel", controllerName: "Export")))
+.Pdf(e => e.AllPages().FileName(fileName: "errorLog(www.toolsfornet.com).pdf").ProxyURL(urlHelper.Action(actionName: "Pdf", controllerName: "Export")))
+.Pageable()
+.Sortable()
+.Filterable(f => f.Extra(value: false))
+.DataSource(dataSource =>
+{
+    AjaxDataSourceBuilder<ErrorLoggingViewModel> ajaxDatasource = dataSource
+      .Ajax()
+      .Sort(s => s.Add(ss => ss.DateCreated).Descending())
+      .ServerOperation(enabled: false)
+
+      .Read(r =>
+      {
+          CrudOperationBuilder cub = r.Action(actionName: "ReadErrorLoggings", controllerName: "ErrorLogging");
+          if (!string.IsNullOrEmpty(readDataJavascriptMethodName))
+          {
+              cub.Data(readDataJavascriptMethodName);
+          }
+      });
+    if (HttpContext.Current.Request.Browser.IsMobileDevice)
+    {
+        ajaxDatasource.PageSize(pageSize: 5);
+    }
+    else
+    {
+        ajaxDatasource.PageSize(pageSize: 10);
+    }
+}
+);
+            builder.Deferred();
+            return builder;
+        }
     }
 }
