@@ -78,28 +78,28 @@ $(window).ready(function myfunction() {
             , 300); // важен е този timeout 300
     });
 
-    var clipboard = new Clipboard('.fa-pencil-square');
+    //var clipboard = new Clipboard('.fa-pencil-square');
 
-    clipboard.on('success', function (e) {
+    //clipboard.on('success', function (e) {
 
-        // Toastr options
-        toastr.options = {
-            "debug": false,
-            "newestOnTop": false,
-            "positionClass": "toast-top-center",
-            "closeButton": true,
-            "toastClass": "animated fadeInDown",
-        };
+    //    // Toastr options
+    //    toastr.options = {
+    //        "debug": false,
+    //        "newestOnTop": false,
+    //        "positionClass": "toast-top-center",
+    //        "closeButton": true,
+    //        "toastClass": "animated fadeInDown",
+    //    };
 
 
-        toastr.info('Copied to clipboard.');
-        e.preventDefault();
-        $("#iconSendEmail").click();
+    //    toastr.info('Copied to clipboard.');
+    //    e.preventDefault();
+    //    $("#iconSendEmail").click();
 
-    });
+    //});
 
-    clipboard.on('error', function (e) {
-    });
+    //clipboard.on('error', function (e) {
+    //});
 
 
 

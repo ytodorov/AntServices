@@ -63,22 +63,22 @@ $(window).ready(function myfunction() {
             resizeGrids();
         }, 300); // важен е този timeout 300
     });
-    var clipboard = new Clipboard('.fa-pencil-square');
-    clipboard.on('success', function (e) {
-        // Toastr options
-        toastr.options = {
-            "debug": false,
-            "newestOnTop": false,
-            "positionClass": "toast-top-center",
-            "closeButton": true,
-            "toastClass": "animated fadeInDown",
-        };
-        toastr.info('Copied to clipboard.');
-        e.preventDefault();
-        $("#iconSendEmail").click();
-    });
-    clipboard.on('error', function (e) {
-    });
+    //var clipboard = new Clipboard('.fa-pencil-square');
+    //clipboard.on('success', function (e) {
+    //    // Toastr options
+    //    toastr.options = {
+    //        "debug": false,
+    //        "newestOnTop": false,
+    //        "positionClass": "toast-top-center",
+    //        "closeButton": true,
+    //        "toastClass": "animated fadeInDown",
+    //    };
+    //    toastr.info('Copied to clipboard.');
+    //    e.preventDefault();
+    //    $("#iconSendEmail").click();
+    //});
+    //clipboard.on('error', function (e) {
+    //});
     var $ip = $("#ip");
     if ($ip.length != 0) {
         var arrOfPlaceholders = [];
