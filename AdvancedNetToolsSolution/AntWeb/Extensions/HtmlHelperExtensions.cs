@@ -99,9 +99,9 @@ builder.Deferred();
             builder.Name("gridName" + Utils.RandomString(length: 10))
 .Columns(columns =>
 {
-    columns.Bound(c => c.DestinationAddress).Title(text: "Address");
-    columns.Bound(c => c.ErrorLogAddress).Title(text: "Error").ClientTemplate(value: "<a href='#: data.ErrorLogAddress #'>#: data.ErrorLogAddress #</a>");
-    columns.Bound(c => c.DateCreatedTimeAgo).Title(text: "Created on");//.Format("{0:u}");
+    columns.Bound(c => c.Message).Title(text: "Message");
+    columns.Bound(c => c.StackTrace).Title(text: "Stacktrace");
+    columns.Bound(c => c.Data).Title(text: "Data");//.Format("{0:u}");
 })
 .Scrollable(s => s.Enabled(value: false))
 .ToolBar(t =>

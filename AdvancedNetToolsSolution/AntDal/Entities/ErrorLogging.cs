@@ -13,5 +13,9 @@ namespace AntDal.Entities
         public string StackTrace { get; set; }
 
         public string Data { get; set; }
+
+        public bool? ShowInHistory { get; set; }
+        public string UserCreatedIpAddress { get; set; }
+        public string DestinationAddress { get; set; }
     }
 }

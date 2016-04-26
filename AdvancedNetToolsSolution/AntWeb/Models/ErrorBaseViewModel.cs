@@ -10,5 +10,7 @@ namespace SmartAdminMvc.Models
         public string DestinationAddress { get; set; }
 
         public string UserCreatedIpAddress { get; set; }
+
+        public bool? ShowInHistory { get; set; }
     }
 }

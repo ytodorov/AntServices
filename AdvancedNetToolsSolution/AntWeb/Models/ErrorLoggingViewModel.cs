@@ -43,6 +43,10 @@ namespace SmartAdminMvc.Models
             }
         }
 
-        public List<ErrorLoggingViewModel> PingResponseSummaries { get; set; }
+        public string Message { get; set; }
+
+        public string StackTrace { get; set; }
+
+        public string Data { get; set; }
     }
 }
