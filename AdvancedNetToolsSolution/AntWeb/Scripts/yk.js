@@ -34,7 +34,6 @@ function resizeGrids() {
 }
 $(document).ready(function docReady() {
     var isMenuVisible = $.cookie('isMenuVisible');
-    debugger;
     if (isMenuVisible != null) {
         var $body = $("body");
         if (isMenuVisible !== "false") {
@@ -45,7 +44,6 @@ $(document).ready(function docReady() {
         }
     }
     $(".header-link").click(function myfunction() {
-        debugger;
         // скрито ли е менюто
         var isMenuVisible = $("body.hide-sidebar").length == 0;
         $.cookie('isMenuVisible', isMenuVisible);
@@ -114,7 +112,6 @@ $(window).ready(function myfunction() {
     //        })
     //        .done(function (data) {
     //            // save the pdf file
-    //            debugger;
     //            kendo.saveAs({
     //                datauri: data,
     //                filename: "toolsfornet" + new Date().getDate() + ".pdf",

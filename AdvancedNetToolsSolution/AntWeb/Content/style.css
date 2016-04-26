@@ -1824,7 +1824,8 @@ body {
 }
 
 #header {
-    background-color: #fff;
+    /*Йордан промени цета*/
+    background-color: #f7f9fa;
     display: block;
     height: 62px;
     margin: 0;
@@ -1834,6 +1835,8 @@ body {
 }
 
 #menu {
+    /*Йордан промени цета*/
+    background-color: #f7f9fa;
     width: 180px;
     bottom: 0;
     float: left;
@@ -2736,6 +2739,7 @@ body.fullscreen-panel-mode {
 }
 
     #side-menu li a {
+               
         color: #6a6c6f;
         text-transform: uppercase;
         font-weight: 700;

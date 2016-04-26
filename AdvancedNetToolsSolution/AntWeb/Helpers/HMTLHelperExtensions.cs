@@ -21,8 +21,10 @@ namespace SmartAdminMvc
             if (String.IsNullOrEmpty(action))
                 action = currentAction;
 
-            return controller == currentController && action == currentAction ?
+            var result = controller.Equals(currentController, StringComparison.CurrentCultureIgnoreCase)
+                && action.Equals(currentAction, StringComparison.CurrentCultureIgnoreCase) ?
                 cssClass : String.Empty;
+            return result;
         }
 
         public static string PageClass(this HtmlHelper html)
