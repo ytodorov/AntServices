@@ -191,6 +191,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="A9DABAA0572B3BC1BB9D025B2A82D391.txt" />
     <Content Include="Content\ajax\email-compose.html" />
     <Content Include="Content\ajax\email-opened.html" />
     <Content Include="Content\ajax\email-reply.html" />
@@ -446,7 +447,6 @@
     <Content Include="Content\sound\voice_on.mp3" />
     <Content Include="Content\style.css" />
     <Content Include="Content\xml\gmap\pins.xml" />
-    <Content Include="ECB4E2CE1203A13523A588F3434C65F8.txt" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Icons\pe-icon-7-stroke\css\helper.css" />
