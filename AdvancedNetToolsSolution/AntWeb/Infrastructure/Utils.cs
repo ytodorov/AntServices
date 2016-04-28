@@ -158,14 +158,66 @@ namespace SmartAdminMvc.Infrastructure
             var markerNamesInMap = new List<string>();
             var infoWindowsNamesInMap = new List<string>();
 
+
+            List<string> sourceIps = new List<string>();
+
             for (int i = 0; i < ips.Count(); i++)
             {
-                IpLocationViewModel currLocation = GetLocationDataForIp(ips.ElementAt(i));
+                if (i % 2 == 0)
+                {
+                    sourceIps.Add(ips.ElementAt(i));
+                }
+            }
 
-                locations.Add(currLocation);
+            for (int i = 0; i < ips.Count(); i++)
+            {
+                // i % 2 == 0 Това в случай, че destionation i source адреса съвпада. Например и двата са в дейта центъра на MS
+                IpLocationViewModel currLocation = GetLocationDataForIp(ips.ElementAt(i));
+                //if (i % 2 == 0 && locations.Any(c => c.Latitude == currLocation.Latitude && c.Longitude == currLocation.Longitude))
+                //{
+                //    for (int j = 0; j < 100; j++)
+                //    {
+                //        double newLongitude = currLocation.Longitude.GetValueOrDefault() + 0.01;
+                //        currLocation.Longitude = newLongitude;
+                //        if (!locations.Any(c => c.Latitude == currLocation.Latitude && c.Longitude == currLocation.Longitude))
+                //        {
+                //            locations.Add(currLocation);
+                //            break;
+                //        }
+
+                //    }
+                //}
+                //else
+                //{
+                    locations.Add(currLocation);
+                //}
+                             
                 locationNamesInMap.Add("latLng" + i);
                 markerNamesInMap.Add("marker" + i);
                 infoWindowsNamesInMap.Add("infoWindow" + i);
+            }
+
+            List<IpLocationViewModel> sourceLocations = new List<IpLocationViewModel>();
+
+            for (int i = 0; i < locations.Count(); i++)
+            {
+                if (i % 2 == 0)
+                {
+                    sourceLocations.Add(locations.ElementAt(i));
+                }
+            }
+
+            for (int i = 0; i < locations.Count; i++)
+            {
+                if (i % 2 == 1)
+                {
+                    var currLocation = locations.ElementAt(i);
+                    if (sourceLocations.Any(c => c.Latitude == currLocation.Latitude && c.Longitude == currLocation.Longitude))
+                    {
+                        double newLongitude = currLocation.Longitude.GetValueOrDefault() + 0.05;
+                        currLocation.Longitude = newLongitude;
+                    }
+                }
             }
 
 
@@ -183,7 +235,7 @@ namespace SmartAdminMvc.Infrastructure
             }
 
             sb.AppendLine($@"var map = new google.maps.Map(document.getElementById('map'), {{
-                zoom: 1,
+                zoom: 2,
                 center: {locationNamesInMap.LastOrDefault()}
             }});");
 

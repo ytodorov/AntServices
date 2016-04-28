@@ -13,7 +13,7 @@ namespace SmartAdminMvc.Controllers
 
     public class HomeController : Controller
     {
-        чупя билда да видя дали ще има email
+        //чупя билда да видя дали ще има email
         public HomeController()
         {
         }
