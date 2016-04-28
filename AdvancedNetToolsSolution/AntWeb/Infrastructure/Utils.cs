@@ -6,12 +6,15 @@ using SmartAdminMvc.Models;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Web;
+using System.Web.Caching;
 using System.Web.Helpers;
+using System.Web.Hosting;
 
 namespace SmartAdminMvc.Infrastructure
 {
@@ -94,6 +97,48 @@ namespace SmartAdminMvc.Infrastructure
             { "http://ants-wus.cloudapp.net" , "West US"}
 
             };
+        }
+
+        public static string Tag(string rootRelativePath)
+        {
+            string applicationVirtualPath = System.Web.Hosting.HostingEnvironment.ApplicationVirtualPath;
+            if (applicationVirtualPath != "/")
+            {
+                rootRelativePath = applicationVirtualPath + rootRelativePath;
+            }
+
+            // *** Йордан: това го правя за да може в debug режим да се използват пълните версии на бъндълите, а в release да са минифицираните версии
+#if DEBUG
+            if (rootRelativePath.Contains(".min."))
+            {
+                rootRelativePath = rootRelativePath.Replace(".min.", ".");
+            }
+#endif
+
+            if (HttpRuntime.Cache[rootRelativePath] == null)
+            {
+                string absolute = HostingEnvironment.MapPath("~" + rootRelativePath);
+
+                DateTime date = File.GetLastWriteTime(absolute);
+                int index = rootRelativePath.LastIndexOf('/');
+                string result = rootRelativePath.Insert(index, "/v-" + date.Ticks);
+                if (applicationVirtualPath != "/")
+                {
+                    string stringToReplace = @"\" + applicationVirtualPath.Replace("/", string.Empty);
+
+                    absolute = ReplaceLastOccurrence(absolute, stringToReplace, string.Empty); // absolute.Replace(stringToReplace, string.Empty);
+                }
+                HttpRuntime.Cache.Insert(rootRelativePath, result, new CacheDependency(absolute));
+            }
+
+            return HttpRuntime.Cache[rootRelativePath] as string;
+        }
+
+        private static string ReplaceLastOccurrence(string source, string find, string replace)
+        {
+            int place = source.LastIndexOf(find);
+            string result = source.Remove(place, find.Length).Insert(place, replace);
+            return result;
         }
 
         public static List<string> TopSitesGlobal { get; set; }
