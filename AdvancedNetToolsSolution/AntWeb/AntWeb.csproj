@@ -207,6 +207,7 @@
     <Content Include="Content\css\font-awesome.min.css" />
     <Content Include="Content\css\invoice.min.css" />
     <Content Include="Content\css\lockscreen.min.css" />
+    <None Include="bundleconfig.json" />
     <None Include="Content\css\your_style.less" />
     <Content Include="Content\css\your_style.css" />
     <Content Include="Content\css\your_style.min.css">
@@ -234,6 +235,9 @@
     <Content Include="Content\img\colorblind-friendly\pt1.png" />
     <Content Include="Content\img\colorblind-friendly\pt2.png" />
     <Content Include="Content\img\colorblind-friendly\pt3.png" />
+    <Content Include="Content\img\comodo\comodo_secure_seal_100x85_transp.png" />
+    <Content Include="Content\img\comodo\comodo_secure_seal_113x59_transp.png" />
+    <Content Include="Content\img\comodo\comodo_secure_seal_76x26_transp.png" />
     <Content Include="Content\img\cover.png" />
     <Content Include="Content\img\demo\64x64.png" />
     <Content Include="Content\img\demo\basic.png" />
@@ -530,13 +534,18 @@
     <Content Include="Scripts\app.config.js" />
     <Content Include="Scripts\app.min.js" />
     <Content Include="Scripts\bootstrap\bootstrap.min.js" />
+    <Content Include="Scripts\bundle.js" />
+    <Content Include="Scripts\bundle.min.js">
+      <DependentUpon>bundle.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\clipboard\clipboard.js" />
     <Content Include="Scripts\clipboard\clipboard.min.js" />
     <Content Include="Scripts\googleAnalytics.js" />
+    <Content Include="Scripts\googleMapsWithMyKey.js" />
     <Content Include="Scripts\homer.js" />
-    <None Include="Scripts\jquery-1.4.4-vsdoc.js" />
-    <Content Include="Scripts\jquery-1.4.4.js" />
-    <Content Include="Scripts\jquery-1.4.4.min.js" />
+    <None Include="Scripts\jquery-2.2.3.intellisense.js" />
+    <Content Include="Scripts\jquery-2.2.3.js" />
+    <Content Include="Scripts\jquery-2.2.3.min.js" />
     <Content Include="Scripts\jquery.cookie-1.4.1.min.js" />
     <Content Include="Scripts\jquery.cookie.js" />
     <Content Include="Scripts\libs\jquery-ui-1.10.3.min.js" />
@@ -1398,6 +1407,7 @@
     <Content Include="Views\Faq\Index.cshtml" />
     <Content Include="tsconfig.json" />
     <Content Include="Views\ErrorLogging\Index.cshtml" />
+    <Content Include="Scripts\jquery-2.2.3.min.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

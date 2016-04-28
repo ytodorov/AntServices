@@ -4466,3 +4466,9 @@ ul.h-list {
 .k-textbox{
     width:100% !important
 }
+
+.yVerticalAlignCenter {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}

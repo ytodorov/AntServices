@@ -1,0 +1,9 @@
+[
+  {
+    "outputFileName": "Scripts/bundle.js",
+    "inputFiles": [
+      "Scripts/viewsJS/pingIndex.js",
+      "Scripts/viewsJS/homeIndex.js"
+    ]
+  }
+]
