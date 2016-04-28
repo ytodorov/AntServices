@@ -32,7 +32,7 @@ namespace SmartAdminMvc.Controllers
             //}
             return View();
         }
-        public ActionResult ReadErrorLoggings([DataSourceRequest] DataSourceRequest request, string address, bool? allErrors = false)
+        public ActionResult ReadErrorLoggings([DataSourceRequest] DataSourceRequest request, string address, bool? allErrors = true)
         {
             List<ErrorLogging> errorLoggins;
             if (!allErrors.GetValueOrDefault())
@@ -47,13 +47,13 @@ namespace SmartAdminMvc.Controllers
                 }
             }
 
-            List<PingPermalinkViewModel> pingPermalinksViewModels = Mapper.Map<List<PingPermalinkViewModel>>(errorLoggins);
-            foreach (var p in pingPermalinksViewModels)
+            List<ErrorLoggingViewModel> errorLoggingsViewModels = Mapper.Map<List<ErrorLoggingViewModel>>(errorLoggins);
+            foreach (var p in errorLoggingsViewModels)
             {
                 p.DateCreatedTimeAgo = p.DateCreated.GetValueOrDefault().TimeAgo();
             }
 
-            JsonResult dsResult = Json(pingPermalinksViewModels.ToDataSourceResult(request));
+            JsonResult dsResult = Json(errorLoggingsViewModels.ToDataSourceResult(request));
             return dsResult;
 
         }

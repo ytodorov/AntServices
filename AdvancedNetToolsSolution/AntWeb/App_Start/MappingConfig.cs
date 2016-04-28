@@ -30,6 +30,9 @@ namespace SmartAdminMvc.App_Start
 
                     config.CreateMap<IpLocationViewModel, IpLocation>();
                     config.CreateMap<IpLocation, IpLocationViewModel>();
+
+                    config.CreateMap<ErrorLoggingViewModel, ErrorLogging>();
+                    config.CreateMap<ErrorLogging, ErrorLoggingViewModel>();
                 });
         }
     }
