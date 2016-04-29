@@ -9,7 +9,9 @@
       "Scripts/kendo/jszip.min.js",
       "Scripts/kendo/kendo.all.js",
       "Scripts/kendo/kendo.aspnetmvc.js",
-      "Scripts/kendo/pako_deflate.min.js"
+      "Scripts/kendo/pako_deflate.min.js",
+      "Scripts/clipboard/clipboard.js",
+      "Scripts/yk.js"
 
     ]
   }

@@ -90,7 +90,7 @@ namespace SmartAdminMvc.Controllers
                     //addressToPing = prvm.Ip.Trim().Replace("https://", string.Empty);
                     firstOpenPort = "443";
                 }
-                else if (prvm.Ip.Trim().StartsWith(value: "ftp://"))
+                else if (prvm.Ip.Trim().StartsWith(value: "ftp://") || prvm.Ip.Trim().StartsWith(value: "ftp."))
                 {
                     //addressToPing = prvm.Ip.Trim().Replace("ftp://", string.Empty);
                     firstOpenPort = "21";
@@ -136,7 +136,9 @@ namespace SmartAdminMvc.Controllers
             {
                 var client = new HttpClient();
                 clients.Add(client);
-                string encodedArgs = Uri.EscapeDataString($"-sn -n {addressToPing}"); // Точно тези са аргументите, -sn -n
+                // Ако не се намери отворен порт ще липсва latency. Primer: ftp.microsoft.com
+                // Затова трябва да се използва - --top-ports 10
+                string encodedArgs = Uri.EscapeDataString($"-n --top-ports 10 -Pn {addressToPing}"); // Точно тези са аргументите, -sn -n
                 string urlWithArgs = urls[i] + "/home/exec?program=nmap&args=" + encodedArgs;
                 Task<string> task = client.GetStringAsync(urlWithArgs);
                 tasksForLatencies.Add(task);

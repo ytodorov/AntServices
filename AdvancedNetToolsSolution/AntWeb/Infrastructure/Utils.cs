@@ -515,7 +515,7 @@ namespace SmartAdminMvc.Infrastructure
             using (HttpClient client = new HttpClient())
             {
                 //Note: Host seems down. If it is really up, but blocking our ping probes, try -Pn
-                string encodedArgs0 = Uri.EscapeDataString($"-T5 --top-ports 1000 -Pn {ipOrHostName}");
+                string encodedArgs0 = Uri.EscapeDataString($"-T4 --top-ports 1000 -Pn {ipOrHostName}");
                 string url = "http://ants-neu.cloudapp.net/home/exec?program=nmap&args=" + encodedArgs0;
                 string portSummary = client.GetStringAsync(url).Result;
 
@@ -556,8 +556,13 @@ namespace SmartAdminMvc.Infrastructure
         //Nmap scan report for data.bg (195.149.248.130)
         //Host is up(0.0040s latency).
         //Nmap done: 1 IP address(1 host up) scanned in 0.38 seconds
-        public static double ParseLatencyString(string latencyString)
+        public static double? ParseLatencyString(string latencyString)
         {
+            if (!latencyString.ToUpperInvariant().Contains("latency".ToUpperInvariant()))
+            {
+                return null;
+            }
+
             string[] lines = latencyString.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
             string latencyLine = lines.FirstOrDefault(l => l.StartsWith(value: "Host is up"));
             string latency = latencyLine
