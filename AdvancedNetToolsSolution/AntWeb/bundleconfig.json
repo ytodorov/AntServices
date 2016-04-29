@@ -11,8 +11,8 @@
       "Scripts/kendo/kendo.aspnetmvc.js",
       "Scripts/kendo/pako_deflate.min.js",
       "Scripts/clipboard/clipboard.js",
-      "Scripts/yk.js"
-
+      "Scripts/yk.js",
+      "Vendor/bootstrap/dist/js/bootstrap.min.js"
     ]
   }
 ]
