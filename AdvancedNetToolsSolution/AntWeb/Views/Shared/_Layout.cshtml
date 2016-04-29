@@ -58,7 +58,7 @@ document.write(unescape("%3Cscript src='" + tlJsHost + "trustlogo/javascript/tru
     <p class="alert alert-danger">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
     <!-- Header -->
-    <div id="header" class="light-version">
+    <div id="header" class="light-version" style="z-index:2">
         @Html.Partial("_Header")
     </div>
 
@@ -67,8 +67,9 @@ document.write(unescape("%3Cscript src='" + tlJsHost + "trustlogo/javascript/tru
         @Html.Partial("_Navigation")
     </aside>
 
-    <!-- Main view  -->
-    <div id="wrapper">
+    <!-- Main view  --> 
+    @*Заради Comodo се слагат тези индекси на header и body, защото не се вижда popup-a на comodo иначе*@
+    <div id="wrapper" style="z-index:1">
         <div id="divBody">
             @RenderBody()
         </div>
