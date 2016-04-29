@@ -1,4 +1,9 @@
-﻿using System;
+﻿using AntDal.Entities;
+using AutoMapper;
+using SmartAdminMvc.Controllers;
+using SmartAdminMvc.Infrastructure;
+using SmartAdminMvc.Models;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
@@ -113,7 +118,7 @@ namespace UnitTests
         {
             var timings = new List<long>();
             var results = new List<string>();
-            List<string> addresses = SmartAdminMvc.Infrastructure.Utils.GetDeployedServicesUrlAddresses;//.Skip(1).ToList();
+            List<string> addresses = Utils.GetDeployedServicesUrlAddresses;//.Skip(1).ToList();
             foreach (var urlService in addresses)
             {
                 Stopwatch sw = Stopwatch.StartNew();
@@ -134,7 +139,7 @@ namespace UnitTests
         public void MeasurePingTimings2()
         {
             var timings = new List<long>();
-            foreach (var urlService in SmartAdminMvc.Infrastructure.Utils.GetDeployedServicesUrlAddresses)
+            foreach (var urlService in Utils.GetDeployedServicesUrlAddresses)
             {
                 Stopwatch sw = Stopwatch.StartNew();
 
@@ -147,6 +152,44 @@ namespace UnitTests
                 }
                 timings.Add(sw.ElapsedMilliseconds);
             }
+        }
+
+        [Theory]
+        [InlineData("google.com")]
+        [InlineData("youtube.com")]
+        [InlineData("facebook.com")]
+        [InlineData("baidu.com")]
+        [InlineData("yahoo.com")]
+        [InlineData("amazon.com")]
+        [InlineData("wikipedia.org")]
+        [InlineData("qq.com")]
+        [InlineData("google.co.in")]
+        [InlineData("twitter.com")]
+        [InlineData("taobao.com")]
+        [InlineData("live.com")]
+        [InlineData("sina.com.cn")]
+        [InlineData("google.co.jp")]
+        [InlineData("msn.com")]
+        [InlineData("bing.com")]
+        [InlineData("yahoo.co.jp")]
+        [InlineData("weibo.com")]
+        [InlineData("linkedin.com")]
+        [InlineData("vk.com")]
+        [InlineData("yandex.ru")]
+        [InlineData("hao123.com")]
+        [InlineData("instagram.com")]
+        [InlineData("google.de")]
+        [InlineData("ebay.com")]
+        [InlineData("google.ru")]
+        [InlineData("amazon.co.jp")]
+        [InlineData("reddit.com")]
+        [InlineData("google.co.uk")]
+        [InlineData("360.cn")]
+        [Fact]
+        public void PingTop30(string line)
+        {
+            PingResponseSummaryViewModel result = PingReplyParser.ParseSummary(line);
+
         }
     }
 }
