@@ -19,5 +19,5 @@
             return data;
         }
 </script>
-@Html.Raw((Html.AntCreateStandardPanel("hviolet", "Ping history for the last 100 pings", "<p>" +
+@Html.Raw((Html.AntCreateStandardPanel("hviolet", "Error logs for the last 10 errors", "<p>" +
      Html.Kendo().Grid<ErrorLoggingViewModel>().CreateErrorLoggingGrid(Url, "getAllErrorLogs").ToHtmlString() + "</p>")))

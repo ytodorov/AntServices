@@ -43,7 +43,7 @@ namespace SmartAdminMvc.Controllers
             {
                 using (AntDbContext context = new AntDbContext())
                 {
-                    errorLoggins = context.ErrorLoggings.Where(p => p.ShowInHistory == true).OrderByDescending(k => k.Id).Take(count: 100).ToList();
+                    errorLoggins = context.ErrorLoggings.Where(p => p.ShowInHistory == true).OrderByDescending(k => k.Id).Take(count: 10).ToList();
                 }
             }
 

@@ -122,6 +122,7 @@ namespace SmartAdminMvc
                 el.Message = ex.Message;
                 el.StackTrace = ex.StackTrace.ToString();
                 el.Data = ex.Data.ToString();
+                el.ShowInHistory = true;
                 el.UserCreated = Request.UserHostAddress;
                 el.UserModified = Request.UserHostAddress;
                 el.DateCreated = DateTime.Now;
