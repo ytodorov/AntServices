@@ -2,8 +2,15 @@
   {
     "outputFileName": "Scripts/bundle.js",
     "inputFiles": [
-      "Scripts/viewsJS/pingIndex.js",
-      "Scripts/viewsJS/homeIndex.js"
+      "Scripts/googleAnalytics.js",
+      "Scripts/googleMapsWithMyKey.js",
+      "Scripts/jquery-2.2.3.js",
+      "Scripts/jquery.cookie.js",
+      "Scripts/kendo/jszip.min.js",
+      "Scripts/kendo/kendo.all.js",
+      "Scripts/kendo/kendo.aspnetmvc.js",
+      "Scripts/kendo/pako_deflate.min.js"
+
     ]
   }
 ]

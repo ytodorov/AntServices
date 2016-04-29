@@ -131,7 +131,9 @@ namespace SmartAdminMvc.Infrastructure
                 HttpRuntime.Cache.Insert(rootRelativePath, result, new CacheDependency(absolute));
             }
 
-            return HttpRuntime.Cache[rootRelativePath] as string;
+            var resultToReturn = HttpRuntime.Cache[rootRelativePath] as string;
+
+            return resultToReturn;
         }
 
         private static string ReplaceLastOccurrence(string source, string find, string replace)

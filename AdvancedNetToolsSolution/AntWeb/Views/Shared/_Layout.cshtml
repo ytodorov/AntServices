@@ -27,8 +27,8 @@
     <!-- Primary HOMER style -->
     @Styles.Render(paths: "~/bundles/homer/css")
 
-    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2016.1.226/styles/kendo.common.min.css">
-    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2016.1.226/styles/kendo.metro.min.css">
+    <link rel="stylesheet" href="~/Content/kendo/kendo.common.min.css">
+    <link rel="stylesheet" href="~/Content/kendo/kendo.metro.min.css">
     <script type="text/javascript">
  //<![CDATA[
 var tlJsHost = ((window.location.protocol == "https:") ? "https://secure.comodo.com/" : "http://www.trustlogo.com/");
@@ -78,29 +78,25 @@ document.write(unescape("%3Cscript src='" + tlJsHost + "trustlogo/javascript/tru
             @Html.Partial("_Footer")
         </div>
     </div>
-    <script src="~/Scripts/googleAnalytics.js"></script>
+  
+   
+
+    @*<script src="~/Scripts/googleAnalytics.js"></script>
     <script src="~/Scripts/googleMapsWithMyKey.js"></script>
-    @*<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDoER6oaWJAUFMNCCE8IkCGsIyHsbTE0Zw"></script>*@
     <script src="~/Scripts/jquery-2.2.3.js"></script>
-    @*<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>*@
     <script src="~/Scripts/jquery.cookie.js"></script>
+    <script src="~/Scripts/kendo/jszip.min.js"></script>
+    <script src="~/Scripts/kendo/kendo.all.js"></script>
+    <script src="~/Scripts/kendo/kendo.aspnetmvc.js"></script>
+    <script src="~/Scripts/kendo/pako_deflate.min.js"></script>*@
+
+    <script src="@Utils.Tag("/scripts/bundle.min.js")"></script>
+
+   
     @Scripts.Render("~/bundles/bootstrap/js")
     @Scripts.Render("~/bundles/homer/js")
     @Scripts.Render("~/bundles/ladda/js")
     @Scripts.Render("~/bundles/toastr/js")
-
-    <script src="~/Scripts/kendo/jszip.min.js"></script>
-    @*<script src="https://kendo.cdn.telerik.com/2016.1.226/js/jszip.min.js"></script>*@
-
-    <script src="~/Scripts/kendo/kendo.all.js"></script>
-    @*<script src="https://kendo.cdn.telerik.com/2016.1.226/js/kendo.all.min.js"></script>*@
-    <script src="~/Scripts/kendo/kendo.aspnetmvc.js"></script>
-    @*<script src="https://kendo.cdn.telerik.com/2016.1.226/js/kendo.aspnetmvc.min.js"></script>*@
-    <script src="~/Scripts/kendo/pako_deflate.min.js"></script>
-    @*<script src="https://kendo.cdn.telerik.com/2016.1.226/js/pako_deflate.min.js"></script>*@
-
-
-
     <!-- Handler for local scripts -->
     @RenderSection("scripts", required: false)
 
