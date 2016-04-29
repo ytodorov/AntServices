@@ -109,10 +109,11 @@ namespace SmartAdminMvc.Infrastructure
 
             // *** Йордан: това го правя за да може в debug режим да се използват пълните версии на бъндълите, а в release да са минифицираните версии
 #if DEBUG
-            if (rootRelativePath.Contains(".min."))
-            {
-                rootRelativePath = rootRelativePath.Replace(".min.", ".");
-            }
+            // Закоментирам защото има проблеми с минифицирането на файловете
+            //if (rootRelativePath.Contains(".min."))
+            //{
+            //    rootRelativePath = rootRelativePath.Replace(".min.", ".");
+            //}
 #endif
 
             if (HttpRuntime.Cache[rootRelativePath] == null)

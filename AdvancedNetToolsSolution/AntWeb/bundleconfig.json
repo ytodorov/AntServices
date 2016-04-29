@@ -12,7 +12,9 @@
       "Scripts/kendo/pako_deflate.min.js",
       "Scripts/clipboard/clipboard.js",
       "Scripts/yk.js",
-      "Vendor/bootstrap/dist/js/bootstrap.min.js"
+      "Vendor/bootstrap/dist/js/bootstrap.min.js",
+      "Vendor/metisMenu/dist/metisMenu.min.js",
+      "Scripts/homer.js"
     ]
   }
 ]

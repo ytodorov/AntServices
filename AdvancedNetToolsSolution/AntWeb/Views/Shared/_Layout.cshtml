@@ -91,11 +91,11 @@ document.write(unescape("%3Cscript src='" + tlJsHost + "trustlogo/javascript/tru
     <script src="~/Scripts/kendo/kendo.aspnetmvc.js"></script>
     <script src="~/Scripts/kendo/pako_deflate.min.js"></script>*@
 
-    <script src="@Utils.Tag("/scripts/bundle.min.js")"></script>
+    <script src="@Utils.Tag("/scripts/bundle.js")"></script>
 
    
     @*@Scripts.Render("~/bundles/bootstrap/js")*@
-    @Scripts.Render("~/bundles/homer/js")
+    @*@Scripts.Render("~/bundles/homer/js")*@
     @Scripts.Render("~/bundles/ladda/js")
     @Scripts.Render("~/bundles/toastr/js")
     <!-- Handler for local scripts -->

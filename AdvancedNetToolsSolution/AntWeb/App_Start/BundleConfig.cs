@@ -14,7 +14,9 @@ namespace SmartAdminMvc
 
             // Homer script
             bundles.Add(new ScriptBundle(virtualPath: "~/bundles/homer/js").Include(
-                    virtualPaths: new string[] { "~/Vendor/metisMenu/dist/metisMenu.min.js", "~/Vendor/iCheck/icheck.min.js", "~/Scripts/homer.js" }));
+                    virtualPaths: new string[] { "~/Vendor/metisMenu/dist/metisMenu.min.js",
+                        //"~/Vendor/iCheck/icheck.min.js",
+                        "~/Scripts/homer.js" }));
 
             // Animate.css
             bundles.Add(new StyleBundle(virtualPath: "~/bundles/animate/css").Include(
