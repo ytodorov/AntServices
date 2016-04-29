@@ -487,6 +487,11 @@
               Looks up a localized string similar to Or.
             </summary>
         </member>
+        <member name="P:Kendo.Mvc.Resources.Messages.Filter_Search">
+            <summary>
+              Looks up a localized string similar to Search.
+            </summary>
+        </member>
         <member name="P:Kendo.Mvc.Resources.Messages.Filter_SelectValue">
             <summary>
               Looks up a localized string similar to -Select value-.
@@ -21512,6 +21517,35 @@
             <param name="isEnabled"></param>
             <returns></returns>
         </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.DiagramFillSettingsBuilder`2.Color(System.String)">
+            <summary>
+            Defines the fill color.
+            </summary>
+            <param name="value">The value that configures the color.</param>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.DiagramFillSettingsBuilder`2.Opacity(System.Double)">
+            <summary>
+            Defines the fill opacity.
+            </summary>
+            <param name="value">The value that configures the opacity.</param>
+        </member>
+        <member name="T:Kendo.Mvc.UI.Fluent.DiagramHoverSettingsBuilder`2">
+            <summary>
+            Defines the fluent API for configuring the hover settings.
+            </summary>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.DiagramHoverSettingsBuilder`2.Fill(System.Action{Kendo.Mvc.UI.Fluent.DiagramFillSettingsBuilder{`0,`1}})">
+            <summary>
+            Hover's fill options.
+            </summary>
+            <param name="configurator">The action that configures the fill.</param>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.DiagramHoverSettingsBuilder`2.Stroke(System.Action{Kendo.Mvc.UI.Fluent.DiagramStrokeSettingsBuilder{`0,`1}})">
+            <summary>
+            Hover's stroke options.
+            </summary>
+            <param name="configurator">The action that configures the stroke.</param>
+        </member>
         <member name="T:Kendo.Mvc.UI.Fluent.DiagramPdfMarginSettingsBuilder`2">
             <summary>
             Defines the fluent API for configuring the DiagramPdfMarginSettings settings.
@@ -21795,6 +21829,24 @@
             <summary>
             Adds an item to the collection
             </summary>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.DiagramStrokeSettingsBuilder`2.Color(System.String)">
+            <summary>
+            Defines the stroke color.
+            </summary>
+            <param name="value">The value that configures the color.</param>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.DiagramStrokeSettingsBuilder`2.DashType(System.String)">
+            <summary>
+            The stroke dash type.
+            </summary>
+            <param name="value">The value that configures the dashtype.</param>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.DiagramStrokeSettingsBuilder`2.Width(System.Double)">
+            <summary>
+            Defines the stroke stroke.
+            </summary>
+            <param name="value">The value that configures the width.</param>
         </member>
         <member name="M:Kendo.Mvc.UI.Fluent.PopupSettingsBuilder.#ctor(Kendo.Mvc.UI.PopupSettings)">
             <summary>
@@ -25013,6 +25065,12 @@
             Fired when the user starts changing the diagram zoom level.
             </summary>
             <param name="handler">The name of the JavaScript function that will handle the zoomStart event.</param>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.DiagramEventBuilder.ToolBarClick(System.String)">
+            <summary>
+            Fired when the user clicks an item in the toolbar.
+            </summary>
+            <param name="handler">The name of the JavaScript function that will handle the toolBarClick event.</param>
         </member>
         <member name="M:Kendo.Mvc.UI.DiagramHtmlBuilder`2.#ctor(Kendo.Mvc.UI.Diagram{`0,`1})">
             <summary>
@@ -31221,6 +31279,12 @@
             </summary>
             <param name="message">The message</param> 
         </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.FilterableMessagesBuilder.Search(System.String)">
+            <summary>
+            Sets the text for the search input placeholder when the search option is enabled.
+            </summary>
+            <param name="message">The message</param>
+        </member>
         <member name="T:Kendo.Mvc.UI.Fluent.FilterableOperatorsBuilder">
             <summary>
             Defines the fluent interface for configuring the Filter menu <see cref="T:Kendo.Mvc.UI.FilterableOperators"/>.
@@ -32754,7 +32818,7 @@
         </member>
         <member name="M:Kendo.Mvc.UI.Fluent.GridColumnBuilderBase`2.Title(System.String)">
             <summary>
-            Sets the title displayed in the header of the column.
+            Sets the title displayed in the header of the column. Any HTML entities or tags should be encoded, or use a HeaderTemplate instead.
             </summary>
             <param name="text">The text.</param>
             <example>
@@ -53606,6 +53670,62 @@
             </code>
             </example>
         </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.WindowEventBuilder.Minimize(System.String)">
+            <summary>
+             Defines the name of the JavaScript function that will handle the the Minimize client-side event.
+            </summary>
+            <param name="handler">The name of the JavaScript function that will handle the event.</param>
+            <example>
+            <code lang="CS">
+             &lt;%= Html.Kendo().Window()
+                        .Name("Window")
+                        .Events(events => events.Minimize("onMinimize"))
+            %&gt;
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.WindowEventBuilder.Minimize(System.Func{System.Object,System.Object})">
+            <summary>
+             Defines the name of the JavaScript function that will handle the the Minimize client-side event.
+            </summary>
+            <param name="handler">The name of the JavaScript function that will handle the event.</param>
+            <example>
+            <code lang="CS">
+             &lt;%= Html.Kendo().Window()
+                        .Name("Window")
+                        .Events(events => events.Minimize("onMinimize"))
+            %&gt;
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.WindowEventBuilder.Maximize(System.String)">
+            <summary>
+             Defines the name of the JavaScript function that will handle the the Maximize client-side event.
+            </summary>
+            <param name="handler">The name of the JavaScript function that will handle the event.</param>
+            <example>
+            <code lang="CS">
+             &lt;%= Html.Kendo().Window()
+                        .Name("Window")
+                        .Events(events => events.Maximize("onMaximize"))
+            %&gt;
+            </code>
+            </example>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.WindowEventBuilder.Maximize(System.Func{System.Object,System.Object})">
+            <summary>
+             Defines the name of the JavaScript function that will handle the the Maximize client-side event.
+            </summary>
+            <param name="handler">The name of the JavaScript function that will handle the event.</param>
+            <example>
+            <code lang="CS">
+             &lt;%= Html.Kendo().Window()
+                        .Name("Window")
+                        .Events(events => events.Maximize("onMaximize"))
+            %&gt;
+            </code>
+            </example>
+        </member>
         <member name="T:Kendo.Mvc.UI.Fluent.WindowBuilder">
             <summary>
             Defines the fluent interface for configuring the <see cref="T:Kendo.Mvc.UI.Window"/> component.
@@ -58586,7 +58706,13 @@
             Defines the fluent API for configuring the DiagramShapeDefaultsSettings settings.
             </summary>
         </member>
-        <member name="M:Kendo.Mvc.UI.Fluent.DiagramShapeDefaultsSettingsBuilder`2.Connectors(System.Action{Kendo.Mvc.UI.Fluent.DiagramShapeDefaultsSettingsConnectorFactory{`0,`1}})">
+        <member name="M:Kendo.Mvc.UI.Fluent.DiagramShapeDefaultsSettingsBuilder`2.ConnectorDefaults(System.Action{Kendo.Mvc.UI.Fluent.DiagramShapeConnectorBuilder{`0,`1}})">
+            <summary>
+            Defines the default options for the shape connectors.
+            </summary>
+            <param name="configurator">The action that configures the default options.</param>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.DiagramShapeDefaultsSettingsBuilder`2.Connectors(System.Action{Kendo.Mvc.UI.Fluent.DiagramShapeConnectorFactory{`0,`1}})">
             <summary>
             Defines the connectors the shape owns.You can easily define your own custom connectors or mix-match with the above defined custom connectors.Example - custom shape with custom connectorsThe following defines a custom shape with connectors adapted to the shape's outline. Note in particular the various helpful methods (right(), left(), top()) to define positions relative to the shape.
             </summary>
@@ -58760,6 +58886,12 @@
             <summary>
             Defines the fluent API for configuring the DiagramShape settings.
             </summary>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.DiagramShapeBuilder`2.ConnectorDefaults(System.Action{Kendo.Mvc.UI.Fluent.DiagramShapeConnectorBuilder{`0,`1}})">
+            <summary>
+            Defines the default options for the shape connectors.
+            </summary>
+            <param name="configurator">The action that configures the default options.</param>
         </member>
         <member name="M:Kendo.Mvc.UI.Fluent.DiagramShapeBuilder`2.Connectors(System.Action{Kendo.Mvc.UI.Fluent.DiagramShapeConnectorFactory{`0,`1}})">
             <summary>
@@ -59009,6 +59141,36 @@
             Defines the inline handler that positions the connector.
             </summary>
             <param name="handler">The inline handler that positions the connector.</param>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.DiagramShapeConnectorBuilder`2.Width(System.Double)">
+            <summary>
+            The connector width.
+            </summary>
+            <param name="value">The value that configures the width.</param>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.DiagramShapeConnectorBuilder`2.Height(System.Double)">
+            <summary>
+            The connector height.
+            </summary>
+            <param name="value">The value that configures the height.</param>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.DiagramShapeConnectorBuilder`2.Fill(System.Action{Kendo.Mvc.UI.Fluent.DiagramFillSettingsBuilder{`0,`1}})">
+            <summary>
+            Connector's fill options.
+            </summary>
+            <param name="configurator">The action that configures the fill.</param>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.DiagramShapeConnectorBuilder`2.Stroke(System.Action{Kendo.Mvc.UI.Fluent.DiagramStrokeSettingsBuilder{`0,`1}})">
+            <summary>
+            Connector's stroke options.
+            </summary>
+            <param name="configurator">The action that configures the stroke.</param>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.DiagramShapeConnectorBuilder`2.Hover(System.Action{Kendo.Mvc.UI.Fluent.DiagramHoverSettingsBuilder{`0,`1}})">
+            <summary>
+            Connector's hover options.
+            </summary>
+            <param name="configurator">The action that configures the hover.</param>
         </member>
         <member name="T:Kendo.Mvc.UI.Fluent.DiagramShapeDefaultsContentSettingsBuilder`2">
             <summary>
@@ -61163,7 +61325,7 @@
         </member>
         <member name="M:Kendo.Mvc.UI.Fluent.TreeMapBuilder.Colors(System.String[])">
             <summary>
-            The default colors for the treemap tiles. When all colors are used, new colors are pulled from the start again. Can be set to array of specific colors or array of color ranges.
+            The default colors for the TreeMap items (tiles). Can be set to array of specific colors or array of color ranges. For more information on the widget behavior, see the Colors section on the TreeMap Overview page.
             </summary>
             <param name="value">The value that configures the colors.</param>
         </member>
@@ -62245,11 +62407,17 @@
             Defines the fluent API for configuring the TreeListColumnFilterableSettings settings.
             </summary>
         </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.TreeListColumnFilterableSettingsBuilder`1.Ui(System.Func{System.Object,System.Object})">
+            <summary>
+            The role data attribute of the widget used in the filter menu or a JavaScript function which initializes that widget.
+            </summary>
+            <param name="value">The value that configures the ui action.</param>
+        </member>
         <member name="M:Kendo.Mvc.UI.Fluent.TreeListColumnFilterableSettingsBuilder`1.Ui(System.String)">
             <summary>
             The role data attribute of the widget used in the filter menu or a JavaScript function which initializes that widget.
             </summary>
-            <param name="value">The value that configures the ui.</param>
+            <param name="value">The value that configures the ui action.</param>
         </member>
         <member name="T:Kendo.Mvc.UI.Fluent.TreeListColumnSortableSettingsBuilder`1">
             <summary>
@@ -63682,6 +63850,24 @@
             </summary>
             <param name="function">The function.</param>
         </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.DiagramConnectionDefaultsContentSettingsBuilder`2.Color(System.String)">
+            <summary>
+            The color of the connection content text.
+            </summary>
+            <param name="value">The value that configures the color.</param>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.DiagramConnectionDefaultsContentSettingsBuilder`2.FontFamily(System.String)">
+            <summary>
+            The font family of the connection content text.
+            </summary>
+            <param name="value">The value that configures the fontfamily.</param>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.DiagramConnectionDefaultsContentSettingsBuilder`2.FontSize(System.Double)">
+            <summary>
+            The font size of the connection content text.
+            </summary>
+            <param name="value">The value that configures the fontsize.</param>
+        </member>
         <member name="T:Kendo.Mvc.UI.Fluent.DiagramConnectionContentSettingsBuilder`2">
             <summary>
             Defines the fluent API for configuring the DiagramConnectionContentSettings settings.
@@ -63716,6 +63902,24 @@
             The function that will create the content visual.
             </summary>
             <param name="function">The function.</param>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.DiagramConnectionContentSettingsBuilder`2.Color(System.String)">
+            <summary>
+            The color of the connection content text.
+            </summary>
+            <param name="value">The value that configures the color.</param>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.DiagramConnectionContentSettingsBuilder`2.FontFamily(System.String)">
+            <summary>
+            The font family of the connection content text.
+            </summary>
+            <param name="value">The value that configures the fontfamily.</param>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.DiagramConnectionContentSettingsBuilder`2.FontSize(System.Double)">
+            <summary>
+            The font size of the connection content text.
+            </summary>
+            <param name="value">The value that configures the fontsize.</param>
         </member>
         <member name="T:Kendo.Mvc.UI.Fluent.TreeListExcelSettingsBuilder`1">
             <summary>
@@ -65542,12 +65746,6 @@
             </summary>
             <param name="value">The value that configures the rows.</param>
         </member>
-        <member name="M:Kendo.Mvc.UI.Fluent.SpreadsheetBuilder.Sheets(System.Action{Kendo.Mvc.UI.Fluent.SpreadsheetSheetFactory})">
-            <summary>
-            An array defining the document sheets and their content.
-            </summary>
-            <param name="configurator">The action that configures the sheets.</param>
-        </member>
         <member name="M:Kendo.Mvc.UI.Fluent.SpreadsheetBuilder.Sheetsbar(System.Boolean)">
             <summary>
             A boolean value indicating if the sheetsbar should be displayed.
@@ -65558,7 +65756,19 @@
             <summary>
             A boolean value indicating if the toolbar should be displayed.
             </summary>
-            <param name="value">The value that configures the toolbar.</param>
+            <param name="enabled">Enables or disables the toolbar option.</param>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.SpreadsheetBuilder.Toolbar(System.Action{Kendo.Mvc.UI.Fluent.SpreadsheetToolbarSettingsBuilder})">
+            <summary>
+            A boolean value indicating if the toolbar should be displayed.
+            </summary>
+            <param name="configurator">The action that configures the toolbar.</param>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.SpreadsheetBuilder.Sheets(System.Action{Kendo.Mvc.UI.Fluent.SpreadsheetSheetFactory})">
+            <summary>
+            An array defining the document sheets and their content.
+            </summary>
+            <param name="configurator">The action that configures the sheets.</param>
         </member>
         <member name="M:Kendo.Mvc.UI.Fluent.SpreadsheetBuilder.Events(System.Action{Kendo.Mvc.UI.Fluent.SpreadsheetEventBuilder})">
             <summary>
@@ -65645,11 +65855,23 @@
             </summary>
             <param name="value">The value that configures the selection.</param>
         </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.SpreadsheetSheetBuilder.ShowGridLines(System.Boolean)">
+            <summary>
+            A boolean value indicating if the sheet grid lines should be displayed.
+            </summary>
+            <param name="value">The value that configures the showgridlines.</param>
+        </member>
         <member name="M:Kendo.Mvc.UI.Fluent.SpreadsheetSheetBuilder.Sort(System.Action{Kendo.Mvc.UI.Fluent.SpreadsheetSheetSortSettingsBuilder})">
             <summary>
             Defines the sort criteria for the sheet.
             </summary>
             <param name="configurator">The action that configures the sort.</param>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.SpreadsheetSheetBuilder.DataSource``1(System.Action{Kendo.Mvc.UI.Fluent.DataSourceBuilder{``0}})">
+            <summary>
+            Sets the data source configuration of the grid.
+            </summary>
+            <param name="configurator">The lambda which configures the data source</param>
         </member>
         <member name="T:Kendo.Mvc.UI.Fluent.SpreadsheetSheetColumnFactory">
             <summary>
@@ -65959,6 +66181,12 @@
             <summary>
             Defines the fluent API for configuring the Kendo Spreadsheet for ASP.NET MVC events.
             </summary>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.SpreadsheetEventBuilder.Change(System.String)">
+            <summary>
+            Triggered when a value in the spreadsheet has been changed. Introduced in 2016.Q1.SP1.
+            </summary>
+            <param name="handler">The name of the JavaScript function that will handle the change event.</param>
         </member>
         <member name="M:Kendo.Mvc.UI.Fluent.SpreadsheetEventBuilder.Render(System.String)">
             <summary>
@@ -66275,6 +66503,29 @@
             The top margin. Numbers are considered as "pt" units.
             </summary>
             <param name="value">The value that configures the top.</param>
+        </member>
+        <member name="T:Kendo.Mvc.UI.Fluent.SpreadsheetToolbarSettingsBuilder">
+            <summary>
+            Defines the fluent API for configuring the SpreadsheetToolbarSettings settings.
+            </summary>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.SpreadsheetToolbarSettingsBuilder.Home(System.Boolean)">
+            <summary>
+            A boolean value indicating if the "home" tab should be displayed or a collection of tools that will be shown in the "home" tab.The available tools are:Those tools which are part of a tool group are defined as array. For example ["bold", "italic", "underline"]
+            </summary>
+            <param name="value">The value that configures the home.</param>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.SpreadsheetToolbarSettingsBuilder.Insert(System.Boolean)">
+            <summary>
+            A boolean value indicating if the "insert" tab should be displayed or a collection of tools that will be shown in the "insert" tab.The available tools are:Those tools which are part of a tool group are defined as array. For example ["deleteColumn", "deleteRow"]
+            </summary>
+            <param name="value">The value that configures the insert.</param>
+        </member>
+        <member name="M:Kendo.Mvc.UI.Fluent.SpreadsheetToolbarSettingsBuilder.Data(System.Boolean)">
+            <summary>
+            A boolean value indicating if the "insert" tab should be displayed or a collection of tools that will be shown in the "insert" tab.The available tools are:
+            </summary>
+            <param name="value">The value that configures the data.</param>
         </member>
     </members>
 </doc>

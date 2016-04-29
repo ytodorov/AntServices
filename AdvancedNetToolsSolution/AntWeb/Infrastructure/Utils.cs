@@ -279,7 +279,7 @@ namespace SmartAdminMvc.Infrastructure
                 sb.AppendLine($@"var {locationNamesInMap[i]} = {{ lat: {locations[i].Latitude.GetValueOrDefault().ToString(CultureInfo.InvariantCulture)}, lng: {locations[i].Longitude.GetValueOrDefault().ToString(CultureInfo.InvariantCulture)} }};");
             }
 
-            sb.AppendLine($@"var map = new SDFSDFSDFgoogle.maps.Map(document.getElementById('map'), {{
+            sb.AppendLine($@"var map = new google.maps.Map(document.getElementById('map'), {{
                 zoom: 2,
                 center: {locationNamesInMap.LastOrDefault()}
             }});");
@@ -315,12 +315,6 @@ namespace SmartAdminMvc.Infrastructure
                 new google.maps.Point(0, 0),
                 new google.maps.Point(10, 34));";
             sb.AppendLine(redColorPing);
-
-           
-
-           
-
-
 
             for (int i = 0; i < ips.Count(); i++)
             {

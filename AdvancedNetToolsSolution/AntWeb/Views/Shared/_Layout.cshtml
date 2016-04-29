@@ -88,12 +88,16 @@ document.write(unescape("%3Cscript src='" + tlJsHost + "trustlogo/javascript/tru
     @Scripts.Render("~/bundles/homer/js")
     @Scripts.Render("~/bundles/ladda/js")
     @Scripts.Render("~/bundles/toastr/js")
-    <script src="https://kendo.cdn.telerik.com/2016.1.226/js/jszip.min.js"></script>
 
+    <script src="~/Scripts/kendo/jszip.min.js"></script>
+    @*<script src="https://kendo.cdn.telerik.com/2016.1.226/js/jszip.min.js"></script>*@
 
-    <script src="https://kendo.cdn.telerik.com/2016.1.226/js/kendo.all.min.js"></script>
-    <script src="https://kendo.cdn.telerik.com/2016.1.226/js/kendo.aspnetmvc.min.js"></script>
-    <script src="https://kendo.cdn.telerik.com/2016.1.226/js/pako_deflate.min.js"></script>
+    <script src="~/Scripts/kendo/kendo.all.js"></script>
+    @*<script src="https://kendo.cdn.telerik.com/2016.1.226/js/kendo.all.min.js"></script>*@
+    <script src="~/Scripts/kendo/kendo.aspnetmvc.js"></script>
+    @*<script src="https://kendo.cdn.telerik.com/2016.1.226/js/kendo.aspnetmvc.min.js"></script>*@
+    <script src="~/Scripts/kendo/pako_deflate.min.js"></script>
+    @*<script src="https://kendo.cdn.telerik.com/2016.1.226/js/pako_deflate.min.js"></script>*@
 
 
 
