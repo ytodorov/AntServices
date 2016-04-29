@@ -28,7 +28,8 @@ namespace SmartAdminMvc
 
             // Font Awesome icons style
             bundles.Add(new StyleBundle(virtualPath: "~/bundles/font-awesome/css").Include(
-                    virtualPath: "~/Vendor/fontawesome/css/font-awesome.min.css", transforms: new System.Web.Optimization.IItemTransform[] { new CssRewriteUrlTransform() }));
+                    virtualPath: "~/Vendor/fontawesome/css/font-awesome.min.css",
+                    transforms: new System.Web.Optimization.IItemTransform[] { new CssRewriteUrlTransform() }));
 
             // Bootstrap style
             bundles.Add(new StyleBundle(virtualPath: "~/bundles/bootstrap/css").Include(

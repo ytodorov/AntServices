@@ -8,10 +8,8 @@
     <title>Tools for Net @ViewBag.Title</title>
 
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
-    @*<link href="@Utils.Tag("/Content/homer/homerCss.css")" rel="stylesheet" />*@
 
     <link rel="icon" type="image/x-icon" href="~/favicon.ico">
-    @*<link rel="shortcut icon" href="favicon.ico">*@
     <!-- Primary vendor style -->
     @Styles.Render(paths: "~/bundles/font-awesome/css")
     @Styles.Render(paths: "~/bundles/animate/css")
@@ -37,9 +35,9 @@ document.write(unescape("%3Cscript src='" + tlJsHost + "trustlogo/javascript/tru
     </script>
 </head>
 <body class="@Html.PageClass() fixed-footer hide-sidebar">
-  
+
     <!-- Simple splash screen-->
-    <div class="splash"  style="z-index:3">
+    <div class="splash" style="z-index:3">
         <div class="color-line"></div>
         <div class="splash-title text-success">
             <p><h3>Tools for Net</h3></p>
@@ -67,7 +65,7 @@ document.write(unescape("%3Cscript src='" + tlJsHost + "trustlogo/javascript/tru
         @Html.Partial("_Navigation")
     </aside>
 
-    <!-- Main view  --> 
+    <!-- Main view  -->
     @*Заради Comodo се слагат тези индекси на header и body, защото не се вижда popup-a на comodo иначе*@
     <div id="wrapper" style="z-index:1">
         <div id="divBody">
@@ -79,31 +77,15 @@ document.write(unescape("%3Cscript src='" + tlJsHost + "trustlogo/javascript/tru
             @Html.Partial("_Footer")
         </div>
     </div>
-  
-   
-
-    @*<script src="~/Scripts/googleAnalytics.js"></script>
-    <script src="~/Scripts/googleMapsWithMyKey.js"></script>
-    <script src="~/Scripts/jquery-2.2.3.js"></script>
-    <script src="~/Scripts/jquery.cookie.js"></script>
-    <script src="~/Scripts/kendo/jszip.min.js"></script>
-    <script src="~/Scripts/kendo/kendo.all.js"></script>
-    <script src="~/Scripts/kendo/kendo.aspnetmvc.js"></script>
-    <script src="~/Scripts/kendo/pako_deflate.min.js"></script>*@
 
     <script src="@Utils.Tag("/scripts/bundle.js")"></script>
-
-   
-    @*@Scripts.Render("~/bundles/bootstrap/js")*@
-    @*@Scripts.Render("~/bundles/homer/js")*@
-    @*@Scripts.Render("~/bundles/ladda/js")
-    @Scripts.Render("~/bundles/toastr/js")*@
+    
     <!-- Handler for local scripts -->
     @RenderSection("scripts", required: false)
 
     @Html.Kendo().DeferredScripts()
     <script type="text/javascript">
-    window.cookieconsent_options = {"message":"This website uses cookies to ensure you get the best experience on our website","dismiss":"Got it!","learnMore":"More info","link":null,"theme":"light-top"};
+        window.cookieconsent_options = { "message": "This website uses cookies to ensure you get the best experience on our website", "dismiss": "Got it!", "learnMore": "More info", "link": null, "theme": "light-top" };
     </script>
     <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-571b2acff4b44bbf"></script>
 
