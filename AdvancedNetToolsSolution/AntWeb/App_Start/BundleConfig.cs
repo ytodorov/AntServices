@@ -40,7 +40,9 @@ namespace SmartAdminMvc
 
             // Ladda
             bundles.Add(new ScriptBundle(virtualPath: "~/bundles/ladda/js").Include(
-                    virtualPaths: new string[] { "~/Vendor/ladda/dist/spin.min.js", "~/Vendor/ladda/dist/ladda.min.js", "~/Vendor/ladda/dist/ladda.jquery.min.js" }));
+                    virtualPaths: new string[] { "~/Vendor/ladda/dist/spin.min.js",
+                        "~/Vendor/ladda/dist/ladda.min.js",
+                        "~/Vendor/ladda/dist/ladda.jquery.min.js" }));
 
             // Ladda style
             bundles.Add(new StyleBundle(virtualPath: "~/bundles/ladda/css").Include(

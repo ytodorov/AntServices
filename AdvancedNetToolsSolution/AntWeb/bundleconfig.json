@@ -1,5 +1,5 @@
 [
-  {
+  { "minify": {"enabled": false},
     "outputFileName": "Scripts/bundle.js",
     "inputFiles": [
       "Scripts/googleAnalytics.js",
@@ -11,10 +11,14 @@
       "Scripts/kendo/kendo.aspnetmvc.js",
       "Scripts/kendo/pako_deflate.min.js",
       "Scripts/clipboard/clipboard.js",
-      "Scripts/yk.js",
       "Vendor/bootstrap/dist/js/bootstrap.min.js",
       "Vendor/metisMenu/dist/metisMenu.min.js",
-      "Scripts/homer.js"
+      "Scripts/homer.js",
+      "Vendor/ladda/dist/spin.min.js",
+      "Vendor/ladda/dist/ladda.min.js",
+      "Vendor/ladda/dist/ladda.jquery.min.js",
+      "Vendor/toastr/build/toastr.min.js",
+       "Scripts/yk.js",
     ]
   }
 ]
