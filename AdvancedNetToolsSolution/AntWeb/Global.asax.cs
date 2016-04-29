@@ -98,18 +98,21 @@ namespace SmartAdminMvc
 
         public void Application_EndRequest()
         {
-            try
+            if (Container != null)
             {
-                foreach (var task in
-                    Container.GetAllInstances<IRunAfterEachRequest>())
+                try
                 {
-                    task.Execute();
+                    foreach (var task in
+                        Container.GetAllInstances<IRunAfterEachRequest>())
+                    {
+                        task.Execute();
+                    }
                 }
-            }
-            finally
-            {
-                Container.Dispose();
-                Container = null;
+                finally
+                {
+                    Container.Dispose();
+                    Container = null;
+                }
             }
         }
 
@@ -132,9 +135,12 @@ namespace SmartAdminMvc
                 context.ErrorLoggings.Add(el);
                 context.SaveChanges();
             }
-            foreach (var task in Container.GetAllInstances<IRunOnError>())
+            if (Container != null)
             {
-                task.Execute();
+                foreach (var task in Container.GetAllInstances<IRunOnError>())
+                {
+                    task.Execute();
+                }
             }
         }
 
