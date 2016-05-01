@@ -354,14 +354,17 @@ namespace SmartAdminMvc.Infrastructure
 
                 string timeAvg = string.Empty;
                 string distance = string.Empty;
+                string speed = string.Empty;
                 if (i % 2 == 0)
                 {
-                    timeAvg = @"<font size=""2"" color=""#057CBE"">TIME AVG:&nbsp;</font>" + Math.Round(pingSummaries[i / 2].AvgRtt.GetValueOrDefault(), digits: 0).ToString() + "ms.<br />";
-                    distance = @"<font size=""2"" color=""#057CBE"">DISTANCE:&nbsp;</font>" + distanceKm.ToString() + "km./" + distanceMiles +"mi.<br />";
+                    var time = Math.Round(pingSummaries[i / 2].AvgRtt.GetValueOrDefault(), digits: 0);
+                    timeAvg = @"<font size=""2"" color=""#057CBE"">TIME AVG:&nbsp;</font>" + time.ToString() + "ms.<br />";
+                    distance = @"<font size=""2"" color=""#057CBE"">DISTANCE:&nbsp;</font>" + distanceKm.ToString() + "km. | " + distanceMiles +"mi.<br />";
+                    speed = @"<font size=""2"" color=""#057CBE"">SPEED:&nbsp;</font>" + ((int)(distanceKm / time)).ToString() + "km./ms. | " + ((int) (distanceMiles / time)).ToString() + "mi./ms.<br />";
                 }
 
                 var sbMarkerWindowHtml = new StringBuilder();
-                sbMarkerWindowHtml.Append($@"<font size=""2"" color=""#057CBE"">IP:&nbsp;</font> {ips.ElementAt(i)} <br />{timeAvg}{distance}<font size=""2"" color=""#057CBE"">CITY:&nbsp;</font> {locations[i].CityName.Replace(oldValue: "'", newValue: "&quot;")} <br /><font size=""2"" color=""#057CBE"">COUNTRY:&nbsp;</font> {locations[i].CountryName.Replace(oldValue: "'", newValue: "&quot;")}");
+                sbMarkerWindowHtml.Append($@"<font size=""2"" color=""#057CBE"">IP:&nbsp;</font> {ips.ElementAt(i)} <br />{timeAvg}{distance}{speed}<font size=""2"" color=""#057CBE"">CITY:&nbsp;</font> {locations[i].CityName.Replace(oldValue: "'", newValue: "&quot;")} <br /><font size=""2"" color=""#057CBE"">COUNTRY:&nbsp;</font> {locations[i].CountryName.Replace(oldValue: "'", newValue: "&quot;")}");
 
                 string markerWindowHtml = sbMarkerWindowHtml.ToString(); ;
 
