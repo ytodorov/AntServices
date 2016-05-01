@@ -58,7 +58,30 @@ $(document).ready(function docReady() {
         $.cookie('isMenuVisible', isMenuVisible);
     })
 
-})
+
+});
+
+/* Back to top */
+(function () {
+    $("#back-top").hide();
+
+    $(window).scroll(function () {
+        if ($(this).scrollTop() > 100) {
+            $('#back-top').fadeIn();
+        } else {
+            $('#back-top').fadeOut();
+        }
+    });
+
+    $('#back-top a').click(function () {
+        $('body,html').animate({
+            scrollTop: 0
+        }, 600);
+        return false;
+    });
+})();
+
+
 
 $(window).ready(function myfunction() {
     //заради менюто което се премахва на малък екран. Важно е да е около 200, защото лявото меню се скрива след определено време и то трябва да мине за да се преначертае графиката отново

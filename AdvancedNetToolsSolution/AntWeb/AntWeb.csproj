@@ -229,6 +229,7 @@
     <Content Include="Content\img\avatars\male.png" />
     <Content Include="Content\img\avatars\sunny-big.png" />
     <Content Include="Content\img\avatars\sunny.png" />
+    <Content Include="Content\img\back_top.png" />
     <Content Include="Content\img\blank.gif" />
     <Content Include="Content\img\border.png" />
     <Content Include="Content\img\clear.png" />
