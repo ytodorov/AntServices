@@ -126,32 +126,32 @@ $(window).ready(function myfunction() {
     }
     // TODO: kendo.drawing gives an error
     // export pdf
-    //$(".pdfexportpage").click(function () {
-    //    // тук скриваме и след това показваме някои части, които пречат на хубаво генериран експорт
-    //    $("#divfooter").hide();
-    //    $(".addthis_sharing_toolbox").hide();
-    //    // convert the dom element to a drawing using kendo.drawing.drawdom
-    //    kendo.drawing.drawDOM($("#divbody"))
-    //        .then(function (group) {
-    //            // render the result as a pdf file
-    //            return kendo.drawing.exportPDF(group, {
-    //                paperSize: "auto",
-    //                margin: { left: "1cm", top: "1cm", right: "1cm", bottom: "1cm" }
-    //            });
-    //        })
-    //        .done(function (data) {
-    //            // save the pdf file
+    $(".pdfexportpage").click(function () {
+        // тук скриваме и след това показваме някои части, които пречат на хубаво генериран експорт
+        $("#divfooter").hide();
+        $(".addthis_sharing_toolbox").hide();
+        // convert the dom element to a drawing using kendo.drawing.drawdom
+        kendo.drawing.drawDOM($("#divbody"), null)
+            .then(function (group) {
+                // render the result as a pdf file
+                return kendo.drawing.exportPDF(group, {
+                    paperSize: "auto",
+                    margin: { left: "1cm", top: "1cm", right: "1cm", bottom: "1cm" }
+                });
+            })
+            .done(function (data) {
+                // save the pdf file
 
-    //            kendo.saveAs({
-    //                datauri: data,
-    //                filename: "toolsfornet" + new Date().getDate() + ".pdf",
-    //                proxyurl: window.location.origin + "/export/pdf"
-    //            });
-    //            $("#divfooter").show();
-    //            $(".addthis_sharing_toolbox").show();
-    //        });
+                kendo.saveAs({
+                    datauri: data,
+                    filename: "toolsfornet" + new Date().getDate() + ".pdf",
+                    proxyurl: window.location.origin + "/export/pdf"
+                });
+                $("#divfooter").show();
+                $(".addthis_sharing_toolbox").show();
+            });
 
-    //});
+    });
 
     //$("#pngexportpage").click(function () {
     //    // convert the dom element to a drawing using kendo.drawing.drawdom

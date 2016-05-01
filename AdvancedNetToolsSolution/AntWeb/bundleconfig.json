@@ -1,27 +1,20 @@
-[
-  {
-    "minify": { "enabled": false },
-    "outputFileName": "Content/bundle.css",
-    "inputFiles": [
-      "Icons/pe-icon-7-stroke/css/pe-icon-7-stroke.css"
-    ]
-  },
+[  
   {
     "minify": { "enabled": false },
     "outputFileName": "Scripts/bundle.js",
     "inputFiles": [
-      "Scripts/googleAnalytics.js", 
-      "Scripts/jquery-2.2.3.js", 
-      "Scripts/jquery.cookie.js",
+      "Scripts/googleAnalytics.min.js",
+      "Scripts/jquery-2.2.3.min.js",
+      "Scripts/jquery.cookie.min.js",
       "Scripts/kendo/jszip.min.js",
-      "Scripts/kendo/kendo.all.js",
-      "Scripts/kendo/kendo.aspnetmvc.js",
+      "Scripts/kendo/kendo.all.min.js",
+      "Scripts/kendo/kendo.aspnetmvc.min.js",
       "Scripts/kendo/pako_deflate.min.js",
-      "Scripts/clipboard/clipboard.js",
+      "Scripts/clipboard/clipboard.min.js",
       "Vendor/bootstrap/dist/js/bootstrap.min.js",
       "Vendor/metisMenu/dist/metisMenu.min.js",
-      "Scripts/homer.js",
-      "Vendor/ladda/dist/spin.min.js", 
+      "Scripts/homer.min.js",
+      "Vendor/ladda/dist/spin.min.js",
       "Vendor/ladda/dist/ladda.min.js",
       "Vendor/ladda/dist/ladda.jquery.min.js",
       "Vendor/toastr/build/toastr.min.js",
