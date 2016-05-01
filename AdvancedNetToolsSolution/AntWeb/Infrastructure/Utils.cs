@@ -292,9 +292,9 @@ namespace SmartAdminMvc.Infrastructure
             {
                 fullRootUrl = fullRootUrl.Replace(":" + HttpContext.Current?.Request.Url.Port, string.Empty);
             }
-            string greenColorPin = @"
-            var pinGreenColor = '00FF00';
-            var pinGreenImage = new google.maps.MarkerImage('http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|' + pinGreenColor,
+            string hostAddress = HttpContext.Current.Request.Url.AbsoluteUri.Replace(HttpContext.Current.Request.Url.LocalPath, string.Empty);
+            string greenColorPin = $@"
+            var pinGreenImage =new google.maps.MarkerImage('{hostAddress}/content/img/pinGreenColor.png',
                 new google.maps.Size(21, 34),
                 new google.maps.Point(0, 0),
                 new google.maps.Point(10, 34));";
@@ -309,10 +309,9 @@ namespace SmartAdminMvc.Infrastructure
             //    new google.maps.Point(10, 34));";
             //sb.AppendLine(redColorPing);
 
-            string hostAddress = HttpContext.Current.Request.Url.AbsoluteUri.Replace(HttpContext.Current.Request.Url.LocalPath, string.Empty);
+         
 
-            string redColorPing = $@"
-            var pinRedColor = 'FF0000';
+            string redColorPing = $@"        
             var pinRedImage = new google.maps.MarkerImage('{hostAddress}/content/img/pinRedColor.png',
                 new google.maps.Size(21, 34),
                 new google.maps.Point(0, 0),
