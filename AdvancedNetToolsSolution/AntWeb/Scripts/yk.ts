@@ -150,6 +150,7 @@ $(window).ready(function myfunction() {
     // TODO: kendo.drawing gives an error
     // export pdf
     $(".pdfexportpage").click(function () {
+        debugger;
         // тук скриваме и след това показваме някои части, които пречат на хубаво генериран експорт
         $("#divfooter").hide();
         $(".addthis_sharing_toolbox").hide();
