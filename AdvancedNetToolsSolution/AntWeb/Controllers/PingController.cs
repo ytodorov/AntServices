@@ -31,7 +31,6 @@ namespace SmartAdminMvc.Controllers
         // GET: home/index
         public ActionResult Index(int? id)
         {
-
             if (id.HasValue)
             {
                 using (AntDbContext context = new AntDbContext())

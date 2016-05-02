@@ -191,6 +191,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="500.html" />
+    <Content Include="404.aspx" />
+    <Content Include="404.html" />
     <Content Include="A9DABAA0572B3BC1BB9D025B2A82D391.txt" />
     <Content Include="Content\ajax\email-compose.html" />
     <Content Include="Content\ajax\email-opened.html" />
@@ -1973,6 +1976,13 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="404.aspx.cs">
+      <DependentUpon>404.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="404.aspx.designer.cs">
+      <DependentUpon>404.aspx</DependentUpon>
+    </Compile>
     <Compile Include="App_Helpers\DashRouteHandler.cs" />
     <Compile Include="App_Helpers\StringExtensions.cs" />
     <Compile Include="App_Helpers\UserManager.cs" />
