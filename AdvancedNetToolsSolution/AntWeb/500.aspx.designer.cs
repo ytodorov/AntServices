@@ -10,6 +10,6 @@
 namespace SmartAdminMvc {
     
     
-    public partial class _404 {
+    public partial class _500 {
     }
 }
