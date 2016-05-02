@@ -249,7 +249,7 @@ function animateIpPlaceholder(txt) {
         timeOut = setTimeout(function () {
             var visible;
             //visible = vis(); // gives current state
-            if (visible) {
+            //if (visible) {
                 char++;
                 var type = txt.substring(0, char);
                 $ip.attr('placeholder', type + '|');
@@ -259,10 +259,10 @@ function animateIpPlaceholder(txt) {
                     $ip.attr('placeholder', $ip.attr('placeholder').slice(0, -1)) // remove the '|'
                     clearTimeout(timeOut);
                 }
-            }
-            else {
-                $ip.attr('placeholder', txt);
-            }
+            //}
+            //else {
+            //    $ip.attr('placeholder', txt);
+            //}
 
         },
             humanize);

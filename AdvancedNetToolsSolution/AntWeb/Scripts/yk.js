@@ -203,19 +203,19 @@ function animateIpPlaceholder(txt) {
         timeOut = setTimeout(function () {
             var visible;
             //visible = vis(); // gives current state
-            if (visible) {
-                char++;
-                var type = txt.substring(0, char);
-                $ip.attr('placeholder', type + '|');
-                typeIt();
-                if (char == txtLen) {
-                    $ip.attr('placeholder', $ip.attr('placeholder').slice(0, -1)); // remove the '|'
-                    clearTimeout(timeOut);
-                }
+            //if (visible) {
+            char++;
+            var type = txt.substring(0, char);
+            $ip.attr('placeholder', type + '|');
+            typeIt();
+            if (char == txtLen) {
+                $ip.attr('placeholder', $ip.attr('placeholder').slice(0, -1)); // remove the '|'
+                clearTimeout(timeOut);
             }
-            else {
-                $ip.attr('placeholder', txt);
-            }
+            //}
+            //else {
+            //    $ip.attr('placeholder', txt);
+            //}
         }, humanize);
     })();
 }
