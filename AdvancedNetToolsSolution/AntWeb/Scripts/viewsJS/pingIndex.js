@@ -17,7 +17,7 @@ $("#btnPing").click(function btnPingClick(e) {
     var showInHistory = $("#showInHistory").is(":checked");
     $.ajax({
         method: "POST",
-        url: "/ping/GenerateId",
+        url: "/ping/generateid",
         data: {
             ip: $("#ip").val(),
             showInHistory: showInHistory,
