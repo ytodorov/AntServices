@@ -25,6 +25,30 @@ namespace SmartAdminMvc.Infrastructure
         {
             RandomNumberGenerator = new Random();
 
+            SitesFromXml = new List<string>();
+            string xmlPath = System.Web.Hosting.HostingEnvironment.MapPath(virtualPath: "~/sitemap.xml");
+
+            if (!string.IsNullOrEmpty(xmlPath))
+            {
+                using (System.IO.StreamReader sr = new System.IO.StreamReader(xmlPath))
+                {
+                    var addressLines = new List<string>();
+                    while (!sr.EndOfStream)
+                    {
+                        string splitMe = sr.ReadLine();
+                        if (splitMe.Contains(value: "<loc>"))
+                        {
+                            addressLines.Add(splitMe);
+                        }
+                    }
+                    foreach (var line in addressLines)
+                    {
+                        int pFrom = line.IndexOf("<loc>") + "<loc>".Length;
+                        int pTo = line.LastIndexOf("</loc>");
+                        SitesFromXml.Add(line.Substring(pFrom, pTo - pFrom));
+                    }
+                }
+            }
             //TopSitesGlobal = Зареди тук сайтовете от файла Misc\TopSites като ги парснеш по подходящ начин. 
             // накрая в TopSitesGlobal трябва да има 1000 сайта
             TopSitesGlobal = new List<string>();
@@ -153,6 +177,8 @@ namespace SmartAdminMvc.Infrastructure
         public static Dictionary<string, string> HotstNameToAzureLocation { get; set; }
 
         public static Random RandomNumberGenerator;
+
+        public static List<string> SitesFromXml { get; set; }
 
         public static IpLocationViewModel GetLocationDataForIp(string ipOrHostName)
         {
