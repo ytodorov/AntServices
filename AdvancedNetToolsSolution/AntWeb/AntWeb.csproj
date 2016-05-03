@@ -186,6 +186,14 @@
       <HintPath>..\packages\TimeAgo.1.0.8\lib\portable-net4+sl5\TimeAgo.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="WebDriver, Version=2.53.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Selenium.WebDriver.2.53.0\lib\net40\WebDriver.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="WebDriver.Support, Version=2.53.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Selenium.Support.2.53.0\lib\net40\WebDriver.Support.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="WebGrease">
       <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
     </Reference>
@@ -2004,6 +2012,7 @@
     <Compile Include="App_Helpers\Settings.cs" />
     <Compile Include="Controllers\ContactUsController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\DashboardPage.cs" />
     <Compile Include="Controllers\ErrorLoggingController.cs" />
     <Compile Include="Controllers\ExportController.cs" />
     <Compile Include="Controllers\FaqController.cs" />
@@ -2035,6 +2044,7 @@
     <Compile Include="Infrastructure\ControllerConvention.cs" />
     <Compile Include="Infrastructure\ControllerRegistry.cs" />
     <Compile Include="Infrastructure\CurrentUser.cs" />
+    <Compile Include="Infrastructure\Driver.cs" />
     <Compile Include="Infrastructure\FailTrackerController.cs" />
     <Compile Include="Infrastructure\ICurrentUser.cs" />
     <Compile Include="Infrastructure\IoC.cs" />

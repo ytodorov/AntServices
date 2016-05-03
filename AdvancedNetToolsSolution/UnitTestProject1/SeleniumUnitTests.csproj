@@ -39,6 +39,7 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
     <Reference Include="WebDriver, Version=2.53.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Selenium.WebDriver.2.53.0\lib\net40\WebDriver.dll</HintPath>
       <Private>True</Private>
@@ -69,6 +70,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AntServicesMvc5\AntServicesMvc5.csproj">
+      <Project>{27641129-62d6-4fc8-86e6-733ab2c85d2b}</Project>
+      <Name>AntServicesMvc5</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AntWeb\AntWeb.csproj">
       <Project>{24ca74f5-6af8-4c67-ac79-3e648ecbea68}</Project>
       <Name>AntWeb</Name>

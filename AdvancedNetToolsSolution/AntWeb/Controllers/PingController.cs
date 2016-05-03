@@ -19,6 +19,9 @@ using System.Net.Sockets;
 using System.Data.Entity;
 using AutoMapper;
 using TimeAgo;
+using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 
 #endregion
 
@@ -267,5 +270,20 @@ namespace SmartAdminMvc.Controllers
             }
         }
 
+        public static void GoTo()
+        {
+            Driver.Instance.Navigate().GoToUrl(url: "https://localhost:44300/ping");
+            var wait = new WebDriverWait(Driver.Instance, TimeSpan.FromMinutes(1));
+            IWebElement element = wait.Until(ExpectedConditions.ElementToBeClickable(By.Id(idToFind: "btnPing")));
+        }
+        public static void Ping(string address)
+        {
+            IWebElement pingInput = Driver.Instance.FindElement(By.Id(idToFind: "ip"));
+            pingInput.Clear();
+            pingInput.SendKeys(address);
+
+            IWebElement btnPing = Driver.Instance.FindElement(By.Id(idToFind: "btnPing"));
+            btnPing.Click();
+        }
     }
 }

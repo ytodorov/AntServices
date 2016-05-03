@@ -1,8 +1,9 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Support.UI;
+using SmartAdminMvc.Controllers;
+using SmartAdminMvc.Infrastructure;
+using SmartAdminMvc.Models;
+
 
 #pragma warning disable JustCode_NamingConventions // Naming conventions inconsistency
 namespace seleniumUnitTests
@@ -11,25 +12,23 @@ namespace seleniumUnitTests
     [TestClass]    
     public class PingUnitTest
     {
-        [TestMethod]
-        public void TestWithChrome()
+        [TestInitialize]
+        public void Init()
         {
-            using (var driverService = ChromeDriverService.CreateDefaultService())
-            {
-                driverService.Start();
-                IWebDriver driver = new ChromeDriver();
-                INavigation nav = driver.Navigate();
-                nav.GoToUrl(url: "http://localhost:56110/ping");
-                driver.FindElement(By.Id(idToFind: "ip")).Clear();
-                driver.FindElement(By.Id(idToFind: "ip")).SendKeys(text: "abv.bg");
-                driver.FindElement(By.Id(idToFind: "btnPing")).SendKeys(Keys.Enter);
+            Driver.Initialize();
+        }
+        [TestMethod]
+        public void PingTestWithChrome()
+        {
+            PingController.GoTo();
+            PingController.Ping(address: "google.bg");
+            Assert.IsTrue(DashboardPage.IsAt, message: "Failed to ping");
 
-                var wait = new WebDriverWait(driver, TimeSpan.FromMinutes(1));
-                var element = wait.Until(ExpectedConditions.ElementToBeClickable(By.Id("btnPing")));
-
-                //Assert.AreEqual("", value);
-                driver.Close();
-            }
+        }
+        [TestCleanup]
+        public void Cleanup()
+        {
+            Driver.Close();
         }
     }
 }
