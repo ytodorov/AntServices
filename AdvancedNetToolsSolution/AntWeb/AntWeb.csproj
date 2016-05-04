@@ -968,6 +968,7 @@
     <Content Include="Content\kendo\kendo.silver.mobile.min.css.map" />
     <Content Include="Content\kendo\kendo.uniform.min.css.map" />
     <Content Include="Content\kendo\kendo.uniform.mobile.min.css.map" />
+    <Content Include="Misc\service-names-port-numbers.csv" />
     <None Include="Properties\PublishProfiles\SmartAdmin - Release.pubxml" />
     <None Include="Properties\PublishProfiles\SmartAdmin - Debug.pubxml" />
     <Content Include="robots.txt" />
@@ -2089,6 +2090,7 @@
     <Compile Include="Models\PortResponseSummaryViewModel.cs" />
     <Compile Include="Models\TraceRouteReplyViewModel.cs" />
     <Compile Include="Models\ViewModelBase.cs" />
+    <Compile Include="Models\WellKnownPortViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

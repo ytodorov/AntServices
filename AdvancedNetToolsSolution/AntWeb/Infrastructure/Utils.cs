@@ -25,7 +25,45 @@ namespace SmartAdminMvc.Infrastructure
         {
             RandomNumberGenerator = new Random();
 
-            SitesFromXml = new List<string>();
+            WellKnownPorts = new List<WellKnownPortViewModel>();
+            var res = new List<WellKnownPortViewModel>();
+
+            string pathA = System.Web.Hosting.HostingEnvironment.MapPath(virtualPath: "~/Misc/service-names-port-numbers.csv");
+            if (!string.IsNullOrEmpty(pathA))
+            {
+                string[] lines = File.ReadAllLines(pathA);
+                foreach (var line in lines)
+                {
+                    var wkpvm = new WellKnownPortViewModel();
+                    uint helper;
+                    DateTime help;
+                    string[] rowsSplits = line.Split(new char[] { ',' });
+                    if (rowsSplits.Length != 0)
+                    {
+                        wkpvm.ServiceName = rowsSplits[0];
+                        uint.TryParse(rowsSplits[1], out helper);
+                        wkpvm.PortNumber = helper;
+                        wkpvm.TransportProtocol = rowsSplits[2];
+                        wkpvm.Description = rowsSplits[3];
+                        wkpvm.Assignee = rowsSplits[4];
+                        DateTime.TryParse(rowsSplits[5], out help);
+                        wkpvm.RegistrationDate = help;
+                        DateTime.TryParse(rowsSplits[6], out help);
+                        wkpvm.ModificationDate = help;
+                        wkpvm.Reference = rowsSplits[7];
+                        uint.TryParse(rowsSplits[8], out helper);
+                        wkpvm.ServiceCode = helper;
+                        wkpvm.KnownUnauthorizedUses = rowsSplits[9];
+                        wkpvm.AssignmentNotes = rowsSplits[10];
+                    }
+                    res.Add(wkpvm);
+                }
+                WellKnownPorts = res.Where(r => r != null).ToList();
+            }
+            
+
+        
+        SitesFromXml = new List<string>();
             string xmlPath = System.Web.Hosting.HostingEnvironment.MapPath(virtualPath: "~/sitemap.xml");
 
             if (!string.IsNullOrEmpty(xmlPath))
@@ -43,8 +81,8 @@ namespace SmartAdminMvc.Infrastructure
                     }
                     foreach (var line in addressLines)
                     {
-                        int pFrom = line.IndexOf("<loc>") + "<loc>".Length;
-                        int pTo = line.LastIndexOf("</loc>");
+                        int pFrom = line.IndexOf(value: "<loc>")+ "<loc>".Length;
+                        int pTo = line.LastIndexOf(value: "</loc>");
                         SitesFromXml.Add(line.Substring(pFrom, pTo - pFrom));
                     }
                 }
@@ -179,6 +217,8 @@ namespace SmartAdminMvc.Infrastructure
         public static Random RandomNumberGenerator;
 
         public static List<string> SitesFromXml { get; set; }
+
+        public static List<WellKnownPortViewModel> WellKnownPorts { get; set; }
 
         public static IpLocationViewModel GetLocationDataForIp(string ipOrHostName)
         {
