@@ -44,15 +44,15 @@ namespace Homer_MVC.Controllers
                     var credentials = new System.Net.NetworkCredential(userName, password);
                     smtpClient.Credentials = credentials;
                     smtpClient.Send(mailMsg);
-
-
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex.Message);
+                    
+                    var result = new { error = "Error sending mail!" };
+                    return Json(result);
                 }
             }
-            return View();
+            return new EmptyResult();
         }
     }
 }

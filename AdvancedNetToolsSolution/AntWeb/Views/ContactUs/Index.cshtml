@@ -51,10 +51,12 @@
 
 @section scripts {
     <script type="text/javascript">
-    $(function () {
+        $(function () {
+           
         var validator = $("#contactus").kendoValidator().data("kendoValidator");
-
+     
         $("form").submit(function (event) {
+            event.preventDefault();
             validator.validate();
         });
     });
@@ -77,6 +79,21 @@
                         senderMail: senderMail,
                         subject: subject,
                         emailBody: emailBody
+                    }
+                    ,
+                    success: function f(id) {
+                        var error = id.error;
+                        debugger;
+                        var notification = $("#notification").data("kendoNotification");
+                        if (typeof error != 'undefined') {
+                            //toastr.error(error);
+                            notification.show(error, "error")
+                        }
+                        else {
+                            //toastr.info("Email successfully delivered!");
+                            notification.show("Email successfully delivered!", "info")
+                        }
+
                     }
                 });
             })
