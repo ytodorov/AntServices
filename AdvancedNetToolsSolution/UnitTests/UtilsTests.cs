@@ -1,4 +1,5 @@
 ﻿using SmartAdminMvc.Infrastructure;
+using SmartAdminMvc.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,5 +52,38 @@ namespace UnitTests
                 }
             }
         }
+        [Fact]
+        public void ParsePortsTest()
+        {
+            List<WellKnownPortViewModel> wkPorts = Utils.WellKnownPorts;
+            string line = "test,1230,tcp,Reserved,[Jon_Postel],[Jon_Postel],test,test,test,test,test,test";
+            try
+            {
+                WellKnownPortViewModel newWKPort = Utils.ParseSinglePort(line);
+                wkPorts.Add(newWKPort);
+            }
+            catch
+            {
+
+            }
+            Assert.True(wkPorts.Last().PortNumber == 1230);
+        }
+        [Fact]
+        public void ParseXmlTest()
+        {
+            List<string> sitesFromXml = Utils.SitesFromXml;
+            string line = "<loc>google.com<loc>";
+            try
+            {
+                string newSite = Utils.ParseXmlSingleLine(line);
+                sitesFromXml.Add(newSite);
+            }
+            catch
+            {
+
+            }
+            Assert.True(sitesFromXml.Contains("google.com"));
+        }
+
     }
 }

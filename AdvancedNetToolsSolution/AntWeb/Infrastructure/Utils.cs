@@ -26,67 +26,15 @@ namespace SmartAdminMvc.Infrastructure
             RandomNumberGenerator = new Random();
 
             WellKnownPorts = new List<WellKnownPortViewModel>();
-            var res = new List<WellKnownPortViewModel>();
+            string pathPorts = HostingEnvironment.MapPath(virtualPath: "~/Misc/service-names-port-numbers.csv");
+            WellKnownPorts = ParsePorts(pathPorts).Where(r => r != null).ToList();
 
-            string pathA = System.Web.Hosting.HostingEnvironment.MapPath(virtualPath: "~/Misc/service-names-port-numbers.csv");
-            if (!string.IsNullOrEmpty(pathA))
-            {
-                string[] lines = File.ReadAllLines(pathA);
-                foreach (var line in lines)
-                {
-                    var wkpvm = new WellKnownPortViewModel();
-                    uint helper;
-                    DateTime help;
-                    string[] rowsSplits = line.Split(new char[] { ',' });
-                    if (rowsSplits.Length != 0)
-                    {
-                        wkpvm.ServiceName = rowsSplits[0];
-                        uint.TryParse(rowsSplits[1], out helper);
-                        wkpvm.PortNumber = helper;
-                        wkpvm.TransportProtocol = rowsSplits[2];
-                        wkpvm.Description = rowsSplits[3];
-                        wkpvm.Assignee = rowsSplits[4];
-                        DateTime.TryParse(rowsSplits[5], out help);
-                        wkpvm.RegistrationDate = help;
-                        DateTime.TryParse(rowsSplits[6], out help);
-                        wkpvm.ModificationDate = help;
-                        wkpvm.Reference = rowsSplits[7];
-                        uint.TryParse(rowsSplits[8], out helper);
-                        wkpvm.ServiceCode = helper;
-                        wkpvm.KnownUnauthorizedUses = rowsSplits[9];
-                        wkpvm.AssignmentNotes = rowsSplits[10];
-                    }
-                    res.Add(wkpvm);
-                }
-                WellKnownPorts = res.Where(r => r != null).ToList();
-            }
-            
 
-        
-        SitesFromXml = new List<string>();
-            string xmlPath = System.Web.Hosting.HostingEnvironment.MapPath(virtualPath: "~/sitemap.xml");
+            SitesFromXml = new List<string>();
+            string xmlPath = HostingEnvironment.MapPath(virtualPath: "https://toolsfornet.com/sitemap.xml");
+            SitesFromXml = ParseXmlFromUrl(xmlPath).Where(r => r != null).ToList();
 
-            if (!string.IsNullOrEmpty(xmlPath))
-            {
-                using (System.IO.StreamReader sr = new System.IO.StreamReader(xmlPath))
-                {
-                    var addressLines = new List<string>();
-                    while (!sr.EndOfStream)
-                    {
-                        string splitMe = sr.ReadLine();
-                        if (splitMe.Contains(value: "<loc>"))
-                        {
-                            addressLines.Add(splitMe);
-                        }
-                    }
-                    foreach (var line in addressLines)
-                    {
-                        int pFrom = line.IndexOf(value: "<loc>")+ "<loc>".Length;
-                        int pTo = line.LastIndexOf(value: "</loc>");
-                        SitesFromXml.Add(line.Substring(pFrom, pTo - pFrom));
-                    }
-                }
-            }
+
             //TopSitesGlobal = Зареди тук сайтовете от файла Misc\TopSites като ги парснеш по подходящ начин. 
             // накрая в TopSitesGlobal трябва да има 1000 сайта
             TopSitesGlobal = new List<string>();
@@ -127,7 +75,7 @@ namespace SmartAdminMvc.Infrastructure
             HotstNameToIp = new Dictionary<string, string>();
             foreach (string url in GetDeployedServicesUrlAddresses)
             {
-                string ip = Utils.GetIpAddressFromHostName(url.Replace(oldValue: "http://", newValue: string.Empty), locationOfDeployedService: "http://ants-neu.cloudapp.net");
+                string ip = GetIpAddressFromHostName(url.Replace(oldValue: "http://", newValue: string.Empty), locationOfDeployedService: "http://ants-neu.cloudapp.net");
                 HotstNameToIp.Add(url, ip);
             }
 
@@ -219,6 +167,74 @@ namespace SmartAdminMvc.Infrastructure
         public static List<string> SitesFromXml { get; set; }
 
         public static List<WellKnownPortViewModel> WellKnownPorts { get; set; }
+
+        public static string ParseXmlSingleLine(string line)
+        {
+            int pFrom = line.IndexOf(value: "<loc>") + "<loc>".Length;
+            int pTo = line.LastIndexOf(value: "</loc>");
+            return line.Substring(pFrom, pTo - pFrom);
+        }
+
+        public static List<string> ParseXmlFromUrl(string url)
+        {
+            if (!string.IsNullOrEmpty(url))
+            {
+                using (StreamReader sr = new StreamReader(url))
+                {
+                    var addressLines = new List<string>();
+                    while (!sr.EndOfStream)
+                    {
+                        string splitMe = sr.ReadLine();
+                        if (splitMe.Contains(value: "<loc>"))
+                        {
+                            addressLines.Add(splitMe);
+                        }
+                    }
+                    foreach (var line in addressLines)
+                    {
+                        SitesFromXml.Add(ParseXmlSingleLine(line));
+                    }
+                }
+            }
+            return SitesFromXml;
+        }
+        public static List<WellKnownPortViewModel> ParsePorts(string pathPorts)
+        {
+            if (!string.IsNullOrEmpty(pathPorts))
+            {
+                string[] lines = File.ReadAllLines(pathPorts);
+                foreach (var line in lines)
+                {
+                    WellKnownPorts.Add(ParseSinglePort(line));
+                }
+            }
+            return WellKnownPorts;
+        }
+
+        public static WellKnownPortViewModel ParseSinglePort(string line)
+        {
+            var wkpvm = new WellKnownPortViewModel();
+            uint helper;
+            DateTime help;
+            string[] rowsSplits = line.Split(new char[] { ',' });
+            wkpvm.ServiceName = rowsSplits[0];
+            uint.TryParse(rowsSplits[1], out helper);
+            wkpvm.PortNumber = helper;
+            wkpvm.TransportProtocol = rowsSplits[2];
+            wkpvm.Description = rowsSplits[3];
+            wkpvm.Assignee = rowsSplits[4];
+            wkpvm.Contact = rowsSplits[5];
+            DateTime.TryParse(rowsSplits[6], out help);
+            wkpvm.RegistrationDate = help;
+            DateTime.TryParse(rowsSplits[7], out help);
+            wkpvm.ModificationDate = help;
+            wkpvm.Reference = rowsSplits[8];
+            uint.TryParse(rowsSplits[9], out helper);
+            wkpvm.ServiceCode = helper;
+            wkpvm.KnownUnauthorizedUses = rowsSplits[10];
+            wkpvm.AssignmentNotes = rowsSplits[11];
+            return wkpvm;
+        }
 
         public static IpLocationViewModel GetLocationDataForIp(string ipOrHostName)
         {

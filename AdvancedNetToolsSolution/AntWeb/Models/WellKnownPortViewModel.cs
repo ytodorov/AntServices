@@ -12,6 +12,7 @@ namespace SmartAdminMvc.Models
         public string TransportProtocol { get; set; }
         public string Description { get; set; }
         public string Assignee { get; set; }
+        public string Contact { get; set; }
         public DateTime? RegistrationDate { get; set; }
         public DateTime? ModificationDate { get; set; }
         public string Reference { get; set; }
