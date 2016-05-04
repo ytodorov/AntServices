@@ -19,21 +19,21 @@
     </div>
 </div>
 
-<div class="">
+<div class="" id="contactus">
     <div class="">
         <div class="p-xs">
             <form method="get" class="form-horizontal">
                 <div class="form-group">
                     <label class="col-sm-1 control-label text-left" for="senderName">Sender's Name</label>
-                    <div class="col-sm-11"><input type="text" class="k-textbox" placeholder="John Doe" id="senderName"></div>
+                    <div class="col-sm-11"><input type="text" class="k-textbox" placeholder="John Doe" required id="senderName"></div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-1 control-label text-left" for="senderMail">Sender's Email</label>
-                    <div class="col-sm-11"><input type="text" class="k-textbox" placeholder="example@email.com" id="senderMail"></div>
+                    <div class="col-sm-11"><input type="email" class="k-textbox"   required data-email-msg="Email format is not valid"  placeholder="example@email.com" id="senderMail"></div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-1 control-label text-left" for="subject">Subject:</label>
-                    <div class="col-sm-11"><input type="text" class="k-textbox" placeholder="Enter Email subject" id="subject"></div>
+                    <div class="col-sm-11"><input type="text" class="k-textbox" required placeholder="Enter Email subject" id="subject"></div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-1 control-label text-left">Body:</label>
@@ -41,7 +41,7 @@
                 </div>
                 <div class="form-group">
                     <label class="col-sm-1 control-label text-left"></label>
-                    <div class="col-sm-11"><button class="k-button" id="btnSend">Send email</button></div>
+                    <div class="col-sm-11"><input type="submit" class="k-button" id="btnSend" title="Send email" value="Send email" /></div>
                 </div>
             </form>
 
@@ -51,8 +51,19 @@
 
 @section scripts {
     <script type="text/javascript">
+    $(function () {
+        var validator = $("#contactus").kendoValidator().data("kendoValidator");
+
+        $("form").submit(function (event) {
+            validator.validate();
+        });
+    });
+
+
+
+
         $(document).ready(function () {
-            $("#btnSend").click(function btnSendClick(e) {
+            $("#contactus").submit(function btnSendClick(e) {
                 e.preventDefault();
                 var senderName = $("#senderName").val();
                 var senderMail = $("#senderMail").val();
@@ -60,7 +71,7 @@
                 var emailBody = $("#emailBody").val();
                 $.ajax({
                     method: "POST",
-                    url: '/contactUs/SendEmail',
+                    url: '/contactus/sendemail',
                     data: {
                         senderName: senderName,
                         senderMail: senderMail,

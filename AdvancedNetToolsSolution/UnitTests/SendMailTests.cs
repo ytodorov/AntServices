@@ -38,9 +38,6 @@ namespace UnitTests
                 smtpClient.Credentials = credentials;
                 smtpClient.Send(mailMsg);
 
-                //SendGrid.SendGridMessage sg;
-                //sg.EnableTemplate();
-                //sg.EnableTemplateEngine()
 
             }
             catch (Exception ex)
