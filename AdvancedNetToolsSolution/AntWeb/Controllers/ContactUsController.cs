@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Net.Mail;
+using System.Net.Mime;
 using System.Web;
 using System.Web.Mvc;
 
@@ -20,28 +22,37 @@ namespace Homer_MVC.Controllers
         {
             if (senderName != "" && senderMail != "" && emailBody != "")
             {
-                var mailMsg = new MailMessage();
+                try
+                {
+                    var mailMsg = new MailMessage();
 
-                // To
-                mailMsg.To.Add(new MailAddress(address: "tfn@ytodorov.com", displayName: "YT"));
-                // From
-                mailMsg.From = new MailAddress(senderMail, senderName);
+                    // To
+                    mailMsg.To.Add(new MailAddress(address: "EmailFromToolsfornet@ytodorov.com"));
 
-                // Subject and multipart/alternative Body
-                mailMsg.Subject = subject;
-                mailMsg.Body = emailBody;
+                    // From
+                    mailMsg.From = new MailAddress(address: senderMail, displayName: senderName);
+                    string html = emailBody;
+                    // Subject and multipart/alternative Body
+                    mailMsg.Subject = subject;
+                    mailMsg.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(html,
+                        contentEncoding: null, mediaType: MediaTypeNames.Text.Html));
 
-                // Init SmtpClient and send
-                var smtpClient = new SmtpClient(host: "smtp.sendgrid.net", port: Convert.ToInt32(value: 587));
-                //smtpClient.EnableSsl = true;
-                var credentials = new System.Net.NetworkCredential(userName: "ytodorov@ytodorov.com", password: "17");
-                smtpClient.Credentials = credentials;
-
-                smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
-
-                smtpClient.Send(mailMsg);
+                    // Init SmtpClient and send
+                    var smtpClient = new SmtpClient(host: "smtp.sendgrid.net", port: Convert.ToInt32(value: 587));
+                    string userName = ConfigurationManager.AppSettings["smtpUserName"];
+                    string password = ConfigurationManager.AppSettings["smtpPassword"];
+                    var credentials = new System.Net.NetworkCredential(userName, password);
+                    smtpClient.Credentials = credentials;
+                    smtpClient.Send(mailMsg);
+                }
+                catch (Exception ex)
+                {
+                    
+                    var result = new { error = "Error sending mail!" };
+                    return Json(result);
+                }
             }
-            return View();
+            return new EmptyResult();
         }
     }
 }

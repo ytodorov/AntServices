@@ -15,7 +15,7 @@ namespace PingAllLocationsWebJob
     {      
         static void Main()
         {
-            var timer = new Timer(TimeSpan.FromMinutes(value: 5).TotalMilliseconds);
+            var timer = new Timer(TimeSpan.FromMinutes(value: 3).TotalMilliseconds);
             timer.Elapsed += Timer_Elapsed;
             timer.Start();
             PingAllLocations();          
@@ -38,7 +38,10 @@ namespace PingAllLocationsWebJob
             var GetDeployedServicesUrlAddresses = new List<string>()
 #pragma warning restore JustCode_NamingConventions // Naming conventions inconsistency
             {
-                "http://toolsfornet.com",
+                "https://toolsfornet.com",
+                 "https://toolsfornet.com/ping",
+                 "https://toolsfornet.com/faq",
+                 "https://toolsfornet.com/contactus",
                 "http://ants-ea.cloudapp.net", // "40.83.125.9",
                 "http://ants-je.cloudapp.net", // "13.71.155.140"
                 "http://ants-sea.cloudapp.net", // "13.76.100.42"
@@ -53,44 +56,51 @@ namespace PingAllLocationsWebJob
 
             foreach (var urlService in GetDeployedServicesUrlAddresses)
             {
-                Stopwatch sw = Stopwatch.StartNew();
-
-                using (HttpClient client = new HttpClient())
+                try
                 {
+                    Stopwatch sw = Stopwatch.StartNew();
 
-                    string encodedArgs0 = Uri.EscapeDataString(stringToEscape: " 8.8.8.8 --delay 10ms -v1");
-                    string res = client.GetStringAsync(urlService).Result;
-                    Console.WriteLine($"{sw.ElapsedMilliseconds} {urlService}");
-
-
-                }
-
-                using (HttpClient client = new HttpClient())
-                {
-                    sw = Stopwatch.StartNew();
-                    string encodedArgs0 = Uri.EscapeDataString(stringToEscape: " 8.8.8.8  --tcp -p 53 --delay 10ms -v1 -c 1");
-                    string url = $"{urlService}/home/exec?program=nping&args=" + encodedArgs0;
-                    string res = client.GetStringAsync(url).Result;
-                    if (res.Length > 100)
+                    using (HttpClient client = new HttpClient())
                     {
-                        res = res.Substring(startIndex: 0, length: 100);
-                    }
-                    Console.WriteLine($"{sw.ElapsedMilliseconds} nping");
-                }
-                using (HttpClient client = new HttpClient())
-                {
-                    sw = Stopwatch.StartNew();
-                    string encodedArgs0 = Uri.EscapeDataString(stringToEscape: " 8.8.8.8 -Pn -sn -n");
-                    string url = $"{urlService}/home/exec?program=nmap&args=" + encodedArgs0;
-                    string res = client.GetStringAsync(url).Result;
-                    if (res.Length > 100)
-                    {
-                        res = res.Substring(startIndex: 0, length: 100);
-                    }
-                    Console.WriteLine($"{sw.ElapsedMilliseconds} nmap");
-                }
 
-                Console.WriteLine(value: "--------------");
+                        string encodedArgs0 = Uri.EscapeDataString(stringToEscape: " 8.8.8.8 --delay 10ms -v1");
+                        string res = client.GetStringAsync(urlService).Result;
+                        Console.WriteLine($"{sw.ElapsedMilliseconds} {urlService}");
+
+
+                    }
+
+                    using (HttpClient client = new HttpClient())
+                    {
+                        sw = Stopwatch.StartNew();
+                        string encodedArgs0 = Uri.EscapeDataString(stringToEscape: " 8.8.8.8  --tcp -p 53 --delay 10ms -v1 -c 1");
+                        string url = $"{urlService}/home/exec?program=nping&args=" + encodedArgs0;
+                        string res = client.GetStringAsync(url).Result;
+                        if (res.Length > 100)
+                        {
+                            res = res.Substring(startIndex: 0, length: 100);
+                        }
+                        Console.WriteLine($"{sw.ElapsedMilliseconds} nping");
+                    }
+                    using (HttpClient client = new HttpClient())
+                    {
+                        sw = Stopwatch.StartNew();
+                        string encodedArgs0 = Uri.EscapeDataString(stringToEscape: " 8.8.8.8 -Pn -sn -n");
+                        string url = $"{urlService}/home/exec?program=nmap&args=" + encodedArgs0;
+                        string res = client.GetStringAsync(url).Result;
+                        if (res.Length > 100)
+                        {
+                            res = res.Substring(startIndex: 0, length: 100);
+                        }
+                        Console.WriteLine($"{sw.ElapsedMilliseconds} nmap");
+                    }
+
+                    Console.WriteLine(value: "--------------");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
 
             }
         }

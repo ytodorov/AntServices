@@ -85,6 +85,15 @@ document.write(unescape("%3Cscript src='" + tlJsHost + "trustlogo/javascript/tru
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDoER6oaWJAUFMNCCE8IkCGsIyHsbTE0Zw"></script>
     <script src="@Utils.Tag("/scripts/bundle.js")"></script>
     
+    @(Html.Kendo().Notification()
+    .Name("notification")
+    .Position(c => c.Top(0).Left(0))
+    .Width("100%")
+    .HideOnClick(true)
+    .AutoHideAfter(7000)    
+    .Deferred()
+    )
+
     <!-- Handler for local scripts -->
     @RenderSection("scripts", required: false)
 
