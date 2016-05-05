@@ -84,6 +84,21 @@ namespace UnitTests
             //}
             Assert.True(sitesFromXml.Contains(item: "http://toolsfornet.com/"));
         }
+        [Fact]
+        public void TopSitesGlobalTest()
+        {
+            List<string> topSites = Utils.TopSitesGlobal;
+            string line = "1,google.com";
+            try
+            {
+                string newTopSite = Utils.ParseSingleTopSite(line);
+                topSites.Add(newTopSite);
+            }
+            catch
+            {
 
+            }
+            Assert.True(topSites.Last() == "google.com");
+        }
     }
 }

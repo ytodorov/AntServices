@@ -30,36 +30,15 @@ namespace SmartAdminMvc.Infrastructure
             string pathPorts = HostingEnvironment.MapPath(virtualPath: "~/Misc/service-names-port-numbers.csv");
             WellKnownPorts = ParsePorts(pathPorts).Where(r => r != null).ToList();
 
-
             SitesFromXml = new List<string>();
             string xmlPath = "https://toolsfornet.com/sitemap.xml";
-            //    HostingEnvironment.MapPath(virtualPath: @"https://toolsfornet.com/sitemap.xml");
-            //string xmlUrl = xmlPath.Replace(oldValue: "https://", newValue: string.Empty);
             SitesFromXml = ParseXmlFromUrl(xmlPath).Where(r => r != null).ToList();
 
-
-            //TopSitesGlobal = Зареди тук сайтовете от файла Misc\TopSites като ги парснеш по подходящ начин. 
-            // накрая в TopSitesGlobal трябва да има 1000 сайта
             TopSitesGlobal = new List<string>();
+            string path = HostingEnvironment.MapPath(virtualPath: "~/Misc/TopSites.txt");
 
-            string path = System.Web.Hosting.HostingEnvironment.MapPath(virtualPath: "~/Misc/TopSites.txt");
-
-            if (!string.IsNullOrEmpty(path))
-            {
-                using (System.IO.StreamReader sr = new System.IO.StreamReader(path))
-                {
-                    while (!sr.EndOfStream)
-                    {
-                        string splitMe = sr.ReadLine();
-                        string[] rowsSplits = splitMe.Split(new char[] { ',' });
-                        if (rowsSplits.Length == 2)
-                        {
-                            TopSitesGlobal.Add(rowsSplits[1]);
-                        }
-                    }
-                }
-            }
-
+            TopSitesGlobal = ParseTopSites(path).Where(r => r != null).ToList();
+            
             GetDeployedServicesUrlAddresses = new List<string>()
             {
                 "http://ants-ea.cloudapp.net", // "40.83.125.9",
@@ -170,6 +149,27 @@ namespace SmartAdminMvc.Infrastructure
         public static List<string> SitesFromXml { get; set; }
 
         public static List<WellKnownPortViewModel> WellKnownPorts { get; set; }
+
+        public static string ParseSingleTopSite(string line)
+        {
+            return line.Split(new char[] { ',' })[1];
+        }
+
+        public static List<string> ParseTopSites(string path)
+        {
+            if (!string.IsNullOrEmpty(path))
+            {
+                using (StreamReader sr = new System.IO.StreamReader(path))
+                {
+                    while (!sr.EndOfStream)
+                    {
+                        string splitMe = sr.ReadLine();
+                        TopSitesGlobal.Add(ParseSingleTopSite(splitMe));
+                    }
+                }
+            }
+            return TopSitesGlobal;
+        }
 
         public static List<string> ParseXmlFromUrl(string url)
         {
