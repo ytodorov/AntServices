@@ -72,17 +72,17 @@ namespace UnitTests
         public void ParseXmlTest()
         {
             List<string> sitesFromXml = Utils.SitesFromXml;
-            string line = "<loc>google.com<loc>";
-            try
-            {
-                string newSite = Utils.ParseXmlSingleLine(line);
-                sitesFromXml.Add(newSite);
-            }
-            catch
-            {
+            //string line = "<loc>google.com<loc>";
+            //try
+            //{
+            //    string newSite = Utils.ParseXmlSingleLine(line);
+            //    sitesFromXml.Add(newSite);
+            //}
+            //catch
+            //{
 
-            }
-            Assert.True(sitesFromXml.Contains("google.com"));
+            //}
+            Assert.True(sitesFromXml.Contains(item: "http://toolsfornet.com/"));
         }
 
     }

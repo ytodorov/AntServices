@@ -15,6 +15,7 @@ using System.Web;
 using System.Web.Caching;
 using System.Web.Helpers;
 using System.Web.Hosting;
+using System.Xml;
 
 namespace SmartAdminMvc.Infrastructure
 {
@@ -31,7 +32,9 @@ namespace SmartAdminMvc.Infrastructure
 
 
             SitesFromXml = new List<string>();
-            string xmlPath = HostingEnvironment.MapPath(virtualPath: "https://toolsfornet.com/sitemap.xml");
+            string xmlPath = "https://toolsfornet.com/sitemap.xml";
+            //    HostingEnvironment.MapPath(virtualPath: @"https://toolsfornet.com/sitemap.xml");
+            //string xmlUrl = xmlPath.Replace(oldValue: "https://", newValue: string.Empty);
             SitesFromXml = ParseXmlFromUrl(xmlPath).Where(r => r != null).ToList();
 
 
@@ -168,31 +171,17 @@ namespace SmartAdminMvc.Infrastructure
 
         public static List<WellKnownPortViewModel> WellKnownPorts { get; set; }
 
-        public static string ParseXmlSingleLine(string line)
-        {
-            int pFrom = line.IndexOf(value: "<loc>") + "<loc>".Length;
-            int pTo = line.LastIndexOf(value: "</loc>");
-            return line.Substring(pFrom, pTo - pFrom);
-        }
-
         public static List<string> ParseXmlFromUrl(string url)
         {
-            if (!string.IsNullOrEmpty(url))
+            using (XmlReader sr = XmlReader.Create(url))
             {
-                using (StreamReader sr = new StreamReader(url))
+                var addressLines = new List<string>();
+                while (sr.Read())
                 {
-                    var addressLines = new List<string>();
-                    while (!sr.EndOfStream)
+                    if ((sr.NodeType == XmlNodeType.Element) && (sr.Name == "loc"))
                     {
-                        string splitMe = sr.ReadLine();
-                        if (splitMe.Contains(value: "<loc>"))
-                        {
-                            addressLines.Add(splitMe);
-                        }
-                    }
-                    foreach (var line in addressLines)
-                    {
-                        SitesFromXml.Add(ParseXmlSingleLine(line));
+                        sr.MoveToContent();
+                        SitesFromXml.Add(sr.ReadElementContentAsString().ToString());
                     }
                 }
             }
