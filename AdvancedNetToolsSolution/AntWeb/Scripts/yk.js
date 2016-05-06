@@ -96,6 +96,7 @@ $(window).ready(function myfunction() {
     //clipboard.on('error', function (e) {
     //});
     setTimeout(function pl() {
+        sessionStorage.setItem("isWindowActive", "true");
         var $ip = $("#ip");
         if ($ip.length != 0) {
             var arrOfPlaceholders = [];
@@ -114,7 +115,7 @@ $(window).ready(function myfunction() {
                 setTimeout(animateIpPlaceholder, 5000 * i, arrOfPlaceholders[i % arrOfPlaceholders.length]);
             }
         }
-    }, 2000);
+    }, 1000);
     // TODO: kendo.drawing gives an error
     // export pdf
     $(".pdfexportpage").click(function () {
