@@ -1,5 +1,6 @@
 ﻿#region Using
 
+using AntDal;
 using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
 using SmartAdminMvc.Extensions;
@@ -19,41 +20,26 @@ namespace SmartAdminMvc.Controllers
 
     public class TracerouteController : BaseController
     {
-        // GET: home/index
         public ActionResult Index(int? id)
         {
-            if (id == 123)
-            {
-               var result =  MemoryCache.Default.Get(key: "123")as string;
-                return View(model: result);
-            }
             return View();
         }
 
-        public ActionResult Read([DataSourceRequest] DataSourceRequest request, string ip)
+        [HttpPost]
+        public ActionResult GenerateId(TracerouteRequestViewModel prvm, AntDbContext context)
         {
             using (HttpClient client = new HttpClient())
             {
-                string encodedArgs = Uri.EscapeDataString($" --traceroute -sn -n {ip}");
+                string encodedArgs = Uri.EscapeDataString($" --traceroute -sn -n {prvm.Ip}");
                 string url = "http://ants-neu.cloudapp.net/home/exec?program=nmap&args=" + encodedArgs;
                 string tracerouteSummary = client.GetStringAsync(url).Result;
 
                 List<TraceRouteReplyViewModel> list = TraceRouteParser.ParseSummary(tracerouteSummary);
 
-                JsonResult dsResult = Json(list.ToDataSourceResult(request));
-                return dsResult;
+             
             }
+            return null;
         }
-
-        [HttpPost]
-        public ActionResult SaveResultHtml(string resultHtmlBase64)
-        {
-            string resultHtml = resultHtmlBase64.Base64Decode();
-
-            MemoryCache.Default.Add(key: "123", value: resultHtml, policy: null);
-
-            return new EmptyResult();
-        }
-
+        
     }
 }

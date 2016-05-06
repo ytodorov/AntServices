@@ -1,0 +1,77 @@
+﻿@model PortPermalinkViewModel
+
+@{
+    //ViewBag.Title = "Ping";
+    //ViewBag.MetaDescription = "Free distributed web-based ping service. Pings simultaneously from many locations to check if a host is online and measure round-trip times.";
+}
+<div class="normalheader transition animated fadeIn small-header">
+    <div class="hpanel">
+        <div class="panel-body">
+            <div id="hbreadcrumb" class="pull-right">
+                <ol class="hbreadcrumb breadcrumb">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/portscan">Port scan</a></li>
+                </ol>
+            </div>
+            <h2 class="font-light m-b-xs">
+                Port scan
+            </h2>
+            <small>Probe a server or host for open ports.</small>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("_Addresses", new AddressViewModel()
+{
+    ButtonId = "btnPortScan",
+    ButtonText = "Port scan",
+    DefaultDestinationAddress = Model?.DestinationAddress,
+    PanelTitle = ""
+}
+)
+
+@if (Model != null)
+{
+
+    @Html.Raw((Html.AntCreateStandardPanel("hyellow", "Table: Round-trip times and latencies in ms.", "<p>" +
+        Html.Kendo().Grid<PortResponseSummaryViewModel>()
+        .Name("portResultsGrid")
+        .Columns(columns =>
+        {
+            columns.Bound(c => c.PortNumber).Title("Port");
+            columns.Bound(c => c.Protocol);
+            columns.Bound(c => c.Service);
+            columns.Bound(c => c.State);
+            columns.Bound(c => c.Version);
+        })
+        .Scrollable(s => s.Enabled(false))
+        .ToolBar(t =>
+        {
+            t.Excel().Text(string.Empty);
+            t.Pdf().Text(string.Empty);
+        })
+        .Excel(e =>
+        e.FileName("portExportHistory(www.toolsfornet.com).xlsx").ProxyURL(Url.Action("Excel", "Export"))
+
+         .Filterable(true)
+        .ProxyURL(Url.Action("Excel", "Export"))
+        )
+        .Pdf(e => e.AllPages().FileName("portExportHistory(www.toolsfornet.com).pdf").ProxyURL(Url.Action("Pdf", "Export")))
+        .DataSource(dataSource => dataSource
+            .Ajax()
+            .ServerOperation(false)
+
+        )
+        .BindTo(Model?.PortResponseSummaries)
+        .Deferred().ToHtmlString() + "</p>")))
+
+}
+
+
+
+
+@section scripts {
+       
+    <script src="~/scripts/viewsjs/portscanindex.js"></script>
+
+}

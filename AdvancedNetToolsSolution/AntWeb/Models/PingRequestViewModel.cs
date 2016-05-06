@@ -5,25 +5,11 @@ using System.Web;
 
 namespace SmartAdminMvc.Models
 {
-    public class PingRequestViewModel
+    public class TracerouteRequestViewModel
     {
         public string Ip { get; set; }
 
         public bool? ShowInHistory { get; set; }
-
-        public int PacketsCount { get; set; }
-
-        public int PacketsSize { get; set; }
-
-        public int DelayBetweenPings { get; set; }
-
-
-        public int Ttl { get; set; }
-
-        public bool Df { get; set; }
-
-      
-
 
     }
 }

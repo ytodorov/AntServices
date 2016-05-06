@@ -15,7 +15,7 @@ using AutoMapper;
 
 namespace SmartAdminMvc.Controllers
 {
-    public class PortsController : Controller
+    public class PortscanController : Controller
     {
         // GET: home/index
         public ActionResult Index(int? id)

@@ -1542,6 +1542,8 @@
     <Content Include="Scripts\speech\voicecommand.min.js" />
     <Content Include="Scripts\viewsJS\homeIndex.js" />
     <Content Include="Scripts\viewsJS\pingIndex.js" />
+    <Content Include="Scripts\viewsJS\portScanIndex.js" />
+    <Content Include="Scripts\viewsJS\traceRouteIndex.js" />
     <Content Include="Scripts\yk.js" />
     <Content Include="sitemap.xml" />
     <Content Include="Vendor\animate.css\animate.css" />
@@ -1787,15 +1789,10 @@
     <Content Include="Scripts\plugin\ckeditor\samples\plugins\htmlwriter\assets\outputforflash\outputforflash.fla" />
     <Content Include="Scripts\plugin\ckeditor\skins\moono\readme.md" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Shared\_Aside.cshtml" />
-    <Content Include="Views\Shared\_CurrentUser.cshtml" />
     <Content Include="Views\Shared\_Footer.cshtml" />
     <Content Include="Views\Shared\_Header.cshtml" />
-    <Content Include="Views\Shared\_Ribbon.cshtml" />
     <Content Include="Views\Shared\_Scripts.cshtml" />
     <Content Include="Views\Shared\_TermsAndConditions.cshtml" />
-    <Content Include="Views\Shared\_Tiles.cshtml" />
-    <Content Include="Views\Shared\_TopRight.cshtml" />
     <Content Include="Scripts\plugin\bootstrap-tags\dist\bootstrap-tagsinput.min.js.map" />
     <Content Include="Views\Ping\Index.cshtml" />
     <Content Include="Views\Traceroute\Index.cshtml" />
@@ -1803,7 +1800,7 @@
     <Content Include="Views\MyIp\Index.cshtml" />
     <Content Include="Views\Speedtest\Index.cshtml" />
     <Content Include="Views\Test\Index.cshtml" />
-    <Content Include="Views\Ports\Index.cshtml" />
+    <Content Include="Views\Portscan\Index.cshtml" />
     <Content Include="Views\Shared\_Navigation.cshtml" />
     <Content Include="Vendor\animate.css\.bower.json" />
     <Content Include="Vendor\animate.css\.editorconfig" />
@@ -1959,8 +1956,6 @@
     <Content Include="Vendor\ladda\README.md" />
     <Content Include="Views\ContactUs\Index.cshtml" />
     <Content Include="Vendor\toastr\build\toastr.js.map" />
-    <Content Include="Views\Shared\Error500.cshtml" />
-    <Content Include="Views\Shared\Error404.cshtml" />
     <Content Include="Views\Faq\Index.cshtml" />
     <Content Include="tsconfig.json" />
     <Content Include="Views\ErrorLogging\Index.cshtml" />
@@ -2010,7 +2005,7 @@
     <Compile Include="Controllers\FaqController.cs" />
     <Compile Include="Controllers\InterfaceController.cs" />
     <Compile Include="Controllers\MyIpController.cs" />
-    <Compile Include="Controllers\PortsController.cs" />
+    <Compile Include="Controllers\PortscanController.cs" />
     <Compile Include="Controllers\SpeedtestController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\WhoisController.cs" />
@@ -2073,6 +2068,8 @@
     <Compile Include="Models\ErrorLoggingViewModel.cs" />
     <Compile Include="Models\IpLocationViewModel.cs" />
     <Compile Include="Models\PermalinkBaseViewModel.cs" />
+    <Compile Include="Models\TracerouteRequestViewModel.cs" />
+    <Compile Include="Models\TraceroutePermalinkViewModel.cs" />
     <Compile Include="Models\PingPermalinkViewModel.cs" />
     <Compile Include="Models\PingResponseSummaryViewModel.cs" />
     <Compile Include="Models\PingReplyViewModel.cs" />
@@ -2113,6 +2110,8 @@
     <TypeScriptCompile Include="Scripts\typings\ladda\ladda.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\toastr\toastr.d.ts" />
     <TypeScriptCompile Include="Scripts\viewsJS\homeIndex.ts" />
+    <TypeScriptCompile Include="Scripts\viewsJS\portScanIndex.ts" />
+    <TypeScriptCompile Include="Scripts\viewsJS\traceRouteIndex.ts" />
     <TypeScriptCompile Include="Scripts\viewsJS\pingIndex.ts" />
     <TypeScriptCompile Include="Scripts\yk.ts" />
   </ItemGroup>
