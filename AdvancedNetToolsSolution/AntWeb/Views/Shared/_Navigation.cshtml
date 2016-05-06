@@ -1,4 +1,9 @@
 ﻿<div id="navigation">
+    <div class="profile-picture">
+        <a href="/">
+            Hello @Request.UserHostAddress
+        </a>
+    </div>
     <ul class="nav metismenu" id="side-menu">
         <li class="@Html.IsSelected(controller: "home")">
             <a href="@Url.Action("Index", "Home")" title="Home">
@@ -33,16 +38,16 @@
         <li class="@Html.IsSelected(controller: "contactus")">
             <a href="@Url.Action("Index", "ContactUs")" title="Contact Us">
                 <span class="text-success pull-left"><i class="pe-7s-mail" style="font-size:large"></i></span>&nbsp;
-                <span class="nav-label">Contact Us</span>              
+                <span class="nav-label">Contact Us</span>
             </a>
         </li>
         @*Това не трябва да се вижда. Ще се достъпва само директно по URL*@
         @*<li class="@Html.IsSelected(action: "Index")">
-            <a href="@Url.Action("Index", "ErrorLogging")" title="Errors">
-                <span class="text-success pull-left"><i class="pe-7s-mail" style="font-size:large"></i></span>&nbsp;
-                <span class="nav-label">Errors</span>
-            </a>
-        </li>*@
+                <a href="@Url.Action("Index", "ErrorLogging")" title="Errors">
+                    <span class="text-success pull-left"><i class="pe-7s-mail" style="font-size:large"></i></span>&nbsp;
+                    <span class="nav-label">Errors</span>
+                </a>
+            </li>*@
     </ul>
 </div>
 
