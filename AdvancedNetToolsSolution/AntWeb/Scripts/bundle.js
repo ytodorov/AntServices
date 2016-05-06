@@ -328,6 +328,7 @@ $(window).ready(function myfunction() {
         // convert the dom element to a drawing using kendo.drawing.drawdom
         kendo.drawing.drawDOM($("#divbody"), null)
             .then(function (group) {
+            debugger;
             // render the result as a pdf file
             return kendo.drawing.exportPDF(group, {
                 paperSize: "auto",
@@ -336,6 +337,7 @@ $(window).ready(function myfunction() {
         })
             .done(function (data) {
             // save the pdf file
+            debugger;
             kendo.saveAs({
                 datauri: data,
                 filename: "toolsfornet" + new Date().getDate() + ".pdf",

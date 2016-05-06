@@ -12,6 +12,12 @@
                 <span class="nav-label">Ping</span>
             </a>
         </li>
+        <li class="@Html.IsSelected(controller: "traceroute")">
+            <a href="@Url.Action("Index", "TraceRoute")" title="TraceRoute">
+                <span class="text-success pull-left"><i class="pe-7s-science" style="font-size:large"></i></span>&nbsp;
+                <span class="nav-label">Traceroute</span>
+            </a>
+        </li>
         @*<li class="@Html.IsSelected(action: "Index")">
             <a href="javascript:void()">
                 <span class="text-success pull-left"><i class="pe-7s-science" style="font-size:large"></i></span>&nbsp;

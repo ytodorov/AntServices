@@ -1965,6 +1965,7 @@
     <Content Include="tsconfig.json" />
     <Content Include="Views\ErrorLogging\Index.cshtml" />
     <Content Include="Scripts\jquery-2.2.3.min.map" />
+    <Content Include="Views\Shared\_Addresses.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -2067,6 +2068,7 @@
     <Compile Include="Infrastructure\Utils.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AddressHistoryViewModel.cs" />
+    <Compile Include="Models\AddressViewModel.cs" />
     <Compile Include="Models\ErrorBaseViewModel.cs" />
     <Compile Include="Models\ErrorLoggingViewModel.cs" />
     <Compile Include="Models\IpLocationViewModel.cs" />
