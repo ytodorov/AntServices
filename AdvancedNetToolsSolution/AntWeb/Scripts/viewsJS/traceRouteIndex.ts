@@ -1,8 +1,5 @@
-﻿debugger;
-$("#btnTraceRoute").click(function btnTraceRoute(e) {
+﻿$("#btnTraceRoute").click(function btnTraceRoute(e) {
     e.preventDefault();
-
-    debugger;
 
     var l = $("#btnTraceRoute").ladda();
 

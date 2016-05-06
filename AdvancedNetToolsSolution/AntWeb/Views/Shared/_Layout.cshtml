@@ -27,12 +27,7 @@
 
     <link rel="stylesheet" href="~/content/kendo/kendo.common.min.css">
     <link rel="stylesheet" href="~/content/kendo/kendo.metro.min.css">
-    <script type="text/javascript">
- //<![CDATA[
-var tlJsHost = ((window.location.protocol == "https:") ? "https://secure.comodo.com/" : "http://www.trustlogo.com/");
-document.write(unescape("%3Cscript src='" + tlJsHost + "trustlogo/javascript/trustlogo.js' type='text/javascript'%3E%3C/script%3E"));
-//]]>
-    </script>
+
 </head>
 <body class="@Html.PageClass() fixed-footer hide-sidebar">
 
@@ -82,26 +77,36 @@ document.write(unescape("%3Cscript src='" + tlJsHost + "trustlogo/javascript/tru
 
     </div>
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDoER6oaWJAUFMNCCE8IkCGsIyHsbTE0Zw"></script>
-    <script src="@Utils.Tag("/scripts/bundle.js")"></script>
     
+
+
     @(Html.Kendo().Notification()
     .Name("notification")
     .Position(c => c.Top(0).Left(0))
     .Width("100%")
     .HideOnClick(true)
-    .AutoHideAfter(7000)    
+    .AutoHideAfter(7000)
     .Deferred()
     )
 
-    <!-- Handler for local scripts -->
-    @RenderSection("scripts", required: false)
 
-    @Html.Kendo().DeferredScripts()
+
+
     <script type="text/javascript">
         window.cookieconsent_options = { "message": "This website uses cookies to ensure you get the best experience on our website", "dismiss": "Got it!", "learnMore": "More info", "link": null, "theme": "light-top" };
     </script>
     <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-571b2acff4b44bbf"></script>
-
+    <script type="text/javascript">
+ //<![CDATA[
+var tlJsHost = ((window.location.protocol == "https:") ? "https://secure.comodo.com/" : "http://www.trustlogo.com/");
+document.write(unescape("%3Cscript src='" + tlJsHost + "trustlogo/javascript/trustlogo.js' type='text/javascript'%3E%3C/script%3E"));
+//]]>
+    </script>
+    <script src="@Utils.Tag("/scripts/bundle.js")"></script>
+    @Html.Kendo().DeferredScripts()
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDoER6oaWJAUFMNCCE8IkCGsIyHsbTE0Zw"></script>
+    <!-- Handler for local scripts -->
+    @RenderSection("scripts", required: false)
 </body>
+
 </html>

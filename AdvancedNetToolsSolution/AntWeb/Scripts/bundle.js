@@ -238,6 +238,7 @@ function resizeGrids() {
     }
 }
 $(document).ready(function docReady() {
+    //$("#trustLogoLi").contents('<script type="text/javascript" >TrustLogo("https://toolsfornet.com/content/img/comodo/comodo_secure_seal_76x26_transp.png", "CL1", "none");</script>');
     var isMenuVisible = $.cookie('isMenuVisible');
     if (isMenuVisible != null) {
         var $body = $("body");
@@ -324,14 +325,12 @@ $(window).ready(function myfunction() {
     // TODO: kendo.drawing gives an error
     // export pdf
     $(".pdfexportpage").click(function () {
-        debugger;
         // тук скриваме и след това показваме някои части, които пречат на хубаво генериран експорт
         $("#divfooter").hide();
         $(".addthis_sharing_toolbox").hide();
         // convert the dom element to a drawing using kendo.drawing.drawdom
         kendo.drawing.drawDOM($("#divbody"), null)
             .then(function (group) {
-            debugger;
             // render the result as a pdf file
             return kendo.drawing.exportPDF(group, {
                 paperSize: "auto",
@@ -340,7 +339,6 @@ $(window).ready(function myfunction() {
         })
             .done(function (data) {
             // save the pdf file
-            debugger;
             kendo.saveAs({
                 datauri: data,
                 filename: "toolsfornet" + new Date().getDate() + ".pdf",
@@ -418,7 +416,6 @@ function animateIpPlaceholder(txt) {
             var type = txt.substring(0, char);
             $ip.attr('placeholder', type + '|');
             var visible = sessionStorage.getItem("isWindowActive") === "true";
-            debugger;
             if (visible) {
                 typeIt();
             }
