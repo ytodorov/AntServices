@@ -95,24 +95,26 @@ $(window).ready(function myfunction() {
     //});
     //clipboard.on('error', function (e) {
     //});
-    var $ip = $("#ip");
-    if ($ip.length != 0) {
-        var arrOfPlaceholders = [];
-        arrOfPlaceholders[0] = "google.com";
-        arrOfPlaceholders[1] = "www.yahoo.com";
-        arrOfPlaceholders[2] = "http://www.facebook.com";
-        arrOfPlaceholders[3] = "ftp://ftp.microsoft.com/";
-        arrOfPlaceholders[4] = "https://weather.com/en-GB";
-        arrOfPlaceholders[5] = "8.8.8.8";
-        arrOfPlaceholders[6] = "172.217.3.238";
-        arrOfPlaceholders[7] = "https://en.wikipedia.org/wiki/Main_Page";
-        arrOfPlaceholders[8] = "https://www.youtube.com/";
-        arrOfPlaceholders[9] = "134.170.188.232";
-        arrOfPlaceholders[10] = "216.58.212.142";
-        for (var i = 0; i < arrOfPlaceholders.length * 1000; i++) {
-            setTimeout(animateIpPlaceholder, 5000 * i, arrOfPlaceholders[i % arrOfPlaceholders.length]);
+    setTimeout(function pl() {
+        var $ip = $("#ip");
+        if ($ip.length != 0) {
+            var arrOfPlaceholders = [];
+            arrOfPlaceholders[0] = "google.com";
+            arrOfPlaceholders[1] = "www.yahoo.com";
+            arrOfPlaceholders[2] = "http://www.facebook.com";
+            arrOfPlaceholders[3] = "ftp://ftp.microsoft.com/";
+            arrOfPlaceholders[4] = "https://weather.com/en-GB";
+            arrOfPlaceholders[5] = "8.8.8.8";
+            arrOfPlaceholders[6] = "172.217.3.238";
+            arrOfPlaceholders[7] = "https://en.wikipedia.org/wiki/Main_Page";
+            arrOfPlaceholders[8] = "https://www.youtube.com/";
+            arrOfPlaceholders[9] = "134.170.188.232";
+            arrOfPlaceholders[10] = "216.58.212.142";
+            for (var i = 0; i < arrOfPlaceholders.length * 1000; i++) {
+                setTimeout(animateIpPlaceholder, 5000 * i, arrOfPlaceholders[i % arrOfPlaceholders.length]);
+            }
         }
-    }
+    }, 2000);
     // TODO: kendo.drawing gives an error
     // export pdf
     $(".pdfexportpage").click(function () {
@@ -204,13 +206,19 @@ function animateIpPlaceholder(txt) {
     (function typeIt() {
         var humanize = Math.round(Math.random() * (200 - 30)) + 30;
         timeOut = setTimeout(function () {
-            var visible;
             //visible = vis(); // gives current state
             //if (visible) {
             char++;
             var type = txt.substring(0, char);
             $ip.attr('placeholder', type + '|');
-            typeIt();
+            var visible = sessionStorage.getItem("isWindowActive") === "true";
+            debugger;
+            if (visible) {
+                typeIt();
+            }
+            else {
+                $ip.attr('placeholder', txt);
+            }
             if (char == txtLen) {
                 $ip.attr('placeholder', $ip.attr('placeholder').slice(0, -1)); // remove the '|'
                 clearTimeout(timeOut);
@@ -241,4 +249,18 @@ var vis = (function () {
         return !document[stateKey];
     };
 })();
+$(window).on("blur focus", function (e) {
+    var prevType = $(this).data("prevType");
+    if (prevType != e.type) {
+        switch (e.type) {
+            case "blur":
+                sessionStorage.setItem("isWindowActive", "false");
+                break;
+            case "focus":
+                sessionStorage.setItem("isWindowActive", "true");
+                break;
+        }
+    }
+    $(this).data("prevType", e.type);
+});
 //# sourceMappingURL=yk.js.map

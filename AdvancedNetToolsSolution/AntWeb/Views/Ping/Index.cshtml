@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Ping";
-    ViewBag.MetaDescription = "Free distributed web-based ping service. Pings simultaneously from many locations to check if a host is online and measure round-trip times.";
+    ViewBag.MetaDescription = "Free distributed online ping service. Ping simultaneously from many locations to check if a host is online and measure round-trip times.";
 }
 <div class="normalheader transition animated fadeIn small-header">
     <div class="hpanel">
@@ -37,8 +37,9 @@
 {
     ButtonId = "btnPing",
     ButtonText = "Ping",
-    DefaultDestinationAddress = Model?.DestinationAddress,
-    PanelTitle = " Ping an IP address or host name"
+    DefaultDestinationAddress = Model?.DestinationAddress
+    //,
+    //PanelTitle = " Ping an IP address or host name"
 }
 )
 
