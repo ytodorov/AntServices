@@ -238,7 +238,6 @@ function resizeGrids() {
     }
 }
 $(document).ready(function docReady() {
-    //$("#trustLogoLi").contents('<script type="text/javascript" >TrustLogo("https://toolsfornet.com/content/img/comodo/comodo_secure_seal_76x26_transp.png", "CL1", "none");</script>');
     var isMenuVisible = $.cookie('isMenuVisible');
     if (isMenuVisible != null) {
         var $body = $("body");
@@ -254,6 +253,7 @@ $(document).ready(function docReady() {
         var isMenuVisible = $("body.hide-sidebar").length == 0;
         $.cookie('isMenuVisible', isMenuVisible);
     });
+    //$("#trustLogoLi").append('<script type="text/javascript" >TrustLogo("https://toolsfornet.com/content/img/comodo/comodo_secure_seal_76x26_transp.png", "CL1", "none");</script>');
 });
 /* Back to top */
 (function () {
