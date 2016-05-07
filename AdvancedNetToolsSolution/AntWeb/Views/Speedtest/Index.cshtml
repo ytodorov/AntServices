@@ -36,7 +36,7 @@
 
                     var downloadLength = numerictextbox.value();
                     $.ajax({
-                        async: false,
+                        async: true,
                         AcceptEncoding: "text/plain",
                         url: "/speedtest/download?downloadLength=" + acurrentDownloadLength + "&marker=" + marker,
                         cache: false
@@ -70,7 +70,7 @@
 
                     var uploadString = CreateRandomString(currentDownloadLength);
                     $.ajax({
-                        async: false,
+                        async: true,
                         method: "POST",
                         AcceptEncoding: "text/plain",
                         url: "/speedtest/upload?marker=" + marker,
