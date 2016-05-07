@@ -27,8 +27,9 @@
             $("#btnDownload").click(function btnDownloadClick() {
                 var numerictextbox = $("#tbDownloadLength").data("kendoNumericTextBox");
                 // use markes so performance.getEntriesByName is unique
-
-                for (var i = 0; i < 7; i++) {
+                $("#result").append("downloadStart" + '<br />');
+                for (var i = 0; i < 6; i++) {
+                    $("#result").append("downloadStart" + i + '<br />');
                     var currentDownloadLength = Math.pow(10, i);    // 49
                     // 10 ^ 7 = 10 MB
                     var marker = new Date().getTime();
@@ -54,10 +55,13 @@
 
 
             $("#btnUpload").click(function btnUploadClick() {
+                $("#result").append("uploadStart" + '<br />');
+
                 var numerictextbox = $("#tbDownloadLength").data("kendoNumericTextBox");
 
                 
-                for (var i = 0; i < 7; i++) {
+                for (var i = 0; i < 6; i++) {
+                    $("#result").append("uploadStart" + i + '<br />');
                     var currentDownloadLength = Math.pow(10, i);    // 49
 
                     // use markes so performance.getEntriesByName is unique
