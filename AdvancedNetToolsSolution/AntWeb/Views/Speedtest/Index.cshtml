@@ -14,11 +14,12 @@
         //alert(performance.timing);
         //alert(performance.timing.connectEnd);
 
-        var entr = performance.getEntries();
-        debugger;
-        for (var i = 0; i < entr.length; i++) {
-            alert(entr[i].toString())
-        }
+        //var entr = performance.getEntries();
+        
+        //debugger;
+        //for (var i = 0; i < entr.length; i++) {
+        //    alert(entr[i].toString())
+        //}
 
         function CreateRandomString(char) {
             var text = "";
@@ -49,23 +50,19 @@
                     $.ajax({
                         async: false,
                         url: "/speedtest/download?downloadLength=" + currentDownloadLength + "&marker=" + marker,
+                        beforeSend: function myfunction() {
+                            sessionStorage.setItem("start", performance.now());
+                            
+                        },
                         success: function f(stringWithTicks) {
-                           
-                            
-                            //var n = stringWithTicks.indexOf("_ticks_");
-                            //var ticksAsString = stringWithTicks.substring(n + "_ticks_".length);
-                            //var ticksInt = parseInt(ticksAsString);
-                            //var tickNow = ((new Date().getTime() * 10000) + 621355968000000000);
+                            var start = sessionStorage.getItem("start");
+                            var now = parseInt(performance.now());
+                            var diff = now - start;
+                            $("#result").append(diff + ' download of ' + currentDownloadLength + '<br />');
 
-                            //var diff = tickNow - ticksInt;
-                            //var myDate = new Date(diff);
-
-                            //$("#result").append(' download of ' + currentDownloadLength + '<br />');
-                            debugger;
-                            
-                            var performanceLastRequest = performance.getEntriesByName(location.origin + this.url);
-                            var timeInMilliseconds = performanceLastRequest[0].responseEnd - performanceLastRequest[0].responseStart;
-                            $("#result").append(timeInMilliseconds + ' download of ' + currentDownloadLength + '<br />');
+                            //var performanceLastRequest = performance.getEntriesByName(location.origin + this.url);
+                            //var timeInMilliseconds = performanceLastRequest[0].responseEnd - performanceLastRequest[0].responseStart;
+                            //$("#result").append(timeInMilliseconds + ' download of ' + currentDownloadLength + '<br />');
                         }
                     })
                 }
@@ -95,11 +92,19 @@
                         method: "POST",
                         url: "/speedtest/upload?marker=" + marker,
                         data: { uploadString: uploadString },
+                        beforeSend: function myfunction() {
+                            sessionStorage.setItem("start", performance.now());
+
+                        },
                         success: function f(id) {
+                            var start = sessionStorage.getItem("start");
+                            var now = parseInt(performance.now());
+                            var diff = now - start;
+                            $("#result").append(diff + ' download of ' + currentDownloadLength + '<br />');
                             //$("#result").append(' upload of ' + currentDownloadLength + '<br />');
-                            var performanceLastRequest = performance.getEntriesByName(location.origin + this.url);
-                            var timeInMilliseconds = performanceLastRequest[0].responseStart - performanceLastRequest[0].requestStart;
-                            $("#result").append(timeInMilliseconds + ' upload of ' + currentDownloadLength + '<br />');
+                            //var performanceLastRequest = performance.getEntriesByName(location.origin + this.url);
+                            //var timeInMilliseconds = performanceLastRequest[0].responseStart - performanceLastRequest[0].requestStart;
+                            //$("#result").append(timeInMilliseconds + ' upload of ' + currentDownloadLength + '<br />');
                         }
                     });
                 }

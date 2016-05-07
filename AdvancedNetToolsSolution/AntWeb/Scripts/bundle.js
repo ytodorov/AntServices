@@ -225,7 +225,7 @@ var Ant;
     Ant.Global = Global;
 })(Ant || (Ant = {}));
 window.antGlobal = new Ant.Global();
-
+//# sourceMappingURL=antGlobal.js.map
 $(window).resize(function () {
     //заради менюто което се премахва на малък екран   
     setTimeout(function () {
@@ -461,3 +461,4 @@ $(window).on("error", function (e) {
     debugger;
     window.antGlobal.showNotification(e.originalEvent.error.message, "error");
 });
+//# sourceMappingURL=yk.js.map
