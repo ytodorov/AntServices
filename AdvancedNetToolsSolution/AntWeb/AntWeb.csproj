@@ -963,6 +963,7 @@
     <None Include="Properties\PublishProfiles\SmartAdmin - Release.pubxml" />
     <None Include="Properties\PublishProfiles\SmartAdmin - Debug.pubxml" />
     <Content Include="robots.txt" />
+    <Content Include="Scripts\antGlobal.js" />
     <Content Include="Scripts\app.config.js" />
     <Content Include="Scripts\app.min.js" />
     <Content Include="Scripts\bootstrap\bootstrap.min.js" />
@@ -2113,6 +2114,7 @@
     <TypeScriptCompile Include="Scripts\viewsJS\portScanIndex.ts" />
     <TypeScriptCompile Include="Scripts\viewsJS\traceRouteIndex.ts" />
     <TypeScriptCompile Include="Scripts\viewsJS\pingIndex.ts" />
+    <TypeScriptCompile Include="Scripts\antGlobal.ts" />
     <TypeScriptCompile Include="Scripts\yk.ts" />
   </ItemGroup>
   <PropertyGroup>

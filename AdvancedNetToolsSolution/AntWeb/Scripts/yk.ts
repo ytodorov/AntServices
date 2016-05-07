@@ -180,44 +180,7 @@ $(window).ready(function myfunction() {
 
     });
 
-    //$("#pngexportpage").click(function () {
-    //    // convert the dom element to a drawing using kendo.drawing.drawdom
-    //    var draw = kendo.drawing;
-
-    //    draw.drawDOM($("#divbody"))
-    //    .then(function (group) {
-    //        // render the result as a png image
-    //        return draw.exportImage(group);
-    //    })
-    //    .done(function (data) {
-    //        // save the image file
-    //        kendo.saveAs({
-    //            datauri: data,
-    //            filename: "toolsfornet" + new Date().getDate() + ".png",
-    //            proxyurl: "@url.action('pdf', 'export')"
-    //        });
-    //    });
-    //});
-
-    //$("#svgexportpage").click(function () {
-
-    //    // convert the dom element to a drawing using kendo.drawing.drawdom
-    //    var draw = kendo.drawing;
-    //    draw.drawDOM($("#divbody"))
-    //    .then(function (group) {
-    //        // render the result as a svg document
-    //        return draw.exportSVG(group);
-    //    })
-    //    .done(function (data) {
-    //        // save the svg document
-    //        kendo.saveAs({
-    //            datauri: data,
-    //            filename: "toolsfornet" + new Date().getDate() + ".svg",
-    //            proxyurl: "@url.action('pdf', 'export')"
-    //        });
-    //    });
-    //});
-
+   
 
 })
 
@@ -313,4 +276,10 @@ $(window).on("blur focus", function (e) {
     }
 
     $(this).data("prevType", e.type);
-})
+});
+
+$(window).on("error", function (e : any) {
+    debugger;
+    window.antGlobal.showNotification(e.originalEvent.error.message, "error");
+
+});
