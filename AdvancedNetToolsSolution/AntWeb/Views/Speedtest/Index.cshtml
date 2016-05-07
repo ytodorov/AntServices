@@ -5,7 +5,9 @@
 <input type="number" id="tbDownloadLength" />
 <input type="text" id="tbDownloadResult" class="k-textbox" />
 
-@section pagespecific {
+<div id="result"></div>
+
+@section scripts {
     <script>
         function CreateRandomString(char) {
             var text = "";
@@ -25,19 +27,28 @@
             $("#btnDownload").click(function btnDownloadClick() {
                 var numerictextbox = $("#tbDownloadLength").data("kendoNumericTextBox");
                 // use markes so performance.getEntriesByName is unique
-                var marker = new Date().getTime();
-                
-                var downloadLength = numerictextbox.value();
-                $.ajax({
-                    AcceptEncoding: "text/plain",
-                    url: "/speedtest/download?downloadLength=" + downloadLength + "&marker=" + marker,
-                    cache: false
-                })
-                  .done(function (html) {
-                      var performanceLastRequest = performance.getEntriesByName(location.origin + this.url);
-                      var timeInMilliseconds = performanceLastRequest[0].responseEnd - performanceLastRequest[0].responseStart;
-                      $("#tbDownloadResult").val(timeInMilliseconds);
-                  });
+
+                for (var i = 0; i < 7; i++) {
+                    var currentDownloadLength = Math.pow(10, i);    // 49
+                    // 10 ^ 7 = 10 MB
+                    var marker = new Date().getTime();
+
+                    var downloadLength = numerictextbox.value();
+                    $.ajax({
+                        async: false,
+                        AcceptEncoding: "text/plain",
+                        url: "/speedtest/download?downloadLength=" + currentDownloadLength + "&marker=" + marker,
+                        cache: false
+                    })
+                      .done(function (html) {
+                          var performanceLastRequest = performance.getEntriesByName(location.origin + this.url);
+                          var timeInMilliseconds = performanceLastRequest[0].responseEnd - performanceLastRequest[0].responseStart;
+                          $("#result").append(timeInMilliseconds + ' download of ' + currentDownloadLength + '<br />');
+                      });
+
+                }
+
+               
             });
 
 
@@ -45,25 +56,30 @@
             $("#btnUpload").click(function btnUploadClick() {
                 var numerictextbox = $("#tbDownloadLength").data("kendoNumericTextBox");
 
-                // use markes so performance.getEntriesByName is unique
-                var marker = new Date().getTime();            
+                
+                for (var i = 0; i < 7; i++) {
+                    var currentDownloadLength = Math.pow(10, i);    // 49
 
-                var downloadLength = numerictextbox.value();
+                    // use markes so performance.getEntriesByName is unique
+                    var marker = new Date().getTime();
 
-                var uploadString = CreateRandomString(downloadLength);
-                $.ajax({
-                    method: "POST",
-                    AcceptEncoding: "text/plain",
-                    url: "/speedtest/upload?marker=" + marker,
-                    data: {uploadString: uploadString},
-                    cache: false
-                })
-                  .done(function (html) {
-                      
-                      var performanceLastRequest = performance.getEntriesByName(location.origin + this.url);
-                      var timeInMilliseconds = performanceLastRequest[0].responseStart - performanceLastRequest[0].requestStart;
-                      $("#tbDownloadResult").val(timeInMilliseconds);
-                  });
+
+                    var uploadString = CreateRandomString(currentDownloadLength);
+                    $.ajax({
+                        async: false,
+                        method: "POST",
+                        AcceptEncoding: "text/plain",
+                        url: "/speedtest/upload?marker=" + marker,
+                        data: { uploadString: uploadString },
+                        cache: false
+                    })
+                      .done(function (html) {
+
+                          var performanceLastRequest = performance.getEntriesByName(location.origin + this.url);
+                          var timeInMilliseconds = performanceLastRequest[0].responseStart - performanceLastRequest[0].requestStart;
+                          $("#result").append(timeInMilliseconds + ' upload of ' + currentDownloadLength + '<br />');
+                      });
+                }
             })
 
         });
