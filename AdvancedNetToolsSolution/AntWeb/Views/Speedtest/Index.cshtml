@@ -28,7 +28,7 @@
                 var numerictextbox = $("#tbDownloadLength").data("kendoNumericTextBox");
                 // use markes so performance.getEntriesByName is unique
                 $("#result").append("downloadStart" + '<br />');
-                for (var i = 0; i < 6; i++) {
+                for (var i = 0; i < 7; i++) {
                     $("#result").append("downloadStart" + i + '<br />');
                     var currentDownloadLength = Math.pow(10, i);    // 49
                     // 10 ^ 7 = 10 MB
@@ -36,21 +36,16 @@
 
                     var downloadLength = numerictextbox.value();
                     $.ajax({
-                        async: true,
+                        async: false,
                         AcceptEncoding: "text/plain",
                         url: "/speedtest/download?downloadLength=" + currentDownloadLength + "&marker=" + marker,
-                        cache: false
+                        cache: false,
+                        success: function f(id) {
+                            var performanceLastRequest = performance.getEntriesByName(location.origin + this.url);
+                            var timeInMilliseconds = performanceLastRequest[0].responseEnd - performanceLastRequest[0].responseStart;
+                            $("#result").append(timeInMilliseconds + ' download of ' + currentDownloadLength + '<br />');
+                        }
                     })
-                     .fail(function () {
-                         alert("error");
-                     })
-                      .done(function (html) {
-
-                          var performanceLastRequest = performance.getEntriesByName(location.origin + this.url);
-                          var timeInMilliseconds = performanceLastRequest[0].responseEnd - performanceLastRequest[0].responseStart;
-                          $("#result").append(timeInMilliseconds + ' download of ' + currentDownloadLength + '<br />');
-                      });
-
                 }
 
                
@@ -64,7 +59,7 @@
                 var numerictextbox = $("#tbDownloadLength").data("kendoNumericTextBox");
 
                 
-                for (var i = 0; i < 6; i++) {
+                for (var i = 0; i < 7; i++) {
                     $("#result").append("uploadStart" + i + '<br />');
                     var currentDownloadLength = Math.pow(10, i);    // 49
 
@@ -74,22 +69,18 @@
 
                     var uploadString = CreateRandomString(currentDownloadLength);
                     $.ajax({
-                        async: true,
+                        async: false,
                         method: "POST",
                         AcceptEncoding: "text/plain",
                         url: "/speedtest/upload?marker=" + marker,
                         data: { uploadString: uploadString },
-                        cache: false
-                    })
-                         .fail(function () {
-                             alert("error");
-                         })
-                      .done(function (html) {
-
-                          var performanceLastRequest = performance.getEntriesByName(location.origin + this.url);
-                          var timeInMilliseconds = performanceLastRequest[0].responseStart - performanceLastRequest[0].requestStart;
-                          $("#result").append(timeInMilliseconds + ' upload of ' + currentDownloadLength + '<br />');
-                      });
+                        cache: false,
+                        success: function f(id) {
+                            var performanceLastRequest = performance.getEntriesByName(location.origin + this.url);
+                            var timeInMilliseconds = performanceLastRequest[0].responseStart - performanceLastRequest[0].requestStart;
+                            $("#result").append(timeInMilliseconds + ' upload of ' + currentDownloadLength + '<br />');
+                        }
+                    });
                 }
             })
 
