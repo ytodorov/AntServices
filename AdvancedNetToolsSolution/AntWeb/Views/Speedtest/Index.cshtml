@@ -37,9 +37,7 @@
                     var downloadLength = numerictextbox.value();
                     $.ajax({
                         async: false,
-                        AcceptEncoding: "text/plain",
                         url: "/speedtest/download?downloadLength=" + currentDownloadLength + "&marker=" + marker,
-                        cache: false,
                         success: function f(id) {
                             var performanceLastRequest = performance.getEntriesByName(location.origin + this.url);
                             var timeInMilliseconds = performanceLastRequest[0].responseEnd - performanceLastRequest[0].responseStart;
@@ -71,10 +69,8 @@
                     $.ajax({
                         async: false,
                         method: "POST",
-                        AcceptEncoding: "text/plain",
                         url: "/speedtest/upload?marker=" + marker,
                         data: { uploadString: uploadString },
-                        cache: false,
                         success: function f(id) {
                             var performanceLastRequest = performance.getEntriesByName(location.origin + this.url);
                             var timeInMilliseconds = performanceLastRequest[0].responseStart - performanceLastRequest[0].requestStart;
