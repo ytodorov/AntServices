@@ -39,9 +39,10 @@
                         async: false,
                         url: "/speedtest/download?downloadLength=" + currentDownloadLength + "&marker=" + marker,
                         success: function f(id) {
-                            var performanceLastRequest = performance.getEntriesByName(location.origin + this.url);
-                            var timeInMilliseconds = performanceLastRequest[0].responseEnd - performanceLastRequest[0].responseStart;
-                            $("#result").append(timeInMilliseconds + ' download of ' + currentDownloadLength + '<br />');
+                            $("#result").append(' download of ' + currentDownloadLength + '<br />');
+                            //var performanceLastRequest = performance.getEntriesByName(location.origin + this.url);
+                            //var timeInMilliseconds = performanceLastRequest[0].responseEnd - performanceLastRequest[0].responseStart;
+                            //$("#result").append(timeInMilliseconds + ' download of ' + currentDownloadLength + '<br />');
                         }
                     })
                 }
@@ -72,9 +73,10 @@
                         url: "/speedtest/upload?marker=" + marker,
                         data: { uploadString: uploadString },
                         success: function f(id) {
-                            var performanceLastRequest = performance.getEntriesByName(location.origin + this.url);
-                            var timeInMilliseconds = performanceLastRequest[0].responseStart - performanceLastRequest[0].requestStart;
-                            $("#result").append(timeInMilliseconds + ' upload of ' + currentDownloadLength + '<br />');
+                            $("#result").append(' upload of ' + currentDownloadLength + '<br />');
+                            //var performanceLastRequest = performance.getEntriesByName(location.origin + this.url);
+                            //var timeInMilliseconds = performanceLastRequest[0].responseStart - performanceLastRequest[0].requestStart;
+                            //$("#result").append(timeInMilliseconds + ' upload of ' + currentDownloadLength + '<br />');
                         }
                     });
                 }
