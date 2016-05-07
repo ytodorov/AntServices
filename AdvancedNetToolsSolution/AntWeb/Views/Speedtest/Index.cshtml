@@ -10,9 +10,15 @@
 @section scripts {
     <script>
 
-        alert(performance.now());
-        alert(performance.timing);
-        alert(performance.timing.connectEnd);
+        //alert(performance.now());
+        //alert(performance.timing);
+        //alert(performance.timing.connectEnd);
+
+        var entr = performance.getEntries();
+        debugger;
+        for (var i = 0; i < entr.length; i++) {
+            alert(entr[i].toString())
+        }
 
         function CreateRandomString(char) {
             var text = "";
@@ -55,6 +61,8 @@
                             //var myDate = new Date(diff);
 
                             //$("#result").append(' download of ' + currentDownloadLength + '<br />');
+                            debugger;
+                            
                             var performanceLastRequest = performance.getEntriesByName(location.origin + this.url);
                             var timeInMilliseconds = performanceLastRequest[0].responseEnd - performanceLastRequest[0].responseStart;
                             $("#result").append(timeInMilliseconds + ' download of ' + currentDownloadLength + '<br />');

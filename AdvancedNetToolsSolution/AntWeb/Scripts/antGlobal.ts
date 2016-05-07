@@ -4,8 +4,13 @@
 
         showNotification(message: string, notificationType: string) {
             var notification = $("#notification").data("kendoNotification");         
-        
-            notification.show(message, notificationType);
+
+            if (notification) {
+                notification.show(message, notificationType);
+            }
+            else {
+                alert(message);
+            }
             if (notificationType === "error") {
                 //this.addJSErrorSeleniumAttributeToBody(message);
             }

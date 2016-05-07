@@ -257,7 +257,9 @@ var vis = (function () {
     }
     return function (c) {
         if (c) document.addEventListener(eventKey, c);
-        return !document[stateKey];
+        if (document) {
+            return !document[stateKey];
+        }
     }
 })();
 

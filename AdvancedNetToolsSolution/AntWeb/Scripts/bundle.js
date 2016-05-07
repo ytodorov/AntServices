@@ -210,7 +210,12 @@ var Ant;
         }
         Global.prototype.showNotification = function (message, notificationType) {
             var notification = $("#notification").data("kendoNotification");
-            notification.show(message, notificationType);
+            if (notification) {
+                notification.show(message, notificationType);
+            }
+            else {
+                alert(message);
+            }
             if (notificationType === "error") {
             }
         };
@@ -220,7 +225,7 @@ var Ant;
     Ant.Global = Global;
 })(Ant || (Ant = {}));
 window.antGlobal = new Ant.Global();
-//# sourceMappingURL=antGlobal.js.map
+
 $(window).resize(function () {
     //заради менюто което се премахва на малък екран   
     setTimeout(function () {
@@ -433,7 +438,9 @@ var vis = (function () {
     return function (c) {
         if (c)
             document.addEventListener(eventKey, c);
-        return !document[stateKey];
+        if (document) {
+            return !document[stateKey];
+        }
     };
 })();
 $(window).on("blur focus", function (e) {
@@ -454,4 +461,3 @@ $(window).on("error", function (e) {
     debugger;
     window.antGlobal.showNotification(e.originalEvent.error.message, "error");
 });
-//# sourceMappingURL=yk.js.map
