@@ -41,7 +41,11 @@
                         url: "/speedtest/download?downloadLength=" + acurrentDownloadLength + "&marker=" + marker,
                         cache: false
                     })
+                     .fail(function () {
+                         alert("error");
+                     })
                       .done(function (html) {
+
                           var performanceLastRequest = performance.getEntriesByName(location.origin + this.url);
                           var timeInMilliseconds = performanceLastRequest[0].responseEnd - performanceLastRequest[0].responseStart;
                           $("#result").append(timeInMilliseconds + ' download of ' + currentDownloadLength + '<br />');
@@ -77,6 +81,9 @@
                         data: { uploadString: uploadString },
                         cache: false
                     })
+                         .fail(function () {
+                             alert("error");
+                         })
                       .done(function (html) {
 
                           var performanceLastRequest = performance.getEntriesByName(location.origin + this.url);
