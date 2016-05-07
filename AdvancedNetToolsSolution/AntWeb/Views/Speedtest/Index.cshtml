@@ -9,6 +9,11 @@
 
 @section scripts {
     <script>
+
+        alert(performance.now());
+        alert(performance.timing);
+        alert(performance.timing.connectEnd);
+
         function CreateRandomString(char) {
             var text = "";
             var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -28,7 +33,7 @@
                 var numerictextbox = $("#tbDownloadLength").data("kendoNumericTextBox");
                 // use markes so performance.getEntriesByName is unique
                 $("#result").append("downloadStart" + '<br />');
-                for (var i = 0; i < 7; i++) {
+                for (var i = 3; i < 7; i++) {
                     $("#result").append("downloadStart" + i + '<br />');
                     var currentDownloadLength = Math.pow(10, i);    // 49
                     // 10 ^ 7 = 10 MB
@@ -38,11 +43,21 @@
                     $.ajax({
                         async: false,
                         url: "/speedtest/download?downloadLength=" + currentDownloadLength + "&marker=" + marker,
-                        success: function f(id) {
-                            $("#result").append(' download of ' + currentDownloadLength + '<br />');
-                            //var performanceLastRequest = performance.getEntriesByName(location.origin + this.url);
-                            //var timeInMilliseconds = performanceLastRequest[0].responseEnd - performanceLastRequest[0].responseStart;
-                            //$("#result").append(timeInMilliseconds + ' download of ' + currentDownloadLength + '<br />');
+                        success: function f(stringWithTicks) {
+                           
+                            
+                            //var n = stringWithTicks.indexOf("_ticks_");
+                            //var ticksAsString = stringWithTicks.substring(n + "_ticks_".length);
+                            //var ticksInt = parseInt(ticksAsString);
+                            //var tickNow = ((new Date().getTime() * 10000) + 621355968000000000);
+
+                            //var diff = tickNow - ticksInt;
+                            //var myDate = new Date(diff);
+
+                            //$("#result").append(' download of ' + currentDownloadLength + '<br />');
+                            var performanceLastRequest = performance.getEntriesByName(location.origin + this.url);
+                            var timeInMilliseconds = performanceLastRequest[0].responseEnd - performanceLastRequest[0].responseStart;
+                            $("#result").append(timeInMilliseconds + ' download of ' + currentDownloadLength + '<br />');
                         }
                     })
                 }
@@ -58,7 +73,7 @@
                 var numerictextbox = $("#tbDownloadLength").data("kendoNumericTextBox");
 
                 
-                for (var i = 0; i < 7; i++) {
+                for (var i = 3; i < 7; i++) {
                     $("#result").append("uploadStart" + i + '<br />');
                     var currentDownloadLength = Math.pow(10, i);    // 49
 
@@ -73,10 +88,10 @@
                         url: "/speedtest/upload?marker=" + marker,
                         data: { uploadString: uploadString },
                         success: function f(id) {
-                            $("#result").append(' upload of ' + currentDownloadLength + '<br />');
-                            //var performanceLastRequest = performance.getEntriesByName(location.origin + this.url);
-                            //var timeInMilliseconds = performanceLastRequest[0].responseStart - performanceLastRequest[0].requestStart;
-                            //$("#result").append(timeInMilliseconds + ' upload of ' + currentDownloadLength + '<br />');
+                            //$("#result").append(' upload of ' + currentDownloadLength + '<br />');
+                            var performanceLastRequest = performance.getEntriesByName(location.origin + this.url);
+                            var timeInMilliseconds = performanceLastRequest[0].responseStart - performanceLastRequest[0].requestStart;
+                            $("#result").append(timeInMilliseconds + ' upload of ' + currentDownloadLength + '<br />');
                         }
                     });
                 }

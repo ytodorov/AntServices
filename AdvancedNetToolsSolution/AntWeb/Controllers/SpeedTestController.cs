@@ -30,6 +30,11 @@ namespace SmartAdminMvc.Controllers
             Response.ContentType = "text/plain; charset=utf-8";
             Request.Headers["Accept-Encoding"] = "";
             string result = Utils.RandomString(downloadLength);
+            var ticks = DateTime.Now.Ticks.ToString();
+            ticks = "_ticks_" + ticks;
+            var tickLength = ticks.Length;
+
+            result = result.Substring(0, result.Length - tickLength) + ticks;
             return result;
         }
 
@@ -37,7 +42,8 @@ namespace SmartAdminMvc.Controllers
         public string Upload(string uploadString)
         {
             Response.ContentType = "text/plain; charset=utf-8";
-            return string.Empty;
+            var ticks = DateTime.Now.Ticks.ToString();
+            return ticks;
         }
 
 
