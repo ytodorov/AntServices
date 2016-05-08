@@ -11,7 +11,7 @@ namespace AntDal
         public AntDbContext()
             : base(nameOrConnectionString: "name=AntModel")
         {
-            //Database.SetInitializer<AntDbContext>(new DropCreateDatabaseIfModelChanges<AntDbContext>());
+            //Database.SetInitializer<AntDbContext>(new DropCreateDatabaseAlways<AntDbContext>());
             Configuration.ProxyCreationEnabled = false;
             Configuration.LazyLoadingEnabled = false;
         }
@@ -23,6 +23,12 @@ namespace AntDal
         public virtual DbSet<PortPermalink> PortPermalinks { get; set; }
 
         public virtual DbSet<PortResponseSummary> PortResponseSummaries { get; set; }
+
+
+        public virtual DbSet<SpeedPermalink> SpeedPermalinks { get; set; }
+
+        public virtual DbSet<SpeedResponseSummary> SpeedResponseSummaries { get; set; }
+
 
         public virtual DbSet<IpLocation> IpLocations { get; set; }
 

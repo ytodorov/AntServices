@@ -2071,6 +2071,8 @@
     <Compile Include="Models\ErrorLoggingViewModel.cs" />
     <Compile Include="Models\IpLocationViewModel.cs" />
     <Compile Include="Models\PermalinkBaseViewModel.cs" />
+    <Compile Include="Models\SpeedResponseSummaryViewModel.cs" />
+    <Compile Include="Models\SpeedPermalinkViewModel.cs" />
     <Compile Include="Models\TracerouteRequestViewModel.cs" />
     <Compile Include="Models\TraceroutePermalinkViewModel.cs" />
     <Compile Include="Models\PingPermalinkViewModel.cs" />
