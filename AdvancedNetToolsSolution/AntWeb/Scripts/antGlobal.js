@@ -14,7 +14,13 @@ var Ant;
             if (notificationType === "error") {
             }
         };
-        ;
+        Global.prototype.CreateRandomString = function (lengthOfString) {
+            var text = "";
+            var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            for (var i = 0; i < lengthOfString; i++)
+                text += possible.charAt(Math.floor(Math.random() * possible.length));
+            return text;
+        };
         return Global;
     })();
     Ant.Global = Global;

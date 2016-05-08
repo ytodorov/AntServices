@@ -7,6 +7,13 @@ namespace SmartAdminMvc.Models
 {
     public class AddressViewModel
     {
+        public AddressViewModel()
+        {
+            ShowAddressTextBox = true;
+        }
+
+            
+
         public string PanelTitle { get; set; }
 
         public string ButtonId { get; set; }
@@ -14,6 +21,8 @@ namespace SmartAdminMvc.Models
         public string ButtonText { get; set; }
 
         public string DefaultDestinationAddress { get; set; }
+
+        public bool ShowAddressTextBox { get; set; }
 
     }
 }

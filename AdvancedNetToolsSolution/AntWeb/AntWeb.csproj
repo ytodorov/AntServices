@@ -16,7 +16,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SmartAdminMvc</RootNamespace>
     <AssemblyName>SmartAdminMvc</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort>44300</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
@@ -1107,6 +1107,7 @@
     <Content Include="Scripts\kendo\kendo.window.js" />
     <Content Include="Scripts\kendo\pako_deflate.min.js" />
     <Content Include="Scripts\libs\jquery-ui-1.10.3.min.js" />
+    <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\notification\SmartNotification.min.js" />
     <Content Include="Scripts\plugin\bootstrap-duallistbox\jquery.bootstrap-duallistbox.min.js" />
     <Content Include="Scripts\plugin\bootstrap-progressbar\bootstrap-progressbar.min.js" />
@@ -1544,6 +1545,7 @@
     <Content Include="Scripts\viewsJS\homeIndex.js" />
     <Content Include="Scripts\viewsJS\pingIndex.js" />
     <Content Include="Scripts\viewsJS\portScanIndex.js" />
+    <Content Include="Scripts\viewsJS\speedTestIndex.js" />
     <Content Include="Scripts\viewsJS\traceRouteIndex.js" />
     <Content Include="Scripts\yk.js" />
     <Content Include="sitemap.xml" />
@@ -2109,8 +2111,10 @@
     <TypeScriptCompile Include="Scripts\typings\jquery\jquery.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\kendo-ui\kendo-ui.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\ladda\ladda.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\modernizr\modernizr.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\toastr\toastr.d.ts" />
     <TypeScriptCompile Include="Scripts\viewsJS\homeIndex.ts" />
+    <TypeScriptCompile Include="Scripts\viewsJS\speedTestIndex.ts" />
     <TypeScriptCompile Include="Scripts\viewsJS\portScanIndex.ts" />
     <TypeScriptCompile Include="Scripts\viewsJS\traceRouteIndex.ts" />
     <TypeScriptCompile Include="Scripts\viewsJS\pingIndex.ts" />
