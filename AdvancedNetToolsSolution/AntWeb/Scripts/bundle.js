@@ -203,6 +203,35 @@ function fixWrapperHeight() { var e = 62, a = $("#navigation").height(), s = $("
 !function(e){e(["jquery"],function(e){return function(){function t(e,t,n){return f({type:O.error,iconClass:g().iconClasses.error,message:e,optionsOverride:n,title:t})}function n(t,n){return t||(t=g()),v=e("#"+t.containerId),v.length?v:(n&&(v=c(t)),v)}function i(e,t,n){return f({type:O.info,iconClass:g().iconClasses.info,message:e,optionsOverride:n,title:t})}function o(e){w=e}function s(e,t,n){return f({type:O.success,iconClass:g().iconClasses.success,message:e,optionsOverride:n,title:t})}function a(e,t,n){return f({type:O.warning,iconClass:g().iconClasses.warning,message:e,optionsOverride:n,title:t})}function r(e){var t=g();v||n(t),l(e,t)||u(t)}function d(t){var i=g();return v||n(i),t&&0===e(":focus",t).length?void h(t):void(v.children().length&&v.remove())}function u(t){for(var n=v.children(),i=n.length-1;i>=0;i--)l(e(n[i]),t)}function l(t,n){return t&&0===e(":focus",t).length?(t[n.hideMethod]({duration:n.hideDuration,easing:n.hideEasing,complete:function(){h(t)}}),!0):!1}function c(t){return v=e("<div/>").attr("id",t.containerId).addClass(t.positionClass).attr("aria-live","polite").attr("role","alert"),v.appendTo(e(t.target)),v}function p(){return{tapToDismiss:!0,toastClass:"toast",containerId:"toast-container",debug:!1,showMethod:"fadeIn",showDuration:300,showEasing:"swing",onShown:void 0,hideMethod:"fadeOut",hideDuration:1e3,hideEasing:"swing",onHidden:void 0,extendedTimeOut:1e3,iconClasses:{error:"toast-error",info:"toast-info",success:"toast-success",warning:"toast-warning"},iconClass:"toast-info",positionClass:"toast-top-right",timeOut:5e3,titleClass:"toast-title",messageClass:"toast-message",target:"body",closeHtml:'<button type="button">&times;</button>',newestOnTop:!0,preventDuplicates:!1,progressBar:!1}}function m(e){w&&w(e)}function f(t){function i(t){return!e(":focus",l).length||t?(clearTimeout(O.intervalId),l[r.hideMethod]({duration:r.hideDuration,easing:r.hideEasing,complete:function(){h(l),r.onHidden&&"hidden"!==b.state&&r.onHidden(),b.state="hidden",b.endTime=new Date,m(b)}})):void 0}function o(){(r.timeOut>0||r.extendedTimeOut>0)&&(u=setTimeout(i,r.extendedTimeOut),O.maxHideTime=parseFloat(r.extendedTimeOut),O.hideEta=(new Date).getTime()+O.maxHideTime)}function s(){clearTimeout(u),O.hideEta=0,l.stop(!0,!0)[r.showMethod]({duration:r.showDuration,easing:r.showEasing})}function a(){var e=(O.hideEta-(new Date).getTime())/O.maxHideTime*100;f.width(e+"%")}var r=g(),d=t.iconClass||r.iconClass;if("undefined"!=typeof t.optionsOverride&&(r=e.extend(r,t.optionsOverride),d=t.optionsOverride.iconClass||d),r.preventDuplicates){if(t.message===C)return;C=t.message}T++,v=n(r,!0);var u=null,l=e("<div/>"),c=e("<div/>"),p=e("<div/>"),f=e("<div/>"),w=e(r.closeHtml),O={intervalId:null,hideEta:null,maxHideTime:null},b={toastId:T,state:"visible",startTime:new Date,options:r,map:t};return t.iconClass&&l.addClass(r.toastClass).addClass(d),t.title&&(c.append(t.title).addClass(r.titleClass),l.append(c)),t.message&&(p.append(t.message).addClass(r.messageClass),l.append(p)),r.closeButton&&(w.addClass("toast-close-button").attr("role","button"),l.prepend(w)),r.progressBar&&(f.addClass("toast-progress"),l.prepend(f)),l.hide(),r.newestOnTop?v.prepend(l):v.append(l),l[r.showMethod]({duration:r.showDuration,easing:r.showEasing,complete:r.onShown}),r.timeOut>0&&(u=setTimeout(i,r.timeOut),O.maxHideTime=parseFloat(r.timeOut),O.hideEta=(new Date).getTime()+O.maxHideTime,r.progressBar&&(O.intervalId=setInterval(a,10))),l.hover(s,o),!r.onclick&&r.tapToDismiss&&l.click(i),r.closeButton&&w&&w.click(function(e){e.stopPropagation?e.stopPropagation():void 0!==e.cancelBubble&&e.cancelBubble!==!0&&(e.cancelBubble=!0),i(!0)}),r.onclick&&l.click(function(){r.onclick(),i()}),m(b),r.debug&&console&&console.log(b),l}function g(){return e.extend({},p(),b.options)}function h(e){v||(v=n()),e.is(":visible")||(e.remove(),e=null,0===v.children().length&&(v.remove(),C=void 0))}var v,w,C,T=0,O={error:"error",info:"info",success:"success",warning:"warning"},b={clear:r,remove:d,error:t,getContainer:n,info:i,options:{},subscribe:o,success:s,version:"2.1.0",warning:a};return b}()})}("function"==typeof define&&define.amd?define:function(e,t){"undefined"!=typeof module&&module.exports?module.exports=t(require("jquery")):window.toastr=t(window.jQuery)});
 //# sourceMappingURL=toastr.js.map
 
+var Ant;
+(function (Ant) {
+    var Global = (function () {
+        function Global() {
+        }
+        Global.prototype.showNotification = function (message, notificationType) {
+            var notification = $("#notification").data("kendoNotification");
+            if (notification) {
+                notification.show(message, notificationType);
+            }
+            else {
+                alert(message);
+            }
+            if (notificationType === "error") {
+            }
+        };
+        Global.prototype.CreateRandomString = function (lengthOfString) {
+            var text = "";
+            var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            for (var i = 0; i < lengthOfString; i++)
+                text += possible.charAt(Math.floor(Math.random() * possible.length));
+            return text;
+        };
+        return Global;
+    })();
+    Ant.Global = Global;
+})(Ant || (Ant = {}));
+window.antGlobal = new Ant.Global();
+//# sourceMappingURL=antGlobal.js.map
 $(window).resize(function () {
     //заради менюто което се премахва на малък екран   
     setTimeout(function () {
@@ -253,6 +282,7 @@ $(document).ready(function docReady() {
         var isMenuVisible = $("body.hide-sidebar").length == 0;
         $.cookie('isMenuVisible', isMenuVisible);
     });
+    //$("#trustLogoLi").append('<script type="text/javascript" >TrustLogo("https://toolsfornet.com/content/img/comodo/comodo_secure_seal_76x26_transp.png", "CL1", "none");</script>');
 });
 /* Back to top */
 (function () {
@@ -300,28 +330,30 @@ $(window).ready(function myfunction() {
     //});
     //clipboard.on('error', function (e) {
     //});
-    var $ip = $("#ip");
-    if ($ip.length != 0) {
-        var arrOfPlaceholders = [];
-        arrOfPlaceholders[0] = "google.com";
-        arrOfPlaceholders[1] = "www.yahoo.com";
-        arrOfPlaceholders[2] = "http://www.facebook.com";
-        arrOfPlaceholders[3] = "ftp://ftp.microsoft.com/";
-        arrOfPlaceholders[4] = "https://weather.com/en-GB";
-        arrOfPlaceholders[5] = "8.8.8.8";
-        arrOfPlaceholders[6] = "172.217.3.238";
-        arrOfPlaceholders[7] = "https://en.wikipedia.org/wiki/Main_Page";
-        arrOfPlaceholders[8] = "https://www.youtube.com/";
-        arrOfPlaceholders[9] = "134.170.188.232";
-        arrOfPlaceholders[10] = "216.58.212.142";
-        for (var i = 0; i < arrOfPlaceholders.length * 1000; i++) {
-            setTimeout(animateIpPlaceholder, 5000 * i, arrOfPlaceholders[i % arrOfPlaceholders.length]);
+    setTimeout(function pl() {
+        sessionStorage.setItem("isWindowActive", "true");
+        var $ip = $("#ip");
+        if ($ip.length != 0) {
+            var arrOfPlaceholders = [];
+            arrOfPlaceholders[0] = "google.com";
+            arrOfPlaceholders[1] = "www.yahoo.com";
+            arrOfPlaceholders[2] = "http://www.facebook.com";
+            arrOfPlaceholders[3] = "ftp://ftp.microsoft.com/";
+            arrOfPlaceholders[4] = "https://weather.com/en-GB";
+            arrOfPlaceholders[5] = "8.8.8.8";
+            arrOfPlaceholders[6] = "172.217.3.238";
+            arrOfPlaceholders[7] = "https://en.wikipedia.org/wiki/Main_Page";
+            arrOfPlaceholders[8] = "https://www.youtube.com/";
+            arrOfPlaceholders[9] = "134.170.188.232";
+            arrOfPlaceholders[10] = "216.58.212.142";
+            for (var i = 0; i < arrOfPlaceholders.length * 1000; i++) {
+                setTimeout(animateIpPlaceholder, 5000 * i, arrOfPlaceholders[i % arrOfPlaceholders.length]);
+            }
         }
-    }
+    }, 1000);
     // TODO: kendo.drawing gives an error
     // export pdf
     $(".pdfexportpage").click(function () {
-        debugger;
         // тук скриваме и след това показваме някои части, които пречат на хубаво генериран експорт
         $("#divfooter").hide();
         $(".addthis_sharing_toolbox").hide();
@@ -345,40 +377,6 @@ $(window).ready(function myfunction() {
             $(".addthis_sharing_toolbox").show();
         });
     });
-    //$("#pngexportpage").click(function () {
-    //    // convert the dom element to a drawing using kendo.drawing.drawdom
-    //    var draw = kendo.drawing;
-    //    draw.drawDOM($("#divbody"))
-    //    .then(function (group) {
-    //        // render the result as a png image
-    //        return draw.exportImage(group);
-    //    })
-    //    .done(function (data) {
-    //        // save the image file
-    //        kendo.saveAs({
-    //            datauri: data,
-    //            filename: "toolsfornet" + new Date().getDate() + ".png",
-    //            proxyurl: "@url.action('pdf', 'export')"
-    //        });
-    //    });
-    //});
-    //$("#svgexportpage").click(function () {
-    //    // convert the dom element to a drawing using kendo.drawing.drawdom
-    //    var draw = kendo.drawing;
-    //    draw.drawDOM($("#divbody"))
-    //    .then(function (group) {
-    //        // render the result as a svg document
-    //        return draw.exportSVG(group);
-    //    })
-    //    .done(function (data) {
-    //        // save the svg document
-    //        kendo.saveAs({
-    //            datauri: data,
-    //            filename: "toolsfornet" + new Date().getDate() + ".svg",
-    //            proxyurl: "@url.action('pdf', 'export')"
-    //        });
-    //    });
-    //});
 });
 $.ajaxSetup({
     error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -407,13 +405,18 @@ function animateIpPlaceholder(txt) {
     (function typeIt() {
         var humanize = Math.round(Math.random() * (200 - 30)) + 30;
         timeOut = setTimeout(function () {
-            var visible;
             //visible = vis(); // gives current state
             //if (visible) {
             char++;
             var type = txt.substring(0, char);
             $ip.attr('placeholder', type + '|');
-            typeIt();
+            var visible = sessionStorage.getItem("isWindowActive") === "true";
+            if (visible) {
+                typeIt();
+            }
+            else {
+                $ip.attr('placeholder', txt);
+            }
             if (char == txtLen) {
                 $ip.attr('placeholder', $ip.attr('placeholder').slice(0, -1)); // remove the '|'
                 clearTimeout(timeOut);
@@ -441,7 +444,27 @@ var vis = (function () {
     return function (c) {
         if (c)
             document.addEventListener(eventKey, c);
-        return !document[stateKey];
+        if (document) {
+            return !document[stateKey];
+        }
     };
 })();
+$(window).on("blur focus", function (e) {
+    var prevType = $(this).data("prevType");
+    if (prevType != e.type) {
+        switch (e.type) {
+            case "blur":
+                sessionStorage.setItem("isWindowActive", "false");
+                break;
+            case "focus":
+                sessionStorage.setItem("isWindowActive", "true");
+                break;
+        }
+    }
+    $(this).data("prevType", e.type);
+});
+$(window).on("error", function (e) {
+    debugger;
+    window.antGlobal.showNotification(e.originalEvent.error.message, "error");
+});
 //# sourceMappingURL=yk.js.map

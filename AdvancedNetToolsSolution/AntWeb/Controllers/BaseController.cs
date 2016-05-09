@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace SmartAdminMvc.Controllers
 {
+    //[WhiteSpaceFilter]
     public class BaseController : Controller
     {
         protected override JsonResult Json(object data, string contentType, Encoding contentEncoding)

@@ -48,6 +48,7 @@ $(document).ready(function docReady() {
         var isMenuVisible = $("body.hide-sidebar").length == 0;
         $.cookie('isMenuVisible', isMenuVisible);
     });
+    //$("#trustLogoLi").append('<script type="text/javascript" >TrustLogo("https://toolsfornet.com/content/img/comodo/comodo_secure_seal_76x26_transp.png", "CL1", "none");</script>');
 });
 /* Back to top */
 (function () {
@@ -95,28 +96,30 @@ $(window).ready(function myfunction() {
     //});
     //clipboard.on('error', function (e) {
     //});
-    var $ip = $("#ip");
-    if ($ip.length != 0) {
-        var arrOfPlaceholders = [];
-        arrOfPlaceholders[0] = "google.com";
-        arrOfPlaceholders[1] = "www.yahoo.com";
-        arrOfPlaceholders[2] = "http://www.facebook.com";
-        arrOfPlaceholders[3] = "ftp://ftp.microsoft.com/";
-        arrOfPlaceholders[4] = "https://weather.com/en-GB";
-        arrOfPlaceholders[5] = "8.8.8.8";
-        arrOfPlaceholders[6] = "172.217.3.238";
-        arrOfPlaceholders[7] = "https://en.wikipedia.org/wiki/Main_Page";
-        arrOfPlaceholders[8] = "https://www.youtube.com/";
-        arrOfPlaceholders[9] = "134.170.188.232";
-        arrOfPlaceholders[10] = "216.58.212.142";
-        for (var i = 0; i < arrOfPlaceholders.length * 1000; i++) {
-            setTimeout(animateIpPlaceholder, 5000 * i, arrOfPlaceholders[i % arrOfPlaceholders.length]);
+    setTimeout(function pl() {
+        sessionStorage.setItem("isWindowActive", "true");
+        var $ip = $("#ip");
+        if ($ip.length != 0) {
+            var arrOfPlaceholders = [];
+            arrOfPlaceholders[0] = "google.com";
+            arrOfPlaceholders[1] = "www.yahoo.com";
+            arrOfPlaceholders[2] = "http://www.facebook.com";
+            arrOfPlaceholders[3] = "ftp://ftp.microsoft.com/";
+            arrOfPlaceholders[4] = "https://weather.com/en-GB";
+            arrOfPlaceholders[5] = "8.8.8.8";
+            arrOfPlaceholders[6] = "172.217.3.238";
+            arrOfPlaceholders[7] = "https://en.wikipedia.org/wiki/Main_Page";
+            arrOfPlaceholders[8] = "https://www.youtube.com/";
+            arrOfPlaceholders[9] = "134.170.188.232";
+            arrOfPlaceholders[10] = "216.58.212.142";
+            for (var i = 0; i < arrOfPlaceholders.length * 1000; i++) {
+                setTimeout(animateIpPlaceholder, 5000 * i, arrOfPlaceholders[i % arrOfPlaceholders.length]);
+            }
         }
-    }
+    }, 1000);
     // TODO: kendo.drawing gives an error
     // export pdf
     $(".pdfexportpage").click(function () {
-        debugger;
         // тук скриваме и след това показваме някои части, които пречат на хубаво генериран експорт
         $("#divfooter").hide();
         $(".addthis_sharing_toolbox").hide();
@@ -140,40 +143,6 @@ $(window).ready(function myfunction() {
             $(".addthis_sharing_toolbox").show();
         });
     });
-    //$("#pngexportpage").click(function () {
-    //    // convert the dom element to a drawing using kendo.drawing.drawdom
-    //    var draw = kendo.drawing;
-    //    draw.drawDOM($("#divbody"))
-    //    .then(function (group) {
-    //        // render the result as a png image
-    //        return draw.exportImage(group);
-    //    })
-    //    .done(function (data) {
-    //        // save the image file
-    //        kendo.saveAs({
-    //            datauri: data,
-    //            filename: "toolsfornet" + new Date().getDate() + ".png",
-    //            proxyurl: "@url.action('pdf', 'export')"
-    //        });
-    //    });
-    //});
-    //$("#svgexportpage").click(function () {
-    //    // convert the dom element to a drawing using kendo.drawing.drawdom
-    //    var draw = kendo.drawing;
-    //    draw.drawDOM($("#divbody"))
-    //    .then(function (group) {
-    //        // render the result as a svg document
-    //        return draw.exportSVG(group);
-    //    })
-    //    .done(function (data) {
-    //        // save the svg document
-    //        kendo.saveAs({
-    //            datauri: data,
-    //            filename: "toolsfornet" + new Date().getDate() + ".svg",
-    //            proxyurl: "@url.action('pdf', 'export')"
-    //        });
-    //    });
-    //});
 });
 $.ajaxSetup({
     error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -202,13 +171,18 @@ function animateIpPlaceholder(txt) {
     (function typeIt() {
         var humanize = Math.round(Math.random() * (200 - 30)) + 30;
         timeOut = setTimeout(function () {
-            var visible;
             //visible = vis(); // gives current state
             //if (visible) {
             char++;
             var type = txt.substring(0, char);
             $ip.attr('placeholder', type + '|');
-            typeIt();
+            var visible = sessionStorage.getItem("isWindowActive") === "true";
+            if (visible) {
+                typeIt();
+            }
+            else {
+                $ip.attr('placeholder', txt);
+            }
             if (char == txtLen) {
                 $ip.attr('placeholder', $ip.attr('placeholder').slice(0, -1)); // remove the '|'
                 clearTimeout(timeOut);
@@ -236,7 +210,27 @@ var vis = (function () {
     return function (c) {
         if (c)
             document.addEventListener(eventKey, c);
-        return !document[stateKey];
+        if (document) {
+            return !document[stateKey];
+        }
     };
 })();
+$(window).on("blur focus", function (e) {
+    var prevType = $(this).data("prevType");
+    if (prevType != e.type) {
+        switch (e.type) {
+            case "blur":
+                sessionStorage.setItem("isWindowActive", "false");
+                break;
+            case "focus":
+                sessionStorage.setItem("isWindowActive", "true");
+                break;
+        }
+    }
+    $(this).data("prevType", e.type);
+});
+$(window).on("error", function (e) {
+    debugger;
+    window.antGlobal.showNotification(e.originalEvent.error.message, "error");
+});
 //# sourceMappingURL=yk.js.map

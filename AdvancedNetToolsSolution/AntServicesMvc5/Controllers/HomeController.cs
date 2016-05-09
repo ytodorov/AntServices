@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using SmartAdminMvc.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -17,25 +18,19 @@ namespace AntServicesMvc5.Controllers
             return View();
         }
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
-
-        public string GetClientIp()
+        public string Download(int downloadLength)
         {
             Response.ContentType = "text/plain; charset=utf-8";
-            string result = Request.UserHostAddress;
+            Request.Headers["Accept-Encoding"] = ""; // Това премахва компресирането
+            string result = Utils.RandomString(downloadLength);
             return result;
+        }
+
+        [HttpPost]
+        public string Upload(string uploadString)
+        {
+            Response.ContentType = "text/plain; charset=utf-8";
+            return string.Empty;
         }
 
         public string Exec(string program, string args)

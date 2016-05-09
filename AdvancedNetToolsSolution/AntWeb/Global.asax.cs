@@ -57,6 +57,15 @@ namespace SmartAdminMvc
             MappingConfig.RegisterMaps();
 
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<AntDbContext, Configuration>());
+            //Database.SetInitializer(new DropCreateDatabaseAlways<AntDbContext>());
+
+            //using (AntDbContext context = new AntDbContext())
+            //{
+            //     context.Database.CreateIfNotExists();
+            //}
+
+         
+
 
             DependencyResolver.SetResolver(
                 new StructureMapDependencyResolver(() => Container ?? IoC.Container));

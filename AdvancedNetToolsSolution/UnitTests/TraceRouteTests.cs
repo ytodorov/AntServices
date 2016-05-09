@@ -43,34 +43,35 @@ namespace UnitTests
             Assert.True(result.Hop != 0);
         }              
 
-        [Theory]
-        [InlineData("92.247.12.80")]
-        [InlineData("77.70.121.1")]
-        [InlineData("8.8.8.8")]
-        [InlineData("abv.bg")]
-        [InlineData("www.dir.bg")]
-        //[InlineData("2001:4860:4860::8888")]
-        //[InlineData("2001:4860:4860::8844")]       
-        public void ParseSummaryTest(string ip)
+        [Fact]
+        public void ParseSummaryTest()
         {
+            StringBuilder sb = new StringBuilder();
 
-            using (HttpClient client = new HttpClient())
+
+
+            List<string> addresses = Utils.GetDeployedServicesUrlAddresses;//.Skip(1).ToList();
+            foreach (var urlService in addresses)
             {
-                string encodedArgs = Uri.EscapeDataString($"--traceroute {ip} -sn -T5");
-                string url = "http://antnortheu.cloudapp.net/home/exec?program=nmap&args=" + encodedArgs;
-                string traceStringToParse = client.GetStringAsync(url).Result;
 
-                List<TraceRouteReplyViewModel> traceRouteViewModels = TraceRouteParser.ParseSummary(traceStringToParse);
-
-                Assert.True(traceRouteViewModels.Count > 0);
-                IPAddress helper;
-                if (IPAddress.TryParse(ip, out helper))
+                using (HttpClient client = new HttpClient())
                 {
-                    // Ако ip e адрес проверяваме дали последния резултат е точно този адрес. Така трябва да бъде
-                    Assert.True(traceRouteViewModels.Last().Ip.Equals(ip));
-                }
+                    string encodedArgs = Uri.EscapeDataString($" -sS -p 80 -Pn --traceroute www.abv.bg");
+                    string url = $"{urlService}/home/exec?program=nmap&args=" + encodedArgs;
+                    string traceStringToParse = client.GetStringAsync(url).Result;
 
+                    sb.AppendLine(traceStringToParse);
+                    sb.AppendLine();
+                    sb.AppendLine();
+
+                    List<TraceRouteReplyViewModel> traceRouteViewModels = TraceRouteParser.ParseSummary(traceStringToParse);
+
+                   
+
+                }
             }
+
+            string result = sb.ToString();
         }
                 
     }

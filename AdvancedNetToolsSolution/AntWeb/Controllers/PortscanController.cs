@@ -12,10 +12,13 @@ using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
 using AutoMapper;
+using Kendo.Mvc.UI;
+using TimeAgo;
+using Kendo.Mvc.Extensions;
 
 namespace SmartAdminMvc.Controllers
 {
-    public class PortsController : Controller
+    public class PortscanController : Controller
     {
         // GET: home/index
         public ActionResult Index(int? id)
@@ -45,7 +48,7 @@ namespace SmartAdminMvc.Controllers
             }
 
             using (HttpClient client = new HttpClient())
-            {                
+            {
                 string encodedArgs0 = Uri.EscapeDataString($"-T5 --top-ports 1000 -Pn {ip}");
                 string url = "http://ants-neu.cloudapp.net/home/exec?program=nmap&args=" + encodedArgs0;
 
@@ -63,7 +66,7 @@ namespace SmartAdminMvc.Controllers
                 using (AntDbContext context = new AntDbContext())
                 {
                     var pp = new PortPermalink();
-                    pp.ShowInHistory =showInHistory;
+                    pp.ShowInHistory = showInHistory;
                     pp.UserCreatedIpAddress = Request.UserHostAddress;
                     pp.DestinationAddress = ip;
                     pp.UserCreated = Request.UserHostAddress;
@@ -82,10 +85,42 @@ namespace SmartAdminMvc.Controllers
 
             }
         }
-
-        public ActionResult GetOpenPorts()
+        public ActionResult ReadPortPermalinks([DataSourceRequest] DataSourceRequest request, AntDbContext context, string address, bool? allPermalinks = false)
         {
-            return View();
+            List<PortPermalink> portPermalinks;
+            if (!allPermalinks.GetValueOrDefault())
+            {
+                portPermalinks = GetPermalinksForCurrentUser(address, context);
+            }
+            else
+            {
+                portPermalinks = context.PortPermalinks.Where(p => p.ShowInHistory == true).OrderByDescending(k => k.Id).Take(count: 100).ToList();
+            }
+
+            List<PortPermalinkViewModel> portPermalinksViewModels = Mapper.Map<List<PortPermalinkViewModel>>(portPermalinks);
+            foreach (var p in portPermalinksViewModels)
+            {
+                p.DateCreatedTimeAgo = p.DateCreated.GetValueOrDefault().TimeAgo();
+            }
+
+            JsonResult dsResult = Json(portPermalinksViewModels.ToDataSourceResult(request));
+            return dsResult;
+
+        }
+
+        private List<PortPermalink> GetPermalinksForCurrentUser(string address, AntDbContext context)
+        {
+            string userIpAddress = Request.UserHostAddress;
+            List<PortPermalink> pingPermalinks;
+            if (string.IsNullOrEmpty(address))
+            {
+                pingPermalinks = context.PortPermalinks.Where(p => p.UserCreatedIpAddress == userIpAddress && p.ShowInHistory == true).ToList();
+            }
+            else
+            {
+                pingPermalinks = context.PortPermalinks.Where(p => p.DestinationAddress == address && p.ShowInHistory == true).ToList();
+            }
+            return pingPermalinks;
         }
     }
 }

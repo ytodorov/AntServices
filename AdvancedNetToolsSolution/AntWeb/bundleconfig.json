@@ -18,6 +18,7 @@
       "Vendor/ladda/dist/ladda.min.js",
       "Vendor/ladda/dist/ladda.jquery.min.js",
       "Vendor/toastr/build/toastr.min.js",
+      "Scripts/antGlobal.js",
       "Scripts/yk.js"
     ]
   }
