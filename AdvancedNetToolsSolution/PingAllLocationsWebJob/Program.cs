@@ -42,16 +42,16 @@ namespace PingAllLocationsWebJob
                  "https://toolsfornet.com/ping",
                  "https://toolsfornet.com/faq",
                  "https://toolsfornet.com/contactus",
-                "http://ants-ea.cloudapp.net", // "40.83.125.9",
+               "http://ants-ea.cloudapp.net", // "40.83.125.9",
                 "http://ants-je.cloudapp.net", // "13.71.155.140"
-                "http://ants-sea.cloudapp.net", // "13.76.100.42"
-                "http://ant-cus.cloudapp.net", // "52.165.26.10"
+                "http://ants-sea2.cloudapp.net", // "13.76.100.42"
+                "http://ants-cus2-83p25urt.cloudapp.net", // "52.165.26.10"
                 "http://ant-jw.cloudapp.net", // "40.74.137.95"
-                "http://ants-eus.cloudapp.net", // "13.90.212.72"
+                "http://ants-eus2-5223is65.cloudapp.net", // "13.90.212.72"
                 "http://ants-neu.cloudapp.net", // "13.74.188.161"
-                "http://ants-scus.cloudapp.net", // "104.214.70.79"
+                "http://ants-scus2.cloudapp.net", // "104.214.70.79"
                 "http://ants-weu.cloudapp.net", // "104.46.38.89"
-                "http://ants-wus.cloudapp.net" // "13.93.211.38"
+                "http://ants-wus2.cloudapp.net" // "13.93.211.38"
             };
 
             foreach (var urlService in GetDeployedServicesUrlAddresses)

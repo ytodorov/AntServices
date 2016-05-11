@@ -51,12 +51,12 @@ namespace UnitTests
 
 
             List<string> addresses = Utils.GetDeployedServicesUrlAddresses;//.Skip(1).ToList();
-            foreach (var urlService in addresses)
-            {
-
+            //foreach (var urlService in addresses)
+            //{
+            var urlService = "http://ants-wus2.cloudapp.net";
                 using (HttpClient client = new HttpClient())
                 {
-                    string encodedArgs = Uri.EscapeDataString($" -sS -p 80 -Pn --traceroute www.abv.bg");
+                    string encodedArgs = Uri.EscapeDataString($" -sn -n --traceroute www.abv.bg");
                     string url = $"{urlService}/home/exec?program=nmap&args=" + encodedArgs;
                     string traceStringToParse = client.GetStringAsync(url).Result;
 
@@ -69,7 +69,7 @@ namespace UnitTests
                    
 
                 }
-            }
+            //}
 
             string result = sb.ToString();
         }
