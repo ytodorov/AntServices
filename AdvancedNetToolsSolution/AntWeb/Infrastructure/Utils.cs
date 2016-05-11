@@ -190,25 +190,34 @@ namespace SmartAdminMvc.Infrastructure
         public static WellKnownPortViewModel ParseSinglePort(string line)
         {
             var wkpvm = new WellKnownPortViewModel();
-            uint helper;
-            DateTime help;
-            string[] rowsSplits = line.Split(new char[] { ',' });
-            wkpvm.ServiceName = rowsSplits[0];
-            uint.TryParse(rowsSplits[1], out helper);
-            wkpvm.PortNumber = helper;
-            wkpvm.TransportProtocol = rowsSplits[2];
-            wkpvm.Description = rowsSplits[3];
-            wkpvm.Assignee = rowsSplits[4];
-            wkpvm.Contact = rowsSplits[5];
-            DateTime.TryParse(rowsSplits[6], out help);
-            wkpvm.RegistrationDate = help;
-            DateTime.TryParse(rowsSplits[7], out help);
-            wkpvm.ModificationDate = help;
-            wkpvm.Reference = rowsSplits[8];
-            uint.TryParse(rowsSplits[9], out helper);
-            wkpvm.ServiceCode = helper;
-            wkpvm.KnownUnauthorizedUses = rowsSplits[10];
-            wkpvm.AssignmentNotes = rowsSplits[11];
+            return wkpvm;
+            // Тук постоянно гърми, оправи си логиката. rowsSplits има само 4 елемента
+            try
+            {
+                uint helper;
+                DateTime help;
+                string[] rowsSplits = line.Split(new char[] { ',' });
+                wkpvm.ServiceName = rowsSplits[0];
+                uint.TryParse(rowsSplits[1], out helper);
+                wkpvm.PortNumber = helper;
+                wkpvm.TransportProtocol = rowsSplits[2];
+                wkpvm.Description = rowsSplits[3];
+                wkpvm.Assignee = rowsSplits[4];
+                wkpvm.Contact = rowsSplits[5];
+                DateTime.TryParse(rowsSplits[6], out help);
+                wkpvm.RegistrationDate = help;
+                DateTime.TryParse(rowsSplits[7], out help);
+                wkpvm.ModificationDate = help;
+                wkpvm.Reference = rowsSplits[8];
+                uint.TryParse(rowsSplits[9], out helper);
+                wkpvm.ServiceCode = helper;
+                wkpvm.KnownUnauthorizedUses = rowsSplits[10];
+                wkpvm.AssignmentNotes = rowsSplits[11];
+            }
+            catch (Exception ex)
+            {
+
+            }
             return wkpvm;
         }
 
