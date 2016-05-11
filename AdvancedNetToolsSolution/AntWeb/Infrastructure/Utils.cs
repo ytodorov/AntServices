@@ -69,32 +69,19 @@ namespace SmartAdminMvc.Infrastructure
                 HotstNameToIp.Add(url, ip);
             }
 
-        //    HotstNameToIp = new Dictionary<string, string>()
-        //{
-        //    {  "http://ants-ea.cloudapp.net", "40.83.125.9" },
-        //    {  "http://ants-je.cloudapp.net", "13.71.155.140" },
-        //    {  "http://ants-sea.cloudapp.net", "13.76.100.42" },
-        //    {  "http://ant-cus.cloudapp.net", "52.165.26.10" },
-        //    {  "http://ant-jw.cloudapp.net", "40.74.137.95" },
-        //    {  "http://ants-eus.cloudapp.net", "13.90.212.72" },
-        //    {  "http://ants-neu.cloudapp.net", "13.74.188.161" },
-        //    {  "http://ants-scus.cloudapp.net", "104.214.70.79" },
-        //    {  "http://ants-weu.cloudapp.net", "104.46.38.89" },
-        //    {  "http://ants-wus.cloudapp.net" , "13.93.211.38"}
-        //};
             HotstNameToAzureLocation = new Dictionary<string, string>()
             {
                 
             { "http://ants-ea.cloudapp.net", "East Asia" },
-            { "http://ants-sea.cloudapp.net", "South East Asia" },
+            { "http://ants-sea2.cloudapp.net", "South East Asia" },
             { "http://ants-je.cloudapp.net", "East Japan" },
             { "http://ant-jw.cloudapp.net", "West Japan" },
-            { "http://ant-cus.cloudapp.net", "Central US" },
-            { "http://ants-eus.cloudapp.net", "East US" },
+            { "http://ants-cus2-83p25urt.cloudapp.net", "Central US" },
+            { "http://ants-eus2-5223is65.cloudapp.net", "East US" },
             { "http://ants-neu.cloudapp.net", "North EU" },
-            { "http://ants-scus.cloudapp.net", "South Central US" },
+            { "http://ants-scus2.cloudapp.net", "South Central US" },
             { "http://ants-weu.cloudapp.net", "West EU" },
-            { "http://ants-wus.cloudapp.net" , "West US"}
+            { "http://ants-wus2.cloudapp.net" , "West US"}
 
             };
         }
