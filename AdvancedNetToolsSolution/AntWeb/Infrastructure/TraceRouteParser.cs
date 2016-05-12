@@ -10,22 +10,22 @@ namespace SmartAdminMvc.Infrastructure
 {
     public static class TraceRouteParser
     {
-        public static List<TraceRouteReplyViewModel> ParseSummary(string traceRouteSummary)
+        public static List<TracerouteResponseDetailViewModel> ParseSummary(string traceRouteSummary)
         {
-            var result = new List<TraceRouteReplyViewModel>();
+            var result = new List<TracerouteResponseDetailViewModel>();
 
             List<string> lines = GetLinesFromSummary(traceRouteSummary);
             foreach (var line in lines)
             {
-                TraceRouteReplyViewModel trrvm = ParseSingleLine(line);
+                TracerouteResponseDetailViewModel trrvm = ParseSingleLine(line);
                 result.Add(trrvm);
             }
             return result;
         }
 
-        public static TraceRouteReplyViewModel ParseSingleLine(string line)
+        public static TracerouteResponseDetailViewModel ParseSingleLine(string line)
         {
-            var result = new TraceRouteReplyViewModel();
+            var result = new TracerouteResponseDetailViewModel();
             int hop;
             double rtt;
             string address, ip;

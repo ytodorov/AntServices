@@ -35,7 +35,7 @@ namespace SmartAdminMvc.Controllers
         }
 
         [HttpPost]
-        public string GoogleMap(TraceRouteReplyViewModel[] models)
+        public string GoogleMap(TracerouteResponseDetailViewModel[] models)
         {
             Response.ContentType = "text/plain; charset=utf-8";
             string gmString = Utils.GetGoogleMapsString(models.Select(m => m.Ip));

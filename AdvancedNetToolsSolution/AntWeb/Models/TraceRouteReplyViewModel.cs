@@ -5,7 +5,7 @@ using System.Web;
 
 namespace SmartAdminMvc.Models
 {
-    public class TraceRouteReplyViewModel
+    public class TracerouteResponseDetailViewModel
     {
         public int Hop { get; set; }
 

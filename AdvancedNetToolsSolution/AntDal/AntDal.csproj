@@ -57,6 +57,9 @@
     <Compile Include="Entities\ErrorLogging.cs" />
     <Compile Include="Entities\IpLocation.cs" />
     <Compile Include="Entities\PermalinkBase.cs" />
+    <Compile Include="Entities\TracerouteResponseDetail.cs" />
+    <Compile Include="Entities\TracerouteResponseSummary.cs" />
+    <Compile Include="Entities\TraceroutePermalink.cs" />
     <Compile Include="Entities\PingPermalink.cs" />
     <Compile Include="Entities\PingResponseSummary.cs" />
     <Compile Include="Entities\PingSuccess.cs" />
@@ -64,21 +67,12 @@
     <Compile Include="Entities\SpeedPermalink.cs" />
     <Compile Include="Entities\PortResponseSummary.cs" />
     <Compile Include="Entities\PortPermalink.cs" />
-    <Compile Include="Migrations\201605082000541_InitialCreate.cs" />
-    <Compile Include="Migrations\201605082000541_InitialCreate.Designer.cs">
-      <DependentUpon>201605082000541_InitialCreate.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201605082000541_InitialCreate.resx">
-      <DependentUpon>201605082000541_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

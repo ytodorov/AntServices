@@ -31,10 +31,10 @@ namespace SmartAdminMvc.Controllers
             using (HttpClient client = new HttpClient())
             {
                 string encodedArgs = Uri.EscapeDataString($" --traceroute -sn -n {prvm.Ip}");
-                string url = "http://ants-neu.cloudapp.net/home/exec?program=nmap&args=" + encodedArgs;
+                string url = "http://ants-sea2.cloudapp.net/home/exec?program=nmap&args=" + encodedArgs;
                 string tracerouteSummary = client.GetStringAsync(url).Result;
 
-                List<TraceRouteReplyViewModel> list = TraceRouteParser.ParseSummary(tracerouteSummary);
+                List<TracerouteResponseDetailViewModel> list = TraceRouteParser.ParseSummary(tracerouteSummary);
 
              
             }

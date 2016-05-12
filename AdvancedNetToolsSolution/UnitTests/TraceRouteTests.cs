@@ -19,7 +19,7 @@ namespace UnitTests
         public void ParseSingleLineExample1Test()
         {
             string line = "7   34.00 ms be-9-0.ibr01.dub30.ntwk.msn.net (104.44.4.138)";
-            TraceRouteReplyViewModel result = TraceRouteParser.ParseSingleLine(line);
+            TracerouteResponseDetailViewModel result = TraceRouteParser.ParseSingleLine(line);
 
             Assert.NotNull(result);
             Assert.Equal(expected: 7, actual: result.Hop);
@@ -37,7 +37,7 @@ namespace UnitTests
         [InlineData("11  32.00 ms ae12-0.fra-96cbe-1a.ntwk.msn.net (104.44.228.0)")]
         public void ParseSingleLineTest(string line)
         {
-            TraceRouteReplyViewModel result = TraceRouteParser.ParseSingleLine(line);
+            TracerouteResponseDetailViewModel result = TraceRouteParser.ParseSingleLine(line);
 
             Assert.NotNull(result);
             Assert.True(result.Hop != 0);
@@ -64,7 +64,7 @@ namespace UnitTests
                     sb.AppendLine();
                     sb.AppendLine();
 
-                    List<TraceRouteReplyViewModel> traceRouteViewModels = TraceRouteParser.ParseSummary(traceStringToParse);
+                    List<TracerouteResponseDetailViewModel> traceRouteViewModels = TraceRouteParser.ParseSummary(traceStringToParse);
 
                    
 

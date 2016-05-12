@@ -2075,7 +2075,6 @@
     <Compile Include="Infrastructure\TraceRouteParser.cs" />
     <Compile Include="Infrastructure\TransactionPerRequest.cs" />
     <Compile Include="Infrastructure\Utils.cs" />
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AddressHistoryViewModel.cs" />
     <Compile Include="Models\AddressViewModel.cs" />
     <Compile Include="Models\ErrorBaseViewModel.cs" />

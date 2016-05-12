@@ -5,11 +5,12 @@ namespace AntDal.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<AntDal.AntDbContext>
+    public sealed class Configuration : DbMigrationsConfiguration<AntDal.AntDbContext>
     {
         public Configuration()
         {
-            //AutomaticMigrationsEnabled = false;
+            // Тези двете обезмислят класовете от Migrations папката
+            AutomaticMigrationDataLossAllowed = true;
             AutomaticMigrationsEnabled = true;
 
             ContextKey = "AntDal.AntDbContext";

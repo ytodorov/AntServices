@@ -35,5 +35,12 @@ namespace AntDal
         public virtual DbSet<ErrorLogging> ErrorLoggings { get; set; }
 
         public virtual DbSet<PingSuccess> PingSuccesses { get; set; }
+
+        public virtual DbSet<TraceroutePermalink> TraceroutePermalinks { get; set; }
+
+        public virtual DbSet<TracerouteResponseSummary> TracerouteResponseSummaries { get; set; }
+
+        public virtual DbSet<TracerouteResponseDetail> TracerouteResponseDetails { get; set; }
+
     }
 }
