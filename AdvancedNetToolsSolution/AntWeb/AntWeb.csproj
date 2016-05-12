@@ -2091,7 +2091,8 @@
     <Compile Include="Models\PingRequestViewModel.cs" />
     <Compile Include="Models\PortPermalinkViewModel.cs" />
     <Compile Include="Models\PortResponseSummaryViewModel.cs" />
-    <Compile Include="Models\TraceRouteReplyViewModel.cs" />
+    <Compile Include="Models\TracerouteResponseDetailViewModel.cs" />
+    <Compile Include="Models\TracerouteResponseSummaryViewModel.cs" />
     <Compile Include="Models\ViewModelBase.cs" />
     <Compile Include="Models\WellKnownPortViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

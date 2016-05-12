@@ -33,6 +33,9 @@ namespace SmartAdminMvc.App_Start
 
                     config.CreateMap<ErrorLoggingViewModel, ErrorLogging>();
                     config.CreateMap<ErrorLogging, ErrorLoggingViewModel>();
+
+                    config.CreateMap<TracerouteResponseDetailViewModel, TracerouteResponseDetail>().ReverseMap();
+                    //config.CreateMap<TracerouteResponseDetail, TracerouteResponseDetailViewModel>();
                 });
         }
     }

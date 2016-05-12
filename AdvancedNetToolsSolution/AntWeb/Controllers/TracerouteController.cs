@@ -1,6 +1,8 @@
 ﻿#region Using
 
 using AntDal;
+using AntDal.Entities;
+using AutoMapper;
 using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
 using SmartAdminMvc.Extensions;
@@ -36,7 +38,31 @@ namespace SmartAdminMvc.Controllers
 
                 List<TracerouteResponseDetailViewModel> list = TraceRouteParser.ParseSummary(tracerouteSummary);
 
-             
+
+                var traceroutePermalink = new TraceroutePermalink();
+                traceroutePermalink.ShowInHistory = prvm.ShowInHistory;
+                traceroutePermalink.UserCreatedIpAddress = Request.UserHostAddress;
+                traceroutePermalink.DestinationAddress = prvm.Ip;
+                traceroutePermalink.UserCreated = Request.UserHostAddress;
+                traceroutePermalink.UserModified = Request.UserHostAddress;
+                traceroutePermalink.DateCreated = DateTime.Now;
+                traceroutePermalink.DateModified = DateTime.Now;
+
+                List<TracerouteResponseDetail> tracerouteResponseDetails = Mapper.Map<List<TracerouteResponseDetail>>(list);
+
+                TracerouteResponseSummary trs = new TracerouteResponseSummary();
+                trs.SourceHostName = "ants-sea2.cloudapp.net";
+                trs.TracerouteResponseDetails.AddRange(tracerouteResponseDetails);
+
+                traceroutePermalink.TracerouteResponseSummaries.Add(trs);
+
+
+                context.TraceroutePermalinks.Add(traceroutePermalink);
+                context.SaveChanges();
+                    
+                    
+
+
             }
             return null;
         }

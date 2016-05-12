@@ -10,9 +10,9 @@ namespace AntDal.Entities
     {
         public TraceroutePermalink()
         {
-            PingResponseSummaries = new List<PingResponseSummary>();
+            TracerouteResponseSummaries = new List<TracerouteResponseSummary>();
         }
                
-        public virtual List<PingResponseSummary> PingResponseSummaries { get; set; }
+        public virtual List<TracerouteResponseSummary> TracerouteResponseSummaries { get; set; }
     }
 }
