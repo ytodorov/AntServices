@@ -241,9 +241,11 @@
     <Content Include="Content\img\avatars\male.png" />
     <Content Include="Content\img\avatars\sunny-big.png" />
     <Content Include="Content\img\avatars\sunny.png" />
+    <Content Include="Content\img\backgroundImage.png" />
     <Content Include="Content\img\back_top.png" />
     <Content Include="Content\img\blank.gif" />
     <Content Include="Content\img\border.png" />
+    <Content Include="Content\img\cheap_diagonal_fabric.png" />
     <Content Include="Content\img\clear.png" />
     <Content Include="Content\img\colorblind-friendly\pt1.png" />
     <Content Include="Content\img\colorblind-friendly\pt2.png" />
@@ -251,6 +253,7 @@
     <Content Include="Content\img\comodo\comodo_secure_seal_100x85_transp.png" />
     <Content Include="Content\img\comodo\comodo_secure_seal_113x59_transp.png" />
     <Content Include="Content\img\comodo\comodo_secure_seal_76x26_transp.png" />
+    <Content Include="Content\img\concrete_seamless.png" />
     <Content Include="Content\img\cover.png" />
     <Content Include="Content\img\demo\64x64.png" />
     <Content Include="Content\img\demo\basic.png" />
