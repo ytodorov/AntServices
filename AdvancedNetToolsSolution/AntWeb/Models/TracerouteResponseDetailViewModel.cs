@@ -14,5 +14,6 @@ namespace SmartAdminMvc.Models
         public string AddressName { get; set; }
 
         public string Ip { get; set; }
+
     }
 }

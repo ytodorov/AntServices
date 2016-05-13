@@ -16,6 +16,7 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using System.Data.Entity;
 using System.Linq;
+using TimeAgo;
 
 #endregion
 
@@ -81,6 +82,51 @@ namespace SmartAdminMvc.Controllers
             }
           
         }
-        
+
+        public ActionResult ReadTraceroutePermalinks([DataSourceRequest] DataSourceRequest request, string address, bool? allPermalinks = false)
+        {
+            List<TraceroutePermalink> traceroutePermalinks;
+            if (!allPermalinks.GetValueOrDefault())
+            {
+                traceroutePermalinks = GetPermalinksForCurrentUser(address);
+            }
+            else
+            {
+                using (AntDbContext context = new AntDbContext())
+                {
+                    traceroutePermalinks = context.TraceroutePermalinks.Where(p => p.ShowInHistory == true).OrderByDescending(k => k.Id).Take(count: 100).ToList();
+                }
+            }
+
+            List<TraceroutePermalinkViewModel> traceroutePermalinksViewModels = Mapper.Map<List<TraceroutePermalinkViewModel>>(traceroutePermalinks);
+            foreach (var p in traceroutePermalinksViewModels)
+            {
+                p.DateCreatedTimeAgo = p.DateCreated.GetValueOrDefault().TimeAgo();
+            }
+
+            JsonResult dsResult = Json(traceroutePermalinksViewModels.ToDataSourceResult(request));
+            return dsResult;
+
+        }
+      
+
+        private List<TraceroutePermalink> GetPermalinksForCurrentUser(string address)
+        {
+            using (AntDbContext context = new AntDbContext())
+            {
+                string userIpAddress = Request.UserHostAddress;
+                List<TraceroutePermalink> pingPermalinks;
+                if (string.IsNullOrEmpty(address))
+                {
+                    pingPermalinks = context.TraceroutePermalinks.Where(p => p.UserCreatedIpAddress == userIpAddress && p.ShowInHistory == true).ToList();
+                }
+                else
+                {
+                    pingPermalinks = context.TraceroutePermalinks.Where(p => p.DestinationAddress == address && p.ShowInHistory == true).ToList();
+                }
+                return pingPermalinks;
+            }
+        }
+
     }
 }

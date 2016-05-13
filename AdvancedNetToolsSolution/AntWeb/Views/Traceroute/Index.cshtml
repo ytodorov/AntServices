@@ -72,3 +72,45 @@
 @section scripts {
     <script src="~/scripts/viewsjs/tracerouteindex.js"></script>
 }
+
+
+@*history*@
+
+@Html.Raw((Html.AntCreateStandardPanel("hviolet", "Traceroute history for current user's IP", "<p>" +
+    Html.Kendo().Grid<TraceroutePermalinkViewModel>().CreateTreaceroutePermalinkGrid(Url).ToHtmlString() + "</p>")))
+
+@if (Model != null)
+{
+    <script>
+            function getRequestedAddress() {
+                var data =
+                {
+                    address: $("#ip").val()
+                };
+                return data;
+            }
+
+    </script>
+
+
+        @Html.Raw((Html.AntCreateStandardPanel("hviolet", "Traceroute history for " + Model.DestinationAddress, "<p>" +
+     Html.Kendo().Grid<TraceroutePermalinkViewModel>().CreateTreaceroutePermalinkGrid(Url, "getRequestedAddress").ToHtmlString() + "</p>")))
+
+
+
+
+}
+<script>
+        function getAllPermalinks() {
+            var data =
+            {
+                allPermalinks: true
+            };
+            return data;
+        }
+</script>
+@Html.Raw((Html.AntCreateStandardPanel("hviolet", "Traceroute history for the last 100 traceroutes", "<p>" +
+     Html.Kendo().Grid<TraceroutePermalinkViewModel>().CreateTreaceroutePermalinkGrid(Url, "getAllPermalinks").ToHtmlString() + "</p>")))
+<div class="normalheader transition animated fadeIn">
+
+</div>
