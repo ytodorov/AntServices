@@ -255,6 +255,7 @@
     <Content Include="Content\img\comodo\comodo_secure_seal_76x26_transp.png" />
     <Content Include="Content\img\concrete_seamless.png" />
     <Content Include="Content\img\cover.png" />
+    <Content Include="Content\img\crossword.png" />
     <Content Include="Content\img\demo\64x64.png" />
     <Content Include="Content\img\demo\basic.png" />
     <Content Include="Content\img\demo\chat.png" />
