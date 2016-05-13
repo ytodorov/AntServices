@@ -30,6 +30,44 @@
     PanelTitle = "Traceroute to an IP address or host name"
 }
 )
+
+
+@if (Model != null)
+{
+
+    @Html.Raw((Html.AntCreateStandardPanel("hyellow", "Table: Round-trip times and latencies in ms.", "<p>" +
+        Html.Kendo().Grid<TracerouteResponseDetailViewModel>()
+            .Name("pingResultsGrid")
+            .Columns(columns =>
+            {
+               
+                columns.Bound(c => c.Hop).Title("Hop");
+                columns.Bound(t => t.Rtt).Title("Rtt");
+                columns.Bound(c => c.Ip).Title("Ip");
+            })
+            .Scrollable(s => s.Enabled(false))
+            .ToolBar(t =>
+            {
+                t.Excel().Text(string.Empty);
+                t.Pdf().Text(string.Empty);
+            })
+            .Excel(e => e.AllPages(true).FileName("pingExportHistory(www.toolsfornet.com).xlsx").ProxyURL(Url.Action("Excel", "Export")))
+            .Pdf(e => e.AllPages().FileName("pingExportHistory(www.toolsfornet.com).pdf").ProxyURL(Url.Action("Pdf", "Export")))
+            .DataSource(dataSource => dataSource
+                .Ajax()
+                .Sort(s => s.Add(ss => ss.Hop))
+                .ServerOperation(false)
+
+            )
+            .Sortable()
+            .BindTo(Model?.AllDetails)
+            .Deferred().ToHtmlString() + "</p>")))
+
+}
+
+
+
+
 @section scripts {
     <script src="~/scripts/viewsjs/tracerouteindex.js"></script>
 }

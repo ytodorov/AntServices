@@ -14,6 +14,8 @@ using System.Net.Http;
 using System.Runtime.Caching;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using System.Data.Entity;
+using System.Linq;
 
 #endregion
 
@@ -24,6 +26,19 @@ namespace SmartAdminMvc.Controllers
     {
         public ActionResult Index(int? id)
         {
+            if (id.HasValue)
+            {
+                using (AntDbContext context = new AntDbContext())
+                {
+                    TraceroutePermalink pp = context.TraceroutePermalinks
+                        .Include(e => e.TracerouteResponseSummaries.Select(s => s.TracerouteResponseDetails)).FirstOrDefault(d => d.Id == id);
+                    if (pp != null)
+                    {
+                        TraceroutePermalinkViewModel ppvm = Mapper.Map<TraceroutePermalinkViewModel>(pp);
+                        return View(model: ppvm);
+                    }
+                }
+            }
             return View();
         }
 
@@ -59,12 +74,12 @@ namespace SmartAdminMvc.Controllers
 
                 context.TraceroutePermalinks.Add(traceroutePermalink);
                 context.SaveChanges();
-                    
-                    
+
+                return Json(traceroutePermalink.Id);
 
 
             }
-            return null;
+          
         }
         
     }

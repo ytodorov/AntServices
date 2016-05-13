@@ -8,7 +8,20 @@ using System.Web;
 namespace SmartAdminMvc.Models
 {
     public class TraceroutePermalinkViewModel : PermalinkBaseViewModel
-    {         
-               
+    {
+        public List<TracerouteResponseSummaryViewModel> TracerouteResponseSummaries { get; set; }
+
+        public List<TracerouteResponseDetailViewModel> AllDetails
+        {
+            get
+            {
+                List<TracerouteResponseDetailViewModel> details = new List<TracerouteResponseDetailViewModel>();
+                foreach (TracerouteResponseSummaryViewModel s in TracerouteResponseSummaries)
+                {
+                    details.AddRange(s.TracerouteResponseDetails);
+                }
+                return details;
+            }
+        }
     }
 }

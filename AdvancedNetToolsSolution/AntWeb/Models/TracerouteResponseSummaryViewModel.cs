@@ -12,5 +12,8 @@ namespace SmartAdminMvc.Models
         public string SourceHostName { get; set; }
 
         public int? TraceroutePermalinkId { get; set; }
+
+        public List<TracerouteResponseDetailViewModel> TracerouteResponseDetails { get; set; }
+
     }
 }
