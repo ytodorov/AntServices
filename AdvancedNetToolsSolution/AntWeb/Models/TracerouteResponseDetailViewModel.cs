@@ -15,5 +15,7 @@ namespace SmartAdminMvc.Models
 
         public string Ip { get; set; }
 
+        public string Location { get; set; }
+
     }
 }

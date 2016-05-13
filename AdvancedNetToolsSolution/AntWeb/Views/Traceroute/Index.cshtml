@@ -71,10 +71,11 @@
             .DataSource(dataSource => dataSource
                 .Ajax()
                 .Sort(s => s.Add(ss => ss.Hop))
+                .Group(s => s.Add(ss => ss.Location))
                 .ServerOperation(false)
 
             )
-            .Sortable()
+            .Sortable()            
             .BindTo(Model?.AllDetails)
             .Deferred().ToHtmlString() + "</p>")))
 

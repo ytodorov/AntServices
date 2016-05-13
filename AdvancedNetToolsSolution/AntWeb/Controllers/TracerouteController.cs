@@ -36,6 +36,9 @@ namespace SmartAdminMvc.Controllers
                     if (pp != null)
                     {
                         TraceroutePermalinkViewModel ppvm = Mapper.Map<TraceroutePermalinkViewModel>(pp);
+
+                        
+
                         return View(model: ppvm);
                     }
                 }
@@ -46,40 +49,94 @@ namespace SmartAdminMvc.Controllers
         [HttpPost]
         public ActionResult GenerateId(TracerouteRequestViewModel prvm, AntDbContext context)
         {
-            using (HttpClient client = new HttpClient())
+            List<string> urls = Utils.GetDeployedServicesUrlAddresses.ToList();
+
+            var tasksForTraceroutes = new List<Task<string>>();
+            var tasksForLatencies = new List<Task<string>>();
+            var clients = new List<HttpClient>();
+
+            for (int i = 0; i < urls.Count; i++)
             {
+                var client = new HttpClient();
+                clients.Add(client);
                 string encodedArgs = Uri.EscapeDataString($" --traceroute -sn {prvm.Ip}");
-                string url = "http://ants-sea2.cloudapp.net/home/exec?program=nmap&args=" + encodedArgs;
-                string tracerouteSummary = client.GetStringAsync(url).Result;
+                string urlWithArgs = urls[i] + "/home/exec?program=nmap&args=" + encodedArgs;
+                Task<string> task = client.GetStringAsync(urlWithArgs);
+                tasksForTraceroutes.Add(task);
+            }
 
-                List<TracerouteResponseDetailViewModel> list = TraceRouteParser.ParseSummary(tracerouteSummary);
+            Task.WaitAll(tasksForTraceroutes.ToArray().Union(tasksForLatencies).ToArray());
 
+            var traceroutePermalink = new TraceroutePermalink();
+            traceroutePermalink.ShowInHistory = prvm.ShowInHistory;
+            traceroutePermalink.UserCreatedIpAddress = Request.UserHostAddress;
+            traceroutePermalink.DestinationAddress = prvm.Ip;
+            traceroutePermalink.UserCreated = Request.UserHostAddress;
+            traceroutePermalink.UserModified = Request.UserHostAddress;
+            traceroutePermalink.DateCreated = DateTime.Now;
+            traceroutePermalink.DateModified = DateTime.Now;
 
-                var traceroutePermalink = new TraceroutePermalink();
-                traceroutePermalink.ShowInHistory = prvm.ShowInHistory;
-                traceroutePermalink.UserCreatedIpAddress = Request.UserHostAddress;
-                traceroutePermalink.DestinationAddress = prvm.Ip;
-                traceroutePermalink.UserCreated = Request.UserHostAddress;
-                traceroutePermalink.UserModified = Request.UserHostAddress;
-                traceroutePermalink.DateCreated = DateTime.Now;
-                traceroutePermalink.DateModified = DateTime.Now;
+            for (int i = 0; i < tasksForTraceroutes.Count; i++)
+            {
+                var tracerouteSummary = tasksForTraceroutes[i].Result;
 
-                List<TracerouteResponseDetail> tracerouteResponseDetails = Mapper.Map<List<TracerouteResponseDetail>>(list);
+                List<TracerouteResponseDetailViewModel> tracerouteResponseDetailsViewModels = TraceRouteParser.ParseSummary(tracerouteSummary);
 
+                List<TracerouteResponseDetail> tracerouteResponseDetails = Mapper.Map<List<TracerouteResponseDetail>>(tracerouteResponseDetailsViewModels);
                 TracerouteResponseSummary trs = new TracerouteResponseSummary();
-                trs.SourceHostName = "ants-sea2.cloudapp.net";
+           
+                var url = urls[i];
+                var name = Utils.HotstNameToAzureLocation[url];
+                trs.SourceHostName = name;
+                trs.SourceIpAddress = Utils.HotstNameToIp[url];
+
                 trs.TracerouteResponseDetails.AddRange(tracerouteResponseDetails);
 
                 traceroutePermalink.TracerouteResponseSummaries.Add(trs);
 
-
-                context.TraceroutePermalinks.Add(traceroutePermalink);
-                context.SaveChanges();
-
-                return Json(traceroutePermalink.Id);
-
-
             }
+
+
+            context.TraceroutePermalinks.Add(traceroutePermalink);
+            context.SaveChanges();
+
+            return Json(traceroutePermalink.Id);
+
+
+            //using (HttpClient client = new HttpClient())
+            //{
+            //    string encodedArgs = Uri.EscapeDataString($" --traceroute -sn {prvm.Ip}");
+            //    string url = "http://ants-sea2.cloudapp.net/home/exec?program=nmap&args=" + encodedArgs;
+            //    string tracerouteSummary = client.GetStringAsync(url).Result;
+
+            //    List<TracerouteResponseDetailViewModel> list = TraceRouteParser.ParseSummary(tracerouteSummary);
+
+
+            //    var traceroutePermalink = new TraceroutePermalink();
+            //    traceroutePermalink.ShowInHistory = prvm.ShowInHistory;
+            //    traceroutePermalink.UserCreatedIpAddress = Request.UserHostAddress;
+            //    traceroutePermalink.DestinationAddress = prvm.Ip;
+            //    traceroutePermalink.UserCreated = Request.UserHostAddress;
+            //    traceroutePermalink.UserModified = Request.UserHostAddress;
+            //    traceroutePermalink.DateCreated = DateTime.Now;
+            //    traceroutePermalink.DateModified = DateTime.Now;
+
+            //    List<TracerouteResponseDetail> tracerouteResponseDetails = Mapper.Map<List<TracerouteResponseDetail>>(list);
+
+            //    TracerouteResponseSummary trs = new TracerouteResponseSummary();
+            //    trs.SourceHostName = "ants-sea2.cloudapp.net";
+            //    trs.TracerouteResponseDetails.AddRange(tracerouteResponseDetails);
+
+            //    traceroutePermalink.TracerouteResponseSummaries.Add(trs);
+
+
+            //    context.TraceroutePermalinks.Add(traceroutePermalink);
+            //    context.SaveChanges();
+
+            //    return Json(traceroutePermalink.Id);
+
+
+            //}
           
         }
 
