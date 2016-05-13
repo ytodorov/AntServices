@@ -1,4 +1,4 @@
-﻿@model PingPermalinkViewModel
+﻿@model SpeedPermalinkViewModel
 
 @{
     ViewBag.Title = "Speed test";
@@ -20,6 +20,17 @@
         </div>
     </div>
 </div>
+
+@if (Model != null)
+{
+    @Html.Raw((Html.AntCreateStandardPanel("hgreen", "Portscan report summary",
+    "<div class='text-center'>" +
+    "<a style='display:none' class='pdfexportpage'>Download as PDF" + "</a>" +
+    "<p>" + "Created on: " + Model.DateCreated + "</p>" +
+    "<p>" + "Share this permalink: <a href='" + Context.Request.Url.ToString() + "' target='_blank'>" + Context.Request.Url.ToString() + "</a></p>" +
+    "<p>" + "<div class='addthis_sharing_toolbox'></div></p>" +
+    "<div>")))
+}
 
 @Html.Partial("_Addresses", new AddressViewModel()
 {

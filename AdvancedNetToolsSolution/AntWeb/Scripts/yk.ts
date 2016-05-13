@@ -157,6 +157,7 @@ $(window).ready(function myfunction() {
     $(".pdfexportpage").click(function () {
         // тук скриваме и след това показваме някои части, които пречат на хубаво генериран експорт
         $("#divfooter").hide();
+        $("#divMap").remove();
         $(".addthis_sharing_toolbox").hide();
         // convert the dom element to a drawing using kendo.drawing.drawdom
         kendo.drawing.drawDOM($("#divbody"), null)
@@ -175,6 +176,7 @@ $(window).ready(function myfunction() {
                     proxyurl: window.location.origin + "/export/pdf"
                 });
                 $("#divfooter").show();
+               // $("#divMap").show();
                 $(".addthis_sharing_toolbox").show();
             });
 

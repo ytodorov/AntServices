@@ -21,6 +21,20 @@
     </div>
 </div>
 
+@if (Model != null)
+{
+    @Html.Raw((Html.AntCreateStandardPanel("hgreen", "Traceroute report summary",
+    "<div class='text-center'>" +
+    "<a style='display:none' class='pdfexportpage'>Download as PDF" + "</a>" +
+    "<p>" + "Created on: " + Model.DateCreated + "</p>" +
+    "<p>" + "Share this permalink: <a href='" + Context.Request.Url.ToString() + "' target='_blank'>" + Context.Request.Url.ToString() + "</a></p>" +
+    "<p>" + "<div class='addthis_sharing_toolbox'></div></p>" +
+    "<div>")))
+
+}
+
+
+
 
 @Html.Partial("_Addresses", new AddressViewModel()
 {
@@ -35,9 +49,9 @@
 @if (Model != null)
 {
 
-    @Html.Raw((Html.AntCreateStandardPanel("hyellow", "Table: Round-trip times and latencies in ms.", "<p>" +
+    @Html.Raw((Html.AntCreateStandardPanel("hyellow", "Table: Round-trip times (in ms.) and hops", "<p>" +
         Html.Kendo().Grid<TracerouteResponseDetailViewModel>()
-            .Name("pingResultsGrid")
+            .Name("tracerouteResultsGrid")
             .Columns(columns =>
             {
 
