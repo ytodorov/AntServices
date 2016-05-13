@@ -3370,7 +3370,8 @@ h6 {
 .splash {
     position: fixed;
     z-index: 2000;
-    background: white;
+    background: url(/content/img/concrete_seamless.png);
+    /*background: white;*/
     color: gray;
     top: 0;
     bottom: 0;
