@@ -42,26 +42,29 @@ namespace SmartAdminMvc.Controllers
         [HttpPost]
         public ActionResult GenerateId(string ip, bool? showInHistory)
         {
-            if (string.IsNullOrEmpty(ip))
+            List<string> urls = Utils.GetDeployedServicesUrlAddresses.ToList().Take(1).ToList();
+
+            var tasksForTraceroutes = new List<Task<string>>();
+            var tasksForLatencies = new List<Task<string>>();
+            var clients = new List<HttpClient>();
+
+            for (int i = 0; i < urls.Count; i++)
             {
-                return Json(string.Empty);
+                var client = new HttpClient();
+                clients.Add(client);
+                string encodedArgs0 = Uri.EscapeDataString($"-T5 --top-ports 1000 -Pn {ip}");
+                string urlWithArgs = urls[i] + "/home/exec?program=nmap&args=" + encodedArgs0;
+                Task<string> task = client.GetStringAsync(urlWithArgs);
+                tasksForTraceroutes.Add(task);
             }
 
-            using (HttpClient client = new HttpClient())
+            Task.WaitAll(tasksForTraceroutes.ToArray().Union(tasksForLatencies).ToArray());
+
+
+
+            for (int i = 0; i < tasksForTraceroutes.Count; i++)
             {
-                string encodedArgs0 = Uri.EscapeDataString($"-T5 --top-ports 1000 -Pn {ip}");
-                string url = "http://ants-neu.cloudapp.net/home/exec?program=nmap&args=" + encodedArgs0;
-
-                string portSummary = client.GetStringAsync(url).Result;
-
-                List<PortResponseSummaryViewModel> portViewModels = PortParser.ParseSummary(portSummary);
-
-
-
-
-
-
-                // Save to Db
+                var portsSummary = tasksForTraceroutes[i].Result;
 
                 using (AntDbContext context = new AntDbContext())
                 {
@@ -74,6 +77,8 @@ namespace SmartAdminMvc.Controllers
                     pp.DateCreated = DateTime.Now;
                     pp.DateModified = DateTime.Now;
 
+                    List<PortResponseSummaryViewModel> portViewModels = PortParser.ParseSummary(portsSummary);
+
                     List<PortResponseSummary> pr = Mapper.Map<List<PortResponseSummary>>(portViewModels);
 
                     pp.PortResponseSummaries.AddRange(pr);
@@ -84,6 +89,72 @@ namespace SmartAdminMvc.Controllers
                 }
 
             }
+
+            return new EmptyResult();
+
+            //using (AntDbContext context = new AntDbContext())
+            //{
+            //    var pp = new PortPermalink();
+            //    pp.ShowInHistory = showInHistory;
+            //    pp.UserCreatedIpAddress = Request.UserHostAddress;
+            //    pp.DestinationAddress = ip;
+            //    pp.UserCreated = Request.UserHostAddress;
+            //    pp.UserModified = Request.UserHostAddress;
+            //    pp.DateCreated = DateTime.Now;
+            //    pp.DateModified = DateTime.Now;
+
+            //    List<PortResponseSummary> pr = Mapper.Map<List<PortResponseSummary>>(portViewModels);
+
+            //    pp.PortResponseSummaries.AddRange(pr);
+            //    context.PortPermalinks.Add(pp);
+            //    context.SaveChanges();
+
+            //    return Json(pp.Id);
+            //}
+
+
+            //if (string.IsNullOrEmpty(ip))
+            //{
+            //    return Json(string.Empty);
+            //}
+
+            //using (HttpClient client = new HttpClient())
+            //{
+            //    string encodedArgs0 = Uri.EscapeDataString($"-T5 --top-ports 1000 -Pn {ip}");
+            //    string url = "http://ants-neu.cloudapp.net/home/exec?program=nmap&args=" + encodedArgs0;
+
+            //    string portSummary = client.GetStringAsync(url).Result;
+
+            //    List<PortResponseSummaryViewModel> portViewModels = PortParser.ParseSummary(portSummary);
+
+
+
+
+
+
+            //    // Save to Db
+
+            //    using (AntDbContext context = new AntDbContext())
+            //    {
+            //        var pp = new PortPermalink();
+            //        pp.ShowInHistory = showInHistory;
+            //        pp.UserCreatedIpAddress = Request.UserHostAddress;
+            //        pp.DestinationAddress = ip;
+            //        pp.UserCreated = Request.UserHostAddress;
+            //        pp.UserModified = Request.UserHostAddress;
+            //        pp.DateCreated = DateTime.Now;
+            //        pp.DateModified = DateTime.Now;
+
+            //        List<PortResponseSummary> pr = Mapper.Map<List<PortResponseSummary>>(portViewModels);
+
+            //        pp.PortResponseSummaries.AddRange(pr);
+            //        context.PortPermalinks.Add(pp);
+            //        context.SaveChanges();
+
+            //        return Json(pp.Id);
+            //    }
+
+            //}
         }
         public ActionResult ReadPortPermalinks([DataSourceRequest] DataSourceRequest request, AntDbContext context, string address, bool? allPermalinks = false)
         {
