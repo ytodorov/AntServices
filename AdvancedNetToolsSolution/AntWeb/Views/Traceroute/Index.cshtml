@@ -40,10 +40,11 @@
             .Name("pingResultsGrid")
             .Columns(columns =>
             {
-               
+
                 columns.Bound(c => c.Hop).Title("Hop");
                 columns.Bound(t => t.Rtt).Title("Rtt");
                 columns.Bound(c => c.Ip).Title("Ip");
+                columns.Bound(c => c.AddressName).Title("Name");
             })
             .Scrollable(s => s.Enabled(false))
             .ToolBar(t =>
@@ -51,8 +52,8 @@
                 t.Excel().Text(string.Empty);
                 t.Pdf().Text(string.Empty);
             })
-            .Excel(e => e.AllPages(true).FileName("pingExportHistory(www.toolsfornet.com).xlsx").ProxyURL(Url.Action("Excel", "Export")))
-            .Pdf(e => e.AllPages().FileName("pingExportHistory(www.toolsfornet.com).pdf").ProxyURL(Url.Action("Pdf", "Export")))
+            .Excel(e => e.AllPages(true).FileName("tracerouteExportHistory(www.toolsfornet.com).xlsx").ProxyURL(Url.Action("Excel", "Export")))
+            .Pdf(e => e.AllPages().FileName("tracerouteExportHistory(www.toolsfornet.com).pdf").ProxyURL(Url.Action("Pdf", "Export")))
             .DataSource(dataSource => dataSource
                 .Ajax()
                 .Sort(s => s.Add(ss => ss.Hop))
