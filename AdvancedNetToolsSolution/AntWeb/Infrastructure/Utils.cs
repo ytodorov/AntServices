@@ -258,7 +258,7 @@ namespace SmartAdminMvc.Infrastructure
         public static string RandomString(int length)
         {
 #pragma warning disable JustCode_NamingConventions // Naming conventions inconsistency
-            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".ToLowerInvariant();
 #pragma warning restore JustCode_NamingConventions // Naming conventions inconsistency
             var result = new string(Enumerable.Repeat(chars, length).Select(s => s[RandomNumberGenerator.Next(s.Length)]).ToArray());
             return result;
