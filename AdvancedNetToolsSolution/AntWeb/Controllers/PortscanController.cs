@@ -18,7 +18,7 @@ using Kendo.Mvc.Extensions;
 
 namespace SmartAdminMvc.Controllers
 {
-    public class PortscanController : Controller
+    public class PortscanController : BaseController
     {
         // GET: home/index
         public ActionResult Index(int? id)
@@ -42,7 +42,9 @@ namespace SmartAdminMvc.Controllers
         [HttpPost]
         public ActionResult GenerateId(string ip, bool? showInHistory)
         {
-            List<string> urls = Utils.GetDeployedServicesUrlAddresses.ToList().Take(1).ToList();
+            //List<string> urls = Utils.GetDeployedServicesUrlAddresses.ToList().Take(1).ToList();
+
+            List<string> urls = new List<string>() { "http://ants-neu.cloudapp.net" };
 
             var tasksForTraceroutes = new List<Task<string>>();
             var tasksForLatencies = new List<Task<string>>();
