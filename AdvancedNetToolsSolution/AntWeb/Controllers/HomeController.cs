@@ -58,5 +58,20 @@ namespace SmartAdminMvc.Controllers
                 return gmString;
         }
 
+        public string Download(int downloadLength)
+        {
+            Response.ContentType = "text/plain; charset=utf-8";
+            Request.Headers["Accept-Encoding"] = ""; // Това премахва компресирането
+            string result = Utils.RandomString(downloadLength);
+            return result;
+        }
+
+        [HttpPost]
+        public string Upload(string uploadString)
+        {
+            Response.ContentType = "text/plain; charset=utf-8";
+            return string.Empty;
+        }
+
     }
 }
