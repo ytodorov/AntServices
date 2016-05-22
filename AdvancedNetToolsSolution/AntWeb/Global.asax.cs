@@ -49,6 +49,8 @@ namespace SmartAdminMvc
 
         protected void Application_Start()
         {
+           
+
             AreaRegistration.RegisterAllAreas();
             IdentityConfig.RegisterIdentities();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
@@ -57,14 +59,9 @@ namespace SmartAdminMvc
             MappingConfig.RegisterMaps();
 
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<AntDbContext, Configuration>());
-            //Database.SetInitializer(new DropCreateDatabaseAlways<AntDbContext>());
 
-            //using (AntDbContext context = new AntDbContext())
-            //{
-            //     context.Database.CreateIfNotExists();
-            //}
+            var dummy = Utils.GetDeployedServicesUrlAddresses; // за да се извика конструктора на Uitls възможно най рано
 
-         
 
 
             DependencyResolver.SetResolver(
