@@ -39,7 +39,7 @@
 
                 // Start loading
                 l.ladda('stop');
-                toastr.error(error);
+                window.antGlobal.showNotification(error, "error");
             }
             else {
                 window.location.href = "traceroute?id=" + id;

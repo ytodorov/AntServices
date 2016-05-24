@@ -48,7 +48,7 @@ namespace Homer_MVC.Controllers
                 catch (Exception ex)
                 {
                     
-                    var result = new { error = "Error sending mail!" };
+                    var result = new { error = ex.Message };
                     return Json(result);
                 }
             }

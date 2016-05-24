@@ -158,7 +158,7 @@ $.ajaxSetup({
         };
         var laddaButtons = $("[data-loading]");
         laddaButtons.ladda('stop');
-        toastr.error('An error occured! Try again.');
+        window.antGlobal.showNotification('An error occured! Try again.', "error");
     },
     success: function myfunction(event, xhr, settings) {
         // alert(message);

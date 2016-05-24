@@ -231,7 +231,7 @@ var Ant;
     Ant.Global = Global;
 })(Ant || (Ant = {}));
 window.antGlobal = new Ant.Global();
-//# sourceMappingURL=antGlobal.js.map
+
 $(window).resize(function () {
     //заради менюто което се премахва на малък екран   
     setTimeout(function () {
@@ -392,7 +392,7 @@ $.ajaxSetup({
         };
         var laddaButtons = $("[data-loading]");
         laddaButtons.ladda('stop');
-        toastr.error('An error occured! Try again.');
+        window.antGlobal.showNotification('An error occured! Try again.', "error");
     },
     success: function myfunction(event, xhr, settings) {
         // alert(message);
@@ -469,4 +469,3 @@ $(window).on("error", function (e) {
     debugger;
     window.antGlobal.showNotification(e.originalEvent.error.message, "error");
 });
-//# sourceMappingURL=yk.js.map

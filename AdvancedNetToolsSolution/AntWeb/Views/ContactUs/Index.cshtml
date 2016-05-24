@@ -38,7 +38,7 @@
                 <div class="form-group">
                     <label class="col-sm-1 control-label text-left">Body:</label>
                     <div class="col-sm-11">@Html.Kendo().Editor().Name("emailBody").Deferred()</div>
-                </div>
+                </div> 
                 <div class="form-group">
                     <label class="col-sm-1 control-label text-left"></label>
                     <div class="col-sm-11"><input type="submit" class="k-button" id="btnSend" title="Send email" value="Send email" /></div>
@@ -85,12 +85,10 @@
                         var error = id.error;
                         var notification = $("#notification").data("kendoNotification");
                         if (typeof error != 'undefined') {
-                            //toastr.error(error);
-                            notification.show(error, "error")
+                            window.antGlobal.showNotification(error, "error");
                         }
                         else {
-                            //toastr.info("Email successfully delivered!");
-                            notification.show("Email successfully delivered!", "info")
+                            window.antGlobal.showNotification("Email successfully delivered!", "info");
                         }
 
                     }
