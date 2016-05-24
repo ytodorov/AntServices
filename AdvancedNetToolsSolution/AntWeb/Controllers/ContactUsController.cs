@@ -4,6 +4,8 @@ using System.Configuration;
 using System.Linq;
 using System.Net.Mail;
 using System.Net.Mime;
+using System.Runtime.Caching;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -18,36 +20,27 @@ namespace Homer_MVC.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult SendEmail(string senderName, string senderMail, string subject, string emailBody)
+        public async Task<ActionResult> SendEmail(string senderName, string senderMail, string subject, string emailBody)
         {
             if (senderName != "" && senderMail != "" && emailBody != "")
             {
                 try
                 {
-                    var mailMsg = new MailMessage();
+                    var myMessage = new SendGrid.SendGridMessage();
+                    myMessage.AddTo("ToolsForNet@ytodorov.com");
+                    myMessage.From = new MailAddress(senderMail, senderName);
+                    myMessage.Subject = subject;
+                    myMessage.Text = emailBody;
 
-                    // To
-                    mailMsg.To.Add(new MailAddress(address: "EmailFromToolsfornet@ytodorov.com"));
+                    var apiKey = ConfigurationManager.AppSettings["sendgridApiKey"];
 
-                    // From
-                    mailMsg.From = new MailAddress(address: senderMail, displayName: senderName);
-                    string html = emailBody;
-                    // Subject and multipart/alternative Body
-                    mailMsg.Subject = subject;
-                    mailMsg.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(html,
-                        contentEncoding: null, mediaType: MediaTypeNames.Text.Html));
+                    var transportWeb = new SendGrid.Web(apiKey);
 
-                    // Init SmtpClient and send
-                    var smtpClient = new SmtpClient(host: "smtp.sendgrid.net", port: Convert.ToInt32(value: 587));
-                    string userName = ConfigurationManager.AppSettings["smtpUserName"];
-                    string password = ConfigurationManager.AppSettings["smtpPassword"];
-                    var credentials = new System.Net.NetworkCredential(userName, password);
-                    smtpClient.Credentials = credentials;
-                    smtpClient.Send(mailMsg);
+                    await transportWeb.DeliverAsync(myMessage);
+                    
                 }
                 catch (Exception ex)
                 {
-                    
                     var result = new { error = ex.Message };
                     return Json(result);
                 }

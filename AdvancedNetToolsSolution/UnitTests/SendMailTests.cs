@@ -45,5 +45,30 @@ namespace UnitTests
                 Console.WriteLine(ex.Message);
             }
         }
+
+        [Fact]
+        public void SendMailSendGridLibraryTest()
+        {
+
+            try
+            {
+                var myMessage = new SendGrid.SendGridMessage();
+                myMessage.AddTo("test@ytodorov.com");
+                myMessage.From = new MailAddress("test@youremail.com", "First Last");
+                myMessage.Subject = "Sending with SendGrid is Fun";
+                myMessage.Text = "and easy to do anywhere, even with C#";
+
+                var transportWeb = new SendGrid.Web("api key");
+                transportWeb.DeliverAsync(myMessage).Wait();
+                 
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+
     }
 }
