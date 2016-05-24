@@ -31,14 +31,27 @@ namespace SmartAdminMvc.Infrastructure
             WellKnownPorts = ParsePorts(pathPorts).Where(r => r != null).ToList();
 
             SitesFromXml = new List<string>();
-            string xmlPath = "https://toolsfornet.com/sitemap.xml";
+
+            if (System.Web.HttpContext.Current != null)
+            {
+             //   string xmlPath = HostingEnvironment.MapPath(virtualPath: "~/sitemap.xml"); //"https://toolsfornet.com/sitemap.xml";
+            }
+            else
+            {
+             //   string xmlPath = HostingEnvironment.MapPath(virtualPath: "~/sitemap.xml"); //"https://toolsfornet.com/sitemap.xml";
+            }
+
+            string xmlPath = HostingEnvironment.MapPath(virtualPath: "~/sitemap.xml");
+
+
+
             SitesFromXml = ParseXmlFromUrl(xmlPath).Where(r => r != null).ToList();
 
             TopSitesGlobal = new List<string>();
             string path = HostingEnvironment.MapPath(virtualPath: "~/Misc/TopSites.txt");
 
             TopSitesGlobal = ParseTopSites(path).Where(r => r != null).ToList();
-            
+
             GetDeployedServicesUrlAddresses = new List<string>()
             {
                 "http://ants-ea.cloudapp.net", // "40.83.125.9",
@@ -63,7 +76,7 @@ namespace SmartAdminMvc.Infrastructure
 
             HotstNameToAzureLocation = new Dictionary<string, string>()
             {
-                
+
             { "http://ants-ea.cloudapp.net", "East Asia" },
             { "http://ants-sea2.cloudapp.net", "South East Asia" },
             { "http://ants-je.cloudapp.net", "East Japan" },
@@ -160,6 +173,12 @@ namespace SmartAdminMvc.Infrastructure
 
         public static List<string> ParseXmlFromUrl(string url)
         {
+            // Тук гърми и трябва да се оправи, защото пир стартиране на сайта нямаме достъп до
+            // string xmlPath = "https://toolsfornet.com/sitemap.xml";
+
+
+
+
             using (XmlReader sr = XmlReader.Create(url))
             {
                 var addressLines = new List<string>();
@@ -264,7 +283,7 @@ namespace SmartAdminMvc.Infrastructure
             return result;
         }
 
-        public static string GetGoogleMapsString(IEnumerable<string> ips, List<PingResponseSummary> pingSummaries = null,  bool starLine = true)
+        public static string GetGoogleMapsString(IEnumerable<string> ips, List<PingResponseSummary> pingSummaries = null, bool starLine = true)
         {
             ips = ips.Where(m => !string.IsNullOrEmpty(m));
 
@@ -304,9 +323,9 @@ namespace SmartAdminMvc.Infrastructure
                 //}
                 //else
                 //{
-                    locations.Add(currLocation);
+                locations.Add(currLocation);
                 //}
-                             
+
                 locationNamesInMap.Add("latLng" + i);
                 markerNamesInMap.Add("marker" + i);
                 infoWindowsNamesInMap.Add("infoWindow" + i);
@@ -376,7 +395,7 @@ namespace SmartAdminMvc.Infrastructure
             //    new google.maps.Point(10, 34));";
             //sb.AppendLine(redColorPing);
 
-         
+
 
             string redColorPing = $@"        
             var pinRedImage = new google.maps.MarkerImage('{hostAddress}/content/img/pinRedColor.png',
@@ -387,14 +406,14 @@ namespace SmartAdminMvc.Infrastructure
 
             for (int i = 0; i < ips.Count(); i++)
             {
-               
+
 
                 double distanceKm = 0;
                 double distanceMiles = 0;
-                if (i%2 == 0)
+                if (i % 2 == 0)
                 {
-                   distanceKm = GeoCodeCalc.CalcDistance(locations[i].Latitude.GetValueOrDefault(), locations[i].Longitude.GetValueOrDefault(),
-                       locations[i + 1].Latitude.GetValueOrDefault(), locations[i + 1].Longitude.GetValueOrDefault());
+                    distanceKm = GeoCodeCalc.CalcDistance(locations[i].Latitude.GetValueOrDefault(), locations[i].Longitude.GetValueOrDefault(),
+                        locations[i + 1].Latitude.GetValueOrDefault(), locations[i + 1].Longitude.GetValueOrDefault());
                     distanceKm = Math.Round(distanceKm, digits: 0);
                     distanceMiles = GeoCodeCalc.CalcDistance(locations[i].Latitude.GetValueOrDefault(), locations[i].Longitude.GetValueOrDefault(),
                        locations[i + 1].Latitude.GetValueOrDefault(), locations[i + 1].Longitude.GetValueOrDefault(), GeoCodeCalcMeasurement.Miles);
@@ -416,7 +435,7 @@ namespace SmartAdminMvc.Infrastructure
                 icon: pinGreenImage,
                 title: 'Left click to show info window.'
                 }});");
-                                        
+
                 }
 
                 string timeAvg = string.Empty;
@@ -426,8 +445,8 @@ namespace SmartAdminMvc.Infrastructure
                 {
                     var time = Math.Round(pingSummaries[i / 2].AvgRtt.GetValueOrDefault(), digits: 0);
                     timeAvg = @"<font size=""2"" color=""#057CBE"">TIME AVG:&nbsp;</font>" + time.ToString() + "ms.<br />";
-                    distance = @"<font size=""2"" color=""#057CBE"">DISTANCE:&nbsp;</font>" + distanceKm.ToString() + "km. | " + distanceMiles +"mi.<br />";
-                    speed = @"<font size=""2"" color=""#057CBE"">SPEED:&nbsp;</font>" + ((int)(distanceKm / time)).ToString() + "km./ms. | " + ((int) (distanceMiles / time)).ToString() + "mi./ms.<br />";
+                    distance = @"<font size=""2"" color=""#057CBE"">DISTANCE:&nbsp;</font>" + distanceKm.ToString() + "km. | " + distanceMiles + "mi.<br />";
+                    speed = @"<font size=""2"" color=""#057CBE"">SPEED:&nbsp;</font>" + ((int) (distanceKm / time)).ToString() + "km./ms. | " + ((int) (distanceMiles / time)).ToString() + "mi./ms.<br />";
                 }
 
                 var sbMarkerWindowHtml = new StringBuilder();
@@ -577,7 +596,7 @@ namespace SmartAdminMvc.Infrastructure
             }
             return false;
         }
-             
+
 
         public static string GetFirstOpenPort(string ipOrHostName)
         {
@@ -674,10 +693,10 @@ namespace SmartAdminMvc.Infrastructure
                 {
                     radius = GeoCodeCalc.EarthRadiusInKilometers;
                 }
-                double result = radius * 2 * Math.Asin(Math.Min(val1: 1, val2: Math.Sqrt((Math.Pow(Math.Sin((DiffRadian(lat1, lat2)) / 2.0), y: 2.0)+ Math.Cos(ToRadian(lat1)) * Math.Cos(ToRadian(lat2)) * Math.Pow(Math.Sin((DiffRadian(lng1, lng2)) / 2.0), y: 2.0)))));
+                double result = radius * 2 * Math.Asin(Math.Min(val1: 1, val2: Math.Sqrt((Math.Pow(Math.Sin((DiffRadian(lat1, lat2)) / 2.0), y: 2.0) + Math.Cos(ToRadian(lat1)) * Math.Cos(ToRadian(lat2)) * Math.Pow(Math.Sin((DiffRadian(lng1, lng2)) / 2.0), y: 2.0)))));
                 return result;
             }
-           
+
         }
 
         public enum GeoCodeCalcMeasurement : int

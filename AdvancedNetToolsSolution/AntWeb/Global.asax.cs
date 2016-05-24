@@ -128,8 +128,8 @@ namespace SmartAdminMvc
             using (AntDbContext context = new AntDbContext())
             {
                 var el = new ErrorLogging();
-                el.Message = ex.Message;
-                el.StackTrace = ex.StackTrace.ToString();
+                el.Message = ex.Message + "   " + ex?.InnerException?.Message;
+                el.StackTrace = ex.StackTrace.ToString() + ex?.InnerException?.StackTrace;
                 el.Data = ex.Data.ToString();
                 el.ShowInHistory = true;
                 el.UserCreated = Request.UserHostAddress;

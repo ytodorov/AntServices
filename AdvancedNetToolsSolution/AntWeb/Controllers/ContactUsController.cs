@@ -20,7 +20,7 @@ namespace Homer_MVC.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<ActionResult> SendEmail(string senderName, string senderMail, string subject, string emailBody)
+        public ActionResult SendEmail(string senderName, string senderMail, string subject, string emailBody)
         {
             if (senderName != "" && senderMail != "" && emailBody != "")
             {
@@ -36,7 +36,7 @@ namespace Homer_MVC.Controllers
 
                     var transportWeb = new SendGrid.Web(apiKey);
 
-                    await transportWeb.DeliverAsync(myMessage);
+                    transportWeb.DeliverAsync(myMessage);
                     
                 }
                 catch (Exception ex)
