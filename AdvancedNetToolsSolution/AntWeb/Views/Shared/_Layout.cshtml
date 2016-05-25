@@ -1,113 +1,86 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="@ViewBag.MetaDescription">
-    <title>@ViewBag.Title | Tools for Net</title>
-
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
-
-    <link rel="icon" type="image/x-icon" href="~/favicon.ico">
-    <!-- Primary vendor style -->
-    @Styles.Render(paths: "~/bundles/font-awesome/css")
-    @Styles.Render(paths: "~/bundles/animate/css")
-    @Styles.Render(paths: "~/bundles/bootstrap/css")
-    @Styles.Render(paths: "~/bundles/peicon7stroke/css")
-    @Styles.Render(paths: "~/bundles/ladda/css")
-    @Styles.Render(paths: "~/bundles/toastr/css")
-
-    <!-- Add local styles, mostly for plugins css file -->
-    @if (IsSectionDefined(name: "Styles"))
-    {@RenderSection(name: "Styles", required: false)}
-
-    <!-- Primary HOMER style -->
-    @Styles.Render(paths: "~/bundles/homer/css")
-
-    <link rel="stylesheet" href="~/content/kendo/kendo.common.min.css">
-    <link rel="stylesheet" href="~/content/kendo/kendo.metro.min.css">
-    <script type="text/javascript">
- //<![CDATA[
-var tlJsHost = ((window.location.protocol == "https:") ? "https://secure.comodo.com/" : "http://www.trustlogo.com/");
-document.write(unescape("%3Cscript src='" + tlJsHost + "trustlogo/javascript/trustlogo.js' type='text/javascript'%3E%3C/script%3E"));
-//]]>
-    </script>
-</head>
-<body class="@Html.PageClass() fixed-footer hide-sidebar">
-
-    <!-- Simple splash screen-->
-    <div class="splash" style="z-index:3">
-        <div class="color-line"></div>
-        <div class="splash-title text-success">
-            <p><h1>Tools for Net</h1></p>
-            <p>Distributed network services</p>
-            <p><h5>Loading ... Please wait</h5></p>
-            <div class="spinner">
-                <div class="rect1"></div>
-                <div class="rect2"></div>
-                <div class="rect3"></div>
-                <div class="rect4"></div>
-                <div class="rect5"></div>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="@ViewBag.MetaDescription">
+        <title>@ViewBag.Title | Tools for Net</title>
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
+        <link rel="icon" type="image/x-icon" href="~/favicon.ico">
+        @Styles.Render(paths: "~/bundles/font-awesome/css")
+        @Styles.Render(paths: "~/bundles/animate/css")
+        @Styles.Render(paths: "~/bundles/bootstrap/css")
+        @Styles.Render(paths: "~/bundles/peicon7stroke/css")
+        @Styles.Render(paths: "~/bundles/ladda/css")
+        @Styles.Render(paths: "~/bundles/toastr/css")
+        @if (IsSectionDefined(name: "Styles"))
+        {@RenderSection(name: "Styles", required: false)}
+        @Styles.Render(paths: "~/bundles/homer/css")
+        <link rel="stylesheet" href="~/content/kendo/kendo.common.min.css">
+        <link rel="stylesheet" href="~/content/kendo/kendo.metro.min.css">
+        <script type="text/javascript">
+            //<![CDATA[
+            var tlJsHost = ((window.location.protocol == "https:") ? "https://secure.comodo.com/" : "http://www.trustlogo.com/");
+            document.write(unescape("%3Cscript src='" + tlJsHost + "trustlogo/javascript/trustlogo.js' type='text/javascript'%3E%3C/script%3E"));
+            //]]>
+        </script>
+    </head>
+    <body class="@Html.PageClass() fixed-footer hide-sidebar">
+        <div class="splash" style="z-index:3">
+            <div class="color-line"></div>
+            <div class="splash-title text-success">
+                <p>
+                    <h1>Tools for Net</h1>
+                </p>
+                <p>Distributed network services</p>
+                <p>
+                    <h5>Loading ... Please wait</h5>
+                </p>
+                <div class="spinner">
+                    <div class="rect1"></div>
+                    <div class="rect2"></div>
+                    <div class="rect3"></div>
+                    <div class="rect4"></div>
+                    <div class="rect5"></div>
+                </div>
             </div>
         </div>
-    </div>
-    <!--[if lt IE 7]>
-    <p class="alert alert-danger">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-    <![endif]-->
-    <!-- Header -->
-    <div id="header" class="light-version" style="z-index:2">
-        @Html.Partial("_Header")
-    </div>
-
-    <!-- Navigation -->
-    <aside id="menu">
-        @Html.Partial("_Navigation")
-    </aside>
-
-    <!-- Main view  -->
-    @*Заради Comodo се слагат тези индекси на header и body, защото не се вижда popup-a на comodo иначе*@
-    <div id="wrapper" style="z-index:1">
-        <div id="divbody">
-            @RenderBody()
+        <!--[if lt IE 7]>
+        <p class="alert alert-danger">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <div id="header" class="light-version" style="z-index:2">
+            @Html.Partial("_Header")
         </div>
-
-        <!-- Footer-->
-        <div id="divFooter">
-            @Html.Partial("_Footer")
+        <aside id="menu">
+            @Html.Partial("_Navigation")
+        </aside>
+        @*Заради Comodo се слагат тези индекси на header и body, защото не се вижда popup-a на comodo иначе*@
+        <div id="wrapper" style="z-index:1">
+            <div id="divbody">
+                @RenderBody()
+            </div>
+            <div id="divFooter">
+                @Html.Partial("_Footer")
+            </div>
+            <div id="back-top">
+                <a href="#top"></a>
+            </div>
         </div>
-        <!-- Back to Top -->
-        <div id="back-top"><a href="#top"></a></div>
-        <!-- /Back to Top -->
-
-    </div>
-
-
-
-
-
-
-
-
-
-    <script type="text/javascript">
-        window.cookieconsent_options = { "message": "This website uses cookies to ensure you get the best experience on our website", "dismiss": "Got it!", "learnMore": "More info", "link": null, "theme": "light-top" };
-    </script>
-    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-571b2acff4b44bbf"></script>
-    @(Html.Kendo().Notification()
-    .Name("notification")
-    .Position(c => c.Top(0).Left(0))
-    .Width("100%")
-    .HideOnClick(true)
-    .AutoHideAfter(7000).Deferred()
-    )
-    <script src="@Utils.Tag("/scripts/bundle.js")"></script>
-    @Html.Kendo().DeferredScripts()
-
-   
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDoER6oaWJAUFMNCCE8IkCGsIyHsbTE0Zw"></script>
-    <!-- Handler for local scripts -->
-    @RenderSection("scripts", required: false)
-</body>
-
+        <script type="text/javascript">
+            window.cookieconsent_options = { "message": "This website uses cookies to ensure you get the best experience on our website", "dismiss": "Got it!", "learnMore": "More info", "link": null, "theme": "light-top" };
+        </script>
+        <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-571b2acff4b44bbf"></script>
+        @(Html.Kendo().Notification()
+        .Name("notification")
+        .Position(c => c.Top(0).Left(0))
+        .Width("100%")
+        .HideOnClick(true)
+        .AutoHideAfter(7000).Deferred()
+        )
+        <script src="@Utils.Tag("/scripts/bundle.js")"></script>
+        @Html.Kendo().DeferredScripts()
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDoER6oaWJAUFMNCCE8IkCGsIyHsbTE0Zw"></script>
+        @RenderSection(name: "scripts", required: false)
+    </body>
 </html>
