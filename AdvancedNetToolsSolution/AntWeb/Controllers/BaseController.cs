@@ -20,5 +20,14 @@ namespace SmartAdminMvc.Controllers
             behavior = JsonRequestBehavior.AllowGet;
             return base.Json(data, contentType, contentEncoding, behavior);
         }
+
+        protected override void HandleUnknownAction(string actionName)
+        {
+            // Нищо не  правим. Предполагаме че няма нужда от exception
+            // Това се получава когато чрез код викаме страници от toolsfornet.com, Примерно от HttpClient
+            // A public action method 'exec' was not found on controller 'SmartAdminMvc.Controllers.HomeController'.   
+            // Prosto premahvame nevalidnite izvikvaniq ot PingAllLocations proekta
+            base.HandleUnknownAction(actionName);
+        }
     }
 }

@@ -12,13 +12,13 @@ namespace PingAllLocationsWebJob
 {
     // To learn more about Microsoft Azure WebJobs SDK, please see http://go.microsoft.com/fwlink/?LinkID=320976
     class Program
-    {      
+    {
         static void Main()
         {
             var timer = new Timer(TimeSpan.FromMinutes(value: 3).TotalMilliseconds);
             timer.Elapsed += Timer_Elapsed;
             timer.Start();
-            PingAllLocations();          
+            PingAllLocations();
 
         }
 
@@ -38,10 +38,8 @@ namespace PingAllLocationsWebJob
             var GetDeployedServicesUrlAddresses = new List<string>()
 #pragma warning restore JustCode_NamingConventions // Naming conventions inconsistency
             {
-                "https://toolsfornet.com",
-                 "https://toolsfornet.com/ping",
-                 "https://toolsfornet.com/faq",
-                 "https://toolsfornet.com/contactus",
+                // Тези могат да доведат до A public action method 'exec' was not found on controller 'SmartAdminMvc.Controllers.HomeController'.   
+        
                "http://ants-ea.cloudapp.net", // "40.83.125.9",
                 "http://ants-je.cloudapp.net", // "13.71.155.140"
                 "http://ants-sea2.cloudapp.net", // "13.76.100.42"
@@ -53,6 +51,27 @@ namespace PingAllLocationsWebJob
                 "http://ants-weu.cloudapp.net", // "104.46.38.89"
                 "http://ants-wus2.cloudapp.net" // "13.93.211.38"
             };
+
+            var toolForNetUrls = new List<string>()
+            {
+                        "https://toolsfornet.com",
+                 "https://toolsfornet.com/ping",
+                 "https://toolsfornet.com/traceroute",
+                   "https://toolsfornet.com/portscan",
+                 "https://toolsfornet.com/faq",
+                 "https://toolsfornet.com/contactus",
+            };
+
+            foreach (var tfn in toolForNetUrls)
+            {
+                Stopwatch sw = Stopwatch.StartNew();
+
+                using (HttpClient client = new HttpClient())
+                {
+                    string res = client.GetStringAsync(tfn).Result;
+                    Console.WriteLine($"{sw.ElapsedMilliseconds} {tfn}");
+                }
+            }
 
             foreach (var urlService in GetDeployedServicesUrlAddresses)
             {
