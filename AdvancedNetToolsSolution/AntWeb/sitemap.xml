@@ -3,19 +3,27 @@
   xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <url>
-    <loc>http://toolsfornet.com/</loc>
+    <loc>https://toolsfornet.com/</loc>
     <priority>1.00</priority>
   </url>
   <url>
-    <loc>http://toolsfornet.com/ping</loc>
+    <loc>https://toolsfornet.com/ping</loc>
     <priority>1.00</priority>
   </url>
   <url>
-    <loc>http://toolsfornet.com/faq</loc>
+    <loc>https://toolsfornet.com/traceroute</loc>
+    <priority>1.00</priority>
+  </url>
+  <url>
+    <loc>https://toolsfornet.com/portscan</loc>
+    <priority>1.00</priority>
+  </url>
+  <url>
+    <loc>https://toolsfornet.com/faq</loc>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>http://toolsfornet.com/contactus</loc>
+    <loc>https://toolsfornet.com/contactus</loc>
     <priority>0.80</priority>
   </url>
 </urlset>
