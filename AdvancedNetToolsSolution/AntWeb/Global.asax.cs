@@ -94,6 +94,16 @@ namespace SmartAdminMvc
         }
         public void Application_BeginRequest()
         {
+            HttpContext context = HttpContext.Current;
+
+            string url = context.Request.Url.ToString();
+
+            if (url.Contains(".js") || url.Contains(".css") || url.Contains(".png") || url.Contains(".gif"))
+            {
+                context.Response.Cache.SetExpires(DateTime.Now.AddDays(7));
+                context.Response.Cache.SetMaxAge(TimeSpan.FromDays(7));
+            }
+
             Container = IoC.Container.GetNestedContainer();
 
             foreach (var task in Container.GetAllInstances<IRunOnEachRequest>())
