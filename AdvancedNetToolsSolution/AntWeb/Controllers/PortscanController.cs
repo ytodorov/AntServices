@@ -54,7 +54,7 @@ namespace SmartAdminMvc.Controllers
             {
                 var client = new HttpClient();
                 clients.Add(client);
-                string encodedArgs0 = Uri.EscapeDataString($"-T5 --top-ports 1000 -Pn {ip}");
+                string encodedArgs0 = Uri.EscapeDataString($"-T5 --top-ports 2000 -Pn {ip}");
                 string urlWithArgs = urls[i] + "/home/exec?program=nmap&args=" + encodedArgs0;
                 Task<string> task = client.GetStringAsync(urlWithArgs);
                 tasksForTraceroutes.Add(task);
