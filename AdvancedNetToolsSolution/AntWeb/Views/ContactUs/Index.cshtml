@@ -7,8 +7,12 @@
         <div class="panel-body">
             <div id="hbreadcrumb" class="pull-right">
                 <ol class="hbreadcrumb breadcrumb">
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/contactus">Contact us</a></li>
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    <li>
+                        <a href="/contactus">Contact us</a>
+                    </li>
                 </ol>
             </div>
             <h2 class="font-light m-b-xs">
@@ -25,23 +29,31 @@
             <form method="get" class="form-horizontal">
                 <div class="form-group">
                     <label class="col-sm-1 control-label text-left" for="senderName">Sender's Name</label>
-                    <div class="col-sm-11"><input type="text" class="k-textbox" placeholder="John Doe" required id="senderName"></div>
+                    <div class="col-sm-11">
+                        <input type="text" class="k-textbox" placeholder="John Doe" required id="senderName">
+                    </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-1 control-label text-left" for="senderMail">Sender's Email</label>
-                    <div class="col-sm-11"><input type="email" class="k-textbox"   required data-email-msg="Email format is not valid"  placeholder="example@email.com" id="senderMail"></div>
+                    <div class="col-sm-11">
+                        <input type="email" class="k-textbox"   required data-email-msg="Email format is not valid"  placeholder="example@email.com" id="senderMail">
+                    </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-1 control-label text-left" for="subject">Subject:</label>
-                    <div class="col-sm-11"><input type="text" class="k-textbox" required placeholder="Enter Email subject" id="subject"></div>
+                    <div class="col-sm-11">
+                        <input type="text" class="k-textbox" required placeholder="Enter Email subject" id="subject">
+                    </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-1 control-label text-left">Body:</label>
                     <div class="col-sm-11">@Html.Kendo().Editor().Name("emailBody").Deferred()</div>
-                </div> 
+                </div>
                 <div class="form-group">
                     <label class="col-sm-1 control-label text-left"></label>
-                    <div class="col-sm-11"><input type="submit" class="k-button" id="btnSend" title="Send email" value="Send email" /></div>
+                    <div class="col-sm-11">
+                        <input type="submit" class="k-button" id="btnSend" title="Send email" value="Send email" />
+                    </div>
                 </div>
             </form>
 
@@ -52,18 +64,14 @@
 @section scripts {
     <script type="text/javascript">
         $(function () {
-           
-        var validator = $("#contactus").kendoValidator().data("kendoValidator");
-     
-        $("form").submit(function (event) {
-            event.preventDefault();
-            validator.validate();
+            var validator = $("#contactus").kendoValidator().data("kendoValidator");
+        
+            $("form").submit(function (event) {
+                event.preventDefault();
+                validator.validate();
+            });
         });
-    });
-
-
-
-
+        
         $(document).ready(function () {
             $("#contactus").submit(function btnSendClick(e) {
                 e.preventDefault();
@@ -72,28 +80,26 @@
                 var subject = $("#subject").val();
                 var emailBody = $("#emailBody").val();
                 $.ajax({
-                    method: "POST",
-                    url: '/contactus/sendemail',
-                    data: {
+                           method: "POST",
+                           url: '/contactus/sendemail',
+                           data: {
                         senderName: senderName,
                         senderMail: senderMail,
                         subject: subject,
                         emailBody: emailBody
                     }
-                    ,
-                    success: function f(id) {
-                        debugger;
-                        var error = id.error;
-                        var notification = $("#notification").data("kendoNotification");
-                        if (typeof error != 'undefined') {
-                            window.antGlobal.showNotification(error, "error");
-                        }
-                        else {
-                            window.antGlobal.showNotification("Email successfully delivered!", "info");
-                        }
-
-                    }
-                });
+                           ,
+                           success: function f(id) {
+                               debugger;
+                               var error = id.error;
+                               var notification = $("#notification").data("kendoNotification");
+                               if (typeof error != 'undefined') {
+                                   window.antGlobal.showNotification(error, "error");
+                               } else {
+                                   window.antGlobal.showNotification("Email successfully delivered!", "info");
+                               }
+                           }
+                       });
             })
         });
     </script>

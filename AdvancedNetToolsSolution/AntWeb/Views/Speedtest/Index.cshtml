@@ -9,8 +9,12 @@
         <div class="panel-body">
             <div id="hbreadcrumb" class="pull-right">
                 <ol class="hbreadcrumb breadcrumb">
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/speedtest">Speed test</a></li>
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    <li>
+                        <a href="/speedtest">Speed test</a>
+                    </li>
                 </ol>
             </div>
             <h2 class="font-light m-b-xs">
@@ -23,24 +27,24 @@
 
 @if (Model != null)
 {
-    @Html.Raw((Html.AntCreateStandardPanel("hgreen", "Portscan report summary",
-    "<div class='text-center'>" +
-    "<a style='display:none' class='pdfexportpage'>Download as PDF" + "</a>" +
-    "<p>" + "Created on: " + Model.DateCreated + "</p>" +
-    "<p>" + "Share this permalink: <a href='" + Context.Request.Url.ToString() + "' target='_blank'>" + Context.Request.Url.ToString() + "</a></p>" +
-    "<p>" + "<div class='addthis_sharing_toolbox'></div></p>" +
-    "<div>")))
+@Html.Raw((Html.AntCreateStandardPanel("hgreen", "Portscan report summary",
+"<div class='text-center'>" +
+"<a style='display:none' class='pdfexportpage'>Download as PDF" + "</a>" +
+"<p>" + "Created on: " + Model.DateCreated + "</p>" +
+"<p>" + "Share this permalink: <a href='" + Context.Request.Url.ToString() + "' target='_blank'>" + Context.Request.Url.ToString() + "</a></p>" +
+"<p>" + "<div class='addthis_sharing_toolbox'></div></p>" +
+"<div>")))
 }
 
 @Html.Partial("_Addresses", new AddressViewModel()
 {
-    ButtonId = "btnSpeedTest",
-    ButtonText = "Start speed test",
-    ShowAddressTextBox = false
+ButtonId = "btnSpeedTest",
+ButtonText = "Start speed test",
+ShowAddressTextBox = false
 })
 
 <div id="result"></div>
 
 @section scripts {
-     <script src="~/scripts/viewsjs/speedtestindex.js"></script>
+    <script src="~/scripts/viewsjs/speedtestindex.js"></script>
 }

@@ -34,11 +34,11 @@ namespace SmartAdminMvc.Infrastructure
 
             if (System.Web.HttpContext.Current != null)
             {
-             //   string xmlPath = HostingEnvironment.MapPath(virtualPath: "~/sitemap.xml"); //"https://toolsfornet.com/sitemap.xml";
+                //   string xmlPath = HostingEnvironment.MapPath(virtualPath: "~/sitemap.xml"); //"https://toolsfornet.com/sitemap.xml";
             }
             else
             {
-             //   string xmlPath = HostingEnvironment.MapPath(virtualPath: "~/sitemap.xml"); //"https://toolsfornet.com/sitemap.xml";
+                //   string xmlPath = HostingEnvironment.MapPath(virtualPath: "~/sitemap.xml"); //"https://toolsfornet.com/sitemap.xml";
             }
 
             string xmlPath = HostingEnvironment.MapPath(virtualPath: "~/sitemap.xml");

@@ -21,8 +21,9 @@ namespace SmartAdminMvc.Filters
 
         public override void OnActionExecuted(ActionExecutedContext filterContext)
         {
-           // var userID = filterContext.HttpContext.User.Identity.GetUserId();
-           // Context.Logs.Add(new LogAction(Description));
+            // var userID = filterContext.HttpContext.User.Identity.GetUserId();
+            // Context.Logs.Add(new LogAction(Description));
+
             Context.SaveChanges();
         }
 

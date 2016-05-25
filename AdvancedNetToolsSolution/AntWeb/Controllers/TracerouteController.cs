@@ -37,7 +37,7 @@ namespace SmartAdminMvc.Controllers
                     {
                         TraceroutePermalinkViewModel ppvm = Mapper.Map<TraceroutePermalinkViewModel>(pp);
 
-                        
+
 
                         return View(model: ppvm);
                     }
@@ -84,7 +84,7 @@ namespace SmartAdminMvc.Controllers
 
                 List<TracerouteResponseDetail> tracerouteResponseDetails = Mapper.Map<List<TracerouteResponseDetail>>(tracerouteResponseDetailsViewModels);
                 TracerouteResponseSummary trs = new TracerouteResponseSummary();
-           
+
                 var url = urls[i];
                 var name = Utils.HotstNameToAzureLocation[url];
                 trs.SourceHostName = name;
@@ -137,7 +137,7 @@ namespace SmartAdminMvc.Controllers
 
 
             //}
-          
+
         }
 
         public ActionResult ReadTraceroutePermalinks([DataSourceRequest] DataSourceRequest request, string address, bool? allPermalinks = false)
@@ -165,7 +165,7 @@ namespace SmartAdminMvc.Controllers
             return dsResult;
 
         }
-      
+
 
         private List<TraceroutePermalink> GetPermalinksForCurrentUser(string address)
         {

@@ -8,11 +8,11 @@ using System.Web;
 namespace SmartAdminMvc.Models
 {
     public class PingPermalinkViewModel : PermalinkBaseViewModel
-    {     
+    {
 
-      
+
 
         public List<PingResponseSummaryViewModel> PingResponseSummaries { get; set; }
-               
+
     }
 }

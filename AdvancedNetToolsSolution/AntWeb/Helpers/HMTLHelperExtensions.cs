@@ -12,8 +12,8 @@ namespace SmartAdminMvc
         public static string IsSelected(this HtmlHelper html, string controller = null, string action = null)
         {
             string cssClass = "active";
-            var currentAction = (string)html.ViewContext.RouteData.Values["action"];
-            var currentController = (string)html.ViewContext.RouteData.Values["controller"];
+            var currentAction = (string) html.ViewContext.RouteData.Values["action"];
+            var currentController = (string) html.ViewContext.RouteData.Values["controller"];
 
             if (String.IsNullOrEmpty(controller))
                 controller = currentController;
@@ -29,7 +29,7 @@ namespace SmartAdminMvc
 
         public static string PageClass(this HtmlHelper html)
         {
-            var currentAction = (string)html.ViewContext.RouteData.Values["action"];
+            var currentAction = (string) html.ViewContext.RouteData.Values["action"];
             return currentAction;
         }
 

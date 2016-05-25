@@ -2,8 +2,8 @@
 
 namespace FailTracker.Web.Infrastructure.Mapping
 {
-	public interface IHaveCustomMappings
-	{
-		void CreateMappings(IConfiguration configuration);
-	}
+    public interface IHaveCustomMappings
+    {
+        void CreateMappings(IConfiguration configuration);
+    }
 }

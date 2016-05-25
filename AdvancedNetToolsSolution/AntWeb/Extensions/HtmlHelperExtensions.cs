@@ -176,7 +176,7 @@ namespace SmartAdminMvc.Extensions
       .Ajax()
       .Sort(s => s.Add(ss => ss.DateCreated).Descending())
       .ServerOperation(enabled: false)
-      
+
       .Read(r =>
       {
           CrudOperationBuilder cub = r.Action(actionName: "ReadPingPermalinks", controllerName: "Ping");
@@ -196,8 +196,8 @@ namespace SmartAdminMvc.Extensions
 }
 );
 
-           
-builder.Deferred();
+
+            builder.Deferred();
             return builder;
         }
 

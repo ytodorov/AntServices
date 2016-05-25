@@ -39,7 +39,7 @@ namespace SmartAdminMvc
         {
             get
             {
-                return (IContainer)HttpContext.Current.Items["_Container"];
+                return (IContainer) HttpContext.Current.Items["_Container"];
             }
             set
             {
@@ -49,7 +49,7 @@ namespace SmartAdminMvc
 
         protected void Application_Start()
         {
-           
+
 
             AreaRegistration.RegisterAllAreas();
             IdentityConfig.RegisterIdentities();
@@ -173,11 +173,11 @@ namespace SmartAdminMvc
                         try
                         {
                             stopWatch.Start();
-                             string tracerouteSummary = client.GetStringAsync(url).Result;
+                            string tracerouteSummary = client.GetStringAsync(url).Result;
                             ps.Successful = true;
                             ps.IpAddress = url;
                             stopWatch.Stop();
-                            ps.TimeNeeded =  stopWatch.Elapsed;
+                            ps.TimeNeeded = stopWatch.Elapsed;
                             ps.StatusMessage = "The url" + ps.IpAddress + "has successfully been pinged for" + ps.TimeNeeded;
 
                         }

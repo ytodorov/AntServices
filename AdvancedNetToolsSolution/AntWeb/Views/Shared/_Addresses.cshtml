@@ -11,27 +11,27 @@
         <div class="panel-body">
             @if (Model.ShowAddressTextBox)
             {
-                <p>
-                    @(Html.Kendo().AutoComplete()
-.Name("ip")
-.DataTextField("Name")
-.MinLength(1)
-.HtmlAttributes(new { style = "width:100%;" })
-.Value(Model?.DefaultDestinationAddress)
-.Filter("contains")
-.DataSource(source => source
-  .Custom()
-  .Group(g => g.Add("Category", typeof(string)))
-  .Transport(transport => transport
-    .Read(read =>
-    {
-        read.Action("ReadAddressesToPing", "Ping");
-    }))
-    .ServerFiltering(false)
-    ).Deferred()
-                    )
+            <p>
+                @(Html.Kendo().AutoComplete()
+                .Name("ip")
+                .DataTextField("Name")
+                .MinLength(1)
+                .HtmlAttributes(new { style = "width:100%;" })
+                .Value(Model?.DefaultDestinationAddress)
+                .Filter("contains")
+                .DataSource(source => source
+                .Custom()
+                .Group(g => g.Add("Category", typeof(string)))
+                .Transport(transport => transport
+                .Read(read =>
+                {
+                read.Action("ReadAddressesToPing", "Ping");
+                }))
+                .ServerFiltering(false)
+                ).Deferred()
+                )
 
-                </p>
+            </p>
             }
             <p class="text-center">
 
@@ -48,12 +48,12 @@
             </p>
             <p>
                 @(Html.Kendo().ProgressBar()
-                  .Name("loadingProgressBar")
-                  .Orientation(ProgressBarOrientation.Horizontal)
-                  .ShowStatus(true)
-                  .Animation(true)
-                  .HtmlAttributes(new { style = "display:none;width:100%" })
-                  .Deferred()
+                .Name("loadingProgressBar")
+                .Orientation(ProgressBarOrientation.Horizontal)
+                .ShowStatus(true)
+                .Animation(true)
+                .HtmlAttributes(new { style = "display:none;width:100%" })
+                .Deferred()
                 )
             </p>
         </div>

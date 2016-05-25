@@ -48,7 +48,7 @@ namespace SmartAdminMvc
             // Ladda style
             bundles.Add(new StyleBundle(virtualPath: "~/bundles/ladda/css").Include(
                     virtualPath: "~/vendor/ladda/dist/ladda-themeless.min.css"));
-                
+
 
             // jQuery UI
             bundles.Add(new ScriptBundle(virtualPath: "~/bundles/jqueryui/js").Include(

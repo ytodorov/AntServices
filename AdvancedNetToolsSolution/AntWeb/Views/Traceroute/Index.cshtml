@@ -9,8 +9,12 @@
         <div class="panel-body">
             <div id="hbreadcrumb" class="pull-right">
                 <ol class="hbreadcrumb breadcrumb">
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/ping">Traceroute</a></li>
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    <li>
+                        <a href="/ping">Traceroute</a>
+                    </li>
                 </ol>
             </div>
             <h2 class="font-light m-b-xs">
@@ -23,13 +27,13 @@
 
 @if (Model != null)
 {
-    @Html.Raw((Html.AntCreateStandardPanel("hgreen", "Traceroute report summary",
-    "<div class='text-center'>" +
-    "<a style='display:none' class='pdfexportpage'>Download as PDF" + "</a>" +
-    "<p>" + "Created on: " + Model.DateCreated + "</p>" +
-    "<p>" + "Share this permalink: <a href='" + Context.Request.Url.ToString() + "' target='_blank'>" + Context.Request.Url.ToString() + "</a></p>" +
-    "<p>" + "<div class='addthis_sharing_toolbox'></div></p>" +
-    "<div>")))
+@Html.Raw((Html.AntCreateStandardPanel("hgreen", "Traceroute report summary",
+"<div class='text-center'>" +
+"<a style='display:none' class='pdfexportpage'>Download as PDF" + "</a>" +
+"<p>" + "Created on: " + Model.DateCreated + "</p>" +
+"<p>" + "Share this permalink: <a href='" + Context.Request.Url.ToString() + "' target='_blank'>" + Context.Request.Url.ToString() + "</a></p>" +
+"<p>" + "<div class='addthis_sharing_toolbox'></div></p>" +
+"<div>")))
 
 }
 
@@ -38,10 +42,10 @@
 
 @Html.Partial("_Addresses", new AddressViewModel()
 {
-    ButtonId = "btnTraceRoute",
-    ButtonText = "Traceroute",
-    DefaultDestinationAddress = Model?.DestinationAddress,
-    PanelTitle = "Traceroute to an IP address or host name"
+ButtonId = "btnTraceRoute",
+ButtonText = "Traceroute",
+DefaultDestinationAddress = Model?.DestinationAddress,
+PanelTitle = "Traceroute to an IP address or host name"
 }
 )
 
@@ -49,39 +53,39 @@
 @if (Model != null)
 {
 
-    @Html.Raw((Html.AntCreateStandardPanel("hyellow", "Table: Round-trip times (in ms.) and hops", "<p>" +
-        Html.Kendo().Grid<TracerouteResponseDetailViewModel>()
-            .Name("tracerouteResultsGrid")
-            .Columns(columns =>
-            {
+@Html.Raw((Html.AntCreateStandardPanel("hyellow", "Table: Round-trip times (in ms.) and hops", "<p>" +
+Html.Kendo().Grid<TracerouteResponseDetailViewModel>()
+.Name("tracerouteResultsGrid")
+.Columns(columns =>
+{
 
-                columns.Bound(c => c.Hop).Title("Hop");
-                columns.Bound(t => t.Rtt).Title("Rtt");
-                columns.Bound(c => c.Ip).Title("Ip");
-                columns.Bound(c => c.AddressName).Title("Name");
-            })
-            .Scrollable(s => s.Enabled(false))
-            .ToolBar(t =>
-            {
-                t.Excel().Text(string.Empty);
-                t.Pdf().Text(string.Empty);
-            })
-            .Excel(e => e.AllPages(true).FileName("tracerouteExportHistory(www.toolsfornet.com).xlsx").ProxyURL(Url.Action("Excel", "Export")))
-            .Pdf(e => e.AllPages().FileName("tracerouteExportHistory(www.toolsfornet.com).pdf").ProxyURL(Url.Action("Pdf", "Export")))
-            .DataSource(dataSource => dataSource
-                .Ajax()
-                .Sort(s => s.Add(ss => ss.Hop))
-                .Group(s => s.Add(ss => ss.Location))
-                .ServerOperation(false)
+columns.Bound(c => c.Hop).Title("Hop");
+columns.Bound(t => t.Rtt).Title("Rtt");
+columns.Bound(c => c.Ip).Title("Ip");
+columns.Bound(c => c.AddressName).Title("Name");
+})
+.Scrollable(s => s.Enabled(false))
+.ToolBar(t =>
+{
+t.Excel().Text(string.Empty);
+t.Pdf().Text(string.Empty);
+})
+.Excel(e => e.AllPages(true).FileName("tracerouteExportHistory(www.toolsfornet.com).xlsx").ProxyURL(Url.Action("Excel", "Export")))
+.Pdf(e => e.AllPages().FileName("tracerouteExportHistory(www.toolsfornet.com).pdf").ProxyURL(Url.Action("Pdf", "Export")))
+.DataSource(dataSource => dataSource
+.Ajax()
+.Sort(s => s.Add(ss => ss.Hop))
+.Group(s => s.Add(ss => ss.Location))
+.ServerOperation(false)
 
-            )
-            .Sortable()            
-            .BindTo(Model?.AllDetails)
-            .Deferred().ToHtmlString() + "</p>")))
+)
+.Sortable()            
+.BindTo(Model?.AllDetails)
+.Deferred().ToHtmlString() + "</p>")))
 
 }
 
-
+    
 
 
 @section scripts {
@@ -92,40 +96,37 @@
 @*history*@
 
 @Html.Raw((Html.AntCreateStandardPanel("hviolet", "Traceroute history for current user's IP", "<p>" +
-    Html.Kendo().Grid<TraceroutePermalinkViewModel>().CreateTreaceroutePermalinkGrid(Url).ToHtmlString() + "</p>")))
+Html.Kendo().Grid<TraceroutePermalinkViewModel>().CreateTreaceroutePermalinkGrid(Url).ToHtmlString() + "</p>")))
 
 @if (Model != null)
 {
-    <script>
-            function getRequestedAddress() {
-                var data =
-                {
-                    address: $("#ip").val()
-                };
-                return data;
-            }
+<script>
+    function getRequestedAddress() {
+        var data = {
+            address: $("#ip").val()
+        };
+        return data;
+    }
+    
+</script>
 
-    </script>
-
-
-        @Html.Raw((Html.AntCreateStandardPanel("hviolet", "Traceroute history for " + Model.DestinationAddress, "<p>" +
-     Html.Kendo().Grid<TraceroutePermalinkViewModel>().CreateTreaceroutePermalinkGrid(Url, "getRequestedAddress").ToHtmlString() + "</p>")))
+@Html.Raw((Html.AntCreateStandardPanel("hviolet", "Traceroute history for " + Model.DestinationAddress, "<p>" +
+Html.Kendo().Grid<TraceroutePermalinkViewModel>().CreateTreaceroutePermalinkGrid(Url, "getRequestedAddress").ToHtmlString() + "</p>")))
 
 
 
 
 }
 <script>
-        function getAllPermalinks() {
-            var data =
-            {
-                allPermalinks: true
-            };
-            return data;
-        }
+    function getAllPermalinks() {
+        var data = {
+            allPermalinks: true
+        };
+        return data;
+    }
 </script>
 @Html.Raw((Html.AntCreateStandardPanel("hviolet", "Traceroute history for the last 100 traceroutes", "<p>" +
-     Html.Kendo().Grid<TraceroutePermalinkViewModel>().CreateTreaceroutePermalinkGrid(Url, "getAllPermalinks").ToHtmlString() + "</p>")))
+Html.Kendo().Grid<TraceroutePermalinkViewModel>().CreateTreaceroutePermalinkGrid(Url, "getAllPermalinks").ToHtmlString() + "</p>")))
 <div class="normalheader transition animated fadeIn">
 
 </div>

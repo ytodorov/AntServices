@@ -37,7 +37,7 @@ namespace Homer_MVC.Controllers
                     var transportWeb = new SendGrid.Web(apiKey);
 
                     transportWeb.DeliverAsync(myMessage);
-                    
+
                 }
                 catch (Exception ex)
                 {

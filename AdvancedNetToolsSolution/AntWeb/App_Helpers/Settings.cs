@@ -72,16 +72,16 @@ namespace SmartAdminMvc
                 return default(T);
 
             // In case the specified type is an enum, try to parse the entry as an enum value
-            if (typeof (T).IsEnum)
+            if (typeof(T).IsEnum)
                 return (T) Enum.Parse(typeof(T), value, ignoreCase: true);
 
             // In case the specified type is a bool and the entry value represents an integer
-            if (typeof (T) == typeof (bool) && value.Is<int>())
+            if (typeof(T) == typeof(bool) && value.Is<int>())
                 // We convert to value to an integer first before changing the entry value to the specified type
-                return (T) Convert.ChangeType(value.As<int>(), typeof (T));
+                return (T) Convert.ChangeType(value.As<int>(), typeof(T));
 
             // Change the entry value to the specified type
-            return (T) Convert.ChangeType(value, typeof (T));
+            return (T) Convert.ChangeType(value, typeof(T));
         }
 
         /// <summary>

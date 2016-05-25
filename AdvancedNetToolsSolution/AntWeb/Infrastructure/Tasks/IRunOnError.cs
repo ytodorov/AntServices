@@ -1,7 +1,7 @@
 namespace FailTracker.Web.Infrastructure.Tasks
 {
-	public interface IRunOnError
-	{
-		void Execute();
-	}
+    public interface IRunOnError
+    {
+        void Execute();
+    }
 }

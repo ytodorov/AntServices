@@ -1,7 +1,7 @@
 namespace FailTracker.Web.Infrastructure.Tasks
 {
-	public interface IRunAfterEachRequest
-	{
-		void Execute();
-	}
+    public interface IRunAfterEachRequest
+    {
+        void Execute();
+    }
 }

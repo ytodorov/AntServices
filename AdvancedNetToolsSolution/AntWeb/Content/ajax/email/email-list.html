@@ -22,7 +22,9 @@
             </td>
             <td class="inbox-data-attachment hidden-xs">
                 <div>
-                    <a href="javascript:void(0);" rel="tooltip" data-placement="left" data-original-title="FILES: rocketlaunch.jpg, timelogs.xsl" class="txt-color-darken"><i class="fa fa-paperclip fa-lg"></i></a>
+                    <a href="javascript:void(0);" rel="tooltip" data-placement="left" data-original-title="FILES: rocketlaunch.jpg, timelogs.xsl" class="txt-color-darken">
+                        <i class="fa fa-paperclip fa-lg"></i>
+                    </a>
                 </div>
             </td>
             <td class="inbox-data-date hidden-xs">
@@ -53,7 +55,9 @@
             </td>
             <td class="inbox-data-attachment hidden-xs">
                 <div>
-                    <a href="javascript:void(0);" rel="tooltip" data-placement="left" data-original-title="rocketlaunch.jpg, timelogs.xsl" class="txt-color-darken"><i class="fa fa-paperclip fa-lg"></i></a>
+                    <a href="javascript:void(0);" rel="tooltip" data-placement="left" data-original-title="rocketlaunch.jpg, timelogs.xsl" class="txt-color-darken">
+                        <i class="fa fa-paperclip fa-lg"></i>
+                    </a>
                 </div>
             </td>
             <td class="inbox-data-date hidden-xs">
@@ -146,7 +150,9 @@
             </td>
             <td class="inbox-data-attachment hidden-xs">
                 <div>
-                    <a href="javascript:void(0);" rel="tooltip" data-placement="left" data-original-title="payscale-changes.pdf" class="txt-color-darken"><i class="fa fa-paperclip fa-lg"></i></a>
+                    <a href="javascript:void(0);" rel="tooltip" data-placement="left" data-original-title="payscale-changes.pdf" class="txt-color-darken">
+                        <i class="fa fa-paperclip fa-lg"></i>
+                    </a>
                 </div>
             </td>
             <td class="inbox-data-date hidden-xs">
@@ -776,7 +782,6 @@
             </td>
         </tr>
 
-
         <tr id="msg26">
             <td class="inbox-table-icon">
                 <div class="checkbox">
@@ -957,20 +962,19 @@
         loadURL("/content/ajax/email-opened.html", $('#inbox-content > .table-wrap'));
     }
 
-
     $('.inbox-table-icon input:checkbox').click(function () {
         enableDeleteButton();
     })
-
+    
     $(".deletebutton").click(function () {
         $('#inbox-table td input:checkbox:checked').parents("tr").rowslide();
         //$(".inbox-checkbox-triggered").removeClass('visible');
         //$("#compose-mail").show();
     });
-
+    
     function enableDeleteButton() {
         var isChecked = $('.inbox-table-icon input:checkbox').is(':checked');
-
+    
         if (isChecked) {
             $(".inbox-checkbox-triggered").addClass('visible');
             //$("#compose-mail").hide();
@@ -979,5 +983,4 @@
             //$("#compose-mail").show();
         }
     }
-
 </script>

@@ -22,7 +22,7 @@ namespace SmartAdminMvc.Models
 
         public bool Df { get; set; }
 
-      
+
 
 
     }

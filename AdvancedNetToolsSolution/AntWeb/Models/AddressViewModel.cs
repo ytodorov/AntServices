@@ -12,7 +12,7 @@ namespace SmartAdminMvc.Models
             ShowAddressTextBox = true;
         }
 
-            
+
 
         public string PanelTitle { get; set; }
 

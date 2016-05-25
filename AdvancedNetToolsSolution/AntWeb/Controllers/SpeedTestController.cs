@@ -29,7 +29,7 @@ namespace SmartAdminMvc.Controllers
         {
             Response.ContentType = "text/plain; charset=utf-8";
             Request.Headers["Accept-Encoding"] = "";
-            string result = Utils.RandomString(downloadLength);           
+            string result = Utils.RandomString(downloadLength);
             return result;
         }
 

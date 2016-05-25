@@ -5,17 +5,17 @@ using StructureMap;
 
 namespace FailTracker.Web.Infrastructure.ModelMetadata
 {
-	public class ModelMetadataRegistry : Registry
-	{
-		public ModelMetadataRegistry()
-		{
-			For<ModelMetadataProvider>().Use<ExtensibleModelMetadataProvider>();
+    public class ModelMetadataRegistry : Registry
+    {
+        public ModelMetadataRegistry()
+        {
+            For<ModelMetadataProvider>().Use<ExtensibleModelMetadataProvider>();
 
-			Scan(scan =>
-			{
-				scan.TheCallingAssembly();
-				scan.AddAllTypesOf<IModelMetadataFilter>();
-			});
-		}
-	}
+            Scan(scan =>
+            {
+                scan.TheCallingAssembly();
+                scan.AddAllTypesOf<IModelMetadataFilter>();
+            });
+        }
+    }
 }

@@ -74,7 +74,7 @@ namespace SmartAdminMvc.Infrastructure
             }
 
             string thirdLine = lines.First(s => s.StartsWith(value: "Tx", comparisonType: StringComparison.InvariantCultureIgnoreCase));
-            
+
             if (!string.IsNullOrEmpty(thirdLine))
             {
                 string timesAndEmptyStrings = thirdLine.Replace(oldValue: "Tx pkts/s:", newValue: string.Empty)
@@ -120,7 +120,7 @@ namespace SmartAdminMvc.Infrastructure
 
 
             }
-            return result;               
+            return result;
 
         }
     }

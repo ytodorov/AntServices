@@ -45,17 +45,17 @@ namespace SmartAdminMvc.Controllers
         [HttpPost]
         public string GoogleMapFromIps(int? permalinkId, AntDbContext context)
         {
-                AntDal.Entities.PingPermalink pingPermalink = context.PingPermalinks.Include(path => path.PingResponseSummaries).FirstOrDefault(p => p.Id == permalinkId);
+            AntDal.Entities.PingPermalink pingPermalink = context.PingPermalinks.Include(path => path.PingResponseSummaries).FirstOrDefault(p => p.Id == permalinkId);
 
-                var ipAddresses = new List<string>();
-                foreach (var prs in pingPermalink.PingResponseSummaries)
-                {
-                    ipAddresses.Add(prs.SourceIpAddress);
-                    ipAddresses.Add(prs.DestinationIpAddress);
-                }
-                Response.ContentType = "text/plain; charset=utf-8";
-                string gmString = Utils.GetGoogleMapsString(ipAddresses, pingPermalink.PingResponseSummaries, starLine: true);
-                return gmString;
+            var ipAddresses = new List<string>();
+            foreach (var prs in pingPermalink.PingResponseSummaries)
+            {
+                ipAddresses.Add(prs.SourceIpAddress);
+                ipAddresses.Add(prs.DestinationIpAddress);
+            }
+            Response.ContentType = "text/plain; charset=utf-8";
+            string gmString = Utils.GetGoogleMapsString(ipAddresses, pingPermalink.PingResponseSummaries, starLine: true);
+            return gmString;
         }
 
         public string Download(int downloadLength)
