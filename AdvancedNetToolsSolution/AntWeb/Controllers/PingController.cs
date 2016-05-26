@@ -146,7 +146,8 @@ namespace SmartAdminMvc.Controllers
                 tasksForLatencies.Add(task);
             }
 
-            Task.WaitAll(tasksForPings.ToArray().Union(tasksForLatencies).ToArray());
+            Task.WaitAll(tasksForPings.ToArray().Union(tasksForLatencies).ToArray(),
+                (int)TimeSpan.FromMinutes(3).TotalMilliseconds);
 
             bool isUserRequestedAddressIp = false;
             IPAddress dummy1;

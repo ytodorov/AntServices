@@ -65,7 +65,8 @@ namespace SmartAdminMvc.Controllers
                 tasksForTraceroutes.Add(task);
             }
 
-            Task.WaitAll(tasksForTraceroutes.ToArray().Union(tasksForLatencies).ToArray());
+            Task.WaitAll(tasksForTraceroutes.ToArray().Union(tasksForLatencies).ToArray(),
+                (int) TimeSpan.FromMinutes(3).TotalMilliseconds);
 
             var traceroutePermalink = new TraceroutePermalink();
             traceroutePermalink.ShowInHistory = prvm.ShowInHistory;
