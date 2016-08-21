@@ -266,6 +266,7 @@ namespace SmartAdminMvc.Infrastructure
 
                         IpLocationViewModel ipLocationViewModel = JsonConvert.DeserializeObject<IpLocationViewModel>(result);
                         IpLocation ipLocationToSaveInDb = Mapper.Map<IpLocation>(ipLocationViewModel);
+                        ipLocationToSaveInDb.DateCreated = DateTime.UtcNow;
                         context.IpLocations.Add(ipLocationToSaveInDb);
                         context.SaveChanges();
                         return ipLocationViewModel;
@@ -410,7 +411,7 @@ namespace SmartAdminMvc.Infrastructure
 
                 double distanceKm = 0;
                 double distanceMiles = 0;
-                if (i % 2 == 0)
+                if (i % 2 == 0 && pingSummaries != null)
                 {
                     distanceKm = GeoCodeCalc.CalcDistance(locations[i].Latitude.GetValueOrDefault(), locations[i].Longitude.GetValueOrDefault(),
                         locations[i + 1].Latitude.GetValueOrDefault(), locations[i + 1].Longitude.GetValueOrDefault());
@@ -441,7 +442,7 @@ namespace SmartAdminMvc.Infrastructure
                 string timeAvg = string.Empty;
                 string distance = string.Empty;
                 string speed = string.Empty;
-                if (i % 2 == 0)
+                if (i % 2 == 0 && pingSummaries != null)
                 {
                     var time = Math.Round(pingSummaries[i / 2].AvgRtt.GetValueOrDefault(), digits: 0);
                     timeAvg = @"<font size=""2"" color=""#057CBE"">TIME AVG:&nbsp;</font>" + time.ToString() + "ms.<br />";
@@ -638,6 +639,21 @@ namespace SmartAdminMvc.Infrastructure
             }
 
             return errorMessage;
+        }
+
+        public static bool IsIPLocal(IPAddress ipaddress)
+        {
+            String[] straryIPAddress = ipaddress.ToString().Split(new String[] { "." }, StringSplitOptions.RemoveEmptyEntries);
+            int[] iaryIPAddress = new int[] { int.Parse(straryIPAddress[0]), int.Parse(straryIPAddress[1]), int.Parse(straryIPAddress[2]), int.Parse(straryIPAddress[3]) };
+            if (iaryIPAddress[0] == 10 || (iaryIPAddress[0] == 192 && iaryIPAddress[1] == 168) || (iaryIPAddress[0] == 172 && (iaryIPAddress[1] >= 16 && iaryIPAddress[1] <= 31)))
+            {
+                return true;
+            }
+            else
+            {
+                // IP Address is "probably" public. This doesn't catch some VPN ranges like OpenVPN and Hamachi.
+                return false;
+            }
         }
 
 

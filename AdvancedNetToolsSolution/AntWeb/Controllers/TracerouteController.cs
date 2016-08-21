@@ -10,21 +10,21 @@ using SmartAdminMvc.Infrastructure;
 using SmartAdminMvc.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
 using System.Net.Http;
 using System.Runtime.Caching;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using System.Data.Entity;
-using System.Linq;
 using TimeAgo;
 
-#endregion
+#endregion Using
 
 namespace SmartAdminMvc.Controllers
 {
-
     public class TracerouteController : BaseController
     {
+        [OutputCache(CacheProfile = "MyCache")]
         public ActionResult Index(int? id)
         {
             if (id.HasValue)
@@ -36,8 +36,6 @@ namespace SmartAdminMvc.Controllers
                     if (pp != null)
                     {
                         TraceroutePermalinkViewModel ppvm = Mapper.Map<TraceroutePermalinkViewModel>(pp);
-
-
 
                         return View(model: ppvm);
                     }
@@ -66,7 +64,7 @@ namespace SmartAdminMvc.Controllers
             }
 
             Task.WaitAll(tasksForTraceroutes.ToArray().Union(tasksForLatencies).ToArray(),
-                (int) TimeSpan.FromMinutes(3).TotalMilliseconds);
+                (int)TimeSpan.FromMinutes(3).TotalMilliseconds);
 
             var traceroutePermalink = new TraceroutePermalink();
             traceroutePermalink.ShowInHistory = prvm.ShowInHistory;
@@ -94,15 +92,12 @@ namespace SmartAdminMvc.Controllers
                 trs.TracerouteResponseDetails.AddRange(tracerouteResponseDetails);
 
                 traceroutePermalink.TracerouteResponseSummaries.Add(trs);
-
             }
-
 
             context.TraceroutePermalinks.Add(traceroutePermalink);
             context.SaveChanges();
 
             return Json(traceroutePermalink.Id);
-
 
             //using (HttpClient client = new HttpClient())
             //{
@@ -111,7 +106,6 @@ namespace SmartAdminMvc.Controllers
             //    string tracerouteSummary = client.GetStringAsync(url).Result;
 
             //    List<TracerouteResponseDetailViewModel> list = TraceRouteParser.ParseSummary(tracerouteSummary);
-
 
             //    var traceroutePermalink = new TraceroutePermalink();
             //    traceroutePermalink.ShowInHistory = prvm.ShowInHistory;
@@ -130,15 +124,12 @@ namespace SmartAdminMvc.Controllers
 
             //    traceroutePermalink.TracerouteResponseSummaries.Add(trs);
 
-
             //    context.TraceroutePermalinks.Add(traceroutePermalink);
             //    context.SaveChanges();
 
             //    return Json(traceroutePermalink.Id);
 
-
             //}
-
         }
 
         public ActionResult ReadTraceroutePermalinks([DataSourceRequest] DataSourceRequest request, string address, bool? allPermalinks = false)
@@ -164,9 +155,7 @@ namespace SmartAdminMvc.Controllers
 
             JsonResult dsResult = Json(traceroutePermalinksViewModels.ToDataSourceResult(request));
             return dsResult;
-
         }
-
 
         private List<TraceroutePermalink> GetPermalinksForCurrentUser(string address)
         {
@@ -185,6 +174,5 @@ namespace SmartAdminMvc.Controllers
                 return pingPermalinks;
             }
         }
-
     }
 }

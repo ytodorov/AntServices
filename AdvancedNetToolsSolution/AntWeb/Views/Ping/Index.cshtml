@@ -157,7 +157,11 @@ series.Column(model => model.Latency).Name("Latency");
             $.ajax({
                        method: "POST",
                        url: "/home/googlemapfromips",
-                       data: { permalinkId: permalinkId },
+                       data: {
+                           permalinkId: permalinkId,
+                           permalinkType: '@typeof(PingPermalink).Name'
+
+                       },
                        success: function f(gmData) {
                            $("#map").height("600px");
                            eval(gmData);

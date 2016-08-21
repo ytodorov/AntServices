@@ -22,7 +22,7 @@ var Ant;
             return text;
         };
         return Global;
-    })();
+    }());
     Ant.Global = Global;
 })(Ant || (Ant = {}));
 window.antGlobal = new Ant.Global();

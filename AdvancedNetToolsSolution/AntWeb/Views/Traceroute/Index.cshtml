@@ -86,10 +86,53 @@ t.Pdf().Text(string.Empty);
 }
 
     
+@*@if (Model != null)
+{
+
+    <div id="divMap" class="col-lg-12">
+        <div class="hpanel hblue">
+            <div class="panel-heading">
+                <p class="text-center">
+                    Traceroute paths
+                </p>
+            </div>
+            <div class="panel-body">             
+                <p>
+                    <div id="map" style="width:100px;height: 10px"></div>
+                </p>
+                <p class="text-center">Locations of IP addresses are only approximations.</p>
+            </div>
+        </div>
+    </div>
+
+}*@
 
 
 @section scripts {
     <script src="~/scripts/viewsjs/tracerouteindex.js"></script>
+
+@if (Model != null)
+    {
+    <script>
+
+        setTimeout(function f() {
+            var permalinkId = '@Model.Id';
+            $.ajax({
+                       method: "POST",
+                       url: "/home/googlemapfromips",
+                       data: {
+                           permalinkId: permalinkId,
+                           permalinkType: '@typeof(TraceroutePermalink).Name'
+                       },
+                       success: function f(gmData) {
+                           $("#map").height("600px");
+                           eval(gmData);
+                       }
+                   });
+        }, 1)
+
+    </script>
+}
 }
 
 
@@ -130,3 +173,5 @@ Html.Kendo().Grid<TraceroutePermalinkViewModel>().CreateTreaceroutePermalinkGrid
 <div class="normalheader transition animated fadeIn">
 
 </div>
+
+

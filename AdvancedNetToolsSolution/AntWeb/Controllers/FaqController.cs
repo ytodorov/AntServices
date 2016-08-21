@@ -8,6 +8,7 @@ namespace SmartAdminMvc.Controllers
 {
     public class FaqController : BaseController
     {
+        [OutputCache(CacheProfile = "MyCache")]
         public ActionResult Index()
         {
             return View();

@@ -22,7 +22,19 @@ $("#btnPortScan").click(function btnPingClick(e) {
             showInHistory: showInHistory,
         },
         success: function f(id) {
-            window.location.href = "portscan?id=" + id;
+            var error = id.error;
+            debugger;
+            if (typeof error != 'undefined') {
+                $("#loadingProgressBar").hide();
+                var l = $("#btnPortScan").ladda();
+                // Start loading 
+                l.ladda('stop');
+                window.antGlobal.showNotification(error, "error");
+            }
+            else {
+                window.location.href = "portscan?id=" + id;
+            }
+            //window.location.href = "portscan?id=" + id;
         }
     });
 });

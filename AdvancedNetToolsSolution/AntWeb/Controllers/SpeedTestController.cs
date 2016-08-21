@@ -12,18 +12,17 @@ using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
-#endregion
+#endregion Using
 
 namespace SmartAdminMvc.Controllers
 {
-
     public class SpeedtestController : BaseController
     {
         // GET: home/index
-        public ActionResult Index()
-        {
-            return View();
-        }
+        //public override ActionResult Index()
+        //{
+        //    return View();
+        //}
 
         public string Download(int downloadLength)
         {
@@ -39,7 +38,5 @@ namespace SmartAdminMvc.Controllers
             Response.ContentType = "text/plain; charset=utf-8";
             return string.Empty;
         }
-
-
     }
 }

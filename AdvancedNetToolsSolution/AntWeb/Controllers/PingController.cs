@@ -2,36 +2,35 @@
 
 using AntDal;
 using AntDal.Entities;
+using AutoMapper;
 using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Support.UI;
 using SmartAdminMvc.Infrastructure;
 using SmartAdminMvc.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.NetworkInformation;
+using System.Net.Sockets;
 using System.Runtime.Caching;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using System.Linq;
-using System.Net.Sockets;
-using System.Data.Entity;
-using AutoMapper;
 using TimeAgo;
-using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Support.UI;
 
-#endregion
+#endregion Using
 
 namespace SmartAdminMvc.Controllers
 {
-
     public class PingController : BaseController
     {
-
         // GET: home/index
+        [OutputCache(CacheProfile = "MyCache")]
         public ActionResult Index(int? id)
         {
             if (id.HasValue)
@@ -47,7 +46,6 @@ namespace SmartAdminMvc.Controllers
                 }
             }
             return View();
-
         }
 
         [HttpPost]
@@ -87,7 +85,6 @@ namespace SmartAdminMvc.Controllers
                     //Uri uriHelper;
                     //if (Uri.TryCreate(prvm.Ip, UriKind.RelativeOrAbsolute, out uriHelper))
                     //{
-
                     //}
                     //addressToPing = prvm.Ip.Trim().Replace("https://", string.Empty);
                     firstOpenPort = "443";
@@ -103,7 +100,6 @@ namespace SmartAdminMvc.Controllers
                     firstOpenPort = "80";
                 }
             }
-
             else //(string.IsNullOrEmpty(firstOpenPort))
             {
                 firstOpenPort = Utils.GetFirstOpenPort(addressToPing);
@@ -114,15 +110,11 @@ namespace SmartAdminMvc.Controllers
             var tasksForLatencies = new List<Task<string>>();
             var clients = new List<HttpClient>();
 
-
-
             if (string.IsNullOrEmpty(firstOpenPort))
             {
                 var result = new { error = $"Host '{addressToPing}' has no open TCP ports!" };
                 return Json(result);
             }
-
-
 
             for (int i = 0; i < urls.Count; i++)
             {
@@ -178,8 +170,6 @@ namespace SmartAdminMvc.Controllers
                 client.Dispose();
             }
 
-
-
             var pingPermalink = new PingPermalink();
             pingPermalink.ShowInHistory = prvm.ShowInHistory;
             pingPermalink.UserCreatedIpAddress = Request.UserHostAddress;
@@ -196,8 +186,8 @@ namespace SmartAdminMvc.Controllers
             context.SaveChanges();
 
             return Json(pingPermalink.Id);
-
         }
+
         public ActionResult ReadPingPermalinks([DataSourceRequest] DataSourceRequest request, string address, bool? allPermalinks = false)
         {
             List<PingPermalink> pingPermalinks;
@@ -221,12 +211,10 @@ namespace SmartAdminMvc.Controllers
 
             JsonResult dsResult = Json(pingPermalinksViewModels.ToDataSourceResult(request));
             return dsResult;
-
         }
+
         public ActionResult ReadAddressesToPing([DataSourceRequest] DataSourceRequest request)
         {
-
-
             List<PingPermalink> pingPermalinks = GetPermalinksForCurrentUser(address: null);
             pingPermalinks = pingPermalinks.GroupBy(pp => pp.DestinationAddress).Select(group => group.First()).ToList();
 
@@ -277,6 +265,7 @@ namespace SmartAdminMvc.Controllers
             var wait = new WebDriverWait(Driver.Instance, TimeSpan.FromMinutes(1));
             IWebElement element = wait.Until(ExpectedConditions.ElementToBeClickable(By.Id(idToFind: "btnPing")));
         }
+
         public static void Ping(string address)
         {
             IWebElement pingInput = Driver.Instance.FindElement(By.Id(idToFind: "ip"));

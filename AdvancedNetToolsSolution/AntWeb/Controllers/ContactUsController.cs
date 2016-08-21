@@ -10,15 +10,18 @@ using System.Web;
 using System.Web.Mvc;
 
 #pragma warning disable JustCode_NamingConventions // Naming conventions inconsistency
+
 namespace Homer_MVC.Controllers
 #pragma warning restore JustCode_NamingConventions // Naming conventions inconsistency
 {
     public class ContactUsController : Controller
     {
+        [OutputCache(CacheProfile = "MyCache")]
         public ActionResult Index()
         {
             return View();
         }
+
         [HttpPost]
         public ActionResult SendEmail(string senderName, string senderMail, string subject, string emailBody)
         {
@@ -37,7 +40,6 @@ namespace Homer_MVC.Controllers
                     var transportWeb = new SendGrid.Web(apiKey);
 
                     transportWeb.DeliverAsync(myMessage);
-
                 }
                 catch (Exception ex)
                 {
