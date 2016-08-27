@@ -27,7 +27,7 @@
 
 @if (Model != null)
 {
-@Html.Raw((Html.AntCreateStandardPanel("hgreen", "Ping report summary",
+    @Html.Raw((Html.AntCreateStandardPanel("hgreen", "Ping report summary",
 "<div class='text-center'>" +
 "<a style='display:none' class='pdfexportpage'>Download as PDF" + "</a>" +
 "<p>" + "Created on: " + Model.DateCreated + "</p>" +
@@ -39,41 +39,41 @@
 
 @Html.Partial("_Addresses", new AddressViewModel()
 {
-ButtonId = "btnPing",
-ButtonText = "Ping",
-DefaultDestinationAddress = Model?.DestinationAddress
-//,
-//PanelTitle = " Ping an IP address or host name"
+    ButtonId = "btnPing",
+    ButtonText = "Ping",
+    DefaultDestinationAddress = Model?.DestinationAddress
+    //,
+    //PanelTitle = " Ping an IP address or host name"
 }
 )
 
 @if (Model != null)
 {
 
-@Html.Raw((Html.AntCreateStandardPanel("hyellow", "Table: Round-trip times and latencies in ms.", "<p>" +
+    @Html.Raw((Html.AntCreateStandardPanel("hyellow", "Round-trip times and latencies in ms.", "<p>" +
 Html.Kendo().Grid<PingResponseSummaryViewModel>()
 .Name("pingResultsGrid")
 .Columns(columns =>
 {
-columns.Bound(c => c.SourceHostName).Title("Origin");
-columns.Bound(c => c.DestinationIpAddress).Title("Dest");
-if (!Model.IsDestinationIpAddress)
-{
-columns.Bound(c => c.DestinationHostName).Title("Host");
-}
+    columns.Bound(c => c.SourceHostName).Title("Origin");
+    columns.Bound(c => c.DestinationIpAddress).Title("Dest");
+    if (!Model.IsDestinationIpAddress)
+    {
+        columns.Bound(c => c.DestinationHostName).Title("Host");
+    }
 
-columns.Bound(c => c.MaxRtt).Title("Max");
-columns.Bound(t => t.AvgRtt).Title("Avg").Format("{0:n0}");
-columns.Bound(c => c.MinRtt).Title("Min");
-columns.Bound(c => c.PacketsSent).Title("Sent");
-columns.Bound(c => c.PacketsReceived).Title("Received");
-columns.Bound(c => c.Latency).Title("Latency");
+    columns.Bound(c => c.MaxRtt).Title("Max");
+    columns.Bound(t => t.AvgRtt).Title("Avg").Format("{0:n0}");
+    columns.Bound(c => c.MinRtt).Title("Min");
+    columns.Bound(c => c.PacketsSent).Title("Sent");
+    columns.Bound(c => c.PacketsReceived).Title("Received");
+    columns.Bound(c => c.Latency).Title("Latency");
 })
 .Scrollable(s => s.Enabled(false))
 .ToolBar(t =>
 {
-t.Excel().Text(string.Empty);
-t.Pdf().Text(string.Empty);
+    t.Excel().Text(string.Empty);
+    t.Pdf().Text(string.Empty);
 })
 .Excel(e => e.AllPages(true).FileName("pingExportHistory(www.toolsfornet.com).xlsx").ProxyURL(Url.Action("Excel", "Export")))
 .Pdf(e => e.AllPages().FileName("pingExportHistory(www.toolsfornet.com).pdf").ProxyURL(Url.Action("Pdf", "Export")))
@@ -92,7 +92,7 @@ t.Pdf().Text(string.Empty);
 @if (Model != null)
 {
 
-@Html.Raw((Html.AntCreateStandardPanel("hred", "Chart: Round-trip times and latencies in ms.", "<p>" +
+    @Html.Raw((Html.AntCreateStandardPanel("hred", "Chart: Round-trip times and latencies in ms.", "<p>" +
 Html.Kendo().Chart(Model.PingResponseSummaries.OrderBy(s => s.AvgRtt)).Theme("metro")
 .Name("pingResultsChart")
 .Legend(legend => legend
@@ -101,10 +101,10 @@ Html.Kendo().Chart(Model.PingResponseSummaries.OrderBy(s => s.AvgRtt)).Theme("me
 
 .Series(series =>
 {
-series.Column(model => model.MaxRtt).Name("Max");
-series.Column(model => model.AvgRtt).Name("Avg");
-series.Column(model => model.MinRtt).Name("Min");
-series.Column(model => model.Latency).Name("Latency");
+    series.Column(model => model.MaxRtt).Name("Max");
+    series.Column(model => model.AvgRtt).Name("Avg");
+    series.Column(model => model.MinRtt).Name("Min");
+    series.Column(model => model.Latency).Name("Latency");
 })
 .CategoryAxis(axis => axis
 .Categories(model => model.SourceHostName)
@@ -124,55 +124,54 @@ series.Column(model => model.Latency).Name("Latency");
 @if (Model != null)
 {
 
-<div id="divMap" class="col-lg-12">
-    <div class="hpanel hblue">
-        <div class="panel-heading">
-            <p class="text-center">
-                Ping locations and distances
-            </p>
-        </div>
-        <div class="panel-body">
-            <p class="text-center">
-                <img src="~/content/img/pinredcolor.png" alt="Ping source" />Ping source &nbsp;<img src="~/content/img/pingreencolor.png" alt="Ping destination" />Ping destination
-            </p>
+    <div id="divMap" class="col-lg-12">
+        <div class="hpanel hblue">
+            <div class="panel-heading">
+                <p class="text-center">
+                    Ping locations and distances
+                </p>
+            </div>
+            <div class="panel-body">
+                <p class="text-center">
+                    <img src="~/content/img/pinredcolor.png" alt="Ping source" />Ping source &nbsp;<img src="~/content/img/pingreencolor.png" alt="Ping destination" />Ping destination
+                </p>
 
-            <p>
-                <div id="map" style="width:100px;height: 10px"></div>
-            </p>
-            <p class="text-center">Locations of IP addresses are only approximations.</p>
+                <p>
+                    <div id="map" style="width:100px;height: 10px"></div>
+                </p>
+                <p class="text-center">Locations of IP addresses are only approximations.</p>
+            </div>
         </div>
     </div>
-</div>
-    
+
 }
 
 @section scripts {
-    
+
     @if (Model != null)
     {
-    <script>
-    
-        setTimeout(function f() {
-            var permalinkId = '@Model.Id';
-            $.ajax({
-                       method: "POST",
-                       url: "/home/googlemapfromips",
-                       data: {
-                           permalinkId: permalinkId,
-                           permalinkType: '@typeof(PingPermalink).Name'
+        <script>
 
-                       },
-                       success: function f(gmData) {
-                           $("#map").height("600px");
-                           eval(gmData);
-                       }
-                   });
-        }, 1)
+            setTimeout(function f() {
+                var permalinkId = '@Model.Id';
+                $.ajax({
+                    method: "POST",
+                    url: "/home/googlemapfromips",
+                    data: {
+                        permalinkId: permalinkId,
+                        permalinkType: '@typeof(PingPermalink).Name'
 
-    </script>
+                    },
+                    success: function f(gmData) {
+                        $("#map").height("600px");
+                        eval(gmData);
+                    }
+                });
+            }, 1)
+        </script>
     }
     <script src="~/scripts/viewsjs/pingindex.js"></script>
-    
+
 }
 
 @*history*@
@@ -182,17 +181,16 @@ Html.Kendo().Grid<PingPermalinkViewModel>().CreatePingPermalinkGrid(Url).ToHtmlS
 
 @if (Model != null)
 {
-<script>
-    function getRequestedAddress() {
-        var data = {
-            address: $("#ip").val()
-        };
-        return data;
-    }
-    
-</script>
+    <script>
+        function getRequestedAddress() {
+            var data = {
+                address: $("#ip").val()
+            };
+            return data;
+        }
+    </script>
 
-@Html.Raw((Html.AntCreateStandardPanel("hviolet", "Ping history for " + Model.DestinationAddress, "<p>" +
+    @Html.Raw((Html.AntCreateStandardPanel("hviolet", "Ping history for " + Model.DestinationAddress, "<p>" +
 Html.Kendo().Grid<PingPermalinkViewModel>().CreatePingPermalinkGrid(Url, "getRequestedAddress").ToHtmlString() + "</p>")))
 
 }
@@ -207,5 +205,4 @@ Html.Kendo().Grid<PingPermalinkViewModel>().CreatePingPermalinkGrid(Url, "getReq
 @Html.Raw((Html.AntCreateStandardPanel("hviolet", "Ping history for the last 100 pings", "<p>" +
 Html.Kendo().Grid<PingPermalinkViewModel>().CreatePingPermalinkGrid(Url, "getAllPermalinks").ToHtmlString() + "</p>")))
 <div class="normalheader transition animated fadeIn">
-
 </div>

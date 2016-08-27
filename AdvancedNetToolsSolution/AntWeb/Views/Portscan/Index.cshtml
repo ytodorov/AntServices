@@ -27,7 +27,7 @@
 
 @if (Model != null)
 {
-@Html.Raw((Html.AntCreateStandardPanel("hgreen", "Portscan report summary",
+    @Html.Raw((Html.AntCreateStandardPanel("hgreen", "Portscan report summary",
 "<div class='text-center'>" +
 "<a style='display:none' class='pdfexportpage'>Download as PDF" + "</a>" +
 "<p>" + "Created on: " + Model.DateCreated + "</p>" +
@@ -36,38 +36,35 @@
 "<div>")))
 }
 
-
-
-
 @Html.Partial("_Addresses", new AddressViewModel()
 {
-ButtonId = "btnPortScan",
-ButtonText = "Port scan",
-DefaultDestinationAddress = Model?.DestinationAddress,
-PanelTitle = ""
+    ButtonId = "btnPortScan",
+    ButtonText = "Port scan",
+    DefaultDestinationAddress = Model?.DestinationAddress,
+    PanelTitle = ""
 }
 )
 
 @if (Model != null)
 {
 
-@Html.Raw((Html.AntCreateStandardPanel("hyellow", "Table: Round-trip times and latencies in ms.", "<p>" +
+    @Html.Raw((Html.AntCreateStandardPanel("hyellow", "Portscan results", "<p>" +
 Html.Kendo().Grid<PortResponseSummaryViewModel>()
 .Name("portResultsGrid")
 .Columns(columns =>
 {
-columns.Bound(c => c.PortNumber).Title("Port");
-columns.Bound(c => c.Protocol);
-columns.Bound(c => c.Service);
-columns.Bound(c => c.State);
-//columns.Bound(c => c.Version);
+    columns.Bound(c => c.PortNumber).Title("Port");
+    columns.Bound(c => c.Protocol);
+    columns.Bound(c => c.Service);
+    columns.Bound(c => c.State);
+    //columns.Bound(c => c.Version);
 })
 .Pageable()
 .Scrollable(s => s.Enabled(false))
 .ToolBar(t =>
 {
-t.Excel().Text(string.Empty);
-t.Pdf().Text(string.Empty);
+    t.Excel().Text(string.Empty);
+    t.Pdf().Text(string.Empty);
 })
 .Excel(e =>
 e.FileName("portExportHistory(www.toolsfornet.com).xlsx").ProxyURL(Url.Action("Excel", "Export"))
@@ -85,48 +82,42 @@ e.FileName("portExportHistory(www.toolsfornet.com).xlsx").ProxyURL(Url.Action("E
 .Deferred().ToHtmlString() + "</p>")))
 
 }
-@*history*@
+    @*history*@
 
-@Html.Raw((Html.AntCreateStandardPanel("hviolet", "Port scan history for current user's IP", "<p>" +
+    @Html.Raw((Html.AntCreateStandardPanel("hviolet", "Port scan history for current user's IP", "<p>" +
 Html.Kendo().Grid<PortPermalinkViewModel>().CreatePortscanPermalinkGrid(Url).ToHtmlString() + "</p>")))
 
-@if (Model != null)
-{
-<script>
-    function getRequestedAddress() {
-        var data = {
-            address: $("#ip").val()
-        };
-        return data;
-    }
-    
-</script>
+    @if (Model != null)
+    {
+        <script>
+            function getRequestedAddress() {
+                var data = {
+                    address: $("#ip").val()
+                };
+                return data;
+            }
+        </script>
 
-@Html.Raw((Html.AntCreateStandardPanel("hviolet", "Port scan history for " + Model.DestinationAddress, "<p>" +
+        @Html.Raw((Html.AntCreateStandardPanel("hviolet", "Port scan history for " + Model.DestinationAddress, "<p>" +
 Html.Kendo().Grid<PortPermalinkViewModel>().CreatePortscanPermalinkGrid(Url, "getRequestedAddress").ToHtmlString() + "</p>")))
 
-
-}
-
-<script>
-    function getAllPermalinks() {
-        var data = {
-            allPermalinks: true
-        };
-        return data;
     }
-</script>
-@Html.Raw((Html.AntCreateStandardPanel("hviolet", "Port scan for the last 100 addresses", "<p>" +
+
+    <script>
+        function getAllPermalinks() {
+            var data = {
+                allPermalinks: true
+            };
+            return data;
+        }
+    </script>
+    @Html.Raw((Html.AntCreateStandardPanel("hviolet", "Port scan for the last 100 addresses", "<p>" +
 Html.Kendo().Grid<PortPermalinkViewModel>().CreatePortscanPermalinkGrid(Url, "getAllPermalinks").ToHtmlString() + "</p>")))
-<div class="normalheader transition animated fadeIn">
+    <div class="normalheader transition animated fadeIn">
+    </div>
 
-</div>
+    @section scripts {
 
+        <script src="~/scripts/viewsjs/portscanindex.js"></script>
 
-
-@section scripts {
-    
-    <script src="~/scripts/viewsjs/portscanindex.js"></script>
-
-}
-
+    }
