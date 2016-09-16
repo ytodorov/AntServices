@@ -197,6 +197,10 @@
     <Reference Include="WebGrease">
       <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
     </Reference>
+    <Reference Include="WebMarkupMin.Core, Version=2.1.0.0, Culture=neutral, PublicKeyToken=99472178d266584b, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebMarkupMin.Core.2.1.0\lib\net40-client\WebMarkupMin.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="500.aspx" />
@@ -983,11 +987,13 @@
     <Content Include="Scripts\bundle.js" />
     <Content Include="Scripts\clipboard\clipboard.js" />
     <Content Include="Scripts\clipboard\clipboard.min.js" />
+    <Content Include="Scripts\css\index.js" />
     <Content Include="Scripts\googleAnalytics.min.js" />
     <Content Include="Scripts\googleAnalytics.js" />
     <Content Include="Scripts\googleMapsWithMyKey.js" />
     <Content Include="Scripts\homer.min.js" />
     <Content Include="Scripts\homer.js" />
+    <Content Include="Scripts\css\index.js.map" />
     <None Include="Scripts\jquery-2.2.3.intellisense.js" />
     <Content Include="Scripts\jquery-2.2.3.js" />
     <Content Include="Scripts\jquery-2.2.3.min.js" />
@@ -1977,6 +1983,7 @@
     <Content Include="Views\ErrorLogging\Index.cshtml" />
     <Content Include="Scripts\jquery-2.2.3.min.map" />
     <Content Include="Views\Shared\_Addresses.cshtml" />
+    <Content Include="Views\Css\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -2022,6 +2029,7 @@
     <Compile Include="Controllers\FaqController.cs" />
     <Compile Include="Controllers\InterfaceController.cs" />
     <Compile Include="Controllers\MyIpController.cs" />
+    <Compile Include="Controllers\CssController.cs" />
     <Compile Include="Controllers\PortscanController.cs" />
     <Compile Include="Controllers\SpeedtestController.cs" />
     <Compile Include="Controllers\TestController.cs" />
@@ -2125,6 +2133,7 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="Scripts\css\index.ts" />
     <TypeScriptCompile Include="Scripts\typings\jquery.cookie\jquery.cookie.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\jquery\jquery.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\kendo-ui\kendo-ui.d.ts" />

@@ -1,0 +1,26 @@
+﻿@{
+    ViewBag.Title = "Css tools";
+    ViewBag.MetaDescription = "Css minifier and beautifier.";
+}
+<script src="~/Scripts/css/index.js"></script>
+
+@(Html.Kendo().Button()
+        .Name("cssMinify")
+        .Tag("em")
+        .SpriteCssClass("k-icon k-i-undo")
+        .Content("<span class='k-sprite'>Minify</span>")
+        .Events(e=>e.Click("cssMinifyClick"))
+        .Deferred())
+
+@(Html.Kendo().Button()
+        .Name("cssBeautify")
+        .Tag("em")
+        .SpriteCssClass("k-icon k-i-redo")
+        .Content("<span class='k-sprite'>Beautify</span>")
+        .Deferred()
+        )
+
+<textarea id="cssInput" class="k-textbox" style="width:100%;min-height:200px;"></textarea>
+<p>Result</p>
+
+<textarea id="cssOutput" class="k-textbox" style="width:100%;min-height:200px;"></textarea>
