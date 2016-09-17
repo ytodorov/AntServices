@@ -4,10 +4,79 @@
 }
 <script src="~/Scripts/word/index.js"></script>
 
-@(Html.Kendo().Upload()
-                        .Name("wordUpload")
+@using (Html.BeginForm("Download_Document", "Word"))
+{
+
+    @(Html.Kendo().Upload()
+                        .Name("wordUploads")
                         .Multiple(true)
                         .ShowFileList(true)
                         .Events(events => events.Select("onSelect"))
                         .Deferred()
-)
+    )
+    @Html.Label("fileExtension", "Convert to: ")
+    @(Html.Kendo().ComboBox()
+                            .Name("convertTo")
+                            .Filter("contains")
+                            .Suggest(true)
+                            .SelectedIndex(0)
+                            .Items(items =>
+                                {
+                                    items.Add().Text("DOCX").Value("docx");
+                                    items.Add().Text("RTF").Value("rtf");
+                                    items.Add().Text("HTML").Value("html");
+                                    items.Add().Text("TXT").Value("txt");
+                                }
+                            )
+                            .Deferred()
+    )
+
+    @*@(Html.Kendo().Button()
+                            .Name("uploadFileBtn")
+                            .Content("Load Custom Document")
+                            .HtmlAttributes(new { type = "button" })
+                            .Events(events => events.Click("uploadFile"))
+                )
+                <div class="imageContainer  custom-doc">
+                    <img src="~/Content/web/wordsprocessing/CustomDocument_file.png" />
+                </div>
+            </div>
+            <div class="column or-elm">- OR -</div>
+            <div class="column">
+                @(Html.Kendo().Button()
+                            .Name("loadTempDocBtn")
+                            .Content("Load Template Document")
+                            .HtmlAttributes(new { type = "button" })
+                            .Events(events => events.Click("loadTemplate"))
+                )
+                <div class="imageContainer">
+                    <img src="~/Content/web/wordsprocessing/SampleDocumentImage.png" />
+                </div>
+            </div>
+        </div>
+                <hr />
+                <div class="file-options-wrapper">
+                    <div class="column float-right">
+                        @Html.Label("fileExtension", "Convert to: ")
+                        @(Html.Kendo().ComboBox()
+                            .Name("convertTo")
+                            .Filter("contains")
+                            .Suggest(true)
+                            .SelectedIndex(0)
+                            .Items(items =>
+                                {
+                                    items.Add().Text("DOCX").Value("docx");
+                                    items.Add().Text("RTF").Value("rtf");
+                                    items.Add().Text("HTML").Value("html");
+                                    items.Add().Text("TXT").Value("txt");
+                                }
+                            )
+                        )
+
+                    </div>
+                    <div class="column"><span>File: </span><span id="fileName"></span></div>
+                </div>
+
+                <hr class="clear" />*@
+    <input type="submit" class="k-button k-primary wide-btn" value="Download" />
+}
