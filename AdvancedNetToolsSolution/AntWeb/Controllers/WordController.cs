@@ -30,6 +30,7 @@ using Telerik.Windows.Documents.Flow.FormatProviders.Html;
 using Telerik.Windows.Documents.Flow.FormatProviders.Rtf;
 using Telerik.Windows.Documents.Flow.FormatProviders.Txt;
 using Telerik.Windows.Documents.Flow.Model;
+using Telerik.Windows.Zip;
 using TimeAgo;
 using WebMarkupMin.Core;
 
@@ -62,83 +63,106 @@ namespace SmartAdminMvc.Controllers
         [HttpPost]
         public ActionResult Download_Document(IEnumerable<HttpPostedFileBase> wordUploads, string convertTo)
         {
-            foreach (var customDocument in wordUploads)
+            using (MemoryStream memoryStream = new MemoryStream())
             {
-                IFormatProvider<RadFlowDocument> fileFormatProvider = null;
-                IFormatProvider<RadFlowDocument> convertFormatProvider = null;
-                RadFlowDocument document = null;
-                string mimeType = string.Empty;
-                string fileDownloadName = "{0}.{1}";
-
-                if (customDocument != null && Regex.IsMatch(Path.GetExtension(customDocument.FileName), ".docx|.rtf|.html|.txt"))
+                using (ZipArchive archive = new ZipArchive(memoryStream, ZipArchiveMode.Create, true, null))
                 {
-                    switch (Path.GetExtension(customDocument.FileName))
+
+
+
+                    foreach (var customDocument in wordUploads)
                     {
-                        case ".docx":
+                        IFormatProvider<RadFlowDocument> fileFormatProvider = null;
+                        IFormatProvider<RadFlowDocument> convertFormatProvider = null;
+                        RadFlowDocument document = null;
+                        string mimeType = string.Empty;
+                        string fileDownloadName = "{0}.{1}";
+
+                        if (customDocument != null && Regex.IsMatch(Path.GetExtension(customDocument.FileName), ".docx|.rtf|.html|.txt"))
+                        {
+                            switch (Path.GetExtension(customDocument.FileName))
+                            {
+                                case ".docx":
+                                    fileFormatProvider = new DocxFormatProvider();
+                                    break;
+                                case ".rtf":
+                                    fileFormatProvider = new RtfFormatProvider();
+                                    break;
+                                case ".html":
+                                    fileFormatProvider = new HtmlFormatProvider();
+                                    break;
+                                case ".txt":
+                                    fileFormatProvider = new TxtFormatProvider();
+                                    break;
+                                default:
+                                    fileFormatProvider = null;
+                                    break;
+                            }
+
+                            document = fileFormatProvider.Import(customDocument.InputStream);
+                            fileDownloadName = String.Format(fileDownloadName, Path.GetFileNameWithoutExtension(customDocument.FileName), convertTo);
+                        }
+                        else
+                        {
                             fileFormatProvider = new DocxFormatProvider();
-                            break;
-                        case ".rtf":
-                            fileFormatProvider = new RtfFormatProvider();
-                            break;
-                        case ".html":
-                            fileFormatProvider = new HtmlFormatProvider();
-                            break;
-                        case ".txt":
-                            fileFormatProvider = new TxtFormatProvider();
-                            break;
-                        default:
-                            fileFormatProvider = null;
-                            break;
+                            string fileName = Server.MapPath("~/Content/web/wordsprocessing/SampleDocument.docx");
+                            using (FileStream input = new FileStream(fileName, FileMode.Open))
+                            {
+                                document = fileFormatProvider.Import(input);
+                            }
+
+                            fileDownloadName = String.Format(fileDownloadName, "SampleDocument", convertTo);
+                        }
+
+                        switch (convertTo)
+                        {
+                            case "docx":
+                                convertFormatProvider = new DocxFormatProvider();
+                                mimeType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+                                break;
+                            case "rtf":
+                                convertFormatProvider = new RtfFormatProvider();
+                                mimeType = "application/rtf";
+                                break;
+                            case "html":
+                                convertFormatProvider = new HtmlFormatProvider();
+                                mimeType = "text/html";
+                                break;
+                            case "txt":
+                                convertFormatProvider = new TxtFormatProvider();
+                                mimeType = "text/plain";
+                                break;
+                            default:
+                                convertFormatProvider = new TxtFormatProvider();
+                                mimeType = "text/plain";
+                                break;
+                        }
+
+                        byte[] renderedBytes = null;
+
+                        using (MemoryStream ms = new MemoryStream())
+                        {
+                            convertFormatProvider.Export(document, ms);
+                            renderedBytes = ms.ToArray();
+
+                        }
+                        if (wordUploads.Count() == 1)
+                        {
+                            return File(renderedBytes, mimeType, fileDownloadName);
+                        }
+                        else
+                        {
+                            using (ZipArchiveEntry entry = archive.CreateEntry(fileDownloadName))
+                            {
+                                BinaryWriter writer = new BinaryWriter(entry.Open());
+                                writer.Write(renderedBytes);
+                                writer.Flush();
+                            }
+                        }
                     }
-
-                    document = fileFormatProvider.Import(customDocument.InputStream);
-                    fileDownloadName = String.Format(fileDownloadName, Path.GetFileNameWithoutExtension(customDocument.FileName), convertTo);
                 }
-                else
-                {
-                    fileFormatProvider = new DocxFormatProvider();
-                    string fileName = Server.MapPath("~/Content/web/wordsprocessing/SampleDocument.docx");
-                    using (FileStream input = new FileStream(fileName, FileMode.Open))
-                    {
-                        document = fileFormatProvider.Import(input);
-                    }
-
-                    fileDownloadName = String.Format(fileDownloadName, "SampleDocument", convertTo);
-                }
-
-                switch (convertTo)
-                {
-                    case "docx":
-                        convertFormatProvider = new DocxFormatProvider();
-                        mimeType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
-                        break;
-                    case "rtf":
-                        convertFormatProvider = new RtfFormatProvider();
-                        mimeType = "application/rtf";
-                        break;
-                    case "html":
-                        convertFormatProvider = new HtmlFormatProvider();
-                        mimeType = "text/html";
-                        break;
-                    case "txt":
-                        convertFormatProvider = new TxtFormatProvider();
-                        mimeType = "text/plain";
-                        break;
-                    default:
-                        convertFormatProvider = new TxtFormatProvider();
-                        mimeType = "text/plain";
-                        break;
-                }
-
-                byte[] renderedBytes = null;
-
-                using (MemoryStream ms = new MemoryStream())
-                {
-                    convertFormatProvider.Export(document, ms);
-                    renderedBytes = ms.ToArray();
-                }
-
-                return File(renderedBytes, mimeType, fileDownloadName);
+                var arr = memoryStream.ToArray();
+                return File(arr, "application/zip", "AllFiles.zip");
             }
             return null;
         }

@@ -69,6 +69,10 @@
       <HintPath>..\packages\CommonServiceLocator.StructureMapAdapter.Unofficial.3.0.4.125\lib\Net40\CommonServiceLocator.StructureMapAdapter.Unofficial.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="DotNetZip, Version=1.10.1.0, Culture=neutral, PublicKeyToken=6583c7c814667745, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetZip.1.10.1\lib\net20\DotNetZip.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
