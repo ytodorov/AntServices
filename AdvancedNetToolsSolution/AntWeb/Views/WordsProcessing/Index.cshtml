@@ -2,9 +2,9 @@
     ViewBag.Title = "Word processing";
     ViewBag.MetaDescription = "Word processing enables users to effortlessly import and export files to and from some of the most commonly used formats. Supported formats include Open XML Word Document (.DOCX), Rich Text Format (.RTF) and Text Files (.TXT).";
 }
-<script src="~/Scripts/word/index.js"></script>
+<script src="~/Scripts/WordsProcessing/index.js"></script>
 
-@using (Html.BeginForm("Download_Document", "Word"))
+@using (Html.BeginForm("Download_Document", "wordsprocessing"))
 {
 
     @(Html.Kendo().Upload()

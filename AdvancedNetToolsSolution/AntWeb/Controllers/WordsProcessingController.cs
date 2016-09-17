@@ -38,7 +38,7 @@ using WebMarkupMin.Core;
 
 namespace SmartAdminMvc.Controllers
 {
-    public class WordController : BaseController
+    public class WordsProcessingController : BaseController
     {
         //[OutputCache(CacheProfile = "MyCache")]
         public ActionResult Index()
@@ -164,7 +164,6 @@ namespace SmartAdminMvc.Controllers
                 var arr = memoryStream.ToArray();
                 return File(arr, "application/zip", "AllFiles.zip");
             }
-            return null;
         }
     }
 }
