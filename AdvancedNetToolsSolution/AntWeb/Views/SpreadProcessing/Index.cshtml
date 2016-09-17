@@ -1,0 +1,37 @@
+﻿@{
+    ViewBag.Title = "Spread processing";
+    ViewBag.MetaDescription = "Spread processing enables you to effortlessly convert documents from one to another file format among XLSX, CSV and TXT. Further, you can export any of these to PDF.";
+}
+<script src="~/Scripts/SpreadProcessing/index.js"></script>
+@using (Html.BeginForm("Download_Document", "SpreadProcessing"))
+{
+    @(Html.Kendo().Upload()
+                        .Name("spreadUploads")
+                        .Multiple(true)
+                        .ShowFileList(true)
+                        .Events(events => events.Select("onSelectSpreadProcessing"))
+                        .Deferred()
+    )
+    @Html.Label("fileExtension", "Convert to: ")
+    @(Html.Kendo().ComboBox()
+                        .Name("convertTo")
+                        .Filter("contains")
+                        .Suggest(true)
+                        .SelectedIndex(0)
+                        .Items(items =>
+                            {
+                                items.Add().Text("XLSX").Value("xlsx");
+                                items.Add().Text("CSV").Value("csv");
+                                items.Add().Text("TXT").Value("txt");
+                                items.Add().Text("PDF").Value("pdf");
+                            }
+                        )
+                        .Deferred()
+    )
+
+
+
+
+    <hr class="clear" />
+            <input type="submit" class="k-button k-primary wide-btn" value="Download" />
+}

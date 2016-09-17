@@ -28,8 +28,13 @@ using Telerik.Windows.Documents.Common.FormatProviders;
 using Telerik.Windows.Documents.Flow.FormatProviders.Docx;
 using Telerik.Windows.Documents.Flow.FormatProviders.Html;
 using Telerik.Windows.Documents.Flow.FormatProviders.Rtf;
-using Telerik.Windows.Documents.Flow.FormatProviders.Txt;
 using Telerik.Windows.Documents.Flow.Model;
+using Telerik.Windows.Documents.Spreadsheet.FormatProviders;
+using Telerik.Windows.Documents.Spreadsheet.FormatProviders.OpenXml.Xlsx;
+using Telerik.Windows.Documents.Spreadsheet.FormatProviders.Pdf;
+using Telerik.Windows.Documents.Spreadsheet.FormatProviders.TextBased.Csv;
+using Telerik.Windows.Documents.Spreadsheet.FormatProviders.TextBased.Txt;
+using Telerik.Windows.Documents.Spreadsheet.Model;
 using Telerik.Windows.Zip;
 using TimeAgo;
 using WebMarkupMin.Core;
@@ -38,45 +43,39 @@ using WebMarkupMin.Core;
 
 namespace SmartAdminMvc.Controllers
 {
-    public class WordsProcessingController : BaseController
+    public class SpreadProcessingController : BaseController
     {
         //[OutputCache(CacheProfile = "MyCache")]
         public ActionResult Index()
         {
             return View();
         }
-              
 
         [HttpPost]
-        public ActionResult Download_Document(IEnumerable<HttpPostedFileBase> wordUploads, string convertTo)
+        public ActionResult Download_Document(IEnumerable<HttpPostedFileBase> spreadUploads, string convertTo)
         {
             using (MemoryStream memoryStream = new MemoryStream())
             {
                 using (ZipArchive archive = new ZipArchive(memoryStream, ZipArchiveMode.Create, true, null))
                 {
-
-
-
-                    foreach (var customDocument in wordUploads)
+                    foreach (var customDocument in spreadUploads)
                     {
-                        IFormatProvider<RadFlowDocument> fileFormatProvider = null;
-                        IFormatProvider<RadFlowDocument> convertFormatProvider = null;
-                        RadFlowDocument document = null;
-                        string mimeType = string.Empty;
+
+                        IWorkbookFormatProvider fileFormatProvider = null;
+                        IWorkbookFormatProvider convertFormatProvider = null;
+                        Workbook document = null;
+                        string mimeType = String.Empty;
                         string fileDownloadName = "{0}.{1}";
 
-                        if (customDocument != null && Regex.IsMatch(Path.GetExtension(customDocument.FileName), ".docx|.rtf|.html|.txt"))
+                        if (customDocument != null && Regex.IsMatch(Path.GetExtension(customDocument.FileName), ".xlsx|.csv|.txt"))
                         {
                             switch (Path.GetExtension(customDocument.FileName))
                             {
-                                case ".docx":
-                                    fileFormatProvider = new DocxFormatProvider();
+                                case ".xlsx":
+                                    fileFormatProvider = new XlsxFormatProvider();
                                     break;
-                                case ".rtf":
-                                    fileFormatProvider = new RtfFormatProvider();
-                                    break;
-                                case ".html":
-                                    fileFormatProvider = new HtmlFormatProvider();
+                                case ".csv":
+                                    fileFormatProvider = new CsvFormatProvider();
                                     break;
                                 case ".txt":
                                     fileFormatProvider = new TxtFormatProvider();
@@ -87,12 +86,12 @@ namespace SmartAdminMvc.Controllers
                             }
 
                             document = fileFormatProvider.Import(customDocument.InputStream);
-                            fileDownloadName = String.Format(fileDownloadName, customDocument.FileName, convertTo);
+                            fileDownloadName = string.Format(fileDownloadName, customDocument.FileName, convertTo);
                         }
                         else
                         {
-                            fileFormatProvider = new DocxFormatProvider();
-                            string fileName = Server.MapPath("~/Content/web/wordsprocessing/SampleDocument.docx");
+                            fileFormatProvider = new XlsxFormatProvider();
+                            string fileName = Server.MapPath("~/Content/web/spreadprocessing/SampleDocument.xlsx");
                             using (FileStream input = new FileStream(fileName, FileMode.Open))
                             {
                                 document = fileFormatProvider.Import(input);
@@ -103,21 +102,21 @@ namespace SmartAdminMvc.Controllers
 
                         switch (convertTo)
                         {
-                            case "docx":
-                                convertFormatProvider = new DocxFormatProvider();
-                                mimeType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+                            case "xlsx":
+                                convertFormatProvider = new XlsxFormatProvider();
+                                mimeType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
                                 break;
-                            case "rtf":
-                                convertFormatProvider = new RtfFormatProvider();
-                                mimeType = "application/rtf";
-                                break;
-                            case "html":
-                                convertFormatProvider = new HtmlFormatProvider();
-                                mimeType = "text/html";
+                            case "csv":
+                                convertFormatProvider = new CsvFormatProvider();
+                                mimeType = "text/csv";
                                 break;
                             case "txt":
                                 convertFormatProvider = new TxtFormatProvider();
                                 mimeType = "text/plain";
+                                break;
+                            case "pdf":
+                                convertFormatProvider = new PdfFormatProvider();
+                                mimeType = "application/pdf";
                                 break;
                             default:
                                 convertFormatProvider = new TxtFormatProvider();
@@ -131,9 +130,8 @@ namespace SmartAdminMvc.Controllers
                         {
                             convertFormatProvider.Export(document, ms);
                             renderedBytes = ms.ToArray();
-
                         }
-                        if (wordUploads.Count() == 1)
+                        if (spreadUploads.Count() == 1)
                         {
                             return File(renderedBytes, mimeType, fileDownloadName);
                         }
@@ -152,9 +150,11 @@ namespace SmartAdminMvc.Controllers
                         }
                     }
                 }
+
                 var arr = memoryStream.ToArray();
                 return File(arr, "application/zip", "AllFiles.zip");
             }
         }
+
     }
 }
