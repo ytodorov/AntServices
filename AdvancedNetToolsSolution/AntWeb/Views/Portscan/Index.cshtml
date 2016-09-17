@@ -67,7 +67,7 @@ Html.Kendo().Grid<PortResponseSummaryViewModel>()
     t.Pdf().Text(string.Empty);
 })
 .Excel(e =>
-e.FileName("portExportHistory(www.toolsfornet.com).xlsx").ProxyURL(Url.Action("Excel", "Export"))
+e.AllPages(true).FileName("portExportHistory(www.toolsfornet.com).xlsx").ProxyURL(Url.Action("Excel", "Export"))
 
 .Filterable(true)
 .ProxyURL(Url.Action("Excel", "Export"))
