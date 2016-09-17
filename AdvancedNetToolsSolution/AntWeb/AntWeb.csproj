@@ -182,6 +182,36 @@
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="Telerik.Web.Spreadsheet">
+      <HintPath>libs\Telerik.Web.Spreadsheet.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Documents.Core">
+      <HintPath>libs\Telerik.Windows.Documents.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Documents.Fixed">
+      <HintPath>libs\Telerik.Windows.Documents.Fixed.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Documents.Flow">
+      <HintPath>libs\Telerik.Windows.Documents.Flow.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Documents.Flow.FormatProviders.Pdf">
+      <HintPath>libs\Telerik.Windows.Documents.Flow.FormatProviders.Pdf.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Documents.Spreadsheet">
+      <HintPath>libs\Telerik.Windows.Documents.Spreadsheet.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Documents.Spreadsheet.FormatProviders.OpenXml">
+      <HintPath>libs\Telerik.Windows.Documents.Spreadsheet.FormatProviders.OpenXml.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Documents.Spreadsheet.FormatProviders.Pdf">
+      <HintPath>libs\Telerik.Windows.Documents.Spreadsheet.FormatProviders.Pdf.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Zip">
+      <HintPath>libs\Telerik.Windows.Zip.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Zip.Extensions">
+      <HintPath>libs\Telerik.Windows.Zip.Extensions.dll</HintPath>
+    </Reference>
     <Reference Include="TimeAgo, Version=1.0.8.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\TimeAgo.1.0.8\lib\portable-net4+sl5\TimeAgo.dll</HintPath>
       <Private>True</Private>
@@ -1566,6 +1596,7 @@
     <Content Include="Scripts\viewsJS\portScanIndex.js" />
     <Content Include="Scripts\viewsJS\speedTestIndex.js" />
     <Content Include="Scripts\viewsJS\traceRouteIndex.js" />
+    <Content Include="Scripts\word\index.js" />
     <Content Include="Scripts\yk.js" />
     <Content Include="sitemap.xml" />
     <Content Include="Vendor\animate.css\animate.css" />
@@ -1984,6 +2015,8 @@
     <Content Include="Scripts\jquery-2.2.3.min.map" />
     <Content Include="Views\Shared\_Addresses.cshtml" />
     <Content Include="Views\Css\Index.cshtml" />
+    <Content Include="Views\Word\Index.cshtml" />
+    <Content Include="Scripts\word\index.js.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -2023,6 +2056,7 @@
     <Compile Include="App_Helpers\Settings.cs" />
     <Compile Include="Controllers\ContactUsController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\WordController.cs" />
     <Compile Include="Controllers\DashboardPage.cs" />
     <Compile Include="Controllers\ErrorLoggingController.cs" />
     <Compile Include="Controllers\ExportController.cs" />
@@ -2146,6 +2180,7 @@
     <TypeScriptCompile Include="Scripts\viewsJS\traceRouteIndex.ts" />
     <TypeScriptCompile Include="Scripts\viewsJS\pingIndex.ts" />
     <TypeScriptCompile Include="Scripts\antGlobal.ts" />
+    <TypeScriptCompile Include="Scripts\word\index.ts" />
     <TypeScriptCompile Include="Scripts\yk.ts" />
   </ItemGroup>
   <PropertyGroup>
