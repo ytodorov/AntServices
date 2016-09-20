@@ -2,49 +2,83 @@
     ViewBag.Title = "Word processing";
     ViewBag.MetaDescription = "Word processing enables users to effortlessly import and export files to and from some of the most commonly used formats. Supported formats include Open XML Word Document (.DOCX), Rich Text Format (.RTF) and Text Files (.TXT).";
 }
+
+<div class="normalheader transition animated fadeIn small-header">
+    <div class="hpanel">
+        <div class="panel-body">
+            <div id="hbreadcrumb" class="pull-right">
+                <ol class="hbreadcrumb breadcrumb">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    <li>
+                        <a href="/wordsprocessing">Words processing</a>
+                    </li>
+                </ol>
+            </div>
+            <h2 class="font-light m-b-xs">
+                Words processing
+            </h2>
+            <small>Import and export files to and from word.</small>
+        </div>
+    </div>
+</div>
+
+
 <script src="~/Scripts/WordsProcessing/index.js"></script>
 
 @using (Html.BeginForm("Download_Document", "wordsprocessing"))
 {
-
-    @(Html.Kendo().Upload()
+    @(@Html.Raw(Html.AntCreateStandardPanel("hgreen", "Upload files (.docx, .rtf, .html or .txt)",
+    Html.Kendo().Upload()
                         .Name("wordUploads")
                         .Multiple(true)
                         .ShowFileList(true)
-                        .Events(events => events.Select("onSelect"))
-                        .Deferred()
-    )
-    @Html.Label("fileExtension", "Convert to: ")
-    @*@(Html.Kendo().ComboBox()
-                            .Name("convertTo")
-                            .Filter("contains")
-                            .Suggest(true)
-                            .SelectedIndex(0)
-                            .Items(items =>
-                                {
-                                    items.Add().Text("DOCX").Value("docx");
-                                    items.Add().Text("RTF").Value("rtf");
-                                    items.Add().Text("HTML").Value("html");
-                                    items.Add().Text("TXT").Value("txt");
-                                }
-                            )
-                            .Deferred()
-    )*@
-    <input type="checkbox" id="docx" name="docx" class="k-checkbox">
-    <label class="k-checkbox-label" for="docx">DOCX</label>
+                        .DropZone("#wrapper")
+                        .Validation(v => v.AllowedExtensions(new string[] {"docx", "rtf", "html", "txt" }).MaxFileSize(10 * 1024 * 1024))
+                        .Deferred().ToHtmlString()                        
+    )))
 
-    <input type="checkbox" id="rtf" name="rtf" class="k-checkbox">
-    <label class="k-checkbox-label" for="rtf">RTF</label>
+    @(@Html.Raw(Html.AntCreateStandardPanel("hgreen", "Choose destination file formats", @"<p class='text-center'>
+        <input type = 'checkbox' id = 'docx' name = 'docx' class='k-checkbox'>
+        <label class='k-checkbox-label' for='docx'>DOCX</label>
 
-    <input type="checkbox" id="html" name="html" class="k-checkbox">
-    <label class="k-checkbox-label" for="html">HTML</label>
+        <input type = 'checkbox' id='rtf' name='rtf' class='k-checkbox'>
+        <label class='k-checkbox-label' for='rtf'>RTF</label>
 
-    <input type="checkbox" id="txt" name="txt" class="k-checkbox">
-    <label class="k-checkbox-label" for="txt">TXT</label>
+        <input type = 'checkbox' id='html' name='html' class='k-checkbox'>
+        <label class='k-checkbox-label' for='html'>HTML</label>
 
-    <input type="checkbox" id="pdf" name="pdf" class="k-checkbox">
-    <label class="k-checkbox-label" for="pdf">PDF</label>
+        <input type = 'checkbox' id='txt' name='txt' class='k-checkbox'>
+        <label class='k-checkbox-label' for='txt'>TXT</label>
 
+        <input type = 'checkbox' id='pdf' name='pdf' class='k-checkbox'>
+        <label class='k-checkbox-label' for='pdf'>PDF</label>
+    </p>
+    <p class='text-center'>
+        <input type = 'submit' class='k-button k-primary wide-btn' value='Convert and Download' />
+    </p>")))
+
+   
+@*<p class="text-center">
+        <input type = "checkbox" id="docx" name="docx" class="k-checkbox">
+        <label class="k-checkbox-label" for="docx">DOCX</label>
+
+        <input type = "checkbox" id="rtf" name="rtf" class="k-checkbox">
+        <label class="k-checkbox-label" for="rtf">RTF</label>
+
+        <input type = "checkbox" id="html" name="html" class="k-checkbox">
+        <label class="k-checkbox-label" for="html">HTML</label>
+
+        <input type = "checkbox" id="txt" name="txt" class="k-checkbox">
+        <label class="k-checkbox-label" for="txt">TXT</label>
+
+        <input type = "checkbox" id="pdf" name="pdf" class="k-checkbox">
+        <label class="k-checkbox-label" for="pdf">PDF</label>
+    </p>
+    <p class="text-center">
+        <input type = "submit" class="k-button k-primary wide-btn" value="Convert and Download" />
+    </p>*@
     @*<ul class="fieldlist">
     
         <li>
@@ -136,5 +170,5 @@
                 </div>
 
                 <hr class="clear" />*@
-    <input type="submit" class="k-button k-primary wide-btn" value="Convert and Download" />
+  
 }
