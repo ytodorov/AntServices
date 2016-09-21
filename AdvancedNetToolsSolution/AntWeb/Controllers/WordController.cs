@@ -39,7 +39,7 @@ using WebMarkupMin.Core;
 
 namespace SmartAdminMvc.Controllers
 {
-    public class WordsProcessingController : BaseController
+    public class WordController : BaseController
     {
         //[OutputCache(CacheProfile = "MyCache")]
         public ActionResult Index()

@@ -2024,9 +2024,9 @@
     <Content Include="Scripts\jquery-2.2.3.min.map" />
     <Content Include="Views\Shared\_Addresses.cshtml" />
     <Content Include="Views\Css\Index.cshtml" />
-    <Content Include="Views\WordsProcessing\Index.cshtml" />
+    <Content Include="Views\Word\Index.cshtml" />
     <Content Include="Scripts\wordsProcessing\index.js.map" />
-    <Content Include="Views\SpreadProcessing\Index.cshtml" />
+    <Content Include="Views\Spread\Index.cshtml" />
     <Content Include="Scripts\spreadProcessing\index.js.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -2067,8 +2067,8 @@
     <Compile Include="App_Helpers\Settings.cs" />
     <Compile Include="Controllers\ContactUsController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
-    <Compile Include="Controllers\SpreadProcessingController.cs" />
-    <Compile Include="Controllers\WordsProcessingController.cs" />
+    <Compile Include="Controllers\SpreadController.cs" />
+    <Compile Include="Controllers\WordController.cs" />
     <Compile Include="Controllers\DashboardPage.cs" />
     <Compile Include="Controllers\ErrorLoggingController.cs" />
     <Compile Include="Controllers\ExportController.cs" />

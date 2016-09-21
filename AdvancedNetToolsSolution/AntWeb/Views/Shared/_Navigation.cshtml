@@ -29,16 +29,22 @@
                 <span class="nav-label">Port scan</span>
             </a>
         </li>
-        <li class="@Html.IsSelected(controller: "wordsprocessing")">
-            <a href="@Url.Action("Index", "wordsprocessing")" title="Words processing">
+        <li class="@Html.IsSelected(controller: "word")">
+            <a href="@Url.Action("Index", "word")" title="Words processing">
                 <span class="text-success pull-left"><i class="fa fa-file-word-o" style="font-size:large"></i></span>&nbsp;
                 <span class="nav-label">Words processing</span>
             </a>
         </li>
-        <li class="@Html.IsSelected(controller: "spreadprocessing")">
-            <a href="@Url.Action("Index", "spreadprocessing")" title="Spread processing">
+        <li class="@Html.IsSelected(controller: "spread")">
+            <a href="@Url.Action("Index", "spread")" title="Spread processing">
                 <span class="text-success pull-left"><i class="fa fa-file-excel-o" style="font-size:large"></i></span>&nbsp;
                 <span class="nav-label">Spread processing</span>
+            </a>
+        </li>
+        <li class="@Html.IsSelected(controller: "css")">
+            <a href="@Url.Action("Index", "css")" title="CSS processing">
+                <span class="text-success pull-left"><i class="fa fa-file-excel-o" style="font-size:large"></i></span>&nbsp;
+                <span class="nav-label">CSS processing</span>
             </a>
         </li>
         <li class="@Html.IsSelected(controller: "faq")">

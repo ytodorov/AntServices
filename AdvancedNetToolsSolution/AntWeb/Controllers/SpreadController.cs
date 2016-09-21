@@ -43,7 +43,7 @@ using WebMarkupMin.Core;
 
 namespace SmartAdminMvc.Controllers
 {
-    public class SpreadProcessingController : BaseController
+    public class SpreadController : BaseController
     {
         //[OutputCache(CacheProfile = "MyCache")]
         public ActionResult Index()

@@ -4,23 +4,69 @@
 }
 <script src="~/Scripts/css/index.js"></script>
 
-@(Html.Kendo().Button()
-        .Name("cssMinify")
-        .Tag("em")
-        .SpriteCssClass("k-icon k-i-undo")
-        .Content("<span class='k-sprite'>Minify</span>")
-        .Events(e=>e.Click("cssMinifyClick"))
-        .Deferred())
+@*@(Html.Kendo().Button()
+            .Name("cssMinify")
+            .Tag("em")
+            .SpriteCssClass("k-icon k-i-undo")
+            .Content("<span class='k-sprite'>Minify</span>")
+            .Events(e=>e.Click("cssMinifyClick"))
+            .Deferred())
 
-@(Html.Kendo().Button()
-        .Name("cssBeautify")
-        .Tag("em")
-        .SpriteCssClass("k-icon k-i-redo")
-        .Content("<span class='k-sprite'>Beautify</span>")
-        .Deferred()
-        )
+    @(Html.Kendo().Button()
+            .Name("cssBeautify")
+            .Tag("em")
+            .SpriteCssClass("k-icon k-i-redo")
+            .Content("<span class='k-sprite'>Beautify</span>")
+            .Deferred()
+            )
 
-<textarea id="cssInput" class="k-textbox" style="width:100%;min-height:200px;"></textarea>
-<p>Result</p>
+    <textarea id="cssInput" class="k-textbox" style="width:100%;min-height:200px;"></textarea>
+    <p>Result</p>
 
-<textarea id="cssOutput" class="k-textbox" style="width:100%;min-height:200px;"></textarea>
+    <textarea id="cssOutput" class="k-textbox" style="width:100%;min-height:200px;"></textarea>
+*@
+
+<div class="normalheader transition animated fadeIn small-header">
+    <div class="hpanel">
+        <div class="panel-body">
+            <div id="hbreadcrumb" class="pull-right">
+                <ol class="hbreadcrumb breadcrumb">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    <li>
+                        <a href="/css">CSS processing</a>
+                    </li>
+                </ol>
+            </div>
+            <h2 class="font-light m-b-xs">
+                Css processing
+            </h2>
+            <small>Minify CSS files with check for errors and warnings.</small>
+        </div>
+    </div>
+</div>
+
+
+
+@using (Html.BeginForm("Download_Document", "css"))
+{
+    @(@Html.Raw(Html.AntCreateStandardPanel("hgreen", "Upload files (.css)",
+    Html.Kendo().Upload()
+                        .Name("cssUploads")
+                        .Multiple(true)
+                        .ShowFileList(true)
+                        .DropZone("#wrapper")
+                        .Validation(v => v.AllowedExtensions(new string[] { "css" }).MaxFileSize(10 * 1024 * 1024))
+                        .Deferred().ToHtmlString()
+    )))
+
+    @(@Html.Raw(Html.AntCreateStandardPanel("hgreen", "Minified files", @"
+    <p class='text-center'>
+        <input type = 'submit' class='k-button k-primary wide-btn' value='Minify and Download' />
+    </p>")))
+
+
+
+   
+}
