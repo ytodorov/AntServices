@@ -36,6 +36,7 @@ namespace SmartAdminMvc.Controllers
             return View();
         }
 
+        [ValidateInput(false)]
         public ActionResult Minify(string css)
         {
             var cssMinifier = new KristensenCssMinifier();

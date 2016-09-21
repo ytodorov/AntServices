@@ -134,6 +134,7 @@ namespace SmartAdminMvc
 
         protected void Application_Error()
         {
+            Debugger.Break();
             Exception ex = Server.GetLastError();
             using (AntDbContext context = new AntDbContext())
             {

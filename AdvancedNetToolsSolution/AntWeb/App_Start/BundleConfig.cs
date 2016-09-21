@@ -10,7 +10,7 @@ namespace SmartAdminMvc
 
             // Homer style
             bundles.Add(new StyleBundle(virtualPath: "~/bundles/homer/css").Include(
-                    virtualPath: "~/content/style.css", transforms: new System.Web.Optimization.IItemTransform[] { new CssRewriteUrlTransform() }));
+                    virtualPath: "~/content/style.min.css", transforms: new System.Web.Optimization.IItemTransform[] { new CssRewriteUrlTransform() }));
 
             // Homer script
             bundles.Add(new ScriptBundle(virtualPath: "~/bundles/homer/js").Include(

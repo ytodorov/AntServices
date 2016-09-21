@@ -6,7 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="@ViewBag.MetaDescription">
     <title>@ViewBag.Title | Tools for Net</title>
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
+    <link href="~/content/googlefont.min.css" rel="stylesheet" />
+    @*<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>*@
     <link rel="icon" type="image/x-icon" href="~/favicon.ico">
     @Styles.Render(paths: "~/bundles/font-awesome/css")
     @Styles.Render(paths: "~/bundles/animate/css")
@@ -25,7 +26,7 @@
         document.write(unescape("%3Cscript src='" + tlJsHost + "trustlogo/javascript/trustlogo.js' type='text/javascript'%3E%3C/script%3E"));
         //]]>
     </script>*@
-    <script src="~/Scripts/trustlogolocal.js"></script>
+    <script src="~/scripts/trustlogolocal.js"></script>
 
 </head>
 <body class="@Html.PageClass() fixed-footer hide-sidebar">

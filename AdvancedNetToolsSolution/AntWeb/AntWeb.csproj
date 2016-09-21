@@ -267,6 +267,8 @@
     <Content Include="Content\fonts\fontawesome4.2\fontawesome-webfont.svg" />
     <Content Include="Content\fonts\fontawesome4.2\readme.txt" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\googleFont.min.css" />
+    <Content Include="Content\googleFont.css" />
     <Content Include="Content\img\ajax-loader.gif" />
     <Content Include="Content\img\alpha.png" />
     <Content Include="Content\img\avatars\1.png" />
@@ -838,6 +840,7 @@
     <Content Include="Content\sound\voice_alert.mp3" />
     <Content Include="Content\sound\voice_off.mp3" />
     <Content Include="Content\sound\voice_on.mp3" />
+    <Content Include="Content\style.min.css" />
     <Content Include="Content\style.css" />
     <Content Include="Content\xml\gmap\pins.xml" />
     <Content Include="favicon.ico" />
