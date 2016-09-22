@@ -1,0 +1,44 @@
+﻿@{
+    ViewBag.Title = "JavaScript tools";
+    ViewBag.MetaDescription = "Javascript minifier and beautifier.";
+}
+<script src="~/Scripts/css/index.js"></script>
+<div class="normalheader transition animated fadeIn small-header">
+    <div class="hpanel">
+        <div class="panel-body">
+            <div id="hbreadcrumb" class="pull-right">
+                <ol class="hbreadcrumb breadcrumb">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    <li>
+                        <a href="/css">Javascript processing</a>
+                    </li>
+                </ol>
+            </div>
+            <h2 class="font-light m-b-xs">
+                Javascript processing
+            </h2>
+            <small>Minify Javascript files with check for errors and warnings.</small>
+        </div>
+    </div>
+</div>
+
+@using (Html.BeginForm("Download_Document", "js"))
+{
+    @(@Html.Raw(Html.AntCreateStandardPanel("hgreen", "Upload files (.js)",
+    Html.Kendo().Upload()
+                        .Name("jsUploads")
+                        .Multiple(true)
+                        .ShowFileList(true)
+                        .DropZone("#wrapper")
+                        .Validation(v => v.AllowedExtensions(new string[] { "js" }).MaxFileSize(10 * 1024 * 1024))
+                        .Deferred().ToHtmlString()
+    )))
+
+    @(@Html.Raw(Html.AntCreateStandardPanel("hgreen", "Minified files", @"
+    <p class='text-center'>
+        <input type = 'submit' class='k-button k-primary wide-btn' value='Minify and Download' />
+    </p>")))
+
+}

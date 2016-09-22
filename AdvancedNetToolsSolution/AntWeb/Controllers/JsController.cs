@@ -31,60 +31,40 @@ using WebMarkupMin.Core;
 
 namespace SmartAdminMvc.Controllers
 {
-    public class CssController : BaseController
+    public class JsController : BaseController
     {
         //[OutputCache(CacheProfile = "MyCache")]
         public ActionResult Index()
         {
             return View();
         }
-
-        [ValidateInput(false)]
-        public ActionResult Minify(string css)
-        {
-            var cssMinifier = new KristensenCssMinifier();
-            
-            var cssMinified = cssMinifier.Minify(css, false);
-         
-
-            
-            if (cssMinified.Errors.Count == 0)
-            {
-                return Json(cssMinified.MinifiedContent);
-            }
-            else
-            {
-                return Json(cssMinified.Errors[0].Message);
-            }
-        }
+             
 
         [HttpPost]
-        public ActionResult Download_Document(IEnumerable<HttpPostedFileBase> cssUploads)
+        public ActionResult Download_Document(IEnumerable<HttpPostedFileBase> jsUploads)
         {
-            if (cssUploads == null)
+            if (jsUploads == null)
             {
                 return File(new byte[0], "text/plain", "noFilesToDownload.txt");
             }
-            var cssMinifier = new KristensenCssMinifier();
+            var jsMinifier = new CrockfordJsMinifier();
 
 
             using (MemoryStream memoryStream = new MemoryStream())
             {
                 using (ZipArchive archive = new ZipArchive(memoryStream, ZipArchiveMode.Create, true, null))
                 {
-
-                    foreach (var customDocument in cssUploads)
+                    foreach (var jsUploadedFile in jsUploads)
                     {
                         try
                         {
-
-                            using (StreamReader reader = new StreamReader(customDocument.InputStream))
+                            using (StreamReader reader = new StreamReader(jsUploadedFile.InputStream))
                             {
                                 var css = reader.ReadToEnd();
-                                var cssMinified = cssMinifier.Minify(css, false);
+                                var cssMinified = jsMinifier.Minify(css, false);
 
 
-                                using (ZipArchiveEntry entry = archive.CreateEntry(customDocument.FileName.Replace(".css", string.Empty) + ".min.css"))
+                                using (ZipArchiveEntry entry = archive.CreateEntry(jsUploadedFile.FileName.Replace(".js",string.Empty) + ".min.js"))
                                 {
                                     BinaryWriter writer = new BinaryWriter(entry.Open());
                                     writer.Write(cssMinified.MinifiedContent);
@@ -93,12 +73,10 @@ namespace SmartAdminMvc.Controllers
                             }
                         }
 
-
                         catch (Exception ex)
                         {
 
                         }
-
                     }
 
 
