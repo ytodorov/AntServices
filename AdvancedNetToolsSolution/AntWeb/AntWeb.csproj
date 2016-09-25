@@ -846,6 +846,7 @@
     <Content Include="Content\sound\voice_on.mp3" />
     <Content Include="Content\style.min.css" />
     <Content Include="Content\style.css" />
+    <Content Include="Content\svgIcons\xml-file-format-symbol.svg" />
     <Content Include="Content\xml\gmap\pins.xml" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
@@ -2035,6 +2036,7 @@
     <Content Include="Views\Js\Index.cshtml" />
     <Content Include="Views\Html\Index.cshtml" />
     <Content Include="Views\Json\Index.cshtml" />
+    <Content Include="Views\Xml\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -2097,6 +2099,7 @@
     <Compile Include="Extensions\GoogleMap.cs" />
     <Compile Include="Extensions\HtmlHelperExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Extensions\XmlDocumentExtensions.cs" />
     <Compile Include="Filters\LogAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -2143,6 +2146,7 @@
     <Compile Include="Infrastructure\TraceRouteParser.cs" />
     <Compile Include="Infrastructure\TransactionPerRequest.cs" />
     <Compile Include="Infrastructure\Utils.cs" />
+    <Compile Include="Controllers\XmlController.cs" />
     <Compile Include="Models\AddressHistoryViewModel.cs" />
     <Compile Include="Models\AddressViewModel.cs" />
     <Compile Include="Models\ErrorBaseViewModel.cs" />

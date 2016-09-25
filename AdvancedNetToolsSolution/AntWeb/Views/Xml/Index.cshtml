@@ -1,0 +1,43 @@
+﻿@{
+    ViewBag.Title = "XML tools";
+    ViewBag.MetaDescription = "XML minifier and beautifier.";
+}
+<div class="normalheader transition animated fadeIn small-header">
+    <div class="hpanel">
+        <div class="panel-body">
+            <div id="hbreadcrumb" class="pull-right">
+                <ol class="hbreadcrumb breadcrumb">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    <li>
+                        <a href="/css">XML processing</a>
+                    </li>
+                </ol>
+            </div>
+            <h2 class="font-light m-b-xs">
+                XML processing
+            </h2>
+            <small>Minify and beautify XML.</small>
+        </div>
+    </div>
+</div>
+
+@using (Html.BeginForm("Download_Document", "xml"))
+{
+    @(@Html.Raw(Html.AntCreateStandardPanel("hgreen", "Upload files (.xml)",
+    Html.Kendo().Upload()
+                        .Name("xmlUploads")
+                        .Multiple(true)
+                        .ShowFileList(true)
+                        .DropZone("#wrapper")
+                        .Validation(v => v.AllowedExtensions(new string[] { "xml" }).MaxFileSize(10 * 1024 * 1024))
+                        .Deferred().ToHtmlString()
+    )))
+
+    @(@Html.Raw(Html.AntCreateStandardPanel("hgreen", "Minified files", @"
+    <p class='text-center'>
+        <input type = 'submit' class='k-button k-primary wide-btn' value='Minify and Download' />
+    </p>")))
+
+}
