@@ -81,6 +81,13 @@
         .HideOnClick(true)
         .AutoHideAfter(7000).Deferred()
     )
+
+    @(Html.Kendo().Tooltip()
+        .For("body")
+        .Filter("*[title]")
+        .Position(TooltipPosition.Top)
+        .Deferred()
+    )
     <script src="@Utils.Tag("/scripts/bundle.js")"></script>
     @Html.Kendo().DeferredScripts()
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDoER6oaWJAUFMNCCE8IkCGsIyHsbTE0Zw"></script>
