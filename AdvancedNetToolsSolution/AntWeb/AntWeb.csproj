@@ -2029,6 +2029,7 @@
     <Content Include="Views\Spread\Index.cshtml" />
     <Content Include="Scripts\spreadProcessing\index.js.map" />
     <Content Include="Views\Js\Index.cshtml" />
+    <Content Include="Views\Html\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -2068,6 +2069,7 @@
     <Compile Include="App_Helpers\Settings.cs" />
     <Compile Include="Controllers\ContactUsController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\HtmlController.cs" />
     <Compile Include="Controllers\JsController.cs" />
     <Compile Include="Controllers\SpreadController.cs" />
     <Compile Include="Controllers\WordController.cs" />

@@ -53,6 +53,12 @@
                 <span class="nav-label">JavaScript processing</span>
             </a>
         </li>
+        <li class="@Html.IsSelected(controller: "html")">
+            <a href="@Url.Action("Index", "html")" title="Html processing">
+                <span class="text-success pull-left"><i class="fa fa-html5" style="font-size:large"></i></span>&nbsp;
+                <span class="nav-label">Html processing</span>
+            </a>
+        </li>
         <li class="@Html.IsSelected(controller: "faq")">
             <a href="@Url.Action("Index", "Faq")" title="FAQs">
                 <span class="text-success pull-left"><i class="pe-7s-chat" style="font-size:large"></i></span>&nbsp;
