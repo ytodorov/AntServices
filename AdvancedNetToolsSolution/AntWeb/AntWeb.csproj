@@ -846,6 +846,8 @@
     <Content Include="Content\sound\voice_on.mp3" />
     <Content Include="Content\style.min.css" />
     <Content Include="Content\style.css" />
+    <Content Include="Content\svgIcons\javascript.svg" />
+    <Content Include="Content\svgIcons\json-file.svg" />
     <Content Include="Content\svgIcons\xml-file-format-symbol.svg" />
     <Content Include="Content\xml\gmap\pins.xml" />
     <Content Include="favicon.ico" />
