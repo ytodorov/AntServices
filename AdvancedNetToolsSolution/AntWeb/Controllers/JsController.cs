@@ -83,7 +83,7 @@ namespace SmartAdminMvc.Controllers
 
                 }
                 var arr = memoryStream.ToArray();
-                return File(arr, "application/zip", "AllMinifiedCssFiles.zip");
+                return File(arr, "application/zip", "AllMinifiedJsFiles.zip");
             }
         }
     }
