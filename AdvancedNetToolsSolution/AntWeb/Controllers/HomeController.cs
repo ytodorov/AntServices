@@ -107,5 +107,12 @@ namespace SmartAdminMvc.Controllers
             Response.ContentType = "text/plain; charset=utf-8";
             return string.Empty;
         }
+
+        public string GetGoogleMapsString(string ip)
+        {
+            Response.ContentType = "text/plain; charset=utf-8";
+            var result = Utils.GetGoogleMapsString(new string[] { ip }, zoom:12);
+            return result;
+        }
     }
 }

@@ -2039,6 +2039,7 @@
     <Content Include="Views\Html\Index.cshtml" />
     <Content Include="Views\Json\Index.cshtml" />
     <Content Include="Views\Xml\Index.cshtml" />
+    <Content Include="Views\IpLocation\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -2081,6 +2082,7 @@
     <Compile Include="Controllers\HtmlController.cs" />
     <Compile Include="Controllers\JsonController.cs" />
     <Compile Include="Controllers\JsController.cs" />
+    <Compile Include="Controllers\IpLocationController.cs" />
     <Compile Include="Controllers\SpreadController.cs" />
     <Compile Include="Controllers\WordController.cs" />
     <Compile Include="Controllers\DashboardPage.cs" />

@@ -284,7 +284,7 @@ namespace SmartAdminMvc.Infrastructure
             return result;
         }
 
-        public static string GetGoogleMapsString(IEnumerable<string> ips, List<PingResponseSummary> pingSummaries = null, bool starLine = true)
+        public static string GetGoogleMapsString(IEnumerable<string> ips, List<PingResponseSummary> pingSummaries = null, bool starLine = true, int? zoom = null)
         {
             ips = ips.Where(m => !string.IsNullOrEmpty(m));
 
@@ -368,9 +368,13 @@ namespace SmartAdminMvc.Infrastructure
             {
                 sb.AppendLine($@"var {locationNamesInMap[i]} = {{ lat: {locations[i].Latitude.GetValueOrDefault().ToString(CultureInfo.InvariantCulture)}, lng: {locations[i].Longitude.GetValueOrDefault().ToString(CultureInfo.InvariantCulture)} }};");
             }
-
+            string zoomAsString = "2";
+            if (zoom.HasValue)
+            {
+                zoomAsString = zoom.GetValueOrDefault().ToString();
+            }
             sb.AppendLine($@"var map = new google.maps.Map(document.getElementById('map'), {{
-                zoom: 2,
+                zoom: {zoomAsString},
                 center: {locationNamesInMap.LastOrDefault()}
             }});");
 

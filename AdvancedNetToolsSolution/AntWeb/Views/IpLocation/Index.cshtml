@@ -1,0 +1,23 @@
+﻿@model string
+<div id="map" style="width:100px;height: 10px"></div>
+@section scripts {
+    <script>
+        setTimeout(function f() {
+            $.ajax({
+                method: "POST",
+                url: "/home/getgooglemapsstring",
+                data: {
+                    ip: '@Model'
+                },
+                success: function f(gmData) {
+                    debugger;
+                    $("#map").height($("#wrapper").height());
+                    eval(gmData);
+                }
+            });
+        }, 1500);
+        $(window).resize(function () {
+            $("#map").height($("#wrapper").height());
+        });
+    </script>
+}
