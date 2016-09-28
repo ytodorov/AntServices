@@ -1,5 +1,7 @@
 ﻿#region Using
 
+using SmartAdminMvc.Infrastructure;
+using System.Net;
 using System.Net.Http;
 using System.Web.Mvc;
 
@@ -10,8 +12,15 @@ namespace SmartAdminMvc.Controllers
 
     public class IpLocationController : Controller
     {
-        public ActionResult Find(string ip)
+        public ActionResult Index(string ip)
         {
+            bool isUserRequestedAddressIp = false;
+            IPAddress dummy1;
+            isUserRequestedAddressIp = IPAddress.TryParse(ip, out dummy1);
+            if (!isUserRequestedAddressIp)
+            {
+                ip = Utils.GetIpAddressFromHostName(hostName: ip, locationOfDeployedService: Utils.GetDeployedServicesUrlAddresses[0]);
+            }
             return View((object)ip);   
         }
 

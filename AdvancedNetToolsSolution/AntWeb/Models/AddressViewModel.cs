@@ -10,6 +10,7 @@ namespace SmartAdminMvc.Models
         public AddressViewModel()
         {
             ShowAddressTextBox = true;
+            ShowSaveInHistory = true;
         }
 
 
@@ -23,6 +24,8 @@ namespace SmartAdminMvc.Models
         public string DefaultDestinationAddress { get; set; }
 
         public bool ShowAddressTextBox { get; set; }
+
+        public bool ShowSaveInHistory { get; set; }
 
     }
 }
