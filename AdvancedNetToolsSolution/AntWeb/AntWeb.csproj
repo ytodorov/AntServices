@@ -2040,6 +2040,7 @@
     <Content Include="Views\Json\Index.cshtml" />
     <Content Include="Views\Xml\Index.cshtml" />
     <Content Include="Views\IpLocation\Index.cshtml" />
+    <Content Include="Views\IpLocation\Find.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

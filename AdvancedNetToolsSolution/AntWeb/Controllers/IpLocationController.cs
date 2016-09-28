@@ -10,7 +10,7 @@ namespace SmartAdminMvc.Controllers
 
     public class IpLocationController : Controller
     {
-        public ActionResult Index(string ip)
+        public ActionResult Find(string ip)
         {
             return View((object)ip);   
         }
