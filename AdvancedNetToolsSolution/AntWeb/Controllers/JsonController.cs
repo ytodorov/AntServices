@@ -52,6 +52,14 @@ namespace SmartAdminMvc.Controllers
 
         }
 
+        [HttpPost]
+        public ActionResult Beautify(string json)
+        {
+            object deserializedObject = JsonConvert.DeserializeObject(json);
+            var jsonBeautify = JsonConvert.SerializeObject(deserializedObject, Formatting.Indented);
+            return Json(jsonBeautify);
+        }
+
 
         [HttpPost]
         public ActionResult Download_Document(IEnumerable<HttpPostedFileBase> jsonUploads)

@@ -1031,6 +1031,7 @@
     <Content Include="Scripts\bundle.js" />
     <Content Include="Scripts\clipboard\clipboard.js" />
     <Content Include="Scripts\clipboard\clipboard.min.js" />
+    <Content Include="Scripts\json\index.js" />
     <Content Include="Scripts\css\index.js" />
     <Content Include="Scripts\googleAnalytics.min.js" />
     <Content Include="Scripts\googleAnalytics.js" />
@@ -1038,6 +1039,7 @@
     <Content Include="Scripts\homer.min.js" />
     <Content Include="Scripts\homer.js" />
     <Content Include="Scripts\css\index.js.map" />
+    <Content Include="Scripts\json\index.js.map" />
     <None Include="Scripts\jquery-2.2.3.intellisense.js" />
     <Content Include="Scripts\jquery-2.2.3.js" />
     <Content Include="Scripts\jquery-2.2.3.min.js" />
@@ -2198,6 +2200,7 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="Scripts\json\index.ts" />
     <TypeScriptCompile Include="Scripts\css\index.ts" />
     <TypeScriptCompile Include="Scripts\typings\jquery.cookie\jquery.cookie.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\jquery\jquery.d.ts" />

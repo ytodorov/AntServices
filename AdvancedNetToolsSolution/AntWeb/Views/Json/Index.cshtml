@@ -2,7 +2,7 @@
     ViewBag.Title = "JSON tools";
     ViewBag.MetaDescription = "JSON minifier and beautifier.";
 }
-<script src="~/Scripts/css/index.js"></script>
+<script src="~/Scripts/json/index.js"></script>
 <div class="normalheader transition animated fadeIn small-header">
     <div class="hpanel">
         <div class="panel-body">
@@ -24,7 +24,7 @@
     </div>
 </div>
 
-@using (Html.BeginForm("Download_Document", "json"))
+@*@using (Html.BeginForm("Download_Document", "json"))
 {
     @(@Html.Raw(Html.AntCreateStandardPanel("hgreen", "Upload files (.json)",
     Html.Kendo().Upload()
@@ -40,5 +40,15 @@
     <p class='text-center'>
         <input type = 'submit' class='k-button k-primary wide-btn' value='Minify and Download' />
     </p>")))
+}*@
 
-}
+<textarea class="k-textbox" id="tbJson" style="width:100%" placeholder="PasteJsonHere"></textarea>
+
+<p class='text-center'>
+    <input type='submit' class='k-button k-primary wide-btn' onclick="jsonBeautyClick()" value='Beautify' />
+</p>
+
+@*@Html.Kendo().Button().Content("Beautify").Name("btnJsonBeautify").Events(e => e.Click("jsonBeautyClick")).Deferred()*@
+
+<textarea class="k-textbox" id="tbResult" style="width:100%" placeholder="Result"></textarea>
+
