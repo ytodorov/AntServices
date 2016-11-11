@@ -23,7 +23,6 @@ $("#btnPortScan").click(function btnPingClick(e) {
         },
         success: function f(id) {
             var error = id.error;
-            debugger;
             if (typeof error != 'undefined') {
                 $("#loadingProgressBar").hide();
                 var l = $("#btnPortScan").ladda();

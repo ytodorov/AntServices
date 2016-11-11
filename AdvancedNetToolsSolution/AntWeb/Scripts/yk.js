@@ -232,7 +232,6 @@ $(window).on("blur focus", function (e) {
     $(this).data("prevType", e.type);
 });
 $(window).on("error", function (e) {
-    debugger;
     window.antGlobal.showNotification(e.originalEvent.error.message, "error");
 });
 //# sourceMappingURL=yk.js.map

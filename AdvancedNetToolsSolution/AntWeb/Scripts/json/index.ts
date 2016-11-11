@@ -10,7 +10,6 @@
         success: function f(cssMinified) {
             var $tbResult = $("#tbResult");
             $tbResult.val(cssMinified);
-            debugger;
             var textArea: HTMLTextAreaElement = <HTMLTextAreaElement>$tbResult.get(0);
 
             var editorConfig: CodeMirror.EditorConfiguration = {

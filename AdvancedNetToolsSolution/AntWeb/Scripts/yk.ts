@@ -282,7 +282,6 @@ $(window).on("blur focus", function (e) {
 });
 
 $(window).on("error", function (e : any) {
-    debugger;
     window.antGlobal.showNotification(e.originalEvent.error.message, "error");
 
 });

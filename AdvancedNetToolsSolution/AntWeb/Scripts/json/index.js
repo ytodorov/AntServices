@@ -9,7 +9,6 @@ function jsonBeautyClick() {
         success: function f(cssMinified) {
             var $tbResult = $("#tbResult");
             $tbResult.val(cssMinified);
-            debugger;
             var textArea = $tbResult.get(0);
             var editorConfig = {
                 mode: "javascript",

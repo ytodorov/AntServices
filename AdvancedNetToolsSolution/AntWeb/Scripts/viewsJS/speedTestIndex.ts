@@ -57,7 +57,6 @@
 });
 
 function downloadFromOneLocation(url: string) {
-    debugger;
     var warmUpDownloadLength = Math.pow(10, 3); 
     var currentDownloadLength = Math.pow(10, 6);    // 49
     $.ajax({
