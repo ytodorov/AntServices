@@ -2,9 +2,20 @@
 @{
     ViewBag.Title = "IP location";
     ViewBag.MetaDescription = "Free IP location service. Locate any IP address on a Google map.";
+    Layout = null;
 }
+<script src="~/Scripts/googleAnalytics.js"></script>
+<script src="~/Scripts/jquery-2.2.3.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDoER6oaWJAUFMNCCE8IkCGsIyHsbTE0Zw"></script>
+<style>
+    body
+    {
+        padding: 0px;
+        margin: 0px
+    }
+</style>
 
-<div class="normalheader transition animated fadeIn small-header">
+@*<div class="normalheader transition animated fadeIn small-header">
     <div class="hpanel">
         <div class="panel-body">
             <div id="hbreadcrumb" class="pull-right">
@@ -29,18 +40,14 @@
     DefaultDestinationAddress = Model,
     ShowSaveInHistory= false
 }
-)
+)*@
 
 <div id="map" style="width:100px;height: 10px"></div>
-@section scripts {
 
 
     <script>
-
-        $("#btnLocateIp").click(function f() {
-            var ip = $("#ip").val();
-            window.location.href = "iplocation?ip=" + ip;
-        });
+        $("#map").height($(window).height() - 1);
+        $("#map").width($(window).width() - 1);
         if ('@Model'.length > 0) {
             setTimeout(function f() {
                 $.ajax({
@@ -59,7 +66,8 @@
         };
 
         $(window).resize(function () {
-            $("#map").height($("#wrapper").height());
+            $("#map").height($(window).height() - 1);
+            $("#map").width($(window).width() - 1);
         });
+      
     </script>
-}

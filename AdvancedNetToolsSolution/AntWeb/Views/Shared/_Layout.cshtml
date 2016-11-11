@@ -15,9 +15,11 @@
     @Styles.Render(paths: "~/bundles/peicon7stroke/css")
     @Styles.Render(paths: "~/bundles/ladda/css")
     @Styles.Render(paths: "~/bundles/toastr/css")
+
     @if (IsSectionDefined(name: "Styles"))
     {@RenderSection(name: "Styles", required: false)}
     @Styles.Render(paths: "~/bundles/homer/css")
+    <link href="~/content/codemirror-3.01/codemirror.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/content/kendo/kendo.common.min.css">
     <link rel="stylesheet" href="~/content/kendo/kendo.metro.min.css">
     @*<script type="text/javascript">

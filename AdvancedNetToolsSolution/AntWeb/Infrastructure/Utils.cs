@@ -262,14 +262,21 @@ namespace SmartAdminMvc.Infrastructure
 
                         string apiKey = "45c5fd0e7b3a7f323010de71fbc4aae7943b9f139ef3578af1b38878d0d02e81";
                         string url = $"http://api.ipinfodb.com/v3/ip-city/?key={apiKey}&ip={ipOrHostName}&format=json";
-                        string result = client.GetStringAsync(url).Result;
+                        try
+                        {
+                            string result = client.GetStringAsync(url).Result;
 
-                        IpLocationViewModel ipLocationViewModel = JsonConvert.DeserializeObject<IpLocationViewModel>(result);
-                        IpLocation ipLocationToSaveInDb = Mapper.Map<IpLocation>(ipLocationViewModel);
-                        ipLocationToSaveInDb.DateCreated = DateTime.UtcNow;
-                        context.IpLocations.Add(ipLocationToSaveInDb);
-                        context.SaveChanges();
-                        return ipLocationViewModel;
+                            IpLocationViewModel ipLocationViewModel = JsonConvert.DeserializeObject<IpLocationViewModel>(result);
+                            IpLocation ipLocationToSaveInDb = Mapper.Map<IpLocation>(ipLocationViewModel);
+                            ipLocationToSaveInDb.DateCreated = DateTime.UtcNow;
+                            context.IpLocations.Add(ipLocationToSaveInDb);
+                            context.SaveChanges();
+                            return ipLocationViewModel;
+                        }
+                        catch (Exception ex)
+                        {
+                            return new IpLocationViewModel();
+                        }
                     }
                 }
             }
@@ -455,7 +462,7 @@ namespace SmartAdminMvc.Infrastructure
                 }
 
                 var sbMarkerWindowHtml = new StringBuilder();
-                sbMarkerWindowHtml.Append($@"<font size=""2"" color=""#057CBE"">IP:&nbsp;</font> {ips.ElementAt(i)} <br />{timeAvg}{distance}{speed}<font size=""2"" color=""#057CBE"">CITY:&nbsp;</font> {locations[i].CityName.Replace(oldValue: "'", newValue: "&quot;")} <br /><font size=""2"" color=""#057CBE"">COUNTRY:&nbsp;</font> {locations[i].CountryName.Replace(oldValue: "'", newValue: "&quot;")}");
+                sbMarkerWindowHtml.Append($@"<font size=""2"" color=""#057CBE"">IP:&nbsp;</font> {ips.ElementAt(i)} <br />{timeAvg}{distance}{speed}<font size=""2"" color=""#057CBE"">CITY:&nbsp;</font> {locations[i].CityName?.Replace(oldValue: "'", newValue: "&quot;")} <br /><font size=""2"" color=""#057CBE"">COUNTRY:&nbsp;</font> {locations[i].CountryName?.Replace(oldValue: "'", newValue: "&quot;")}");
 
                 string markerWindowHtml = sbMarkerWindowHtml.ToString(); ;
 
