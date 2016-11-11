@@ -15,35 +15,7 @@
     }
 </style>
 
-@*<div class="normalheader transition animated fadeIn small-header">
-    <div class="hpanel">
-        <div class="panel-body">
-            <div id="hbreadcrumb" class="pull-right">
-                <ol class="hbreadcrumb breadcrumb">
-                    <li>
-                        <a href="/">Home</a>
-                    </li>
-                </ol>
-            </div>
-            <h2 class="font-light m-b-xs">
-                IP location
-            </h2>
-            <small>Locate IP address on a Google map.</small>
-        </div>
-    </div>
-</div>
-
-@Html.Partial("_Addresses", new AddressViewModel()
-{
-    ButtonId = "btnLocateIp",
-    ButtonText = "Locate IP",
-    DefaultDestinationAddress = Model,
-    ShowSaveInHistory= false
-}
-)*@
-
 <div id="map" style="width:100px;height: 10px"></div>
-
 
     <script>
         $("#map").height($(window).height() - 1);
