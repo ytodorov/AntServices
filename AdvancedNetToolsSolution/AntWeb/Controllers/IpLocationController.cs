@@ -12,6 +12,7 @@ namespace SmartAdminMvc.Controllers
 
     public class IpLocationController : Controller
     {
+        [OutputCache(Duration = 3600, Location = System.Web.UI.OutputCacheLocation.Server, VaryByParam = "ip")]
         public ActionResult Index(string ip)
         {
             bool isUserRequestedAddressIp = false;

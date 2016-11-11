@@ -392,7 +392,7 @@ namespace SmartAdminMvc.Infrastructure
             }
             string hostAddress = HttpContext.Current.Request.Url.AbsoluteUri.Replace(HttpContext.Current.Request.Url.LocalPath, string.Empty);
             string greenColorPin = $@"
-            var pinGreenImage =new google.maps.MarkerImage('{hostAddress}/content/img/pinGreenColor.png',
+            var pinGreenImage =new google.maps.MarkerImage('{hostAddress}/content/img/pingreencolor.png',
                 new google.maps.Size(21, 34),
                 new google.maps.Point(0, 0),
                 new google.maps.Point(10, 34));";
@@ -410,7 +410,7 @@ namespace SmartAdminMvc.Infrastructure
 
 
             string redColorPing = $@"        
-            var pinRedImage = new google.maps.MarkerImage('{hostAddress}/content/img/pinRedColor.png',
+            var pinRedImage = new google.maps.MarkerImage('{hostAddress}/content/img/pinredcolor.png',
                 new google.maps.Size(21, 34),
                 new google.maps.Point(0, 0),
                 new google.maps.Point(10, 34));";
