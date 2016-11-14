@@ -143,12 +143,14 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data.Services.Client" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -2117,6 +2119,7 @@
     <Compile Include="Infrastructure\Alerts\Alert.cs" />
     <Compile Include="Infrastructure\Alerts\AlertDecoratorResult.cs" />
     <Compile Include="Infrastructure\Alerts\AlertExtensions.cs" />
+    <Compile Include="Infrastructure\IPCheckContainer.cs" />
     <Compile Include="Infrastructure\Constants.cs" />
     <Compile Include="Infrastructure\ContainerPerRequestExtensions.cs" />
     <Compile Include="Infrastructure\ControllerConvention.cs" />
@@ -2126,6 +2129,8 @@
     <Compile Include="Infrastructure\FailTrackerController.cs" />
     <Compile Include="Infrastructure\ICurrentUser.cs" />
     <Compile Include="Infrastructure\IoC.cs" />
+    <Compile Include="Infrastructure\IPRecord.cs" />
+    <Compile Include="Infrastructure\IPResponse.cs" />
     <Compile Include="Infrastructure\Mapping\IHaveCustomMappings.cs" />
     <Compile Include="Infrastructure\Mapping\IMapFrom.cs" />
     <Compile Include="Infrastructure\ModelMetadata\ExtensibleModelMetadataProvider.cs" />
@@ -2159,6 +2164,7 @@
     <Compile Include="Models\ErrorBaseViewModel.cs" />
     <Compile Include="Models\ErrorLoggingViewModel.cs" />
     <Compile Include="Models\IpLocationViewModel.cs" />
+    <Compile Include="Models\MelissaIpLocationViewModel.cs" />
     <Compile Include="Models\PermalinkBaseViewModel.cs" />
     <Compile Include="Models\SpeedResponseSummaryViewModel.cs" />
     <Compile Include="Models\SpeedPermalinkViewModel.cs" />

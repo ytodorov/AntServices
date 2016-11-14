@@ -40,6 +40,8 @@ namespace SmartAdminMvc.App_Start
 
                     config.CreateMap<TracerouteResponseSummaryViewModel, TracerouteResponseSummary>().ReverseMap();
 
+                    config.CreateMap<MelissaIpLocationViewModel, MelissaIpLocation>().ReverseMap();
+
                 });
         }
     }

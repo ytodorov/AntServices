@@ -42,5 +42,8 @@ namespace AntDal
 
         public virtual DbSet<TracerouteResponseDetail> TracerouteResponseDetails { get; set; }
 
+        public virtual DbSet<MelissaIpLocation> MelissaIpLocations { get; set; }
+        
+
     }
 }

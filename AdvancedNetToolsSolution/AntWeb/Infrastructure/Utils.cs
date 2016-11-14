@@ -1,6 +1,8 @@
 ﻿using AntDal;
 using AntDal.Entities;
 using AutoMapper;
+using GlobalIPCSSampleCode;
+using MelissaData;
 using Newtonsoft.Json;
 using SmartAdminMvc.Models;
 using System;
@@ -17,8 +19,11 @@ using System.Web.Helpers;
 using System.Web.Hosting;
 using System.Xml;
 
+
 namespace SmartAdminMvc.Infrastructure
 {
+
+
     public static class Utils
     {
 
@@ -240,46 +245,66 @@ namespace SmartAdminMvc.Infrastructure
             return wkpvm;
         }
 
-        public static IpLocationViewModel GetLocationDataForIp(string ipOrHostName)
+        public static MelissaIpLocationViewModel GetLocationDataForIp(string ipOrHostName)
         {
-            //IPAddress ipString;
-            //if(!IPAddress.TryParse(ipOrHostName, out ipString))
-            //{
-
-            //}
             using (AntDbContext context = new AntDbContext())
             {
-                IpLocation ipLocation = context.IpLocations.Where(ip => ip.IpAddress == ipOrHostName).FirstOrDefault();
-                if (ipLocation != null)
+                var mipl = context.MelissaIpLocations.FirstOrDefault(m => m.IpAddress == ipOrHostName);
+                MelissaIpLocationViewModel res = Mapper.Map<MelissaIpLocationViewModel>(mipl);
+                if (mipl != null)
                 {
-                    IpLocationViewModel ipLocationViewModel = Mapper.Map<IpLocationViewModel>(ipLocation);
-                    return ipLocationViewModel;
+                    res = Mapper.Map<MelissaIpLocationViewModel>(mipl);
                 }
                 else
                 {
-                    using (HttpClient client = new HttpClient())
-                    {
-
-                        string apiKey = "45c5fd0e7b3a7f323010de71fbc4aae7943b9f139ef3578af1b38878d0d02e81";
-                        string url = $"http://api.ipinfodb.com/v3/ip-city/?key={apiKey}&ip={ipOrHostName}&format=json";
-                        try
-                        {
-                            string result = client.GetStringAsync(url).Result;
-
-                            IpLocationViewModel ipLocationViewModel = JsonConvert.DeserializeObject<IpLocationViewModel>(result);
-                            IpLocation ipLocationToSaveInDb = Mapper.Map<IpLocation>(ipLocationViewModel);
-                            ipLocationToSaveInDb.DateCreated = DateTime.UtcNow;
-                            context.IpLocations.Add(ipLocationToSaveInDb);
-                            context.SaveChanges();
-                            return ipLocationViewModel;
-                        }
-                        catch (Exception ex)
-                        {
-                            return new IpLocationViewModel();
-                        }
-                    }
+                    var client2 = new IPCheckContainer(
+       new Uri("https://api.datamarket.azure.com/Data.ashx/MelissaData/IPCheck/v1/")
+       );
+                    client2.Credentials = new NetworkCredential("accountKey", "72z1kughiHqQnZ45qsVuIe4PyoFa5L3xZm2qtSbi9+U");
+                    var marketData = client2.SuggestIPAddresses(
+                        ipOrHostName, 1, 1).Execute();
+                    mipl = marketData.ToList().FirstOrDefault();
+                    mipl.IpAddress = ipOrHostName;
+                    context.MelissaIpLocations.Add(mipl);
+                    context.SaveChanges();
+                    res = Mapper.Map<MelissaIpLocationViewModel>(mipl);
                 }
+                return res;
             }
+
+            //using (AntDbContext context = new AntDbContext())
+            //{
+            //    IpLocation ipLocation = context.IpLocations.Where(ip => ip.IpAddress == ipOrHostName).FirstOrDefault();
+            //    if (ipLocation != null)
+            //    {
+            //        IpLocationViewModel ipLocationViewModel = Mapper.Map<IpLocationViewModel>(ipLocation);
+            //        return ipLocationViewModel;
+            //    }
+            //    else
+            //    {
+            //        using (HttpClient client = new HttpClient())
+            //        {
+
+            //            string apiKey = "45c5fd0e7b3a7f323010de71fbc4aae7943b9f139ef3578af1b38878d0d02e81";
+            //            string url = $"http://api.ipinfodb.com/v3/ip-city/?key={apiKey}&ip={ipOrHostName}&format=json";
+            //            try
+            //            {
+            //                string result = client.GetStringAsync(url).Result;
+
+            //                IpLocationViewModel ipLocationViewModel = JsonConvert.DeserializeObject<IpLocationViewModel>(result);
+            //                IpLocation ipLocationToSaveInDb = Mapper.Map<IpLocation>(ipLocationViewModel);
+            //                ipLocationToSaveInDb.DateCreated = DateTime.UtcNow;
+            //                context.IpLocations.Add(ipLocationToSaveInDb);
+            //                context.SaveChanges();
+            //                return ipLocationViewModel;
+            //            }
+            //            catch (Exception ex)
+            //            {
+            //                return new IpLocationViewModel();
+            //            }
+            //        }
+            //    }
+            //}
         }
 
         public static string RandomString(int length)
@@ -295,7 +320,7 @@ namespace SmartAdminMvc.Infrastructure
         {
             ips = ips.Where(m => !string.IsNullOrEmpty(m));
 
-            var locations = new List<IpLocationViewModel>();
+            var locations = new List<MelissaIpLocationViewModel>();
             var locationNamesInMap = new List<string>();
             var markerNamesInMap = new List<string>();
             var infoWindowsNamesInMap = new List<string>();
@@ -314,7 +339,7 @@ namespace SmartAdminMvc.Infrastructure
             for (int i = 0; i < ips.Count(); i++)
             {
                 // i % 2 == 0 Това в случай, че destionation i source адреса съвпада. Например и двата са в дейта центъра на MS
-                IpLocationViewModel currLocation = GetLocationDataForIp(ips.ElementAt(i));
+                MelissaIpLocationViewModel currLocation = GetLocationDataForIp(ips.ElementAt(i));
                 //if (i % 2 == 0 && locations.Any(c => c.Latitude == currLocation.Latitude && c.Longitude == currLocation.Longitude))
                 //{
                 //    for (int j = 0; j < 100; j++)
@@ -339,7 +364,7 @@ namespace SmartAdminMvc.Infrastructure
                 infoWindowsNamesInMap.Add("infoWindow" + i);
             }
 
-            List<IpLocationViewModel> sourceLocations = new List<IpLocationViewModel>();
+            List<MelissaIpLocationViewModel> sourceLocations = new List<MelissaIpLocationViewModel>();
 
             for (int i = 0; i < locations.Count(); i++)
             {
@@ -356,7 +381,7 @@ namespace SmartAdminMvc.Infrastructure
                     var currLocation = locations.ElementAt(i);
                     if (sourceLocations.Any(c => c.Latitude == currLocation.Latitude && c.Longitude == currLocation.Longitude))
                     {
-                        double newLongitude = currLocation.Longitude.GetValueOrDefault() + 0.05;
+                        double newLongitude = currLocation.Longitude + 0.05;
                         currLocation.Longitude = newLongitude;
                     }
                 }
@@ -368,12 +393,12 @@ namespace SmartAdminMvc.Infrastructure
 
             for (int i = 0; i < ips.Count(); i++)
             {
-                IpLocationViewModel location = locations[i];
+                MelissaIpLocationViewModel location = locations[i];
             }
 
             for (int i = 0; i < ips.Count(); i++)
             {
-                sb.AppendLine($@"var {locationNamesInMap[i]} = {{ lat: {locations[i].Latitude.GetValueOrDefault().ToString(CultureInfo.InvariantCulture)}, lng: {locations[i].Longitude.GetValueOrDefault().ToString(CultureInfo.InvariantCulture)} }};");
+                sb.AppendLine($@"var {locationNamesInMap[i]} = {{ lat: {locations[i].Latitude.ToString(CultureInfo.InvariantCulture)}, lng: {locations[i].Longitude.ToString(CultureInfo.InvariantCulture)} }};");
             }
             string zoomAsString = "2";
             if (zoom.HasValue)
@@ -424,11 +449,11 @@ namespace SmartAdminMvc.Infrastructure
                 double distanceMiles = 0;
                 if (i % 2 == 0 && pingSummaries != null)
                 {
-                    distanceKm = GeoCodeCalc.CalcDistance(locations[i].Latitude.GetValueOrDefault(), locations[i].Longitude.GetValueOrDefault(),
-                        locations[i + 1].Latitude.GetValueOrDefault(), locations[i + 1].Longitude.GetValueOrDefault());
+                    distanceKm = GeoCodeCalc.CalcDistance(locations[i].Latitude, locations[i].Longitude,
+                        locations[i + 1].Latitude, locations[i + 1].Longitude);
                     distanceKm = Math.Round(distanceKm, digits: 0);
-                    distanceMiles = GeoCodeCalc.CalcDistance(locations[i].Latitude.GetValueOrDefault(), locations[i].Longitude.GetValueOrDefault(),
-                       locations[i + 1].Latitude.GetValueOrDefault(), locations[i + 1].Longitude.GetValueOrDefault(), GeoCodeCalcMeasurement.Miles);
+                    distanceMiles = GeoCodeCalc.CalcDistance(locations[i].Latitude, locations[i].Longitude,
+                       locations[i + 1].Latitude, locations[i + 1].Longitude, GeoCodeCalcMeasurement.Miles);
                     distanceMiles = Math.Round(distanceMiles, digits: 0);
 
 
@@ -462,7 +487,7 @@ namespace SmartAdminMvc.Infrastructure
                 }
 
                 var sbMarkerWindowHtml = new StringBuilder();
-                sbMarkerWindowHtml.Append($@"<font size=""2"" color=""#057CBE"">IP:&nbsp;</font> {ips.ElementAt(i)} <br />{timeAvg}{distance}{speed}<font size=""2"" color=""#057CBE"">CITY:&nbsp;</font> {locations[i].CityName?.Replace(oldValue: "'", newValue: "&quot;")} <br /><font size=""2"" color=""#057CBE"">COUNTRY:&nbsp;</font> {locations[i].CountryName?.Replace(oldValue: "'", newValue: "&quot;")}");
+                sbMarkerWindowHtml.Append($@"<font size=""2"" color=""#057CBE"">IP:&nbsp;</font> {ips.ElementAt(i)} <br />{timeAvg}{distance}{speed}<font size=""2"" color=""#057CBE"">CITY:&nbsp;</font> {locations[i].City?.Replace(oldValue: "'", newValue: "&quot;")} <br /><font size=""2"" color=""#057CBE"">COUNTRY:&nbsp;</font> {locations[i].Country?.Replace(oldValue: "'", newValue: "&quot;")}");
 
                 string markerWindowHtml = sbMarkerWindowHtml.ToString(); ;
 
