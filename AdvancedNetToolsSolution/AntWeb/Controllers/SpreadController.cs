@@ -52,100 +52,127 @@ namespace SmartAdminMvc.Controllers
         }
 
         [HttpPost]
-        public ActionResult Download_Document(IEnumerable<HttpPostedFileBase> spreadUploads, string convertTo)
+        public ActionResult Download_Document(IEnumerable<HttpPostedFileBase> spreadUploads, string xlsx, string csv,
+            string txt, string pdf)
         {
+            if (spreadUploads == null)
+            {
+                return new EmptyResult();
+            }
+
+            if ("on".Equals(xlsx, StringComparison.InvariantCultureIgnoreCase))
+            {
+                xlsx = "xlsx";
+            }
+            if ("on".Equals(csv, StringComparison.InvariantCultureIgnoreCase))
+            {
+                csv = "csv";
+            }
+            if ("on".Equals(txt, StringComparison.InvariantCultureIgnoreCase))
+            {
+                txt = "txt";
+            }
+            if ("on".Equals(pdf, StringComparison.InvariantCultureIgnoreCase))
+            {
+                pdf = "pdf";
+            }
+            List<string> convertToTypes = new List<string>() { xlsx, csv, txt, pdf }.Where(t => !string.IsNullOrWhiteSpace(t)).ToList();
+
             using (MemoryStream memoryStream = new MemoryStream())
             {
                 using (ZipArchive archive = new ZipArchive(memoryStream, ZipArchiveMode.Create, true, null))
                 {
-                    foreach (var customDocument in spreadUploads)
+                    foreach (var convertTo in convertToTypes)
                     {
-
-                        IWorkbookFormatProvider fileFormatProvider = null;
-                        IWorkbookFormatProvider convertFormatProvider = null;
-                        Workbook document = null;
-                        string mimeType = String.Empty;
-                        string fileDownloadName = "{0}.{1}";
-
-                        if (customDocument != null && Regex.IsMatch(Path.GetExtension(customDocument.FileName), ".xlsx|.csv|.txt"))
+                        foreach (var customDocument in spreadUploads)
                         {
-                            switch (Path.GetExtension(customDocument.FileName))
+
+                            IWorkbookFormatProvider fileFormatProvider = null;
+                            IWorkbookFormatProvider convertFormatProvider = null;
+                            Workbook document = null;
+                            string mimeType = String.Empty;
+                            string fileDownloadName = "{0}.{1}";
+
+                            if (customDocument != null && Regex.IsMatch(Path.GetExtension(customDocument.FileName), ".xlsx|.csv|.txt"))
                             {
-                                case ".xlsx":
-                                    fileFormatProvider = new XlsxFormatProvider();
+                                switch (Path.GetExtension(customDocument.FileName))
+                                {
+                                    case ".xlsx":
+                                        fileFormatProvider = new XlsxFormatProvider();
+                                        break;
+                                    case ".csv":
+                                        fileFormatProvider = new CsvFormatProvider();
+                                        break;
+                                    case ".txt":
+                                        fileFormatProvider = new TxtFormatProvider();
+                                        break;
+                                    default:
+                                        fileFormatProvider = null;
+                                        break;
+                                }
+
+                                document = fileFormatProvider.Import(customDocument.InputStream);
+                                fileDownloadName = string.Format(fileDownloadName, customDocument.FileName, convertTo);
+                            }
+                            else
+                            {
+                                fileFormatProvider = new XlsxFormatProvider();
+                                string fileName = Server.MapPath("~/Content/web/spread/SampleDocument.xlsx");
+                                using (FileStream input = new FileStream(fileName, FileMode.Open))
+                                {
+                                    document = fileFormatProvider.Import(input);
+                                }
+
+                                fileDownloadName = String.Format(fileDownloadName, "SampleDocument", convertTo);
+                            }
+
+                            switch (convertTo)
+                            {
+                                case "xlsx":
+                                    convertFormatProvider = new XlsxFormatProvider();
+                                    mimeType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
                                     break;
-                                case ".csv":
-                                    fileFormatProvider = new CsvFormatProvider();
+                                case "csv":
+                                    convertFormatProvider = new CsvFormatProvider();
+                                    mimeType = "text/csv";
                                     break;
-                                case ".txt":
-                                    fileFormatProvider = new TxtFormatProvider();
+                                case "txt":
+                                    convertFormatProvider = new TxtFormatProvider();
+                                    mimeType = "text/plain";
+                                    break;
+                                case "pdf":
+                                    convertFormatProvider = new PdfFormatProvider();
+                                    mimeType = "application/pdf";
                                     break;
                                 default:
-                                    fileFormatProvider = null;
+                                    convertFormatProvider = new TxtFormatProvider();
+                                    mimeType = "text/plain";
                                     break;
                             }
 
-                            document = fileFormatProvider.Import(customDocument.InputStream);
-                            fileDownloadName = string.Format(fileDownloadName, customDocument.FileName, convertTo);
-                        }
-                        else
-                        {
-                            fileFormatProvider = new XlsxFormatProvider();
-                            string fileName = Server.MapPath("~/Content/web/spreadprocessing/SampleDocument.xlsx");
-                            using (FileStream input = new FileStream(fileName, FileMode.Open))
+                            byte[] renderedBytes = null;
+
+                            using (MemoryStream ms = new MemoryStream())
                             {
-                                document = fileFormatProvider.Import(input);
+                                convertFormatProvider.Export(document, ms);
+                                renderedBytes = ms.ToArray();
                             }
-
-                            fileDownloadName = String.Format(fileDownloadName, "SampleDocument", convertTo);
-                        }
-
-                        switch (convertTo)
-                        {
-                            case "xlsx":
-                                convertFormatProvider = new XlsxFormatProvider();
-                                mimeType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-                                break;
-                            case "csv":
-                                convertFormatProvider = new CsvFormatProvider();
-                                mimeType = "text/csv";
-                                break;
-                            case "txt":
-                                convertFormatProvider = new TxtFormatProvider();
-                                mimeType = "text/plain";
-                                break;
-                            case "pdf":
-                                convertFormatProvider = new PdfFormatProvider();
-                                mimeType = "application/pdf";
-                                break;
-                            default:
-                                convertFormatProvider = new TxtFormatProvider();
-                                mimeType = "text/plain";
-                                break;
-                        }
-
-                        byte[] renderedBytes = null;
-
-                        using (MemoryStream ms = new MemoryStream())
-                        {
-                            convertFormatProvider.Export(document, ms);
-                            renderedBytes = ms.ToArray();
-                        }
-                        if (spreadUploads.Count() == 1)
-                        {
-                            return File(renderedBytes, mimeType, fileDownloadName);
-                        }
-                        else
-                        {
-                            if (archive.Entries.Any(e => e.Name.Equals(fileDownloadName, StringComparison.InvariantCultureIgnoreCase)))
+                            if (spreadUploads.Count() == 1)
                             {
-                                continue;
+                                return File(renderedBytes, mimeType, fileDownloadName);
                             }
-                            using (ZipArchiveEntry entry = archive.CreateEntry(fileDownloadName))
+                            else
                             {
-                                BinaryWriter writer = new BinaryWriter(entry.Open());
-                                writer.Write(renderedBytes);
-                                writer.Flush();
+                                if (archive.Entries.Any(e => e.Name.Equals(fileDownloadName, StringComparison.InvariantCultureIgnoreCase)))
+                                {
+                                    continue;
+                                }
+                                using (ZipArchiveEntry entry = archive.CreateEntry(fileDownloadName))
+                                {
+                                    BinaryWriter writer = new BinaryWriter(entry.Open());
+                                    writer.Write(renderedBytes);
+                                    writer.Flush();
+                                }
                             }
                         }
                     }

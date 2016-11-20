@@ -2,36 +2,60 @@
     ViewBag.Title = "Spread processing";
     ViewBag.MetaDescription = "Spread processing enables you to effortlessly convert documents from one to another file format among XLSX, CSV and TXT. Further, you can export any of these to PDF.";
 }
-<script src="~/Scripts/SpreadProcessing/index.js"></script>
-@using (Html.BeginForm("Download_Document", "SpreadProcessing"))
+
+<div class="normalheader transition animated fadeIn small-header">
+    <div class="hpanel">
+        <div class="panel-body">
+            <div id="hbreadcrumb" class="pull-right">
+                <ol class="hbreadcrumb breadcrumb">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    <li>
+                        <a href="/spread">Spreadsheet processing</a>
+                    </li>
+                </ol>
+            </div>
+            <h2 class="font-light m-b-xs">
+                Spreadsheet processing
+            </h2>
+            <small>Import and export files to and from Excel.</small>
+        </div>
+    </div>
+</div>
+
+
+<script src="~/scripts/spread/index.js"></script>
+
+@using (Html.BeginForm("Download_Document", "spread"))
 {
-    @(Html.Kendo().Upload()
+    @(@Html.Raw(Html.AntCreateStandardPanel("hgreen", "Upload files (.xlsx, .csv, or .txt)",
+    Html.Kendo().Upload()
                         .Name("spreadUploads")
                         .Multiple(true)
                         .ShowFileList(true)
-                        .Events(events => events.Select("onSelectSpreadProcessing"))
-                        .Deferred()
-    )
-    @Html.Label("fileExtension", "Convert to: ")
-    @(Html.Kendo().ComboBox()
-                        .Name("convertTo")
-                        .Filter("contains")
-                        .Suggest(true)
-                        .SelectedIndex(0)
-                        .Items(items =>
-                            {
-                                items.Add().Text("XLSX").Value("xlsx");
-                                items.Add().Text("CSV").Value("csv");
-                                items.Add().Text("TXT").Value("txt");
-                                items.Add().Text("PDF").Value("pdf");
-                            }
-                        )
-                        .Deferred()
-    )
+                        .DropZone("#wrapper")
+                        .Validation(v => v.AllowedExtensions(new string[] { "xlsx", "csv", "txt" }).MaxFileSize(10 * 1024 * 1024))
+                        .Deferred().ToHtmlString()
+    )))
 
+    @(@Html.Raw(Html.AntCreateStandardPanel("hgreen", "Choose destination file formats", @"<p class='text-center'>
+        <input type = 'checkbox' id = 'xlsx' name = 'xlsx' class='k-checkbox'>
+        <label class='k-checkbox-label' for='xlsx'>XLSX</label>
 
+        <input type = 'checkbox' id='csv' name='csv' class='k-checkbox'>
+        <label class='k-checkbox-label' for='csv'>CSV</label>
 
+        <input type = 'checkbox' id='txt' name='txt' class='k-checkbox'>
+        <label class='k-checkbox-label' for='txt'>TXT</label>
 
-    <hr class="clear" />
-            <input type="submit" class="k-button k-primary wide-btn" value="Download" />
+        <input type = 'checkbox' id='pdf' name='pdf' class='k-checkbox'>
+        <label class='k-checkbox-label' for='pdf'>PDF</label>
+    </p>
+    <p class='text-center'>
+        <input type = 'submit' class='k-button k-primary wide-btn' value='Convert and Download' />
+    </p>")))
+
 }
+
+
