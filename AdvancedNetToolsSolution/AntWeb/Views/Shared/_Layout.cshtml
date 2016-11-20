@@ -20,8 +20,11 @@
     {@RenderSection(name: "Styles", required: false)}
     @Styles.Render(paths: "~/bundles/homer/css")
     <link href="~/content/codemirror-3.01/codemirror.css" rel="stylesheet" />
-    <link rel="stylesheet" href="~/content/kendo/kendo.common.min.css">
-    <link rel="stylesheet" href="~/content/kendo/kendo.metro.min.css">
+    @*<link rel="stylesheet" href="~/content/kendo/kendo.common.min.css">*@
+    <link rel="stylesheet" href="//kendo.cdn.telerik.com/2016.3.1028/styles/kendo.common.min.css">
+    <link rel="stylesheet" href="//kendo.cdn.telerik.com/2016.3.1028/styles/kendo.metro.min.css">
+
+    @*<link rel="stylesheet" href="~/content/kendo/kendo.metro.min.css">*@
     @*<script type="text/javascript">
         //<![CDATA[
         var tlJsHost = ((window.location.protocol == "https:") ? "https://secure.comodo.com/" : "http://www.trustlogo.com/");
@@ -84,12 +87,19 @@
         .AutoHideAfter(7000).Deferred()
     )
 
-    @(Html.Kendo().Tooltip()
+    @*@(Html.Kendo().Tooltip()
         .For("body")
         .Filter("*[title]")
         .Position(TooltipPosition.Top)
         .Deferred()
-    )
+    )*@
+    <script src="//code.jquery.com/jquery-1.12.3.min.js"></script>
+    <script src="//kendo.cdn.telerik.com/2016.3.1028/js/jszip.min.js"></script>
+    <script src="//kendo.cdn.telerik.com/2016.3.1028/js/kendo.all.min.js"></script>
+    <script src="//kendo.cdn.telerik.com/2016.3.1028/js/kendo.aspnetmvc.min.js"></script>
+    <script src="//kendo.cdn.telerik.com/2016.3.1028/js/pako_deflate.min.js"></script>
+
+
     <script src="@Utils.Tag("/scripts/bundle.js")"></script>
     @Html.Kendo().DeferredScripts()
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDoER6oaWJAUFMNCCE8IkCGsIyHsbTE0Zw"></script>
