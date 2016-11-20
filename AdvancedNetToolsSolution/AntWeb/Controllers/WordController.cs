@@ -127,7 +127,7 @@ namespace SmartAdminMvc.Controllers
                                 else
                                 {
                                     fileFormatProvider = new DocxFormatProvider();
-                                    string fileName = Server.MapPath("~/Content/web/wordsprocessing/SampleDocument.docx");
+                                    string fileName = Server.MapPath("~/Content/web/word/SampleDocument.docx");
                                     using (FileStream input = new FileStream(fileName, FileMode.Open))
                                     {
                                         document = fileFormatProvider.Import(input);

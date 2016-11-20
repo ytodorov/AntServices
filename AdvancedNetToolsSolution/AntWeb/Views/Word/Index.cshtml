@@ -12,7 +12,7 @@
                         <a href="/">Home</a>
                     </li>
                     <li>
-                        <a href="/wordsprocessing">Words processing</a>
+                        <a href="/word">Words processing</a>
                     </li>
                 </ol>
             </div>
@@ -25,9 +25,9 @@
 </div>
 
 
-<script src="~/scripts/wordsprocessing/index.js"></script>
+<script src="~/scripts/word/index.js"></script>
 
-@using (Html.BeginForm("Download_Document", "wordsprocessing"))
+@using (Html.BeginForm("Download_Document", "word"))
 {
     @(@Html.Raw(Html.AntCreateStandardPanel("hgreen", "Upload files (.docx, .rtf, .html or .txt)",
     Html.Kendo().Upload()
@@ -58,117 +58,5 @@
     <p class='text-center'>
         <input type = 'submit' class='k-button k-primary wide-btn' value='Convert and Download' />
     </p>")))
-
-   
-@*<p class="text-center">
-        <input type = "checkbox" id="docx" name="docx" class="k-checkbox">
-        <label class="k-checkbox-label" for="docx">DOCX</label>
-
-        <input type = "checkbox" id="rtf" name="rtf" class="k-checkbox">
-        <label class="k-checkbox-label" for="rtf">RTF</label>
-
-        <input type = "checkbox" id="html" name="html" class="k-checkbox">
-        <label class="k-checkbox-label" for="html">HTML</label>
-
-        <input type = "checkbox" id="txt" name="txt" class="k-checkbox">
-        <label class="k-checkbox-label" for="txt">TXT</label>
-
-        <input type = "checkbox" id="pdf" name="pdf" class="k-checkbox">
-        <label class="k-checkbox-label" for="pdf">PDF</label>
-    </p>
-    <p class="text-center">
-        <input type = "submit" class="k-button k-primary wide-btn" value="Convert and Download" />
-    </p>*@
-    @*<ul class="fieldlist">
-    
-        <li>
-            <input type="checkbox" id="docx" name="docx" class="k-checkbox">
-            <label class="k-checkbox-label" for="docx">DOCX</label>
-        </li>
-        <li>
-            <input type="checkbox" id="rtf" name="rtf" class="k-checkbox">
-            <label class="k-checkbox-label" for="rtf">RTF</label>
-        </li>
-        <li>
-            <input type="checkbox" id="html" name="html" class="k-checkbox">
-            <label class="k-checkbox-label" for="html">HTML</label>
-        </li>
-        <li>
-            <input type="checkbox" id="txt" name="txt" class="k-checkbox">
-            <label class="k-checkbox-label" for="txt">TXT</label>
-        </li>
-        <li>
-            <input type="checkbox" id="pdf" name="pdf" class="k-checkbox">
-            <label class="k-checkbox-label" for="pdf">PDF</label>
-        </li>
-    </ul>*@
-
-    @*@(Html.Kendo().TreeView()
-                .Name("treeview")
-                .Checkboxes(checkboxes => checkboxes
-                    .Name("checkedFiles")
-                    .CheckChildren(true)
-                )
-                // .Events(events => events
-                //    .Check("onCheck")
-                //)
-                .Items(treeview =>
-                {
-                    treeview.Add().Text("DOCX").Id("docx");
-                    treeview.Add().Text("RTF").Id("rtf");
-                    treeview.Add().Text("HTML").Id("html");
-                    treeview.Add().Text("TXT").Id("txt");
-                    treeview.Add().Text("PDF").Id("pdf");
-                })
-                .Deferred()
-    )*@
-
-    @*@(Html.Kendo().Button()
-                            .Name("uploadFileBtn")
-                            .Content("Load Custom Document")
-                            .HtmlAttributes(new { type = "button" })
-                            .Events(events => events.Click("uploadFile"))
-                )
-                <div class="imageContainer  custom-doc">
-                    <img src="~/Content/web/wordsprocessing/CustomDocument_file.png" />
-                </div>
-            </div>
-            <div class="column or-elm">- OR -</div>
-            <div class="column">
-                @(Html.Kendo().Button()
-                            .Name("loadTempDocBtn")
-                            .Content("Load Template Document")
-                            .HtmlAttributes(new { type = "button" })
-                            .Events(events => events.Click("loadTemplate"))
-                )
-                <div class="imageContainer">
-                    <img src="~/Content/web/wordsprocessing/SampleDocumentImage.png" />
-                </div>
-            </div>
-        </div>
-                <hr />
-                <div class="file-options-wrapper">
-                    <div class="column float-right">
-                        @Html.Label("fileExtension", "Convert to: ")
-                        @(Html.Kendo().ComboBox()
-                            .Name("convertTo")
-                            .Filter("contains")
-                            .Suggest(true)
-                            .SelectedIndex(0)
-                            .Items(items =>
-                                {
-                                    items.Add().Text("DOCX").Value("docx");
-                                    items.Add().Text("RTF").Value("rtf");
-                                    items.Add().Text("HTML").Value("html");
-                                    items.Add().Text("TXT").Value("txt");
-                                }
-                            )
-                        )
-
-                    </div>
-                    <div class="column"><span>File: </span><span id="fileName"></span></div>
-                </div>
-
-                <hr class="clear" />*@
-  
+      
 }
