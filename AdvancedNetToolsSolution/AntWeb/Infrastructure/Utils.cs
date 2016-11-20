@@ -260,10 +260,14 @@ namespace SmartAdminMvc.Infrastructure
                     var client2 = new IPCheckContainer(
        new Uri("https://api.datamarket.azure.com/Data.ashx/MelissaData/IPCheck/v1/")
        );
-                    client2.Credentials = new NetworkCredential("accountKey", "72z1kughiHqQnZ45qsVuIe4PyoFa5L3xZm2qtSbi9+U");
+                    client2.Credentials = new NetworkCredential("accountKey", "gAtdtU3ImXbKLdhiz8ZpWsxT+7taQjjfxNmQmsUctu0");
                     var marketData = client2.SuggestIPAddresses(
                         ipOrHostName, 1, 1).Execute();
                     mipl = marketData.ToList().FirstOrDefault();
+                    if (mipl == null)
+                    {
+                        return new MelissaIpLocationViewModel();
+                    }
                     mipl.IpAddress = ipOrHostName;
                     context.MelissaIpLocations.Add(mipl);
                     context.SaveChanges();
@@ -481,13 +485,26 @@ namespace SmartAdminMvc.Infrastructure
                 if (i % 2 == 0 && pingSummaries != null)
                 {
                     var time = Math.Round(pingSummaries[i / 2].AvgRtt.GetValueOrDefault(), digits: 0);
-                    timeAvg = @"<font size=""2"" color=""#057CBE"">TIME AVG:&nbsp;</font>" + time.ToString() + "ms.<br />";
-                    distance = @"<font size=""2"" color=""#057CBE"">DISTANCE:&nbsp;</font>" + distanceKm.ToString() + "km. | " + distanceMiles + "mi.<br />";
-                    speed = @"<font size=""2"" color=""#057CBE"">SPEED:&nbsp;</font>" + ((int) (distanceKm / time)).ToString() + "km./ms. | " + ((int) (distanceMiles / time)).ToString() + "mi./ms.<br />";
+                    if (time != 0)
+                    {
+                        timeAvg = @"<font size=""2"" color=""#057CBE"">TIME AVG:&nbsp;</font>" + time.ToString() + "ms<br />";
+                        distance = @"<font size=""2"" color=""#057CBE"">DISTANCE:&nbsp;</font>" + distanceKm.ToString() + "km | " + distanceMiles + "mi<br />";
+                        speed = @"<font size=""2"" color=""#057CBE"">SPEED:&nbsp;</font>" + ((int)(distanceKm / time)).ToString() + "km/ms | " + ((int)(distanceMiles / time)).ToString() + "mi/ms<br />";
+                    }
                 }
 
                 var sbMarkerWindowHtml = new StringBuilder();
-                sbMarkerWindowHtml.Append($@"<font size=""2"" color=""#057CBE"">IP:&nbsp;</font> {ips.ElementAt(i)} <br />{timeAvg}{distance}{speed}<font size=""2"" color=""#057CBE"">CITY:&nbsp;</font> {locations[i].City?.Replace(oldValue: "'", newValue: "&quot;")} <br /><font size=""2"" color=""#057CBE"">COUNTRY:&nbsp;</font> {locations[i].Country?.Replace(oldValue: "'", newValue: "&quot;")}");
+                sbMarkerWindowHtml.Append($@"\
+<font size=""2"" color=""#057CBE"">IP:&nbsp;</font> {ips.ElementAt(i)} <br />{timeAvg}{distance}{speed}\
+<font size=""2"" color=""#057CBE"">City:&nbsp;</font> {locations[i].City?.Replace(oldValue: "'", newValue: "&quot;")} <br />\
+<font size=""2"" color=""#057CBE"">Region:&nbsp;</font> {locations[i].Region?.Replace(oldValue: "'", newValue: "&quot;")} <br />\
+<font size=""2"" color=""#057CBE"">Country:&nbsp;</font> {locations[i].Country?.Replace(oldValue: "'", newValue: "&quot;")} <br />\
+<font size=""2"" color=""#057CBE"">CountryAbbreviation:&nbsp;</font> {locations[i].CountryAbbreviation?.Replace(oldValue: "'", newValue: "&quot;")} <br />\
+<font size=""2"" color=""#057CBE"">ISP:&nbsp;</font> {locations[i].ISP?.Replace(oldValue: "'", newValue: "&quot;")} <br />\
+<font size=""2"" color=""#057CBE"">Latitude:&nbsp;</font> {locations[i].Latitude} <br />\
+<font size=""2"" color=""#057CBE"">Longitude:&nbsp;</font> {locations[i].Longitude} <br />\
+<font size=""2"" color=""#057CBE"">Domain:&nbsp;</font> {locations[i].Domain?.Replace(oldValue: "'", newValue: "&quot;")} <br />\
+");
 
                 string markerWindowHtml = sbMarkerWindowHtml.ToString(); ;
 
