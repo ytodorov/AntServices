@@ -26,7 +26,7 @@ namespace SmartAdminMvc.Extensions
                 body = string.Empty;
             }
 
-            string template = $@"<div class='col-lg-12'>
+            string template = $@"<div>
     <div class='hpanel {headerColorClass}'>
         <div class='panel-heading'>
             <p class='text-center'>

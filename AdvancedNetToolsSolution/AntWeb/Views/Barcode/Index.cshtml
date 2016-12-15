@@ -1,0 +1,303 @@
+﻿@model BarcodePermalinkViewModel
+
+@{
+    ViewBag.Title = "Barcode";
+    ViewBag.MetaDescription = "Barcode generation in any format.";
+}
+
+     <style type="text/css">
+            .barcodeDiv {
+                width: 300px;
+                margin: 20px auto;
+            }
+        </style>
+
+<div class="normalheader transition animated fadeIn small-header">
+    <div class="hpanel">
+        <div class="panel-body">
+            <div id="hbreadcrumb" class="pull-right">
+                <ol class="hbreadcrumb breadcrumb">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    <li>
+                        <a href="/barcode">Barcode</a>
+                    </li>
+                </ol>
+            </div>
+            <h2 class="font-light m-b-xs">
+                Barcode
+            </h2>
+            <small>Barcode generation in any format</small>
+        </div>
+    </div>
+</div>
+
+@(Html.Kendo().TextBox().Name("tbBarcodeValue"))
+<button type="button" class="ladda-button btn center-block btn-outline btn-success" id="btnGenerateBarcode" data-style="zoom-in">
+    <span class="ladda-label">Generate</span>
+    <span class="ladda-spinner"></span>
+</button>
+<div id="result" class="container-fluid">
+    <div class="row">
+        @foreach (BarcodeSymbology bs in Enum.GetValues(typeof(BarcodeSymbology)))
+        {
+
+
+            <div class='col-md-4'>
+                @Html.Raw(Html.AntCreateStandardPanel("hgreen", bs.ToString(), "<div class='text-center'><div id='barcode" + bs.ToString() + "' class='barcodeDiv' data-type='" + bs.ToString() + "'></div></div>"))
+            </div>
+
+
+
+        }
+    </div>
+
+    <table id="barcodeTable" class="stripes" style="margin-top: 1.2em;">
+        <tbody>
+            <tr>
+                <th>Symbology</th>
+                <th>Character set</th>
+                <th>Length</th>
+                <th>Check digits</th>
+            </tr>
+            <tr>
+                <td><a href="https://en.wikipedia.org/wiki/Code_128">Code 39 (default)</a></td>
+                <td>[A-Z]; [0-9]; [ - . $ / + % ]</td>
+                <td>variable (avg. up to 20 chars)</td>
+                <td>optional (Mod. 43)</td>
+            </tr>
+            <tr>
+                <td><a href="http://en.wikipedia.org/wiki/Code_39#Full_ASCII_Code_39">Code39Extended</a></td>
+                <td>ASCII (128 characters)</td>
+                <td>variable</td>
+                <td>optional (Mod. 43)</td>
+            </tr>
+            <tr>
+                <td><a href="http://www.barcodeisland.com/code93.phtml">Code 93</a></td>
+                <td>[0-9];[A-Z];[SPACE . + - / % $]</td>
+                <td>variable</td>
+                <td>2 check digits</td>
+            </tr>
+            <tr>
+                <td><a href="http://en.wikipedia.org/wiki/Code_93">Code93Extended</a></td>
+                <td>ASCII(128 characters)</td>
+                <td>variable</td>
+                <td>2 check digits</td>
+            </tr>
+            <tr>
+                <td><a href="http://en.wikipedia.org/wiki/International_Article_Number_(EAN)">EAN-13</a></td>
+                <td>numeric [0..9]</td>
+                <td>12 usable digits</td>
+                <td>1 check digit</td>
+            </tr>
+            <tr>
+                <td><a href="http://en.wikipedia.org/wiki/EAN-8">EAN-8</a></td>
+                <td>numeric [0..9]</td>
+                <td>7 usable digits</td>
+                <td>1 check digit</td>
+            </tr>
+            <tr>
+                <td><a href="http://en.wikipedia.org/wiki/Universal_Product_Code">UPC-A</a></td>
+                <td>numeric [0..9]</td>
+                <td>11 usable digits (first is always 0)</td>
+                <td>1 check digit</td>
+            </tr>
+            <tr>
+                <td><a href="http://en.wikipedia.org/wiki/Universal_Product_Code">UPC-E</a></td>
+                <td>numeric [0..9]</td>
+                <td>6 usable digits (first is always 0)</td>
+                <td>1 check digit</td>
+            </tr>
+            <tr>
+                <td><a href="http://en.wikipedia.org/wiki/POSTNET">POSTNET</a></td>
+                <td>numeric [0..9]</td>
+                <td>variable</td>
+                <td>1 check digit</td>
+            </tr>
+            <tr>
+                <td><a href="http://www.barcodeisland.com/code11.phtml">Code 11</a></td>
+                <td>[0-9]; [-]</td>
+                <td>variable</td>
+                <td>1 or 2 based on length</td>
+            </tr>
+            <tr>
+                <td><a href="https://en.wikipedia.org/wiki/Code_128">Code128</a></td>
+                <td>LATIN-1 (<a href="http://en.wikipedia.org/wiki/ISO/IEC_8859-1">ISO-8859-1</a>)</td>
+                <td>variable</td>
+                <td>1 check digit</td>
+            </tr>
+            <tr>
+                <td><a href="https://en.wikipedia.org/wiki/Code_128">Code128A</a></td>
+                <td>ASCII 00 to 95 (0-9, A-Z and control codes), special characters</td>
+                <td>variable</td>
+                <td>1 check digit</td>
+            </tr>
+            <tr>
+                <td><a href="https://en.wikipedia.org/wiki/Code_128">Code128B</a></td>
+                <td>ASCII 32 to 127 (0-9, A-Z, a-z), special characters</td>
+                <td>variable</td>
+                <td>1 check digit</td>
+            </tr>
+            <tr>
+                <td><a href="https://en.wikipedia.org/wiki/Code_128">Code128C</a></td>
+                <td>ASCII 00-99 (encodes each two digits with one code)</td>
+                <td>variable</td>
+                <td>1 check digit</td>
+            </tr>
+            <tr>
+                <td><a href="http://en.wikipedia.org/wiki/GS1-128">GS1-128</a></td>
+                <td>depending on Application Identifier</td>
+                <td>variable</td>
+                <td>1 check digit</td>
+            </tr>
+            <tr>
+                <td><a href="http://en.wikipedia.org/wiki/MSI_Barcode">MSImod10</a></td>
+                <td>numeric [0..9]</td>
+                <td>variable</td>
+                <td>1 check digit</td>
+            </tr>
+            <tr>
+                <td><a href="http://en.wikipedia.org/wiki/MSI_Barcode">MSImod11</a></td>
+                <td>numeric [0..9]</td>
+                <td>variable</td>
+                <td>1 check digit</td>
+            </tr>
+            <tr>
+                <td><a href="http://en.wikipedia.org/wiki/MSI_Barcode">MSImod1010</a></td>
+                <td>numeric [0..9]</td>
+                <td>variable</td>
+                <td>1 check digit</td>
+            </tr>
+            <tr>
+                <td><a href="http://en.wikipedia.org/wiki/MSI_Barcode">MSImod1110</a></td>
+                <td>numeric [0..9]</td>
+                <td>variable</td>
+                <td>1 check digit</td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+<br />
+@section scripts {
+    @if (!string.IsNullOrEmpty(Model?.Value))
+    {
+        <script>
+
+
+            var barcodeDivs = $(".barcodeDiv");
+            barcodeDivs.each(function (index) {
+
+                var valToSet = $("#tbBarcodeValue").val();
+                try {
+                    var type = $(this).attr("data-type")
+                    $(this).kendoBarcode({
+                        width: 280,
+                        height: 100,
+                        value: "@Model.Value",
+                        type: type,
+                        background: "transparent"
+                    });
+                }
+                catch (e) {
+                    console.log(e.message);
+                }
+
+            });
+        </script>
+    }
+    <script>
+        function bindExportPdf() {
+            $(".exportBarcodeAsPdf").click(function f() {
+                debugger;
+                var type = $(this).attr("data-type");
+                var bc = $("#barcode" + type).first();
+                //var bc = $(this).nextAll(".barcodeDiv").first();
+                if (bc.length > 0) {
+                    // Convert the DOM element to a drawing using kendo.drawing.drawDOM
+                    kendo.drawing.drawDOM(bc)
+                    .then(function (group) {
+                        // Render the result as a PDF file
+                        return kendo.drawing.exportPDF(group, {
+                            paperSize: "auto",
+                            margin: { left: "1cm", top: "1cm", right: "1cm", bottom: "1cm" }
+                        });
+                    })
+                            .done(function (data) {
+                                // Save the PDF file
+                                kendo.saveAs({
+                                    dataURI: data,
+                                    fileName: "HR-Dashboard.pdf",
+                                    proxyURL: "//demos.telerik.com/kendo-ui/service/export"
+                                });
+                            });
+                }
+            });
+        }
+
+        bindExportPdf();
+
+
+        function setOptions(e) {
+            var validValue = $('#validValue');
+
+            try {
+                var barcode = $('#barcode').data('kendoBarcode');
+                barcode.setOptions({
+                    value: $('#value').val(),
+                    checksum: $('#checksum').is(':checked'),
+                    text: {
+                        visible: $('#text').is(':checked')
+                    },
+                    type: $('#type').kendoDropDownList('value')
+                })
+                validValue.hide();
+            } catch (e) {
+                validValue.text(e.message).show();
+            }
+        }
+
+        $("#btnGenerateBarcode").click(function myfunction() {
+
+            //var $barcodes = $("[data-role=barcode]");
+            var $barcodes = $(".barcodeDiv");
+
+            $barcodes.each(function (index) {
+                try {
+                    var valToSet = $("#tbBarcodeValue").val();
+                    var type = $(this).attr("data-type")
+                    var barcode = $(this).data("kendoBarcode");
+                    if (typeof barcode == 'undefined') {
+                        $(this).kendoBarcode({
+                            width: 280,
+                            height: 100,
+                            value: valToSet,
+                            type: type,
+                            background: "transparent"
+                        });
+                        barcode = $(this).data("kendoBarcode");
+                    }
+
+
+                    barcode.value(valToSet);
+                }
+                catch (e) {
+                    console.log(e.message);
+                    $(this).html('<p>' + e.message + '</p>');
+                }
+
+            });
+            bindExportPdf();
+
+        });
+
+        $("#barcodeTable").kendoGrid({
+        });
+
+
+
+
+
+    </script>
+}

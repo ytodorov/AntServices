@@ -309,6 +309,11 @@ $(window).on("blur focus", function (e) {
     $(this).data("prevType", e.type);
 });
 $(window).on("error", function (e) {
-    window.antGlobal.showNotification(e.originalEvent.error.message, "error");
+    if (typeof e.originalEvent.error != 'undefined' && e.originalEvent.error != null) {
+        window.antGlobal.showNotification(e.originalEvent.error.message, "error");
+    }
+    else {
+        window.antGlobal.showNotification(e.originalEvent, "error");
+    }
 });
 //# sourceMappingURL=yk.js.map

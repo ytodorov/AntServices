@@ -1,0 +1,59 @@
+﻿@{
+    ViewBag.Title = "Spread processing";
+    ViewBag.MetaDescription = "Spread processing enables you to effortlessly convert documents from one to another file format among XLSX, CSV and TXT. Further, you can export any of these to PDF.";
+}
+
+<div class="normalheader transition animated fadeIn small-header">
+    <div class="hpanel">
+        <div class="panel-body">
+            <div id="hbreadcrumb" class="pull-right">
+                <ol class="hbreadcrumb breadcrumb">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    <li>
+                        <a href="/spread">Spreadsheet processing</a>
+                    </li>
+                </ol>
+            </div>
+            <h2 class="font-light m-b-xs">
+                Spreadsheet processing
+            </h2>
+            <small>Import and export files to and from Excel.</small>
+        </div>
+    </div>
+</div>
+
+
+    @Html.Raw((Html.AntCreateStandardPanel("hyellow", "Round-trip times and latencies in ms.", "<p>" +
+Html.Kendo().Grid<WebSiteMonitoringViewModel>()
+.Name("pingResultsGrid")
+.Columns(columns =>
+{
+    columns.Bound(c => c.Url).Title("Url");
+    columns.Bound(c => c.PingInterval).Title("Ping Interval");
+})
+.Scrollable(s => s.Enabled(false))
+ .ToolBar(toolbar =>
+ {
+     toolbar.Create();
+     toolbar.Save();
+ })
+    .Editable(editable => editable.Mode(GridEditMode.InCell))
+
+.Excel(e => e.AllPages(true).FileName("pingExportHistory(www.toolsfornet.com).xlsx").ProxyURL(Url.Action("Excel", "Export")))
+.Pdf(e => e.AllPages().FileName("pingExportHistory(www.toolsfornet.com).pdf").ProxyURL(Url.Action("Pdf", "Export")))
+.DataSource(dataSource => dataSource
+.Ajax()
+.Model(m => m.Id(i => i.Id))
+
+.Read(r =>
+r.Action(nameof(WebSiteMonitoringController.WebSiteMonitoring_Read), nameof(WebSiteMonitoring)))
+ .Create(update => update.Action(nameof(WebSiteMonitoringController.WebSiteMonitoring_Create), nameof(WebSiteMonitoring)))
+  .Update(update => update.Action(nameof(WebSiteMonitoringController.WebSiteMonitoring_Update), nameof(WebSiteMonitoring)))
+
+.ServerOperation(false)
+)
+.Sortable()
+.Deferred().ToHtmlString() + "</p>")))
+

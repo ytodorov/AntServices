@@ -58,6 +58,7 @@
     <Compile Include="Entities\IpLocation.cs" />
     <Compile Include="Entities\MelissaIpLocation.cs" />
     <Compile Include="Entities\PermalinkBase.cs" />
+    <Compile Include="Entities\BarcodePermalink.cs" />
     <Compile Include="Entities\TracerouteResponseDetail.cs" />
     <Compile Include="Entities\TracerouteResponseSummary.cs" />
     <Compile Include="Entities\TraceroutePermalink.cs" />
@@ -68,6 +69,7 @@
     <Compile Include="Entities\SpeedPermalink.cs" />
     <Compile Include="Entities\PortResponseSummary.cs" />
     <Compile Include="Entities\PortPermalink.cs" />
+    <Compile Include="Entities\WebSiteMonitoring.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

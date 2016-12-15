@@ -2046,6 +2046,8 @@
     <Content Include="Views\Xml\Index.cshtml" />
     <Content Include="Views\IpLocation\Index.cshtml" />
     <Content Include="Views\IpLocation\Find.cshtml" />
+    <Content Include="Views\WebSiteMonitoring\Index.cshtml" />
+    <Content Include="Views\Barcode\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -2089,6 +2091,8 @@
     <Compile Include="Controllers\JsonController.cs" />
     <Compile Include="Controllers\JsController.cs" />
     <Compile Include="Controllers\IpLocationController.cs" />
+    <Compile Include="Controllers\BarcodeController.cs" />
+    <Compile Include="Controllers\WebSiteMonitoringController.cs" />
     <Compile Include="Controllers\SpreadController.cs" />
     <Compile Include="Controllers\WordController.cs" />
     <Compile Include="Controllers\DashboardPage.cs" />
@@ -2162,6 +2166,7 @@
     <Compile Include="Controllers\XmlController.cs" />
     <Compile Include="Models\AddressHistoryViewModel.cs" />
     <Compile Include="Models\AddressViewModel.cs" />
+    <Compile Include="Models\BarcodePermalinkViewModel.cs" />
     <Compile Include="Models\ErrorBaseViewModel.cs" />
     <Compile Include="Models\ErrorLoggingViewModel.cs" />
     <Compile Include="Models\IpLocationViewModel.cs" />
@@ -2180,6 +2185,7 @@
     <Compile Include="Models\TracerouteResponseDetailViewModel.cs" />
     <Compile Include="Models\TracerouteResponseSummaryViewModel.cs" />
     <Compile Include="Models\ViewModelBase.cs" />
+    <Compile Include="Models\WebSiteMonitoringViewModel.cs" />
     <Compile Include="Models\WellKnownPortViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

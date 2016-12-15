@@ -281,7 +281,13 @@ $(window).on("blur focus", function (e) {
     $(this).data("prevType", e.type);
 });
 
-$(window).on("error", function (e : any) {
-    window.antGlobal.showNotification(e.originalEvent.error.message, "error");
+$(window).on("error", function (e: any) {
+    if (typeof e.originalEvent.error != 'undefined' && e.originalEvent.error != null) {
+        window.antGlobal.showNotification(e.originalEvent.error.message, "error");
+    }
+    else {
+        window.antGlobal.showNotification(e.originalEvent, "error");
+    }
+
 
 });

@@ -42,6 +42,10 @@ namespace SmartAdminMvc.App_Start
 
                     config.CreateMap<MelissaIpLocationViewModel, MelissaIpLocation>().ReverseMap();
 
+                    config.CreateMap<WebSiteMonitoring, WebSiteMonitoringViewModel>().ReverseMap();
+
+                    config.CreateMap<BarcodePermalink, BarcodePermalinkViewModel>().ReverseMap();
+
                 });
         }
     }
