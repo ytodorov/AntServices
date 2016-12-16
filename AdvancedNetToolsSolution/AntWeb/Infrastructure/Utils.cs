@@ -245,6 +245,85 @@ namespace SmartAdminMvc.Infrastructure
             return wkpvm;
         }
 
+        class IpInfo
+        {
+            public string IP { get; set; }
+
+            public string Hostname { get; set; }
+
+            public string City { get; set; }
+
+            public string Region { get; set; }
+
+            public string Country { get; set; }
+
+            public string Loc { get; set; }
+
+            public double Latitude
+            {
+                get
+                {
+                    string[] latString = Loc.Split(',');
+                    if (latString.Length > 0)
+                    {
+                        string lat = latString[0];
+                        double latDouble = double.Parse(lat, CultureInfo.InvariantCulture);
+                        return latDouble;
+                    }
+                    return 0;
+                }
+            }
+
+            public double Longitude
+            {
+                get
+                {
+                    string[] longString = Loc.Split(',');
+                    if (longString.Length > 1)
+                    {
+                        string longit = longString[1];
+                        double longDouble = double.Parse(longit, CultureInfo.InvariantCulture);
+                        return longDouble;
+                    }
+                    return 0;
+                }
+            }
+
+            public string Org { get; set; }
+
+            public string AS
+            {
+                get
+                {
+                    string[] longString = Org.Split(' ');
+                    if (longString.Length > 0)
+                    {
+                        string autonomous = longString[0];
+                        return autonomous;
+
+                    }
+                    return string.Empty;
+                }
+            }
+
+            public string Organisation
+            {
+                get
+                {
+                    int index = Org.IndexOf(' ');
+                    if (index >= 0)
+                    {
+                        string organisation = Org.Substring(index + 1);
+                        return organisation;
+
+                    }
+                    return string.Empty;
+                }
+            }
+            public string Postal { get; set; }
+
+        }
+
         public static MelissaIpLocationViewModel GetLocationDataForIp(string ipOrHostName)
         {
             using (AntDbContext context = new AntDbContext())
@@ -257,58 +336,35 @@ namespace SmartAdminMvc.Infrastructure
                 }
                 else
                 {
-                    var client2 = new IPCheckContainer(
-       new Uri("https://api.datamarket.azure.com/Data.ashx/MelissaData/IPCheck/v1/")
-       );
-                    client2.Credentials = new NetworkCredential("accountKey", "gAtdtU3ImXbKLdhiz8ZpWsxT+7taQjjfxNmQmsUctu0");
-                    var marketData = client2.SuggestIPAddresses(
-                        ipOrHostName, 1, 1).Execute();
-                    mipl = marketData.ToList().FirstOrDefault();
-                    if (mipl == null)
+
+                    using (HttpClient client = new HttpClient())
                     {
-                        return new MelissaIpLocationViewModel();
+                        var json = client.GetStringAsync($"http://ipinfo.io/{ipOrHostName}/json").Result;
+                        
+                        IpInfo ipInfo = JsonConvert.DeserializeObject<IpInfo>(json);
+                        mipl = new MelissaIpLocation();
+                        mipl.AS = ipInfo.AS;
+                        mipl.IpAddress = ipOrHostName;
+                        mipl.City = ipInfo.City;
+                        mipl.Country = ipInfo.Country;
+                        mipl.CountryAbbreviation = ipInfo.Country;
+                        mipl.Domain = ipInfo.Hostname;
+                        mipl.ISP = ipInfo.Organisation;
+                        mipl.Latitude = ipInfo.Latitude;
+                        mipl.Longitude = ipInfo.Longitude;
+                        mipl.Region = ipInfo.Region;
+                        mipl.ZipCode = ipInfo.Postal;
+
+                        context.MelissaIpLocations.Add(mipl);
+                        context.SaveChanges();
+                        res = Mapper.Map<MelissaIpLocationViewModel>(mipl);
+
                     }
-                    mipl.IpAddress = ipOrHostName;
-                    context.MelissaIpLocations.Add(mipl);
-                    context.SaveChanges();
-                    res = Mapper.Map<MelissaIpLocationViewModel>(mipl);
                 }
+                                 
                 return res;
             }
 
-            //using (AntDbContext context = new AntDbContext())
-            //{
-            //    IpLocation ipLocation = context.IpLocations.Where(ip => ip.IpAddress == ipOrHostName).FirstOrDefault();
-            //    if (ipLocation != null)
-            //    {
-            //        IpLocationViewModel ipLocationViewModel = Mapper.Map<IpLocationViewModel>(ipLocation);
-            //        return ipLocationViewModel;
-            //    }
-            //    else
-            //    {
-            //        using (HttpClient client = new HttpClient())
-            //        {
-
-            //            string apiKey = "45c5fd0e7b3a7f323010de71fbc4aae7943b9f139ef3578af1b38878d0d02e81";
-            //            string url = $"http://api.ipinfodb.com/v3/ip-city/?key={apiKey}&ip={ipOrHostName}&format=json";
-            //            try
-            //            {
-            //                string result = client.GetStringAsync(url).Result;
-
-            //                IpLocationViewModel ipLocationViewModel = JsonConvert.DeserializeObject<IpLocationViewModel>(result);
-            //                IpLocation ipLocationToSaveInDb = Mapper.Map<IpLocation>(ipLocationViewModel);
-            //                ipLocationToSaveInDb.DateCreated = DateTime.UtcNow;
-            //                context.IpLocations.Add(ipLocationToSaveInDb);
-            //                context.SaveChanges();
-            //                return ipLocationViewModel;
-            //            }
-            //            catch (Exception ex)
-            //            {
-            //                return new IpLocationViewModel();
-            //            }
-            //        }
-            //    }
-            //}
         }
 
         public static string RandomString(int length)
@@ -498,11 +554,11 @@ namespace SmartAdminMvc.Infrastructure
 <font size=""2"" color=""#057CBE"">IP:&nbsp;</font> {ips.ElementAt(i)} <br />{timeAvg}{distance}{speed}\
 <font size=""2"" color=""#057CBE"">City:&nbsp;</font> {locations[i].City?.Replace(oldValue: "'", newValue: "&quot;")} <br />\
 <font size=""2"" color=""#057CBE"">Region:&nbsp;</font> {locations[i].Region?.Replace(oldValue: "'", newValue: "&quot;")} <br />\
-<font size=""2"" color=""#057CBE"">Country:&nbsp;</font> {locations[i].Country?.Replace(oldValue: "'", newValue: "&quot;")} <br />\
 <font size=""2"" color=""#057CBE"">CountryAbbreviation:&nbsp;</font> {locations[i].CountryAbbreviation?.Replace(oldValue: "'", newValue: "&quot;")} <br />\
 <font size=""2"" color=""#057CBE"">ISP:&nbsp;</font> {locations[i].ISP?.Replace(oldValue: "'", newValue: "&quot;")} <br />\
 <font size=""2"" color=""#057CBE"">Latitude:&nbsp;</font> {locations[i].Latitude} <br />\
 <font size=""2"" color=""#057CBE"">Longitude:&nbsp;</font> {locations[i].Longitude} <br />\
+<font size=""2"" color=""#057CBE"">AS:&nbsp;</font> {locations[i].AS} <br />\
 <font size=""2"" color=""#057CBE"">Domain:&nbsp;</font> {locations[i].Domain?.Replace(oldValue: "'", newValue: "&quot;")} <br />\
 ");
 
@@ -657,20 +713,27 @@ namespace SmartAdminMvc.Infrastructure
 
             using (HttpClient client = new HttpClient())
             {
-                //Note: Host seems down. If it is really up, but blocking our ping probes, try -Pn
-                string encodedArgs0 = Uri.EscapeDataString($"-T4 --top-ports 1000 -Pn {ipOrHostName}");
-                string url = "http://ants-neu.cloudapp.net/home/exec?program=nmap&args=" + encodedArgs0;
-                string portSummary = client.GetStringAsync(url).Result;
-
-                List<PortResponseSummaryViewModel> portViewModels = PortParser.ParseSummary(portSummary);
-                PortResponseSummaryViewModel firstOpen = portViewModels.FirstOrDefault(p => p.State.Equals(value: "open"));
-                string result = string.Empty;
-                if (firstOpen != null)
+                try
                 {
-                    result = firstOpen.PortNumber.ToString();
-                }
-                return result;
+                    client.Timeout = TimeSpan.FromMinutes(1);
+                    //Note: Host seems down. If it is really up, but blocking our ping probes, try -Pn
+                    string encodedArgs0 = Uri.EscapeDataString($"-T4 --top-ports 1000 -Pn {ipOrHostName}");
+                    string url = "http://ants-neu.cloudapp.net/home/exec?program=nmap&args=" + encodedArgs0;
+                    string portSummary = client.GetStringAsync(url).Result;
 
+                    List<PortResponseSummaryViewModel> portViewModels = PortParser.ParseSummary(portSummary);
+                    PortResponseSummaryViewModel firstOpen = portViewModels.FirstOrDefault(p => p.State.Equals(value: "open"));
+                    string result = string.Empty;
+                    if (firstOpen != null)
+                    {
+                        result = firstOpen.PortNumber.ToString();
+                    }
+                    return result;
+                }
+                catch (Exception)
+                {
+                    return string.Empty;
+                }
 
             }
 

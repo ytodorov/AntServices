@@ -32,5 +32,7 @@ namespace SmartAdminMvc.Models
         public string Country { get; set; }
 
         public string CountryAbbreviation { get; set; }
+
+        public string AS { get; set; }
     }
 }

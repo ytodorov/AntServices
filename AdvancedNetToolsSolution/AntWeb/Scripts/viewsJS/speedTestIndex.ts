@@ -69,9 +69,9 @@ function downloadFromOneLocation(url: string) {
 
                 },
                 success: function successFunction() {
-                    var start = sessionStorage.getItem("start");
-                    var now = parseInt(performance.now().toString());
-                    var diff = now - start;
+                    var start = parseInt(sessionStorage.getItem("start"));
+                    var now = performance.now();
+                    var diff: number = now - start;
                     $("#result").append(diff + ' download of ' + currentDownloadLength + '<br />');
                 }
             })
@@ -98,8 +98,8 @@ function uploadFormOneLocation(url: string) {
                         sessionStorage.setItem("start", performance.now().toString());
                     },
                     success: function f() {
-                        var start = sessionStorage.getItem("start");
-                        var now = parseInt(performance.now().toString());
+                        var start = parseInt(sessionStorage.getItem("start"));
+                        var now = performance.now();
                         var diff = now - start;
                         $("#result").append(diff + ' upload of ' + warmUpDownloadLength + '<br />');
 
