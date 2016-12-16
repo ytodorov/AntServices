@@ -46,6 +46,8 @@
 }
 )
 
+<a href="#">content</a>
+
 @if (Model != null)
 {
 
@@ -55,7 +57,7 @@ Html.Kendo().Grid<PingResponseSummaryViewModel>()
 .Columns(columns =>
 {
     columns.Bound(c => c.SourceHostName).Title("Origin");
-    columns.Bound(c => c.DestinationIpAddress).Title("Dest");
+    columns.Bound(c => c.DestinationIpAddress).Title("Dest").ClientTemplate("<a href='https://toolsfornet.com/iplocation?ip=#:DestinationIpAddress#'>#:DestinationIpAddress#</a>");
     if (!Model.IsDestinationIpAddress)
     {
         columns.Bound(c => c.DestinationHostName).Title("Host");

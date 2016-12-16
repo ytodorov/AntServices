@@ -295,12 +295,15 @@ namespace SmartAdminMvc.Infrastructure
             {
                 get
                 {
-                    string[] longString = Org.Split(' ');
-                    if (longString.Length > 0)
+                    if (!string.IsNullOrEmpty(Org))
                     {
-                        string autonomous = longString[0];
-                        return autonomous;
+                        string[] longString = Org.Split(' ');
+                        if (longString.Length > 0)
+                        {
+                            string autonomous = longString[0];
+                            return autonomous;
 
+                        }
                     }
                     return string.Empty;
                 }
@@ -310,12 +313,15 @@ namespace SmartAdminMvc.Infrastructure
             {
                 get
                 {
-                    int index = Org.IndexOf(' ');
-                    if (index >= 0)
+                    if (!string.IsNullOrEmpty(Org))
                     {
-                        string organisation = Org.Substring(index + 1);
-                        return organisation;
+                        int index = Org.IndexOf(' ');
+                        if (index >= 0)
+                        {
+                            string organisation = Org.Substring(index + 1);
+                            return organisation;
 
+                        }
                     }
                     return string.Empty;
                 }
@@ -717,8 +723,11 @@ namespace SmartAdminMvc.Infrastructure
                 {
                     client.Timeout = TimeSpan.FromMinutes(1);
                     //Note: Host seems down. If it is really up, but blocking our ping probes, try -Pn
-                    string encodedArgs0 = Uri.EscapeDataString($"-T4 --top-ports 1000 -Pn {ipOrHostName}");
-                    string url = "http://ants-neu.cloudapp.net/home/exec?program=nmap&args=" + encodedArgs0;
+                    string encodedArgs0 = Uri.EscapeDataString($"-T4 --top-ports 100 -Pn {ipOrHostName}");
+                    var hostServer = HotstNameToAzureLocation.First().Key;
+                    string url = $"{hostServer}/home/exec?program=nmap&args=" + encodedArgs0;
+
+                    //string url = "http://ants-neu.cloudapp.net/home/exec?program=nmap&args=" + encodedArgs0;
                     string portSummary = client.GetStringAsync(url).Result;
 
                     List<PortResponseSummaryViewModel> portViewModels = PortParser.ParseSummary(portSummary);

@@ -59,16 +59,16 @@ Html.Kendo().Grid<TracerouteResponseDetailViewModel>()
 .Columns(columns =>
 {
 
-columns.Bound(c => c.Hop).Title("Hop");
-columns.Bound(t => t.Rtt).Title("Rtt");
-columns.Bound(c => c.Ip).Title("Ip");
-columns.Bound(c => c.AddressName).Title("Name");
+    columns.Bound(c => c.Hop).Title("Hop");
+    columns.Bound(t => t.Rtt).Title("Rtt");
+    columns.Bound(c => c.Ip).Title("Ip").ClientTemplate("<a href='https://toolsfornet.com/iplocation?ip=#:Ip#'>#:Ip#</a>"); ;
+    columns.Bound(c => c.AddressName).Title("Name");
 })
 .Scrollable(s => s.Enabled(false))
 .ToolBar(t =>
 {
-t.Excel().Text(string.Empty);
-t.Pdf().Text(string.Empty);
+    t.Excel().Text(string.Empty);
+    t.Pdf().Text(string.Empty);
 })
 .Excel(e => e.AllPages(true).FileName("tracerouteExportHistory(www.toolsfornet.com).xlsx").ProxyURL(Url.Action("Excel", "Export")))
 .Pdf(e => e.AllPages().FileName("tracerouteExportHistory(www.toolsfornet.com).pdf").ProxyURL(Url.Action("Pdf", "Export")))
@@ -79,7 +79,7 @@ t.Pdf().Text(string.Empty);
 .ServerOperation(false)
 
 )
-.Sortable()            
+.Sortable()
 .BindTo(Model?.AllDetails)
 .Deferred().ToHtmlString() + "</p>")))
 
