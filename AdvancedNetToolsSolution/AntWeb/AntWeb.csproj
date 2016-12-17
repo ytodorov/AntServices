@@ -1611,6 +1611,7 @@
     <Content Include="Scripts\smartwidgets\jarvis.widget.min.js" />
     <Content Include="Scripts\speech\voicecommand.min.js" />
     <Content Include="Scripts\trustlogolocal.js" />
+    <Content Include="Scripts\viewsJS\barcodeIndex.js" />
     <Content Include="Scripts\viewsJS\homeIndex.js" />
     <Content Include="Scripts\viewsJS\pingIndex.js" />
     <Content Include="Scripts\viewsJS\portScanIndex.js" />
@@ -2227,6 +2228,7 @@
     <TypeScriptCompile Include="Scripts\typings\modernizr\modernizr.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\toastr\toastr.d.ts" />
     <TypeScriptCompile Include="Scripts\viewsJS\homeIndex.ts" />
+    <TypeScriptCompile Include="Scripts\viewsJS\barcodeIndex.ts" />
     <TypeScriptCompile Include="Scripts\viewsJS\speedTestIndex.ts" />
     <TypeScriptCompile Include="Scripts\viewsJS\portScanIndex.ts" />
     <TypeScriptCompile Include="Scripts\viewsJS\traceRouteIndex.ts" />

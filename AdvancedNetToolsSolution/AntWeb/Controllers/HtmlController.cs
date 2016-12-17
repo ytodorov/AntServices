@@ -77,7 +77,7 @@ namespace SmartAdminMvc.Controllers
                             }
                         }
 
-                        catch (Exception ex)
+                        catch (Exception)
                         {
 
                         }

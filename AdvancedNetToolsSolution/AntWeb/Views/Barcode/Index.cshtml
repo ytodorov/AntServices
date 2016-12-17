@@ -33,11 +33,14 @@
     </div>
 </div>
 
-@(Html.Kendo().TextBox().Name("tbBarcodeValue"))
-<button type="button" class="ladda-button btn center-block btn-outline btn-success" id="btnGenerateBarcode" data-style="zoom-in">
-    <span class="ladda-label">Generate</span>
-    <span class="ladda-spinner"></span>
-</button>
+@Html.Partial("_Addresses", new AddressViewModel()
+{
+    ButtonId = "btnBarcode",
+    ButtonText = "Generate",
+    DefaultDestinationAddress = Model?.Value,
+    PanelTitle = "Enter value of the barcode"
+})
+
 <div id="result" class="container-fluid">
     <div class="row">
         @foreach (BarcodeSymbology bs in Enum.GetValues(typeof(BarcodeSymbology)))
@@ -181,6 +184,7 @@
 </div>
 <br />
 @section scripts {
+<script src="~/scripts/viewsjs/barcodeindex.js"></script>
     @if (!string.IsNullOrEmpty(Model?.Value))
     {
         <script>
@@ -188,7 +192,6 @@
 
             var barcodeDivs = $(".barcodeDiv");
             barcodeDivs.each(function (index) {
-
                 var valToSet = $("#tbBarcodeValue").val();
                 try {
                     var type = $(this).attr("data-type")
@@ -202,6 +205,7 @@
                 }
                 catch (e) {
                     console.log(e.message);
+                    $(this).html('<p class="k-error-colored">' + e.message + '</p>');
                 }
 
             });
