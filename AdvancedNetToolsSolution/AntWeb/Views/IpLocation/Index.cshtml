@@ -2,26 +2,25 @@
 @{
     ViewBag.Title = "IP location";
     ViewBag.MetaDescription = "Free IP location service. Locate any IP address on a Google map.";
-    Layout = null;
 }
-<script src="~/scripts/googleanalytics.js"></script>
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"
-        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-        crossorigin="anonymous"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDoER6oaWJAUFMNCCE8IkCGsIyHsbTE0Zw"></script>
-<style>
+@*<script src="~/scripts/googleanalytics.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"
+            integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+            crossorigin="anonymous"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDoER6oaWJAUFMNCCE8IkCGsIyHsbTE0Zw"></script>*@
+@*<style>
     body
     {
         padding: 0px;
         margin: 0px
     }
-</style>
+</style>*@
 
 <div id="map" style="width:100px;height: 10px"></div>
-
+@section scripts {
     <script>
-        $("#map").height($(window).height() - 1);
-        $("#map").width($(window).width() - 1);
+        $("#map").height($(window).height() - 70);
+        $("#map").width($(window).width() - 70);
         if ('@Model'.length > 0) {
             setTimeout(function f() {
                 $.ajax({
@@ -39,8 +38,9 @@
         };
 
         $(window).resize(function () {
-            $("#map").height($(window).height() - 1);
-            $("#map").width($(window).width() - 1);
+            $("#map").height($(window).height() - 70);
+            $("#map").width($(window).width() - 70);
         });
       
     </script>
+    }

@@ -562,7 +562,7 @@ namespace SmartAdminMvc.Infrastructure
 
                 var sbMarkerWindowHtml = new StringBuilder();
                 sbMarkerWindowHtml.Append($@"\
-<font size=""2"" color=""#057CBE"">IP:&nbsp;</font> {ips.ElementAt(i)} <br />{timeAvg}{distance}{speed}\
+<font size=""2"" color=""#057CBE"">IP:&nbsp;</font> <a target=""_blank"" href=""https://toolsfornet.com/iplocation?ip={ips.ElementAt(i)}"">{ips.ElementAt(i)}</a> <br />{timeAvg}{distance}{speed}\
 <font size=""2"" color=""#057CBE"">City:&nbsp;</font> {locations[i].City?.Replace(oldValue: "'", newValue: "&quot;")} <br />\
 <font size=""2"" color=""#057CBE"">Region:&nbsp;</font> {locations[i].Region?.Replace(oldValue: "'", newValue: "&quot;")} <br />\
 <font size=""2"" color=""#057CBE"">CountryAbbreviation:&nbsp;</font> {locations[i].CountryAbbreviation?.Replace(oldValue: "'", newValue: "&quot;")} <br />\
@@ -572,7 +572,7 @@ namespace SmartAdminMvc.Infrastructure
 <font size=""2"" color=""#057CBE"">AS:&nbsp;</font> {locations[i].AS} <br />\
 <font size=""2"" color=""#057CBE"">Domain:&nbsp;</font> {locations[i].Domain?.Replace(oldValue: "'", newValue: "&quot;")} <br />\
 ");
-
+                // <font size=""2"" color=""#057CBE"">IP:&nbsp;</font> {ips.ElementAt(i)} <br />{timeAvg}{distance}{speed}\
                 string markerWindowHtml = sbMarkerWindowHtml.ToString(); ;
 
                 //string infoWindowContentHtml; -> never used

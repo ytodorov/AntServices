@@ -61,7 +61,7 @@ Html.Kendo().Grid<TracerouteResponseDetailViewModel>()
 
     columns.Bound(c => c.Hop).Title("Hop");
     columns.Bound(t => t.Rtt).Title("Rtt");
-    columns.Bound(c => c.Ip).Title("Ip").ClientTemplate("<a href='https://toolsfornet.com/iplocation?ip=#:Ip#'>#:Ip#</a>"); ;
+    columns.Bound(c => c.Ip).Title("Ip").ClientTemplate("<a target='_blank' href='#:window.location.origin#/iplocation?ip=#:Ip#'>#:Ip#</a>");//.ClientTemplate("<a href='https://toolsfornet.com/iplocation?ip=#:Ip#'>#:Ip#</a>"); ;
     columns.Bound(c => c.AddressName).Title("Name");
 })
 .Scrollable(s => s.Enabled(false))
@@ -113,7 +113,7 @@ Html.Kendo().Grid<TracerouteResponseDetailViewModel>()
 
 @if (Model != null)
     {
-    <script>
+    @*Без карта за сега, гърми а и не е особено читава <script>
 
         setTimeout(function f() {
             var permalinkId = '@Model.Id';
@@ -131,7 +131,7 @@ Html.Kendo().Grid<TracerouteResponseDetailViewModel>()
                    });
         }, 1)
 
-    </script>
+    </script>*@
 }
 }
 
