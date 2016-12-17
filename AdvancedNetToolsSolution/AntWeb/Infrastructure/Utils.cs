@@ -361,6 +361,11 @@ namespace SmartAdminMvc.Infrastructure
                         mipl.Region = ipInfo.Region;
                         mipl.ZipCode = ipInfo.Postal;
 
+                        mipl.DateCreated = DateTime.Now;
+                        mipl.DateModified = DateTime.Now;
+                        mipl.UserCreated = HttpContext.Current?.Request?.UserHostAddress;
+                        mipl.UserModified = HttpContext.Current?.Request?.UserHostAddress;
+
                         context.MelissaIpLocations.Add(mipl);
                         context.SaveChanges();
                         res = Mapper.Map<MelissaIpLocationViewModel>(mipl);
