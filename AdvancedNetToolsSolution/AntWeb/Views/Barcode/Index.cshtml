@@ -5,12 +5,12 @@
     ViewBag.MetaDescription = "Barcode generation in any format.";
 }
 
-     <style type="text/css">
-            .barcodeDiv {
-                width: 300px;
-                margin: 20px auto;
-            }
-        </style>
+<style type="text/css">
+    .barcodeDiv {
+        width: 250px;
+        margin: 5px auto;
+    }
+</style>
 
 <div class="normalheader transition animated fadeIn small-header">
     <div class="hpanel">
@@ -196,7 +196,7 @@
 </div>
 <br />
 @section scripts {
-<script src="~/scripts/viewsjs/barcodeindex.js"></script>
+    <script src="~/scripts/viewsjs/barcodeindex.js"></script>
     @if (!string.IsNullOrEmpty(Model?.Value))
     {
         <script>
@@ -214,106 +214,78 @@
                         type: type,
                         background: "transparent"
                     });
+                    $(this).append('<a href="JavaScript:Void(0)" onclick="exportPdf(this)">Export pdf | </a><a href="JavaScript:Void(0)" onclick="exportImage(this)"> Export image | </a><a href="JavaScript:Void(0)" onclick="exportSvg(this)"> Export SVG </a>');
                 }
                 catch (e) {
                     console.log(e.message);
                     $(this).html('<p class="k-error-colored">' + e.message + '</p>');
+
                 }
 
             });
         </script>
     }
-    <script>
-        function bindExportPdf() {
-            $(".exportBarcodeAsPdf").click(function f() {
-                debugger;
-                var type = $(this).attr("data-type");
-                var bc = $("#barcode" + type).first();
-                //var bc = $(this).nextAll(".barcodeDiv").first();
+    <script>            
+            function exportPdf(sender) {
+                event.preventDefault();
+                var bc = $(sender).parents(".barcodeDiv").first();
                 if (bc.length > 0) {
-                    // Convert the DOM element to a drawing using kendo.drawing.drawDOM
                     kendo.drawing.drawDOM(bc)
-                    .then(function (group) {
-                        // Render the result as a PDF file
-                        return kendo.drawing.exportPDF(group, {
-                            paperSize: "auto",
-                            margin: { left: "1cm", top: "1cm", right: "1cm", bottom: "1cm" }
-                        });
-                    })
-                            .done(function (data) {
-                                // Save the PDF file
-                                kendo.saveAs({
-                                    dataURI: data,
-                                    fileName: "HR-Dashboard.pdf",
-                                    proxyURL: "//demos.telerik.com/kendo-ui/service/export"
-                                });
+                        .then(function (group) {
+                            return kendo.drawing.exportPDF(group, {
+                                paperSize: "auto",
+                                margin: { left: "1cm", top: "1cm", right: "1cm", bottom: "1cm" }
                             });
-                }
-            });
-        }
-
-        bindExportPdf();
-
-
-        function setOptions(e) {
-            var validValue = $('#validValue');
-
-            try {
-                var barcode = $('#barcode').data('kendoBarcode');
-                barcode.setOptions({
-                    value: $('#value').val(),
-                    checksum: $('#checksum').is(':checked'),
-                    text: {
-                        visible: $('#text').is(':checked')
-                    },
-                    type: $('#type').kendoDropDownList('value')
-                })
-                validValue.hide();
-            } catch (e) {
-                validValue.text(e.message).show();
-            }
-        }
-
-        $("#btnGenerateBarcode").click(function myfunction() {
-
-            //var $barcodes = $("[data-role=barcode]");
-            var $barcodes = $(".barcodeDiv");
-
-            $barcodes.each(function (index) {
-                try {
-                    var valToSet = $("#tbBarcodeValue").val();
-                    var type = $(this).attr("data-type")
-                    var barcode = $(this).data("kendoBarcode");
-                    if (typeof barcode == 'undefined') {
-                        $(this).kendoBarcode({
-                            width: 280,
-                            height: 100,
-                            value: valToSet,
-                            type: type,
-                            background: "transparent"
+                        })
+                        .done(function (data) {
+                            kendo.saveAs({
+                                dataURI: data,
+                                fileName: "barcode(toolsfornet.com).pdf",
+                                proxyURL: "//demos.telerik.com/kendo-ui/service/export"
+                            });
                         });
-                        barcode = $(this).data("kendoBarcode");
-                    }
-
-
-                    barcode.value(valToSet);
                 }
-                catch (e) {
-                    console.log(e.message);
-                    $(this).html('<p>' + e.message + '</p>');
+            }
+            function exportImage(sender) {
+                event.preventDefault();
+                var bc = $(sender).parents(".barcodeDiv").first();
+                if (bc.length > 0) {
+                    kendo.drawing.drawDOM(bc)
+                        .then(function (group) {
+                            // Render the result as a PNG image
+                            return kendo.drawing.exportImage(group);
+                        })
+                        .done(function (data) {
+                            kendo.saveAs({
+                                dataURI: data,
+                                fileName: "barcode(toolsfornet.com).png",
+                                proxyURL: "//demos.telerik.com/kendo-ui/service/export"
+                            });
+                        });
                 }
+            }
 
+            function exportSvg(sender) {
+                event.preventDefault();
+                var bc = $(sender).parents(".barcodeDiv").first();
+                if (bc.length > 0) {
+                    kendo.drawing.drawDOM(bc)
+                        .then(function (group) {
+                            // Render the result as a PNG image
+                            return kendo.drawing.exportSVG(group);
+                        })
+                        .done(function (data) {
+                            kendo.saveAs({
+                                dataURI: data,
+                                fileName: "barcode(toolsfornet.com).svg",
+                                proxyURL: "//demos.telerik.com/kendo-ui/service/export"
+                            });
+                        });
+                }
+            }
+
+            $("#barcodeTable").kendoGrid({
             });
-            bindExportPdf();
-
-        });
-
-        $("#barcodeTable").kendoGrid({
-        });
-
-
-
-
 
     </script>
 }
