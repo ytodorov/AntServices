@@ -3,7 +3,7 @@
     "minify": { "enabled": false },
     "outputFileName": "Scripts/bundle.js",
     "inputFiles": [
-      "Scripts/googleAnalytics.min.js",
+      //"Scripts/googleAnalytics.min.js",
       //"Scripts/jquery-2.2.3.min.js",
       "Scripts/jquery.cookie.min.js",
       //"Scripts/kendo/jszip.min.js",
