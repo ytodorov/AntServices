@@ -1617,7 +1617,7 @@
     <Content Include="Scripts\viewsJS\portScanIndex.js" />
     <Content Include="Scripts\viewsJS\speedTestIndex.js" />
     <Content Include="Scripts\viewsJS\traceRouteIndex.js" />
-    <Content Include="Scripts\spreadProcessing\index.js" />
+    <Content Include="Scripts\spread\index.js" />
     <Content Include="Scripts\word\index.js" />
     <Content Include="Scripts\yk.js" />
     <Content Include="sitemap.xml" />
@@ -2041,7 +2041,7 @@
     <Content Include="Views\Word\Index.cshtml" />
     <Content Include="Scripts\word\index.js.map" />
     <Content Include="Views\Spread\Index.cshtml" />
-    <Content Include="Scripts\spreadProcessing\index.js.map" />
+    <Content Include="Scripts\spread\index.js.map" />
     <Content Include="Views\Js\Index.cshtml" />
     <Content Include="Views\Html\Index.cshtml" />
     <Content Include="Views\Json\Index.cshtml" />
@@ -2235,7 +2235,7 @@
     <TypeScriptCompile Include="Scripts\viewsJS\traceRouteIndex.ts" />
     <TypeScriptCompile Include="Scripts\viewsJS\pingIndex.ts" />
     <TypeScriptCompile Include="Scripts\antGlobal.ts" />
-    <TypeScriptCompile Include="Scripts\spreadProcessing\index.ts" />
+    <TypeScriptCompile Include="Scripts\spread\index.ts" />
     <TypeScriptCompile Include="Scripts\word\index.ts" />
     <TypeScriptCompile Include="Scripts\yk.ts" />
   </ItemGroup>

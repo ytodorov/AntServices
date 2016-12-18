@@ -1,6 +1,9 @@
 ﻿@{
-    ViewBag.Title = "Free distributed network tools and services. Ping, traceroute, port scanner";
-    ViewBag.MetaDescription = "Free distributed network tools and services. Ping, traceroute, port scannner and much more coming soon.";
+    ViewBag.Title = "Toolsfornet.com - Free distributed network tools and services.";
+    ViewBag.MetaDescription = "Toolsfornet.com - Free distributed network tools and services at your disposal." +
+        "Ping, traceroute, port scan, barcode, word, excel.";
+        //"We offer Ping and Traceroute simultaneously from 10 locations across the world. Fast port scan service." +
+        //"Barcode generation in all symbologies. Effortlessly convert documents from one to another file format among the supported PDF, XLSX, DOCX, RTF, HTML and TXT.";
 }
 <div class="normalheader transition animated fadeIn small-header">
     <div class="hpanel">
@@ -53,6 +56,16 @@
 
         <div class="row text-center">
 
+            <a href="~/barcode">
+                <div class="col-md-4" title="Barcode generation">
+                    <h3 class="m-t-lg">
+                        <i class="fa fa-barcode text-success icon-big"></i>
+                    </h3>
+                    <strong>Barcode generation</strong>
+                    <p>Generate barcodes in all symbologies (encodings) simultaneously and export them in pdf, image or SVG.</p>
+                </div>
+            </a>
+
             <a href="~/word" >
                 <div class="col-md-4" title="Words processing">
                     <h3 class="m-t-lg">
@@ -72,18 +85,10 @@
                 </div>
             </a>
 
-            <a href="~/faq" >
-                <div class="col-md-4" title="FAQs">
-                    <h3 class="m-t-lg">
-                        <i class="pe-7s-chat text-success icon-big"></i>
-                    </h3>
-                    <strong>FAQs</strong>
-                    <p>List of frequently asked questions grouped by categories.</p>
-                </div>
-            </a>
+          
 
         </div>
-        <div class="row text-center">
+        @*<div class="row text-center">
             <a href="~/css" >
                 <div class="col-md-4" title="CSS processing">
                     <h3 class="m-t-lg">
@@ -111,8 +116,18 @@
                     <p>Minify Html files with check for errors and warnings.</p>
                 </div>
             </a>
-        </div>
+        </div>*@
+
         <div class="row text-center">
+            <a href="~/faq">
+                <div class="col-md-4" title="FAQs">
+                    <h3 class="m-t-lg">
+                        <i class="pe-7s-chat text-success icon-big"></i>
+                    </h3>
+                    <strong>FAQs</strong>
+                    <p>List of frequently asked questions grouped by categories.</p>
+                </div>
+            </a>
             <a href="~/contactus" >
                 <div class="col-md-4" title="Contact us">
                     <h3 class="m-t-lg">

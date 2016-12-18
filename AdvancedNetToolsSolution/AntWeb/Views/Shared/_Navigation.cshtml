@@ -29,6 +29,12 @@
                 <span class="nav-label">Port scan</span>
             </a>
         </li>
+        <li class="@Html.IsSelected(controller: "barcode")">
+            <a href="@Url.Action("Index", "barcode")" title="Barcode generation">
+                <span class="text-success pull-left"><i class="fa fa-barcode" style="font-size:large"></i></span>&nbsp;
+                <span class="nav-label">Barcode generation</span>
+            </a>
+        </li>
         <li class="@Html.IsSelected(controller: "word")">
             <a href="@Url.Action("Index", "word")" title="Words processing">
                 <span class="text-success pull-left"><i class="fa fa-file-word-o" style="font-size:large"></i></span>&nbsp;
@@ -41,7 +47,7 @@
                 <span class="nav-label">Spread processing</span>
             </a>
         </li>
-        <li class="@Html.IsSelected(controller: "css")">
+        @*<li class="@Html.IsSelected(controller: "css")">
             <a href="@Url.Action("Index", "css")" title="CSS processing">
                 <span class="text-success pull-left"><i class="fa fa-file-excel-o" style="font-size:large"></i></span>&nbsp;
                 <span class="nav-label">CSS processing</span>
@@ -58,7 +64,7 @@
                 <span class="text-success pull-left"><i class="fa fa-html5" style="font-size:large"></i></span>&nbsp;
                 <span class="nav-label">Html processing</span>
             </a>
-        </li>
+        </li>*@
         <li class="@Html.IsSelected(controller: "faq")">
             <a href="@Url.Action("Index", "Faq")" title="FAQs">
                 <span class="text-success pull-left"><i class="pe-7s-chat" style="font-size:large"></i></span>&nbsp;
