@@ -33,7 +33,7 @@ namespace SmartAdminMvc
 
             // Bootstrap style
             bundles.Add(new StyleBundle(virtualPath: "~/bundles/bootstrap/css").Include(
-                    virtualPath: "~/vendor/bootstrap/dist/css/bootstrap.min.css", transforms: new System.Web.Optimization.IItemTransform[] { new CssRewriteUrlTransform() }));
+                    virtualPath: "~/vendor/bootstrap/dist/css/bootstrap1.min.css", transforms: new System.Web.Optimization.IItemTransform[] { new CssRewriteUrlTransform() }));
 
             // Bootstrap
             bundles.Add(new ScriptBundle(virtualPath: "~/bundles/bootstrap/js").Include(

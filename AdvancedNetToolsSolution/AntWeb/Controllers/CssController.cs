@@ -61,6 +61,7 @@ namespace SmartAdminMvc.Controllers
         [HttpPost]
         public ActionResult Download_Document(IEnumerable<HttpPostedFileBase> cssUploads)
         {
+            byte[] arr = new byte[0];
             if (cssUploads == null)
             {
                 return File(new byte[0], "text/plain", "noFilesToDownload.txt");
@@ -68,8 +69,9 @@ namespace SmartAdminMvc.Controllers
             var cssMinifier = new KristensenCssMinifier();
 
 
-            using (MemoryStream memoryStream = new MemoryStream())
-            {
+            MemoryStream memoryStream = new MemoryStream();
+            
+            
                 using (ZipArchive archive = new ZipArchive(memoryStream, ZipArchiveMode.Create, true, null))
                 {
 
@@ -104,9 +106,10 @@ namespace SmartAdminMvc.Controllers
 
 
                 }
-                var arr = memoryStream.ToArray();
-                return File(arr, "application/zip", "AllMinifiedCssFiles.zip");
-            }
+                arr = memoryStream.ToArray();
+                
+            
+            return File(arr, "application/zip", "AllMinifiedCssFiles.zip");
         }
     }
 }

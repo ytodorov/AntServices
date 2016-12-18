@@ -1694,6 +1694,7 @@
     <Content Include="Vendor\bootstrap\dist\css\bootstrap-theme.css" />
     <Content Include="Vendor\bootstrap\dist\css\bootstrap-theme.min.css" />
     <Content Include="Vendor\bootstrap\dist\css\bootstrap.css" />
+    <Content Include="Vendor\bootstrap\dist\css\bootstrap1.min.css" />
     <Content Include="Vendor\bootstrap\dist\css\bootstrap.min.css" />
     <Content Include="Vendor\bootstrap\dist\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Vendor\bootstrap\dist\js\bootstrap.js" />
