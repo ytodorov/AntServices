@@ -346,7 +346,7 @@ namespace SmartAdminMvc.Infrastructure
                     using (HttpClient client = new HttpClient())
                     {
                         var json = client.GetStringAsync($"http://ipinfo.io/{ipOrHostName}/json").Result;
-                        
+
                         IpInfo ipInfo = JsonConvert.DeserializeObject<IpInfo>(json);
                         mipl = new MelissaIpLocation();
                         mipl.AS = ipInfo.AS;
@@ -372,7 +372,7 @@ namespace SmartAdminMvc.Infrastructure
 
                     }
                 }
-                                 
+
                 return res;
             }
 
@@ -784,6 +784,37 @@ namespace SmartAdminMvc.Infrastructure
                 // IP Address is "probably" public. This doesn't catch some VPN ranges like OpenVPN and Hamachi.
                 return false;
             }
+        }
+
+        public static string GetCorrectAddressOrHost(string ipAddressOrHost)
+        {
+            string result = string.Empty;
+
+            try
+            {
+                Uri uri = new Uri(ipAddressOrHost);
+                result = uri.Host;
+                return result;
+            }
+            catch(Exception)
+            {
+
+            }
+            IPAddress ipAddress;
+            if(IPAddress.TryParse(ipAddressOrHost, out ipAddress))
+            {
+                if (IsIPLocal(ipAddress))
+                {
+                    throw new Exception($"IP address {ipAddress} is local address! See <a target='_blank' href='https://tools.ietf.org/html/rfc1918'>RFC1918</a>. You cannot use local IP addresses for this service!");
+                }
+                else
+                {
+                    result = ipAddressOrHost;
+                    return result;
+                }
+            }
+
+            throw new Exception($"'{ipAddressOrHost}' is not a valid IP address nor a valid host name!");
         }
 
 

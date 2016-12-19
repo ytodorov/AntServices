@@ -42,57 +42,53 @@ namespace SmartAdminMvc.Controllers
         [HttpPost]
         public ActionResult GenerateId(string ip, bool? showInHistory)
         {
-            //List<string> urls = Utils.GetDeployedServicesUrlAddresses.ToList().Take(1).ToList();
-
             try
             {
-                Uri url = new Uri(ip);
-                ip = url.Host;
-            }
-            catch (Exception)
-            {
-            }
+                ip = Utils.GetCorrectAddressOrHost(ip);
 
 
-            string errorMessage = Utils.CheckIfHostIsUp(ip);
-            if (!string.IsNullOrEmpty(errorMessage))
+                string errorMessage = Utils.CheckIfHostIsUp(ip);
+                if (!string.IsNullOrEmpty(errorMessage))
+                {
+                    var result = new { error = errorMessage };
+                    return Json(result);
+                }
+
+                var client = new HttpClient();
+                client.Timeout = TimeSpan.FromMinutes(15);
+                // Do not use T5
+                string encodedArgs0 = Uri.EscapeDataString($"-T4 -Pn --top-ports 1000 {ip}");
+                string urlWithArgs = "http://ants-neu.cloudapp.net/home/exec?program=nmap&args=" + encodedArgs0;
+                var portsSummary = client.GetStringAsync(urlWithArgs).Result;
+                client.Dispose();
+
+                using (AntDbContext context = new AntDbContext())
+                {
+                    var pp = new PortPermalink();
+                    pp.ShowInHistory = showInHistory;
+                    pp.UserCreatedIpAddress = Request.UserHostAddress;
+                    pp.DestinationAddress = ip;
+                    pp.UserCreated = Request.UserHostAddress;
+                    pp.UserModified = Request.UserHostAddress;
+                    pp.DateCreated = DateTime.Now;
+                    pp.DateModified = DateTime.Now;
+
+                    List<PortResponseSummaryViewModel> portViewModels = PortParser.ParseSummary(portsSummary);
+
+                    List<PortResponseSummary> pr = Mapper.Map<List<PortResponseSummary>>(portViewModels);
+
+                    pp.PortResponseSummaries.AddRange(pr);
+                    context.PortPermalinks.Add(pp);
+                    context.SaveChanges();
+
+                    return Json(pp.Id);
+                }
+            }
+            catch(Exception ex)
             {
-                var result = new { error = errorMessage };
+                var result = new { error = ex.Message };
                 return Json(result);
             }
-
-            var client = new HttpClient();
-            client.Timeout = TimeSpan.FromMinutes(15);
-            // Do not use T5
-            string encodedArgs0 = Uri.EscapeDataString($"-T4 -Pn --top-ports 1000 {ip}");
-            string urlWithArgs = "http://ants-neu.cloudapp.net/home/exec?program=nmap&args=" + encodedArgs0;
-            var portsSummary = client.GetStringAsync(urlWithArgs).Result;
-            client.Dispose();
-
-            using (AntDbContext context = new AntDbContext())
-            {
-                var pp = new PortPermalink();
-                pp.ShowInHistory = showInHistory;
-                pp.UserCreatedIpAddress = Request.UserHostAddress;
-                pp.DestinationAddress = ip;
-                pp.UserCreated = Request.UserHostAddress;
-                pp.UserModified = Request.UserHostAddress;
-                pp.DateCreated = DateTime.Now;
-                pp.DateModified = DateTime.Now;
-
-                List<PortResponseSummaryViewModel> portViewModels = PortParser.ParseSummary(portsSummary);
-
-                List<PortResponseSummary> pr = Mapper.Map<List<PortResponseSummary>>(portViewModels);
-
-                pp.PortResponseSummaries.AddRange(pr);
-                context.PortPermalinks.Add(pp);
-                context.SaveChanges();
-
-                return Json(pp.Id);
-            }
-
-
-            return new EmptyResult();
         }
 
         public ActionResult ReadPortPermalinks([DataSourceRequest] DataSourceRequest request, AntDbContext context, string address, bool? allPermalinks = false)
