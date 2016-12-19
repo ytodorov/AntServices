@@ -1,22 +1,21 @@
-﻿@model string
-<div id="map" style="width:100px;height: 10px"></div>
+﻿@Html.Raw((Html.AntCreateStandardPanel("hgreen", "Locate IP address", "<div class='text-center'>" +
+"<p>" + "<input type='text' id='tbIp' name='tbIp' placeholder='Enter IP address' class='k-textbox' />" + "</p>" +
+"<p>" + "<input type='button' id='btnLocateIp' value='Locate' class='k-button' />" + "</p>" +
+"<div>")))
+
 @section scripts {
     <script>
-        setTimeout(function f() {
-            $.ajax({
-                method: "POST",
-                url: "/home/getgooglemapsstring",
-                data: {
-                    ip: '@Model'
-                },
-                success: function f(gmData) {
-                    $("#map").height($("#wrapper").height());
-                    eval(gmData);
-                }
-            });
-        }, 1500);
-        $(window).resize(function () {
-            $("#map").height($("#wrapper").height());
+        $("#tbIp").keyup(function myfunction(eventData) {
+            if (eventData.keyCode == 13) {
+                $("#btnLocateIp").click();
+            }
+
+        });
+
+        $("#btnLocateIp").click(function f() {
+            debugger;
+            var ip = $("#tbIp").val();
+            window.location = window.location.origin + '/iplocation?ip=' + ip;
         });
     </script>
 }

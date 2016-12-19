@@ -11,37 +11,39 @@
         <div class="panel-body">
             @if (Model.ShowAddressTextBox)
             {
-            <p>
-                @(Html.Kendo().AutoComplete()
-                .Name("ip")
-                .DataTextField("Name")
-                .MinLength(1)
-                .HtmlAttributes(new { style = "width:100%;" })
-                .Value(Model?.DefaultDestinationAddress)
-                .Filter("contains")
-                .DataSource(source => source
-                .Custom()
-                .Group(g => g.Add("Category", typeof(string)))
-                .Transport(transport => transport
-                .Read(read =>
-                {
-                read.Action("ReadAddressesToPing", "Ping");
-                }))
+                <p>
+                    @(Html.Kendo().AutoComplete()
+                    .Name("ip")
+                    .DataTextField("Name")
+                    .MinLength(1)
+                    .HtmlAttributes(new { style = "width:100%;" })
+                    .Value(Model?.DefaultDestinationAddress)
+                    .Filter("contains")
+                    .DataSource(source => source
+                    .Custom()
+                    .Group(g => g.Add("Category", typeof(string)))
+                    .Transport(transport => transport
+                    .Read(read =>
+                    {
+                        var action = Model.Action != null ? Model.Action : "ReadAddressesToPing";
+                        var controller = Model.Controller != null ? Model.Controller : "Ping";
+                        read.Action(action, controller);
+                    }))
                 .ServerFiltering(false)
                 ).Deferred()
-                )
+                    )
 
-            </p>
+                </p>
             }
-@if (Model.ShowSaveInHistory)
-{
-            <p class="text-center">
+            @if (Model.ShowSaveInHistory)
+            {
+                <p class="text-center">
 
-                <input type="checkbox" id="showInHistory" class="k-checkbox" checked="checked">
+                    <input type="checkbox" id="showInHistory" class="k-checkbox" checked="checked">
 
-                <label class="k-checkbox-label" for="showInHistory">Save in history</label>
-            </p>
-}
+                    <label class="k-checkbox-label" for="showInHistory">Save in history</label>
+                </p>
+            }
             <p>
 
                 <button type="button" class="ladda-button btn center-block btn-outline btn-success" id="@Model.ButtonId" data-style="zoom-in">

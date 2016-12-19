@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="@ViewBag.MetaDescription">
-    <title>@(ViewBag.Title + (Request.Url.LocalPath == "/" ? "": " | Tools for Net"))</title>
+    <title>@(ViewBag.Title + (Request.Url.LocalPath == "/" ? "" : " | Tools for Net"))</title>
     @*<link href="~/content/googlefont.min.css" rel="stylesheet" />*@
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
     <link rel="icon" type="image/x-icon" href="~/favicon.ico">
@@ -25,21 +25,21 @@
     <link rel="stylesheet" href="//kendo.cdn.telerik.com/2016.3.1028/styles/kendo.metro.min.css">
     <script async defer src="~/scripts/googleanalytics.min.js"></script>
     @*<script type="text/javascript">
-        setTimeout(function f() {
+            setTimeout(function f() {
 
-            var script = document.createElement('script')
-            script.src = '~/scripts/googleanalytics.min.js';
-            document.documentElement.firstChild.appendChild(script)
-        }, 1);
-    </script>*@ 
+                var script = document.createElement('script')
+                script.src = '~/scripts/googleanalytics.min.js';
+                document.documentElement.firstChild.appendChild(script)
+            }, 1);
+        </script>*@
 
     @*<link rel="stylesheet" href="~/content/kendo/kendo.metro.min.css">*@
     @*<script type="text/javascript">
-        //<![CDATA[
-        var tlJsHost = ((window.location.protocol == "https:") ? "https://secure.comodo.com/" : "http://www.trustlogo.com/");
-        document.write(unescape("%3Cscript src='" + tlJsHost + "trustlogo/javascript/trustlogo.js' type='text/javascript'%3E%3C/script%3E"));
-        //]]>
-    </script>*@
+            //<![CDATA[
+            var tlJsHost = ((window.location.protocol == "https:") ? "https://secure.comodo.com/" : "http://www.trustlogo.com/");
+            document.write(unescape("%3Cscript src='" + tlJsHost + "trustlogo/javascript/trustlogo.js' type='text/javascript'%3E%3C/script%3E"));
+            //]]>
+        </script>*@
     <script src="~/scripts/trustlogolocal.js"></script>
 
 </head>
@@ -50,9 +50,11 @@
             <p>
                 <h1>Tools for Net</h1>
             </p>
-            <p>Distributed network services</p>
             <p>
-                <h5>Loading ... Please wait</h5>
+                <h4>Distributed network services</h4>
+            </p>
+            <p>
+                <h4>Loading, please wait</h4>
             </p>
             <div class="spinner">
                 <div class="rect1"></div>
@@ -88,7 +90,7 @@
         window.cookieconsent_options = { "message": "This website uses cookies to ensure you get the best experience on our website", "dismiss": "Got it!", "learnMore": "More info", "link": null, "theme": "light-top" };
     </script>
 
-     @*Това бави по този начим*@
+    @*Това бави по този начим*@
     @*<script async defer type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-571b2acff4b44bbf"></script>*@
 
     @*А така е бързо*@
@@ -99,7 +101,7 @@
             script.src = '//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-571b2acff4b44bbf';
             document.documentElement.firstChild.appendChild(script)
         }, 1);
-    </script> 
+    </script>
     @(Html.Kendo().Notification()
         .Name("notification")
         .Position(c => c.Top(0).Left(0))
@@ -109,11 +111,11 @@
     )
 
     @*@(Html.Kendo().Tooltip()
-        .For("body")
-        .Filter("*[title]")
-        .Position(TooltipPosition.Top)
-        .Deferred()
-    )*@
+            .For("body")
+            .Filter("*[title]")
+            .Position(TooltipPosition.Top)
+            .Deferred()
+        )*@
     <script src="//code.jquery.com/jquery-1.12.3.min.js"></script>
     <script src="//kendo.cdn.telerik.com/2016.3.1028/js/jszip.min.js"></script>
     <script src="//kendo.cdn.telerik.com/2016.3.1028/js/kendo.all.min.js"></script>

@@ -812,7 +812,7 @@ namespace SmartAdminMvc.Infrastructure
             {
                 if (IsIPLocal(ipAddress))
                 {
-                    throw new Exception($"IP address {ipAddress} is local address! See <a target='_blank' href='https://tools.ietf.org/html/rfc1918'>RFC1918</a>. You cannot use local IP addresses for this service!");
+                    throw new Exception($"IP address {ipAddress} is local address! See <a target='_blank' href='https://tools.ietf.org/html/rfc1918' rel='nofollow'>RFC1918</a>. You cannot use local IP addresses for this service!");
                 }
                 else
                 {

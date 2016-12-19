@@ -42,7 +42,6 @@
 "<p>" + "Share this permalink: <a href='" + Context.Request.Url.ToString() + "' target='_blank'>" + Context.Request.Url.ToString() + "</a></p>" +
 "<p>" + "<div class='addthis_sharing_toolbox'></div></p>" +
 "<div>")))
-
 }
 
 @Html.Partial("_Addresses", new AddressViewModel()
@@ -50,8 +49,25 @@
     ButtonId = "btnBarcode",
     ButtonText = "Generate",
     DefaultDestinationAddress = Model?.Value,
-    PanelTitle = "Enter value of the barcode"
+    PanelTitle = "Enter value of the barcode",
+    ShowAddressTextBox = true,
+    Controller = nameof(Barcode),
+    Action = nameof(BarcodeController.ReadBarcodePermalinkValues)
 })
+
+@*премахни display: none;*@
+<div class="hpanel hgreen panel-collapse" style="display: none;">
+    <div class="panel-heading text-center">
+        <div class="panel-tools">
+            <a class="showhide"><i class="fa fa-chevron-down"></i></a>
+        </div>
+        Advanced options
+    </div>
+    <div class="panel-body" style="display: none;">
+        <p>          
+        </p>
+    </div>  
+</div>
 
 <div id="result" class="container-fluid">
     <div class="row">
@@ -68,6 +84,13 @@
         }
     </div>
 
+    <div class="k-info-colored">
+        <blockquote>
+            <p><strong>Important</strong></p>
+            <p>If the value for a particular encoding you provide does not meet the expected length or character set, it is going to throw an error.</p>
+        </blockquote>
+    </div>
+
     <table id="barcodeTable" class="stripes" style="margin-top: 1.2em;">
         <tbody>
             <tr>
@@ -77,115 +100,115 @@
                 <th>Check digits</th>
             </tr>
             <tr>
-                <td><a href="https://en.wikipedia.org/wiki/Code_128">Code 39 (default)</a></td>
+                <td><a href="https://en.wikipedia.org/wiki/Code_128" rel="nofollow">Code 39 (default)</a></td>
                 <td>[A-Z]; [0-9]; [ - . $ / + % ]</td>
                 <td>variable (avg. up to 20 chars)</td>
                 <td>optional (Mod. 43)</td>
             </tr>
             <tr>
-                <td><a href="http://en.wikipedia.org/wiki/Code_39#Full_ASCII_Code_39">Code39Extended</a></td>
+                <td><a href="http://en.wikipedia.org/wiki/Code_39#Full_ASCII_Code_39" rel="nofollow">Code39Extended</a></td>
                 <td>ASCII (128 characters)</td>
                 <td>variable</td>
                 <td>optional (Mod. 43)</td>
             </tr>
             <tr>
-                <td><a href="http://www.barcodeisland.com/code93.phtml">Code 93</a></td>
+                <td><a href="http://www.barcodeisland.com/code93.phtml" rel="nofollow">Code 93</a></td>
                 <td>[0-9];[A-Z];[SPACE . + - / % $]</td>
                 <td>variable</td>
                 <td>2 check digits</td>
             </tr>
             <tr>
-                <td><a href="http://en.wikipedia.org/wiki/Code_93">Code93Extended</a></td>
+                <td><a href="http://en.wikipedia.org/wiki/Code_93" rel="nofollow">Code93Extended</a></td>
                 <td>ASCII(128 characters)</td>
                 <td>variable</td>
                 <td>2 check digits</td>
             </tr>
             <tr>
-                <td><a href="http://en.wikipedia.org/wiki/International_Article_Number_(EAN)">EAN-13</a></td>
+                <td><a href="http://en.wikipedia.org/wiki/International_Article_Number_(EAN)" rel="nofollow">EAN-13</a></td>
                 <td>numeric [0..9]</td>
                 <td>12 usable digits</td>
                 <td>1 check digit</td>
             </tr>
             <tr>
-                <td><a href="http://en.wikipedia.org/wiki/EAN-8">EAN-8</a></td>
+                <td><a href="http://en.wikipedia.org/wiki/EAN-8" rel="nofollow">EAN-8</a></td>
                 <td>numeric [0..9]</td>
                 <td>7 usable digits</td>
                 <td>1 check digit</td>
             </tr>
             <tr>
-                <td><a href="http://en.wikipedia.org/wiki/Universal_Product_Code">UPC-A</a></td>
+                <td><a href="http://en.wikipedia.org/wiki/Universal_Product_Code" rel="nofollow">UPC-A</a></td>
                 <td>numeric [0..9]</td>
                 <td>11 usable digits (first is always 0)</td>
                 <td>1 check digit</td>
             </tr>
             <tr>
-                <td><a href="http://en.wikipedia.org/wiki/Universal_Product_Code">UPC-E</a></td>
+                <td><a href="http://en.wikipedia.org/wiki/Universal_Product_Code" rel="nofollow">UPC-E</a></td>
                 <td>numeric [0..9]</td>
                 <td>6 usable digits (first is always 0)</td>
                 <td>1 check digit</td>
             </tr>
             <tr>
-                <td><a href="http://en.wikipedia.org/wiki/POSTNET">POSTNET</a></td>
+                <td><a href="http://en.wikipedia.org/wiki/POSTNET" rel="nofollow">POSTNET</a></td>
                 <td>numeric [0..9]</td>
                 <td>variable</td>
                 <td>1 check digit</td>
             </tr>
             <tr>
-                <td><a href="http://www.barcodeisland.com/code11.phtml">Code 11</a></td>
+                <td><a href="http://www.barcodeisland.com/code11.phtml" rel="nofollow">Code 11</a></td>
                 <td>[0-9]; [-]</td>
                 <td>variable</td>
                 <td>1 or 2 based on length</td>
             </tr>
             <tr>
-                <td><a href="https://en.wikipedia.org/wiki/Code_128">Code128</a></td>
-                <td>LATIN-1 (<a href="http://en.wikipedia.org/wiki/ISO/IEC_8859-1">ISO-8859-1</a>)</td>
+                <td><a href="https://en.wikipedia.org/wiki/Code_128" rel="nofollow">Code128</a></td>
+                <td>LATIN-1 (<a href="http://en.wikipedia.org/wiki/ISO/IEC_8859-1" rel="nofollow">ISO-8859-1</a>)</td>
                 <td>variable</td>
                 <td>1 check digit</td>
             </tr>
             <tr>
-                <td><a href="https://en.wikipedia.org/wiki/Code_128">Code128A</a></td>
+                <td><a href="https://en.wikipedia.org/wiki/Code_128" rel="nofollow">Code128A</a></td>
                 <td>ASCII 00 to 95 (0-9, A-Z and control codes), special characters</td>
                 <td>variable</td>
                 <td>1 check digit</td>
             </tr>
             <tr>
-                <td><a href="https://en.wikipedia.org/wiki/Code_128">Code128B</a></td>
+                <td><a href="https://en.wikipedia.org/wiki/Code_128" rel="nofollow">Code128B</a></td>
                 <td>ASCII 32 to 127 (0-9, A-Z, a-z), special characters</td>
                 <td>variable</td>
                 <td>1 check digit</td>
             </tr>
             <tr>
-                <td><a href="https://en.wikipedia.org/wiki/Code_128">Code128C</a></td>
+                <td><a href="https://en.wikipedia.org/wiki/Code_128" rel="nofollow">Code128C</a></td>
                 <td>ASCII 00-99 (encodes each two digits with one code)</td>
                 <td>variable</td>
                 <td>1 check digit</td>
             </tr>
             <tr>
-                <td><a href="http://en.wikipedia.org/wiki/GS1-128">GS1-128</a></td>
+                <td><a href="http://en.wikipedia.org/wiki/GS1-128" rel="nofollow">GS1-128</a></td>
                 <td>depending on Application Identifier</td>
                 <td>variable</td>
                 <td>1 check digit</td>
             </tr>
             <tr>
-                <td><a href="http://en.wikipedia.org/wiki/MSI_Barcode">MSImod10</a></td>
+                <td><a href="http://en.wikipedia.org/wiki/MSI_Barcode" rel="nofollow">MSImod10</a></td>
                 <td>numeric [0..9]</td>
                 <td>variable</td>
                 <td>1 check digit</td>
             </tr>
             <tr>
-                <td><a href="http://en.wikipedia.org/wiki/MSI_Barcode">MSImod11</a></td>
+                <td><a href="http://en.wikipedia.org/wiki/MSI_Barcode" rel="nofollow">MSImod11</a></td>
                 <td>numeric [0..9]</td>
                 <td>variable</td>
                 <td>1 check digit</td>
             </tr>
             <tr>
-                <td><a href="http://en.wikipedia.org/wiki/MSI_Barcode">MSImod1010</a></td>
+                <td><a href="http://en.wikipedia.org/wiki/MSI_Barcode" rel="nofollow">MSImod1010</a></td>
                 <td>numeric [0..9]</td>
                 <td>variable</td>
                 <td>1 check digit</td>
             </tr>
             <tr>
-                <td><a href="http://en.wikipedia.org/wiki/MSI_Barcode">MSImod1110</a></td>
+                <td><a href="http://en.wikipedia.org/wiki/MSI_Barcode" rel="nofollow">MSImod1110</a></td>
                 <td>numeric [0..9]</td>
                 <td>variable</td>
                 <td>1 check digit</td>

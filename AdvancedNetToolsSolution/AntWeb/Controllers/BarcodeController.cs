@@ -69,52 +69,17 @@ namespace SmartAdminMvc.Controllers
             return Json(barcodePermalink.Id);
         }
 
-        public ActionResult ReadPingPermalinks([DataSourceRequest] DataSourceRequest request, string address, bool? allPermalinks = false)
+        
+
+        public ActionResult ReadBarcodePermalinkValues([DataSourceRequest] DataSourceRequest request)
         {
-            List<PingPermalink> pingPermalinks;
-            if (!allPermalinks.GetValueOrDefault())
-            {
-                pingPermalinks = GetPermalinksForCurrentUser(address);
-            }
-            else
-            {
-                using (AntDbContext context = new AntDbContext())
-                {
-                    pingPermalinks = context.PingPermalinks.Where(p => p.ShowInHistory == true).OrderByDescending(k => k.Id).Take(count: 100).ToList();
-                }
-            }
-
-            List<PingPermalinkViewModel> pingPermalinksViewModels = Mapper.Map<List<PingPermalinkViewModel>>(pingPermalinks);
-            foreach (var p in pingPermalinksViewModels)
-            {
-                p.DateCreatedTimeAgo = p.DateCreated.GetValueOrDefault().TimeAgo();
-            }
-
-            JsonResult dsResult = Json(pingPermalinksViewModels.ToDataSourceResult(request));
-            return dsResult;
-        }
-
-        public ActionResult ReadAddressesToPing([DataSourceRequest] DataSourceRequest request)
-        {
-            List<PingPermalink> pingPermalinks = GetPermalinksForCurrentUser(address: null);
-            pingPermalinks = pingPermalinks.GroupBy(pp => pp.DestinationAddress).Select(group => group.First()).ToList();
-
             var list = new List<AddressHistoryViewModel>();
-            list.Add(new AddressHistoryViewModel { Name = Request.UserHostAddress, Category = "My IP", Order = 0 });
-            foreach (var pp in pingPermalinks)
+            using (AntDbContext context = new AntDbContext())
             {
-                var ahvm = new AddressHistoryViewModel() { Name = pp.DestinationAddress, Category = "History", Order = 1 };
-                if (!list.Any(l => l.Name.Equals(ahvm.Name, StringComparison.InvariantCultureIgnoreCase)))
+                var barcodePermalinks = context.BarcodePermalinks.Where(b => b.ShowInHistory == true).ToList();
+                foreach (var bp in barcodePermalinks)
                 {
-                    list.Add(ahvm);
-                }
-            }
-
-            foreach (string topSite in Utils.TopSitesGlobal)
-            {
-                var ahvm = new AddressHistoryViewModel() { Name = topSite, Category = "Top sites", Order = 2 };
-                if (!list.Any(l => l.Name.Equals(ahvm.Name, StringComparison.InvariantCultureIgnoreCase)))
-                {
+                    var ahvm = new AddressHistoryViewModel() { Name = bp.Value, Category = "History", Order = 1 };
                     list.Add(ahvm);
                 }
             }
@@ -122,39 +87,6 @@ namespace SmartAdminMvc.Controllers
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 
-        private List<PingPermalink> GetPermalinksForCurrentUser(string address)
-        {
-            using (AntDbContext context = new AntDbContext())
-            {
-                string userIpAddress = Request.UserHostAddress;
-                List<PingPermalink> pingPermalinks;
-                if (string.IsNullOrEmpty(address))
-                {
-                    pingPermalinks = context.PingPermalinks.Where(p => p.UserCreatedIpAddress == userIpAddress && p.ShowInHistory == true).ToList();
-                }
-                else
-                {
-                    pingPermalinks = context.PingPermalinks.Where(p => p.DestinationAddress == address && p.ShowInHistory == true).ToList();
-                }
-                return pingPermalinks;
-            }
-        }
-
-        public static void GoTo()
-        {
-            Driver.Instance.Navigate().GoToUrl(url: "https://localhost:44300/ping");
-            var wait = new WebDriverWait(Driver.Instance, TimeSpan.FromMinutes(1));
-            IWebElement element = wait.Until(ExpectedConditions.ElementToBeClickable(By.Id(idToFind: "btnPing")));
-        }
-
-        public static void Ping(string address)
-        {
-            IWebElement pingInput = Driver.Instance.FindElement(By.Id(idToFind: "ip"));
-            pingInput.Clear();
-            pingInput.SendKeys(address);
-
-            IWebElement btnPing = Driver.Instance.FindElement(By.Id(idToFind: "btnPing"));
-            btnPing.Click();
-        }
+       
     }
 }

@@ -227,17 +227,34 @@ namespace SmartAdminMvc.Controllers
 
         public ActionResult ReadAddressesToPing([DataSourceRequest] DataSourceRequest request)
         {
-            List<PingPermalink> pingPermalinks = GetPermalinksForCurrentUser(address: null);
-            pingPermalinks = pingPermalinks.GroupBy(pp => pp.DestinationAddress).Select(group => group.First()).ToList();
-
             var list = new List<AddressHistoryViewModel>();
-            list.Add(new AddressHistoryViewModel { Name = Request.UserHostAddress, Category = "My IP", Order = 0 });
-            foreach (var pp in pingPermalinks)
+
+            if (Request.Url.ToString().ToLowerInvariant().IndexOf("/barcode/") < 0)
             {
-                var ahvm = new AddressHistoryViewModel() { Name = pp.DestinationAddress, Category = "History", Order = 1 };
-                if (!list.Any(l => l.Name.Equals(ahvm.Name, StringComparison.InvariantCultureIgnoreCase)))
+                List<PingPermalink> pingPermalinks = GetPermalinksForCurrentUser(address: null);
+                pingPermalinks = pingPermalinks.GroupBy(pp => pp.DestinationAddress).Select(group => group.First()).ToList();
+
+
+                list.Add(new AddressHistoryViewModel { Name = Request.UserHostAddress, Category = "My IP", Order = 0 });
+                foreach (var pp in pingPermalinks)
                 {
-                    list.Add(ahvm);
+                    var ahvm = new AddressHistoryViewModel() { Name = pp.DestinationAddress, Category = "History", Order = 1 };
+                    if (!list.Any(l => l.Name.Equals(ahvm.Name, StringComparison.InvariantCultureIgnoreCase)))
+                    {
+                        list.Add(ahvm);
+                    }
+                }
+            }
+            else
+            {
+                using (AntDbContext context = new AntDbContext())
+                {
+                    var barcodePermalinks = context.BarcodePermalinks.Where(b => b.ShowInHistory == true).ToList();
+                    foreach (var bp in barcodePermalinks)
+                    {
+                        var ahvm = new AddressHistoryViewModel() { Name = bp.Value, Category = "History", Order = 1 };
+                        list.Add(ahvm);
+                    }
                 }
             }
 

@@ -25,6 +25,10 @@ namespace SmartAdminMvc.Models
 
         public bool ShowAddressTextBox { get; set; }
 
+        public string Controller { get; set; }
+
+        public string Action { get; set; }
+
         public bool ShowSaveInHistory { get; set; }
 
     }
