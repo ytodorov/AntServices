@@ -49,7 +49,7 @@ namespace SmartAdminMvc.Controllers
                 Uri url = new Uri(ip);
                 ip = url.Host;
             }
-            catch(Exception)
+            catch (Exception)
             {
             }
 
@@ -61,59 +61,36 @@ namespace SmartAdminMvc.Controllers
                 return Json(result);
             }
 
-            List<string> urls = new List<string>() { "http://ants-neu.cloudapp.net" };
+            var client = new HttpClient();
+            client.Timeout = TimeSpan.FromMinutes(15);
+            // Do not use T5
+            string encodedArgs0 = Uri.EscapeDataString($"-T4 -Pn --top-ports 1000 {ip}");
+            string urlWithArgs = "http://ants-neu.cloudapp.net/home/exec?program=nmap&args=" + encodedArgs0;
+            var portsSummary = client.GetStringAsync(urlWithArgs).Result;
+            client.Dispose();
 
-            var tasksForTraceroutes = new List<Task<string>>();
-            var tasksForLatencies = new List<Task<string>>();
-            var clients = new List<HttpClient>();
-
-            for (int i = 0; i < 1; i++)
+            using (AntDbContext context = new AntDbContext())
             {
-                var client = new HttpClient();
-                clients.Add(client);
-                // Do not use T5
-                string encodedArgs0 = Uri.EscapeDataString($"-T3 --top-ports 1000 -Pn {ip}");
-                string urlWithArgs = urls[i] + "/home/exec?program=nmap&args=" + encodedArgs0;
-                Task<string> task = client.GetStringAsync(urlWithArgs);
-                tasksForTraceroutes.Add(task);
+                var pp = new PortPermalink();
+                pp.ShowInHistory = showInHistory;
+                pp.UserCreatedIpAddress = Request.UserHostAddress;
+                pp.DestinationAddress = ip;
+                pp.UserCreated = Request.UserHostAddress;
+                pp.UserModified = Request.UserHostAddress;
+                pp.DateCreated = DateTime.Now;
+                pp.DateModified = DateTime.Now;
+
+                List<PortResponseSummaryViewModel> portViewModels = PortParser.ParseSummary(portsSummary);
+
+                List<PortResponseSummary> pr = Mapper.Map<List<PortResponseSummary>>(portViewModels);
+
+                pp.PortResponseSummaries.AddRange(pr);
+                context.PortPermalinks.Add(pp);
+                context.SaveChanges();
+
+                return Json(pp.Id);
             }
 
-            try
-            {
-                Task.WaitAll(tasksForTraceroutes.ToArray().Union(tasksForLatencies).ToArray(),
-                    (int)TimeSpan.FromMinutes(5).TotalMilliseconds);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Cannot complete request in the allowed time! Please try again!");
-            }
-
-            for (int i = 0; i < tasksForTraceroutes.Count; i++)
-            {
-                var portsSummary = tasksForTraceroutes[i].Result;
-
-                using (AntDbContext context = new AntDbContext())
-                {
-                    var pp = new PortPermalink();
-                    pp.ShowInHistory = showInHistory;
-                    pp.UserCreatedIpAddress = Request.UserHostAddress;
-                    pp.DestinationAddress = ip;
-                    pp.UserCreated = Request.UserHostAddress;
-                    pp.UserModified = Request.UserHostAddress;
-                    pp.DateCreated = DateTime.Now;
-                    pp.DateModified = DateTime.Now;
-
-                    List<PortResponseSummaryViewModel> portViewModels = PortParser.ParseSummary(portsSummary);
-
-                    List<PortResponseSummary> pr = Mapper.Map<List<PortResponseSummary>>(portViewModels);
-
-                    pp.PortResponseSummaries.AddRange(pr);
-                    context.PortPermalinks.Add(pp);
-                    context.SaveChanges();
-
-                    return Json(pp.Id);
-                }
-            }
 
             return new EmptyResult();
         }
