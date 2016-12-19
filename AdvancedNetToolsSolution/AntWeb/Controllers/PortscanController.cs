@@ -44,6 +44,16 @@ namespace SmartAdminMvc.Controllers
         {
             //List<string> urls = Utils.GetDeployedServicesUrlAddresses.ToList().Take(1).ToList();
 
+            try
+            {
+                Uri url = new Uri(ip);
+                ip = url.Host;
+            }
+            catch(Exception)
+            {
+            }
+
+
             string errorMessage = Utils.CheckIfHostIsUp(ip);
             if (!string.IsNullOrEmpty(errorMessage))
             {
@@ -57,18 +67,26 @@ namespace SmartAdminMvc.Controllers
             var tasksForLatencies = new List<Task<string>>();
             var clients = new List<HttpClient>();
 
-            for (int i = 0; i < urls.Count; i++)
+            for (int i = 0; i < 1; i++)
             {
                 var client = new HttpClient();
                 clients.Add(client);
-                string encodedArgs0 = Uri.EscapeDataString($"-T5 --top-ports 1000 -Pn {ip}");
+                // Do not use T5
+                string encodedArgs0 = Uri.EscapeDataString($"-T3 --top-ports 1000 -Pn {ip}");
                 string urlWithArgs = urls[i] + "/home/exec?program=nmap&args=" + encodedArgs0;
                 Task<string> task = client.GetStringAsync(urlWithArgs);
                 tasksForTraceroutes.Add(task);
             }
 
-            Task.WaitAll(tasksForTraceroutes.ToArray().Union(tasksForLatencies).ToArray(),
-                (int)TimeSpan.FromMinutes(3).TotalMilliseconds);
+            try
+            {
+                Task.WaitAll(tasksForTraceroutes.ToArray().Union(tasksForLatencies).ToArray(),
+                    (int)TimeSpan.FromMinutes(5).TotalMilliseconds);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Cannot complete request in the allowed time! Please try again!");
+            }
 
             for (int i = 0; i < tasksForTraceroutes.Count; i++)
             {
