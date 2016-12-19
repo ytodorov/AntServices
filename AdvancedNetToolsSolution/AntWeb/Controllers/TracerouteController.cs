@@ -50,6 +50,13 @@ namespace SmartAdminMvc.Controllers
             try
             {
                 prvm.Ip = Utils.GetCorrectAddressOrHost(prvm.Ip);
+                string errorMessage = Utils.CheckIfHostIsUp(prvm.Ip);
+                if (!string.IsNullOrEmpty(errorMessage))
+                {
+                    var result = new { error = errorMessage };
+                    return Json(result);
+                }
+
                 List<string> urls = Utils.GetDeployedServicesUrlAddresses.ToList();
 
                 var tasksForTraceroutes = new List<Task<string>>();

@@ -792,8 +792,15 @@ namespace SmartAdminMvc.Infrastructure
 
             try
             {
-                Uri uri = new Uri(ipAddressOrHost);
-                result = uri.Host;
+                Uri uri = new Uri(ipAddressOrHost, UriKind.RelativeOrAbsolute);
+                if (!uri.IsAbsoluteUri)
+                {
+                    result = uri.ToString();
+                }
+                else
+                {
+                    result = uri.Host;
+                }
                 return result;
             }
             catch(Exception)
