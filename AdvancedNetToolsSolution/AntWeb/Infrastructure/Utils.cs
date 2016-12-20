@@ -790,6 +790,21 @@ namespace SmartAdminMvc.Infrastructure
         {
             string result = string.Empty;
 
+            // ip is first IMPORTANT
+            IPAddress ipAddress;
+            if (IPAddress.TryParse(ipAddressOrHost, out ipAddress))
+            {
+                if (IsIPLocal(ipAddress))
+                {
+                    throw new Exception($"IP address {ipAddress} is local address! See <a target='_blank' href='https://tools.ietf.org/html/rfc1918' rel='nofollow'>RFC1918</a>. You cannot use local IP addresses for this service!");
+                }
+                else
+                {
+                    result = ipAddressOrHost;
+                    return result;
+                }
+            }
+
             try
             {
                 Uri uri = new Uri(ipAddressOrHost, UriKind.RelativeOrAbsolute);
@@ -807,19 +822,7 @@ namespace SmartAdminMvc.Infrastructure
             {
 
             }
-            IPAddress ipAddress;
-            if(IPAddress.TryParse(ipAddressOrHost, out ipAddress))
-            {
-                if (IsIPLocal(ipAddress))
-                {
-                    throw new Exception($"IP address {ipAddress} is local address! See <a target='_blank' href='https://tools.ietf.org/html/rfc1918' rel='nofollow'>RFC1918</a>. You cannot use local IP addresses for this service!");
-                }
-                else
-                {
-                    result = ipAddressOrHost;
-                    return result;
-                }
-            }
+          
 
             throw new Exception($"'{ipAddressOrHost}' is not a valid IP address nor a valid host name!");
         }
