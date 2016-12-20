@@ -77,7 +77,6 @@ $(window).ready(function myfunction() {
             method: 'POST',
             url: '/home/getip'
         }).done(function f(ip) {
-            debugger;
             $("#aUserHostAddress").attr('href', 'https://toolsfornet.com/iplocation?ip=' + ip);
             $("#pUserHostAddress").html('Hello ' + ip);
         });

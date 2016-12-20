@@ -99,7 +99,6 @@ $(window).ready(function myfunction() {
                 url: '/home/getip'
             }
         ).done(function f(ip: string) {
-            debugger;
             $("#aUserHostAddress").attr('href', 'https://toolsfornet.com/iplocation?ip=' + ip);
             $("#pUserHostAddress").html('Hello ' + ip);
         });
