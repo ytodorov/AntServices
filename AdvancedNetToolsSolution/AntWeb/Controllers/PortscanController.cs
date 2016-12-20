@@ -20,7 +20,6 @@ namespace SmartAdminMvc.Controllers
 {
     public class PortscanController : BaseController
     {
-        // GET: home/index
         [OutputCache(CacheProfile = "MyCache")]
         public ActionResult Index(int? id)
         {

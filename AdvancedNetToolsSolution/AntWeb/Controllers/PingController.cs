@@ -29,7 +29,6 @@ namespace SmartAdminMvc.Controllers
 {
     public class PingController : BaseController
     {
-        // GET: home/index
         [OutputCache(CacheProfile = "MyCache")]
         public ActionResult Index(int? id)
         {

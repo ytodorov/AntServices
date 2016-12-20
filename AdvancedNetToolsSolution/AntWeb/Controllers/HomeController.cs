@@ -12,11 +12,7 @@ using System.Web.Mvc;
 namespace SmartAdminMvc.Controllers
 {
     public class HomeController : BaseController
-    {
-        //чупя билда да видя дали ще има email
-        //public HomeController()
-        //{
-        //}
+    {       
 
         [OutputCache(CacheProfile = "MyCache")]
         public virtual ActionResult Index()
@@ -42,6 +38,12 @@ namespace SmartAdminMvc.Controllers
             Response.ContentType = "text/plain; charset=utf-8";
             string gmString = Utils.GetGoogleMapsString(models.Select(m => m.Ip));
             return gmString;
+        }
+
+        [HttpPost]
+        public string GetIp()
+        {
+            return Request.UserHostAddress;
         }
 
         [HttpPost]

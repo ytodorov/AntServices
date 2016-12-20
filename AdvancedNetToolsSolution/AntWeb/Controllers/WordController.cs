@@ -41,7 +41,7 @@ namespace SmartAdminMvc.Controllers
 {
     public class WordController : BaseController
     {
-        //[OutputCache(CacheProfile = "MyCache")]
+        [OutputCache(CacheProfile = "MyCache")]
         public ActionResult Index()
         {
             return View();

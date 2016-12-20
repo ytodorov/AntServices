@@ -19,6 +19,18 @@
     <priority>1.00</priority>
   </url>
   <url>
+    <loc>https://toolsfornet.com/barcode</loc>
+    <priority>1.00</priority>
+  </url>
+  <url>
+    <loc>https://toolsfornet.com/word</loc>
+    <priority>1.00</priority>
+  </url>
+  <url>
+    <loc>https://toolsfornet.com/spread</loc>
+    <priority>1.00</priority>
+  </url>
+  <url>
     <loc>https://toolsfornet.com/faq</loc>
     <priority>0.80</priority>
   </url>

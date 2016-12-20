@@ -149,6 +149,14 @@ $(window).ready(function myfunction() {
     setTimeout(function () {
         resizeCharts();
         resizeGrids();
+        $.ajax({
+            method: 'POST',
+            url: '/home/getip'
+        }).done(function f(ip) {
+            debugger;
+            $("#aUserHostAddress").attr('href', 'https://toolsfornet.com/iplocation?ip=' + ip);
+            $("#pUserHostAddress").html('Hello ' + ip);
+        });
     }, 200);
     $("div.hide-menu").click(function () {
         setTimeout(function () {
@@ -172,27 +180,27 @@ $(window).ready(function myfunction() {
     //});
     //clipboard.on('error', function (e) {
     //});
-    setTimeout(function pl() {
-        sessionStorage.setItem("isWindowActive", "true");
-        var $ip = $("#ip");
-        if ($ip.length != 0) {
-            var arrOfPlaceholders = [];
-            arrOfPlaceholders[0] = "google.com";
-            arrOfPlaceholders[1] = "www.yahoo.com";
-            arrOfPlaceholders[2] = "http://www.facebook.com";
-            arrOfPlaceholders[3] = "ftp://ftp.microsoft.com/";
-            arrOfPlaceholders[4] = "https://weather.com/en-GB";
-            arrOfPlaceholders[5] = "8.8.8.8";
-            arrOfPlaceholders[6] = "172.217.3.238";
-            arrOfPlaceholders[7] = "https://en.wikipedia.org/wiki/Main_Page";
-            arrOfPlaceholders[8] = "https://www.youtube.com/";
-            arrOfPlaceholders[9] = "134.170.188.232";
-            arrOfPlaceholders[10] = "216.58.212.142";
-            for (var i = 0; i < arrOfPlaceholders.length * 1000; i++) {
-                setTimeout(animateIpPlaceholder, 5000 * i, arrOfPlaceholders[i % arrOfPlaceholders.length]);
-            }
-        }
-    }, 1000);
+    //setTimeout(function pl() {
+    //    sessionStorage.setItem("isWindowActive", "true");
+    //    var $ip = $("#ip");
+    //    if ($ip.length != 0) {
+    //        var arrOfPlaceholders = [];
+    //        arrOfPlaceholders[0] = "google.com";
+    //        arrOfPlaceholders[1] = "www.yahoo.com";
+    //        arrOfPlaceholders[2] = "http://www.facebook.com";
+    //        arrOfPlaceholders[3] = "ftp://ftp.microsoft.com/";
+    //        arrOfPlaceholders[4] = "https://weather.com/en-GB";
+    //        arrOfPlaceholders[5] = "8.8.8.8";
+    //        arrOfPlaceholders[6] = "172.217.3.238";
+    //        arrOfPlaceholders[7] = "https://en.wikipedia.org/wiki/Main_Page";
+    //        arrOfPlaceholders[8] = "https://www.youtube.com/";
+    //        arrOfPlaceholders[9] = "134.170.188.232";
+    //        arrOfPlaceholders[10] = "216.58.212.142";
+    //        for (var i = 0; i < arrOfPlaceholders.length * 1000; i++) {
+    //            setTimeout(animateIpPlaceholder, 5000 * i, arrOfPlaceholders[i % arrOfPlaceholders.length]);
+    //        }
+    //    }
+    //}, 1000); 
     // TODO: kendo.drawing gives an error
     // export pdf
     $(".pdfexportpage").click(function () {

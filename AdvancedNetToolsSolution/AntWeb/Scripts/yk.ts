@@ -41,7 +41,7 @@ function resizeGrids() {
 
 $(document).ready(function docReady() {
 
-   
+
 
 
     var isMenuVisible = $.cookie('isMenuVisible');
@@ -92,6 +92,18 @@ $(window).ready(function myfunction() {
     setTimeout(function () {
         resizeCharts();
         resizeGrids();
+
+        $.ajax(
+            {
+                method: 'POST',
+                url: '/home/getip'
+            }
+        ).done(function f(ip: string) {
+            debugger;
+            $("#aUserHostAddress").attr('href', 'https://toolsfornet.com/iplocation?ip=' + ip);
+            $("#pUserHostAddress").html('Hello ' + ip);
+        });
+
     }
         , 200);
 
@@ -129,29 +141,29 @@ $(window).ready(function myfunction() {
 
 
 
-    setTimeout(function pl() {
-        sessionStorage.setItem("isWindowActive", "true");
-        var $ip = $("#ip");
-        if ($ip.length != 0) {
-            var arrOfPlaceholders = [];
-            arrOfPlaceholders[0] = "google.com";
-            arrOfPlaceholders[1] = "www.yahoo.com";
-            arrOfPlaceholders[2] = "http://www.facebook.com";
-            arrOfPlaceholders[3] = "ftp://ftp.microsoft.com/";
-            arrOfPlaceholders[4] = "https://weather.com/en-GB";
-            arrOfPlaceholders[5] = "8.8.8.8";
-            arrOfPlaceholders[6] = "172.217.3.238";
-            arrOfPlaceholders[7] = "https://en.wikipedia.org/wiki/Main_Page";
-            arrOfPlaceholders[8] = "https://www.youtube.com/";
-            arrOfPlaceholders[9] = "134.170.188.232";
-            arrOfPlaceholders[10] = "216.58.212.142";
+    //setTimeout(function pl() {
+    //    sessionStorage.setItem("isWindowActive", "true");
+    //    var $ip = $("#ip");
+    //    if ($ip.length != 0) {
+    //        var arrOfPlaceholders = [];
+    //        arrOfPlaceholders[0] = "google.com";
+    //        arrOfPlaceholders[1] = "www.yahoo.com";
+    //        arrOfPlaceholders[2] = "http://www.facebook.com";
+    //        arrOfPlaceholders[3] = "ftp://ftp.microsoft.com/";
+    //        arrOfPlaceholders[4] = "https://weather.com/en-GB";
+    //        arrOfPlaceholders[5] = "8.8.8.8";
+    //        arrOfPlaceholders[6] = "172.217.3.238";
+    //        arrOfPlaceholders[7] = "https://en.wikipedia.org/wiki/Main_Page";
+    //        arrOfPlaceholders[8] = "https://www.youtube.com/";
+    //        arrOfPlaceholders[9] = "134.170.188.232";
+    //        arrOfPlaceholders[10] = "216.58.212.142";
 
-            for (var i = 0; i < arrOfPlaceholders.length * 1000; i++) {
-                setTimeout(animateIpPlaceholder, 5000 * i, arrOfPlaceholders[i % arrOfPlaceholders.length]);
-            }
+    //        for (var i = 0; i < arrOfPlaceholders.length * 1000; i++) {
+    //            setTimeout(animateIpPlaceholder, 5000 * i, arrOfPlaceholders[i % arrOfPlaceholders.length]);
+    //        }
 
-        }
-    }, 1000); 
+    //    }
+    //}, 1000); 
     // TODO: kendo.drawing gives an error
     // export pdf
     $(".pdfexportpage").click(function () {
@@ -167,7 +179,7 @@ $(window).ready(function myfunction() {
                     paperSize: "auto",
                     margin: { left: "1cm", top: "1cm", right: "1cm", bottom: "1cm" }
                 });
-            }) 
+            })
             .done(function (data) {
                 // save the pdf file
                 kendo.saveAs({
@@ -176,13 +188,13 @@ $(window).ready(function myfunction() {
                     proxyurl: window.location.origin + "/export/pdf"
                 });
                 $("#divfooter").show();
-               // $("#divMap").show();
+                // $("#divMap").show();
                 $(".addthis_sharing_toolbox").show();
             });
 
     });
 
-   
+
 
 })
 
@@ -201,7 +213,7 @@ $.ajaxSetup({
         window.antGlobal.showNotification('An error occured! Try again.', "error");
     },
     success: function myfunction(event, xhr, settings) {
-       // alert(message);
+        // alert(message);
     }
 });
 
@@ -217,22 +229,22 @@ function animateIpPlaceholder(txt) {
         timeOut = setTimeout(function () {
             //visible = vis(); // gives current state
             //if (visible) {
-                char++;
-                var type = txt.substring(0, char);
-                $ip.attr('placeholder', type + '|');
-            
-                var visible: boolean = sessionStorage.getItem("isWindowActive") === "true";
-                if (visible) {
-                    typeIt();
-                }
-                else {
-                    $ip.attr('placeholder', txt);
-                }
+            char++;
+            var type = txt.substring(0, char);
+            $ip.attr('placeholder', type + '|');
 
-                if (char == txtLen) {
-                    $ip.attr('placeholder', $ip.attr('placeholder').slice(0, -1)) // remove the '|'
-                    clearTimeout(timeOut);
-                }
+            var visible: boolean = sessionStorage.getItem("isWindowActive") === "true";
+            if (visible) {
+                typeIt();
+            }
+            else {
+                $ip.attr('placeholder', txt);
+            }
+
+            if (char == txtLen) {
+                $ip.attr('placeholder', $ip.attr('placeholder').slice(0, -1)) // remove the '|'
+                clearTimeout(timeOut);
+            }
             //}
             //else {
             //    $ip.attr('placeholder', txt);

@@ -29,8 +29,7 @@ namespace SmartAdminMvc.Controllers
 {
     public class BarcodeController : BaseController
     {
-        // GET: home/index
-        //[OutputCache(CacheProfile = "MyCache")]
+        [OutputCache(CacheProfile = "MyCache")]
         public ActionResult Index(int? id)
         {
             if (id.HasValue)
