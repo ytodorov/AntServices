@@ -1610,6 +1610,7 @@
     <Content Include="Scripts\smart-chat-ui\smart.chat.ui.min.js" />
     <Content Include="Scripts\smartwidgets\jarvis.widget.min.js" />
     <Content Include="Scripts\speech\voicecommand.min.js" />
+    <Content Include="Scripts\trustLogoBody.js" />
     <Content Include="Scripts\trustlogolocal.js" />
     <Content Include="Scripts\viewsJS\barcodeIndex.js" />
     <Content Include="Scripts\viewsJS\homeIndex.js" />

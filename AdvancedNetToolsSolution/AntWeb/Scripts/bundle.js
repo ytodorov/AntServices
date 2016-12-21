@@ -74,6 +74,7 @@ var Ant;
 })(Ant || (Ant = {}));
 window.antGlobal = new Ant.Global();
 //# sourceMappingURL=antGlobal.js.map
+//window.cookieconsent_options = { "message": "This website uses cookies to ensure you get the best experience on our website", "dismiss": "Got it!", "learnMore": "More info", "link": null, "theme": "light-top" };
 $(window).resize(function () {
     //заради менюто което се премахва на малък екран   
     setTimeout(function () {
@@ -157,6 +158,11 @@ $(window).ready(function myfunction() {
             $("#pUserHostAddress").html('Hello ' + ip);
         });
     }, 200);
+    setTimeout(function f() {
+        var script = document.createElement('script');
+        script.src = '//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-571b2acff4b44bbf';
+        document.documentElement.firstChild.appendChild(script);
+    }, 1);
     $("div.hide-menu").click(function () {
         setTimeout(function () {
             resizeCharts();
