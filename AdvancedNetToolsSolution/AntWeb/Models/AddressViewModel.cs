@@ -11,6 +11,7 @@ namespace SmartAdminMvc.Models
         {
             ShowAddressTextBox = true;
             ShowSaveInHistory = true;
+            PlaceholderText = "IP address, URL or host name";
         }
 
 
@@ -30,6 +31,10 @@ namespace SmartAdminMvc.Models
         public string Action { get; set; }
 
         public bool ShowSaveInHistory { get; set; }
+
+        public bool? OnlyWellknownPorts { get; set; }
+
+        public string PlaceholderText { get; set; }
 
     }
 }

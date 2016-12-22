@@ -27,13 +27,17 @@ namespace SmartAdminMvc.Controllers
 
         protected override JsonResult Json(object data, string contentType, Encoding contentEncoding)
         {
-            return base.Json(data, contentType, contentEncoding, JsonRequestBehavior.AllowGet);
+            var baseResult = base.Json(data, contentType, contentEncoding, JsonRequestBehavior.AllowGet);
+            baseResult.MaxJsonLength = int.MaxValue;
+            return baseResult;
         }
 
         protected override JsonResult Json(object data, string contentType, Encoding contentEncoding, JsonRequestBehavior behavior)
         {
             behavior = JsonRequestBehavior.AllowGet;
-            return base.Json(data, contentType, contentEncoding, behavior);
+            var baseResult = base.Json(data, contentType, contentEncoding, behavior);
+            baseResult.MaxJsonLength = int.MaxValue;
+            return baseResult;
         }
 
         protected override void HandleUnknownAction(string actionName)

@@ -15,8 +15,8 @@
                     @(Html.Kendo().AutoComplete()
                     .Name("ip")
                     .DataTextField("Name")
-                    .MinLength(1)
-                    .HtmlAttributes(new { style = "width:100%;" })
+                    .MinLength(1)                    
+                    .HtmlAttributes(new { style = "width:100%;", placeholder = !string.IsNullOrEmpty(Model.PlaceholderText) ? Model.PlaceholderText : string.Empty })
                     .Value(Model?.DefaultDestinationAddress)
                     .Filter("contains")
                     .DataSource(source => source
@@ -38,12 +38,17 @@
             @if (Model.ShowSaveInHistory)
             {
                 <p class="text-center">
-
                     <input type="checkbox" id="showInHistory" class="k-checkbox" checked="checked">
-
-                    <label class="k-checkbox-label" for="showInHistory">Save in history</label>
+                    <label class="k-checkbox-label" title="Leave this checked if you want your request to be visible later." for="showInHistory">Save in history</label>
+                    @if (Model.OnlyWellknownPorts.GetValueOrDefault())
+                    {
+                        <input type="checkbox" id="wellKnownPorts" class="k-checkbox" checked="checked">
+                        <label class="k-checkbox-label" title="Only 6046 wellknown ports will be scanned, instead of all 65535 ports."
+                                for="wellKnownPorts"><a href="#wnp">Wellknown ports</a> only (recommended)</label>
+                    }
                 </p>
             }
+
             <p>
 
                 <button type="button" class="ladda-button btn center-block btn-outline btn-success" id="@Model.ButtonId" data-style="zoom-in">
@@ -56,7 +61,7 @@
                 .Name("loadingProgressBar")
                 .Orientation(ProgressBarOrientation.Horizontal)
                 .ShowStatus(true)
-                .Animation(true)
+                .Animation(false)
                 .HtmlAttributes(new { style = "display:none;width:100%" })
                 .Deferred()
                 )

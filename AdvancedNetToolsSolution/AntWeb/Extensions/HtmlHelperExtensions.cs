@@ -148,6 +148,55 @@ namespace SmartAdminMvc.Extensions
             return builder;
         }
 
+        public static GridBuilder<WellKnownPortViewModel> CreateWellKnownPortGrid
+         (this GridBuilder<WellKnownPortViewModel> builder, UrlHelper urlHelper)
+        {
+            builder.Name("gridName" + Utils.RandomString(length: 10))
+.Columns(columns =>
+{
+    columns.Bound(c => c.PortNumber).Title(text: "Port");
+    columns.Bound(c => c.ServiceName);
+    columns.Bound(c => c.Description);//.Format("{0:u}");
+})
+.Scrollable(s => s.Enabled(value: false))
+.ToolBar(t =>
+{
+    t.Excel().Text(string.Empty);
+    t.Pdf().Text(string.Empty);
+})
+.Excel(e => e.AllPages(allPages: true).FileName(fileName: "pingExport(www.toolsfornet.com).xlsx").ProxyURL(urlHelper.Action(actionName: "Excel", controllerName: "Export")))
+.Pdf(e => e.AllPages().FileName(fileName: "pingExport(www.toolsfornet.com).pdf").ProxyURL(urlHelper.Action(actionName: "Pdf", controllerName: "Export")))
+.Pageable()
+.Sortable()
+.Filterable(f => f.Extra(value: false))
+.DataSource(dataSource =>
+{
+    AjaxDataSourceBuilder<WellKnownPortViewModel> ajaxDatasource = dataSource
+      .Ajax()
+      .Sort(s => s.Add(ss => ss.PortNumber))
+      .ServerOperation(enabled: false)
+
+      .Read(r =>
+      {
+          CrudOperationBuilder cub = r.Action(actionName: "ReadWellKnownPorts", controllerName: "Portscan");
+         
+      });
+    if (HttpContext.Current.Request.Browser.IsMobileDevice)
+    {
+        ajaxDatasource.PageSize(pageSize: 5);
+    }
+    else
+    {
+        ajaxDatasource.PageSize(pageSize: 10);
+    }
+}
+);
+
+
+            builder.Deferred();
+            return builder;
+        }
+
 
         public static GridBuilder<PingPermalinkViewModel> CreatePingPermalinkGrid
             (this GridBuilder<PingPermalinkViewModel> builder, UrlHelper urlHelper, string readDataJavascriptMethodName = null)

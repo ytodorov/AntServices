@@ -11,13 +11,13 @@ namespace SmartAdminMvc.Models
         public uint PortNumber { get; set; }
         public string TransportProtocol { get; set; }
         public string Description { get; set; }
-        public string Assignee { get; set; }
-        public string Contact { get; set; }
-        public DateTime? RegistrationDate { get; set; }
-        public DateTime? ModificationDate { get; set; }
-        public string Reference { get; set; }
-        public uint ServiceCode { get; set; }
-        public string KnownUnauthorizedUses { get; set; }
-        public string AssignmentNotes { get; set; }
+        //public string Assignee { get; set; }
+        //public string Contact { get; set; }
+        //public DateTime? RegistrationDate { get; set; }
+        //public DateTime? ModificationDate { get; set; }
+        //public string Reference { get; set; }
+        //public uint ServiceCode { get; set; }
+        //public string KnownUnauthorizedUses { get; set; }
+        //public string AssignmentNotes { get; set; }
     }
 }

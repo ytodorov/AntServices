@@ -35,6 +35,14 @@ namespace SmartAdminMvc.Infrastructure
             string pathPorts = HostingEnvironment.MapPath(virtualPath: "~/Misc/service-names-port-numbers.csv");
             WellKnownPorts = ParsePorts(pathPorts).Where(r => r != null).ToList();
 
+            StringBuilder sb = new StringBuilder();
+            foreach (var wp in WellKnownPorts.Take(100))
+            {
+                sb.Append($"{wp.PortNumber},");
+            }
+            string wellKnownPortsResultString = sb.ToString();
+            WellKnownPortsString = wellKnownPortsResultString.Substring(0, wellKnownPortsResultString.LastIndexOf(','));
+
             SitesFromXml = new List<string>();
 
             if (System.Web.HttpContext.Current != null)
@@ -154,6 +162,7 @@ namespace SmartAdminMvc.Infrastructure
         public static List<string> SitesFromXml { get; set; }
 
         public static List<WellKnownPortViewModel> WellKnownPorts { get; set; }
+        public static string WellKnownPortsString { get; set; }
 
         public static string ParseSingleTopSite(string line)
         {
@@ -208,41 +217,43 @@ namespace SmartAdminMvc.Infrastructure
                     WellKnownPorts.Add(ParseSinglePort(line));
                 }
             }
+            WellKnownPorts = WellKnownPorts.Where(w => w.PortNumber != 0 && w.TransportProtocol?.Equals("tcp", StringComparison.InvariantCultureIgnoreCase) == true).ToList();
             return WellKnownPorts;
         }
 
         public static WellKnownPortViewModel ParseSinglePort(string line)
         {
             var wkpvm = new WellKnownPortViewModel();
-            return wkpvm;
-            // Тук постоянно гърми, оправи си логиката. rowsSplits има само 4 елемента
-            //try
-            //{
-            //    uint helper;
-            //    DateTime help;
-            //    string[] rowsSplits = line.Split(new char[] { ',' });
-            //    wkpvm.ServiceName = rowsSplits[0];
-            //    uint.TryParse(rowsSplits[1], out helper);
-            //    wkpvm.PortNumber = helper;
-            //    wkpvm.TransportProtocol = rowsSplits[2];
-            //    wkpvm.Description = rowsSplits[3];
-            //    wkpvm.Assignee = rowsSplits[4];
-            //    wkpvm.Contact = rowsSplits[5];
-            //    DateTime.TryParse(rowsSplits[6], out help);
-            //    wkpvm.RegistrationDate = help;
-            //    DateTime.TryParse(rowsSplits[7], out help);
-            //    wkpvm.ModificationDate = help;
-            //    wkpvm.Reference = rowsSplits[8];
-            //    uint.TryParse(rowsSplits[9], out helper);
-            //    wkpvm.ServiceCode = helper;
-            //    wkpvm.KnownUnauthorizedUses = rowsSplits[10];
-            //    wkpvm.AssignmentNotes = rowsSplits[11];
-            //}
-            //catch (Exception ex)
-            //{
-
-            //}
             //return wkpvm;
+            //Тук постоянно гърми, оправи си логиката.rowsSplits има само 4 елемента
+            try
+            {
+                uint helper;
+                string[] rowsSplits = line.Split(new char[] { ',' });
+                if (rowsSplits.Count() > 3)
+                wkpvm.ServiceName = rowsSplits[0];
+                uint.TryParse(rowsSplits[1], out helper);
+                wkpvm.PortNumber = helper;
+                wkpvm.TransportProtocol = rowsSplits[2];
+                wkpvm.Description = rowsSplits[3];
+                
+                //wkpvm.Assignee = rowsSplits[4];
+                //wkpvm.Contact = rowsSplits[5];
+                //DateTime.TryParse(rowsSplits[6], out help);
+                //wkpvm.RegistrationDate = help;
+                //DateTime.TryParse(rowsSplits[7], out help);
+                //wkpvm.ModificationDate = help;
+                //wkpvm.Reference = rowsSplits[8];
+                //uint.TryParse(rowsSplits[9], out helper);
+                //wkpvm.ServiceCode = helper;
+                //wkpvm.KnownUnauthorizedUses = rowsSplits[10];
+                //wkpvm.AssignmentNotes = rowsSplits[11];
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return wkpvm;
         }
 
         class IpInfo

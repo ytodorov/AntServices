@@ -10,16 +10,19 @@ $("#btnPortScan").click(function btnPingClick(e) {
             pb.value(pb.value() + 1);
         }
         else {
+            pb.value(0);
             clearInterval(interval);
         }
-    }, 100);
+    }, 1000);
     var showInHistory = $("#showInHistory").is(":checked");
+    var wellKnownPorts = $("#wellKnownPorts").is(":checked");
     $.ajax({
         method: "POST",
         url: "/portscan/generateid",
         data: {
             ip: $("#ip").val(),
             showInHistory: showInHistory,
+            wellKnownPorts: wellKnownPorts
         },
         success: function f(id) {
             var error = id.error;

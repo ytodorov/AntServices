@@ -41,7 +41,8 @@
     ButtonId = "btnPortScan",
     ButtonText = "Port scan",
     DefaultDestinationAddress = Model?.DestinationAddress,
-    PanelTitle = "IP address or host name"
+    PanelTitle = "IP address or host name",
+    OnlyWellknownPorts = true
 }
 )
 
@@ -53,8 +54,8 @@ Html.Kendo().Grid<PortResponseSummaryViewModel>()
 .Name("portResultsGrid")
 .Columns(columns =>
 {
-    columns.Bound(c => c.PortNumber).Title("Port");
-    columns.Bound(c => c.Protocol);
+    columns.Bound(c => c.PortNumber).Title("TCP port");
+    //columns.Bound(c => c.Protocol);
     columns.Bound(c => c.Service);
     columns.Bound(c => c.State);
 })
@@ -120,3 +121,12 @@ Html.Kendo().Grid<PortPermalinkViewModel>().CreatePortscanPermalinkGrid(Url, "ge
         <script src="~/scripts/viewsjs/portscanindex.js"></script>
 
     }
+
+
+
+
+
+@Html.Raw((Html.AntCreateStandardPanel("hviolet", "<span id='wnp'>Wellknown TCP ports</span>", "<p>" +
+Html.Kendo().Grid<WellKnownPortViewModel>().CreateWellKnownPortGrid(Url).ToHtmlString() + "</p>")))
+
+}

@@ -39,26 +39,37 @@ namespace SmartAdminMvc.Controllers
         }
 
         [HttpPost]
-        public ActionResult GenerateId(string ip, bool? showInHistory)
+        public ActionResult GenerateId(string ip, bool? showInHistory, bool? wellKnownPorts)
         {
             try
             {
                 ip = Utils.GetCorrectAddressOrHost(ip);
 
 
-                string errorMessage = Utils.CheckIfHostIsUp(ip);
-                if (!string.IsNullOrEmpty(errorMessage))
-                {
-                    var result = new { error = errorMessage };
-                    return Json(result);
-                }
+                //string errorMessage = Utils.CheckIfHostIsUp(ip);
+                //if (!string.IsNullOrEmpty(errorMessage))
+                //{
+                //    var result = new { error = errorMessage };
+                //    return Json(result);
+                //}
 
                 var client = new HttpClient();
                 client.Timeout = TimeSpan.FromMinutes(15);
                 // Do not use T5
-                string encodedArgs0 = Uri.EscapeDataString($"-T4 -Pn --top-ports 1000 {ip}");
-                string urlWithArgs = "http://ants-neu.cloudapp.net/home/exec?program=nmap&args=" + encodedArgs0;
-                var portsSummary = client.GetStringAsync(urlWithArgs).Result;
+                string args0 = $"-T4 -Pn -p {Utils.WellKnownPortsString} {ip}";
+                if (!wellKnownPorts.GetValueOrDefault())
+                {
+                    args0 = $"-T4 -Pn --top-ports 2000 {Utils.WellKnownPortsString} {ip}";
+                }
+
+                var content = new FormUrlEncodedContent(new[]
+           {
+                new KeyValuePair<string, string>("program", "nmap"),
+                new KeyValuePair<string, string>("args", args0)
+            });
+                var portsSummary = client.PostAsync("http://ants-neu.cloudapp.net/home/exec", content)
+                    .Result.Content.ReadAsStringAsync().Result;
+
                 client.Dispose();
 
                 using (AntDbContext context = new AntDbContext())
@@ -125,6 +136,12 @@ namespace SmartAdminMvc.Controllers
                 pingPermalinks = context.PortPermalinks.Where(p => p.DestinationAddress == address && p.ShowInHistory == true).ToList();
             }
             return pingPermalinks;
+        }
+
+        public ActionResult ReadWellKnownPorts([DataSourceRequest] DataSourceRequest request)
+        {       
+            JsonResult dsResult = Json(Utils.WellKnownPorts.ToDataSourceResult(request));
+            return dsResult;
         }
     }
 }
