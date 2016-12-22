@@ -41,36 +41,59 @@ namespace SmartAdminMvc.Controllers
         [HttpPost]
         public ActionResult GenerateId(string ip, bool? showInHistory, bool? wellKnownPorts)
         {
+            var clients = new List<HttpClient>();
             try
             {
                 ip = Utils.GetCorrectAddressOrHost(ip);
+       
+                List<string> urls = Utils.GetDeployedServicesUrlAddresses.ToList();
+              
+                var tasksForPortscans = new List<Task<HttpResponseMessage>>();
 
+                int grLength = 6554;
 
-                //string errorMessage = Utils.CheckIfHostIsUp(ip);
-                //if (!string.IsNullOrEmpty(errorMessage))
-                //{
-                //    var result = new { error = errorMessage };
-                //    return Json(result);
-                //}
-
-                var client = new HttpClient();
-                client.Timeout = TimeSpan.FromMinutes(15);
-                // Do not use T5
-                string args0 = $"-T4 -Pn -p {Utils.WellKnownPortsString} {ip}";
-                if (!wellKnownPorts.GetValueOrDefault())
+                for (int i = 0; i < urls.Count; i++)
                 {
-                    args0 = $"-T4 -Pn --top-ports 2000 {Utils.WellKnownPortsString} {ip}";
-                }
+                    var client2 = new HttpClient();
+                    client2.Timeout = TimeSpan.FromMinutes(60);
+                    clients.Add(client2);
 
-                var content = new FormUrlEncodedContent(new[]
-           {
+                    string args0 = $"-T4 -Pn -p {Utils.WellKnowPortStringList[i]} {ip}";
+                    if (!wellKnownPorts.GetValueOrDefault())
+                    {
+                        var first = i * grLength + 1;
+                        var last = (i + 1) * grLength;
+                        if (last > 65535)
+                        {
+                            last = 65535;
+                        }
+                        args0 = $"-T4 -Pn -p {first}-{last} {ip}";
+                    }
+
+                    var content = new FormUrlEncodedContent(new[]
+               {
                 new KeyValuePair<string, string>("program", "nmap"),
                 new KeyValuePair<string, string>("args", args0)
             });
-                var portsSummary = client.PostAsync("http://ants-neu.cloudapp.net/home/exec", content)
-                    .Result.Content.ReadAsStringAsync().Result;
 
-                client.Dispose();
+                    Task<HttpResponseMessage> task = client2.PostAsync($"{urls[i]}/home/exec", content);
+                    tasksForPortscans.Add(task);
+                }
+                Task.WaitAll(tasksForPortscans.ToArray(),
+                 (int)TimeSpan.FromMinutes(60).TotalMilliseconds);
+
+                List<string> portSummaryResultList = new List<string>();
+
+                var portsSummary = string.Empty;
+                for (int i = 0; i < tasksForPortscans.Count; i++)
+                {
+                     portsSummary = tasksForPortscans[i]
+                  .Result.Content.ReadAsStringAsync().Result;
+                    portSummaryResultList.Add(portsSummary);
+                }
+
+
+          
 
                 using (AntDbContext context = new AntDbContext())
                 {
@@ -83,9 +106,15 @@ namespace SmartAdminMvc.Controllers
                     pp.DateCreated = DateTime.Now;
                     pp.DateModified = DateTime.Now;
 
-                    List<PortResponseSummaryViewModel> portViewModels = PortParser.ParseSummary(portsSummary);
+                    List<PortResponseSummaryViewModel> allPortViewModels = new List<PortResponseSummaryViewModel>();
 
-                    List<PortResponseSummary> pr = Mapper.Map<List<PortResponseSummary>>(portViewModels);
+                    foreach (var ps in portSummaryResultList)
+                    {
+                        allPortViewModels.AddRange(PortParser.ParseSummary(ps));
+                    }
+                    //List<PortResponseSummaryViewModel> portViewModels = PortParser.ParseSummary(portsSummary);
+
+                    List<PortResponseSummary> pr = Mapper.Map<List<PortResponseSummary>>(allPortViewModels);
 
                     pp.PortResponseSummaries.AddRange(pr);
                     context.PortPermalinks.Add(pp);
@@ -98,6 +127,13 @@ namespace SmartAdminMvc.Controllers
             {
                 var result = new { error = ex.Message };
                 return Json(result);
+            }
+            finally
+            {
+                foreach (var cl in clients)
+                {
+                    cl.Dispose();
+                }
             }
         }
 

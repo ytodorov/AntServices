@@ -31,17 +31,73 @@ namespace SmartAdminMvc.Infrastructure
         {
             RandomNumberGenerator = new Random();
 
+            GetDeployedServicesUrlAddresses = new List<string>()
+            {
+                "http://ants-ea.cloudapp.net", // "40.83.125.9",
+                "http://ants-je.cloudapp.net", // "13.71.155.140"
+                "http://ants-sea2.cloudapp.net", // "13.76.100.42"
+                "http://ants-cus2-83p25urt.cloudapp.net", // "52.165.26.10"
+                "http://ant-jw.cloudapp.net", // "40.74.137.95"
+                "http://ants-eus2-5223is65.cloudapp.net", // "13.90.212.72"
+                "http://ants-neu.cloudapp.net", // "13.74.188.161"
+                "http://ants-scus2.cloudapp.net", // "104.214.70.79"
+                "http://ants-weu.cloudapp.net", // "104.46.38.89"
+                "http://ants-wus2.cloudapp.net" // "13.93.211.38"
+            };
+
+
             WellKnownPorts = new List<WellKnownPortViewModel>();
             string pathPorts = HostingEnvironment.MapPath(virtualPath: "~/Misc/service-names-port-numbers.csv");
             WellKnownPorts = ParsePorts(pathPorts).Where(r => r != null).ToList();
 
             StringBuilder sb = new StringBuilder();
-            foreach (var wp in WellKnownPorts.Take(100))
+            foreach (var wp in WellKnownPorts)
             {
                 sb.Append($"{wp.PortNumber},");
             }
             string wellKnownPortsResultString = sb.ToString();
             WellKnownPortsString = wellKnownPortsResultString.Substring(0, wellKnownPortsResultString.LastIndexOf(','));
+
+            WellKnowPortStringList = new List<string>();
+            int portCountInGroup = WellKnownPorts.Count / GetDeployedServicesUrlAddresses.Count + 1;
+            for (int i = 0; i < GetDeployedServicesUrlAddresses.Count; i++)
+            {
+                var portsInGroup = WellKnownPorts.Skip(i * portCountInGroup).Take(portCountInGroup);
+                sb = new StringBuilder();
+                foreach (var wp in portsInGroup)
+                {
+                    sb.Append($"{wp.PortNumber},");
+                }
+                wellKnownPortsResultString = sb.ToString();
+                if (wellKnownPortsResultString.EndsWith(","))
+                {
+                    wellKnownPortsResultString = wellKnownPortsResultString.Substring(0, wellKnownPortsResultString.LastIndexOf(','));
+                }
+                WellKnowPortStringList.Add(wellKnownPortsResultString);
+            }
+
+            AllPortStringList = new List<string>();
+            List<int> allPorts = Enumerable.Range(1, 65535).ToList();
+            portCountInGroup = allPorts.Count / GetDeployedServicesUrlAddresses.Count + 1;
+            for (int i = 0; i < GetDeployedServicesUrlAddresses.Count; i++)
+            {
+                var portsInGroup = allPorts.Skip(i * portCountInGroup).Take(portCountInGroup);
+                sb = new StringBuilder();
+                foreach (var wp in portsInGroup)
+                {
+                    sb.Append($"{wp},");
+                }
+                wellKnownPortsResultString = sb.ToString();
+                if (wellKnownPortsResultString.EndsWith(","))
+                {
+                    wellKnownPortsResultString = wellKnownPortsResultString.Substring(0, wellKnownPortsResultString.LastIndexOf(','));
+                }
+                AllPortStringList.Add(wellKnownPortsResultString);
+            }
+
+
+
+
 
             SitesFromXml = new List<string>();
 
@@ -65,19 +121,7 @@ namespace SmartAdminMvc.Infrastructure
 
             TopSitesGlobal = ParseTopSites(path).Where(r => r != null).ToList();
 
-            GetDeployedServicesUrlAddresses = new List<string>()
-            {
-                "http://ants-ea.cloudapp.net", // "40.83.125.9",
-                "http://ants-je.cloudapp.net", // "13.71.155.140"
-                "http://ants-sea2.cloudapp.net", // "13.76.100.42"
-                "http://ants-cus2-83p25urt.cloudapp.net", // "52.165.26.10"
-                "http://ant-jw.cloudapp.net", // "40.74.137.95"
-                "http://ants-eus2-5223is65.cloudapp.net", // "13.90.212.72"
-                "http://ants-neu.cloudapp.net", // "13.74.188.161"
-                "http://ants-scus2.cloudapp.net", // "104.214.70.79"
-                "http://ants-weu.cloudapp.net", // "104.46.38.89"
-                "http://ants-wus2.cloudapp.net" // "13.93.211.38"
-            };
+            
 
             // Това е защото гасим и палим виртуалните машини през нощта за да спестим някой лев
             HotstNameToIp = new Dictionary<string, string>();
@@ -164,6 +208,10 @@ namespace SmartAdminMvc.Infrastructure
         public static List<WellKnownPortViewModel> WellKnownPorts { get; set; }
         public static string WellKnownPortsString { get; set; }
 
+        public static List<string> WellKnowPortStringList { get; set; }
+
+        public static List<string> AllPortStringList { get; set; }
+
         public static string ParseSingleTopSite(string line)
         {
             return line.Split(new char[] { ',' })[1];
@@ -218,6 +266,10 @@ namespace SmartAdminMvc.Infrastructure
                 }
             }
             WellKnownPorts = WellKnownPorts.Where(w => w.PortNumber != 0 && w.TransportProtocol?.Equals("tcp", StringComparison.InvariantCultureIgnoreCase) == true).ToList();
+
+            // remove duplicates
+            WellKnownPorts = WellKnownPorts.GroupBy(w => w.PortNumber).Select(s => s.First()).ToList();
+
             return WellKnownPorts;
         }
 

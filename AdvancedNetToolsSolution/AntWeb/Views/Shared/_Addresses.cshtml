@@ -43,7 +43,7 @@
                     @if (Model.OnlyWellknownPorts.GetValueOrDefault())
                     {
                         <input type="checkbox" id="wellKnownPorts" class="k-checkbox" checked="checked">
-                        <label class="k-checkbox-label" title="Only 6046 wellknown ports will be scanned, instead of all 65535 ports."
+                        <label class="k-checkbox-label" title="Only @(Utils.WellKnownPorts.Count) wellknown ports will be scanned, instead of all 65535 ports."
                                 for="wellKnownPorts"><a href="#wnp">Wellknown ports</a> only (recommended)</label>
                     }
                 </p>
