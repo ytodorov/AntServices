@@ -19,12 +19,25 @@
     @if (IsSectionDefined(name: "Styles"))
     {@RenderSection(name: "Styles", required: false)}
     @Styles.Render(paths: "~/bundles/homer/css")
-    @*<link href="~/content/codemirror-3.01/codemirror.css" rel="stylesheet" />*@
-    @*<link rel="stylesheet" href="~/content/kendo/kendo.common.min.css">*@
     <link rel="stylesheet" href="//kendo.cdn.telerik.com/2016.3.1028/styles/kendo.common.min.css">
-    <link rel="stylesheet" href="//kendo.cdn.telerik.com/2016.3.1028/styles/kendo.metro.min.css">   
+    <link rel="stylesheet" href="//kendo.cdn.telerik.com/2016.3.1028/styles/kendo.metro.min.css">  
+    <meta property="og:url" content="https://toolsfornet.com@(Request.Url.LocalPath)" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content='@(ViewBag.Title + (Request.Url.LocalPath == "/" ? "" : " | Tools for Net"))' />
+    <meta property="og:description" content="@ViewBag.MetaDescription" />
+    <meta property="og:image" content="https://toolsfornet.com/favicon.ico" /> 
 </head>
 <body class="@Html.PageClass() fixed-footer hide-sidebar">
+    <div id="fb-root"></div>
+    <script>
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.8";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
     <div class="splash" style="z-index:3">
         <div class="color-line"></div>
         <div class="splash-title text-success">
@@ -57,7 +70,24 @@
     </aside>
     @*Заради Comodo се слагат тези индекси на header и body, защото не се вижда popup-a на comodo иначе*@
     <div id="wrapper" style="z-index:1">
+
         <div id="divbody">
+            <div class="normalheader transition animated fadeIn small-header right">
+                <div class="hpanel">
+                    <div class="panel-body">
+                        <div class="pull-right fb-like"
+                             data-href="https://www.facebook.com/toolsfornet"
+                             data-colorscheme="light"
+                             data-layout="button_count"
+                             data-action="like"
+                             data-size="small"
+                             data-show-faces="false"
+                             data-share="true"></div>
+                       
+                    </div>
+                </div>
+            </div>
+
             @RenderBody()
         </div>
         <div id="divFooter">
