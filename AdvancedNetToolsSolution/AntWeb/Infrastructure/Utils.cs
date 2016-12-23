@@ -121,6 +121,18 @@ namespace SmartAdminMvc.Infrastructure
 
             TopSitesGlobal = ParseTopSites(path).Where(r => r != null).ToList();
 
+            string portPath = HostingEnvironment.MapPath(virtualPath: "~/Misc/NmapTcpPorts.txt");
+            var portWithRelevance = ParsePortRelevance(portPath);
+
+            foreach (var portVM in WellKnownPorts)
+            {
+                double? frq = portWithRelevance.FirstOrDefault(t => t.Item1 == portVM.PortNumber)?.Item2;
+                if (frq.HasValue)
+                {
+                    portVM.Frequency = frq.GetValueOrDefault();
+                }
+            }
+
             
 
             // Това е защото гасим и палим виртуалните машини през нощта за да спестим някой лев
@@ -231,6 +243,44 @@ namespace SmartAdminMvc.Infrastructure
                 }
             }
             return TopSitesGlobal;
+        }
+
+        public static List<Tuple<int, double>> ParsePortRelevance(string path)
+        {
+            List<Tuple<int, double>> result = new List<Tuple<int, double>>();
+
+            if (!string.IsNullOrEmpty(path))
+            {
+                using (StreamReader sr = new System.IO.StreamReader(path))
+                {
+                    while (!sr.EndOfStream)
+                    {
+                        string splitMe = sr.ReadLine();
+
+                        if (splitMe.ToLowerInvariant().Contains("tcp"))
+                        {
+
+                            string[] parts = splitMe.Split(new char[] { '\t' }, StringSplitOptions.RemoveEmptyEntries);
+                            if (parts.Count() == 2)
+                            {
+                                var secondPart = parts[1];
+                                double d;
+                                double.TryParse(secondPart, NumberStyles.Any, CultureInfo.InvariantCulture, out d);
+
+                                var firstPart = parts[0];
+
+                                string port = firstPart.Substring(0, firstPart.IndexOf('/'));
+                                int portInt;
+                                int.TryParse(port, out portInt);
+                                Tuple<int, double> tuple = new Tuple<int, double>(portInt, d);
+                                result.Add(tuple);
+
+                            }
+                        }
+                    }
+                }
+            }
+            return result;
         }
 
         public static List<string> ParseXmlFromUrl(string url)

@@ -907,6 +907,7 @@
     <Content Include="Images\profile.jpg" />
     <Content Include="libs\Kendo.Mvc.dll" />
     <Content Include="libs\Kendo.Mvc.xml" />
+    <Content Include="Misc\NmapTcpPorts.txt" />
     <Content Include="Misc\TopSites.txt" />
     <Content Include="packages.config" />
     <Content Include="Content\fonts\fontawesome-webfont.eot" />

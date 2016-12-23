@@ -11,6 +11,8 @@ namespace SmartAdminMvc.Models
         public uint PortNumber { get; set; }
         public string TransportProtocol { get; set; }
         public string Description { get; set; }
+
+        public double? Frequency { get; set; }
         //public string Assignee { get; set; }
         //public string Contact { get; set; }
         //public DateTime? RegistrationDate { get; set; }

@@ -157,6 +157,8 @@ namespace SmartAdminMvc.Extensions
     columns.Bound(c => c.PortNumber).Title(text: "Port");
     columns.Bound(c => c.ServiceName);
     columns.Bound(c => c.Description);//.Format("{0:u}");
+    columns.Bound(c => c.Frequency);
+
 })
 .Scrollable(s => s.Enabled(value: false))
 .ToolBar(t =>
