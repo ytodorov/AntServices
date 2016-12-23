@@ -38,6 +38,22 @@ namespace SmartAdminMvc.Controllers
             return View();
         }
 
+        public ActionResult MyIp()
+        {
+            using (AntDbContext context = new AntDbContext())
+            {
+                PortPermalink pp = new PortPermalink();
+                pp.DestinationAddress = Request.UserHostAddress;
+                pp.ShowInHistory = true;
+                //context.PortPermalinks.Add(pp);
+                //context.SaveChanges();
+
+                PortPermalinkViewModel ppvm = Mapper.Map<PortPermalinkViewModel>(pp);
+                ppvm.ForcePortScan = true;
+                return View("Index", model: ppvm);
+            }
+        }
+
         [HttpPost]
         public ActionResult GenerateId(string ip, bool? showInHistory, bool? wellKnownPorts)
         {
@@ -58,7 +74,7 @@ namespace SmartAdminMvc.Controllers
                     client2.Timeout = TimeSpan.FromMinutes(60);
                     clients.Add(client2);
 
-                    string args0 = $"-T4 -Pn -p {Utils.WellKnowPortStringList[i]} {ip}";
+                    string args0 = $"-T4 -Pn -p {Utils.WellKnowPortStringListTop1000[i]} {ip}";
                     if (!wellKnownPorts.GetValueOrDefault())
                     {
                         var first = i * grLength + 1;

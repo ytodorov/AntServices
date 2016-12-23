@@ -7,18 +7,20 @@
 
 
     var pb = $("#loadingProgressBar").data("kendoProgressBar");
-    pb.value(0);
-    $("#loadingProgressBar").show();
+    if (typeof pb != 'undefined') {
+        pb.value(0);
+        $("#loadingProgressBar").show();
 
 
-    var interval = setInterval(function () {
-        if (pb.value() < 100) {
-            pb.value(pb.value() + 1);
-        } else {
-            pb.value(0);
-            clearInterval(interval);
-        }
-    }, 1000); 
+        var interval = setInterval(function () {
+            if (pb.value() < 100) {
+                pb.value(pb.value() + 1);
+            } else {
+                pb.value(0);
+                //clearInterval(interval);
+            }
+        }, 1000);
+    }
 
     var showInHistory = $("#showInHistory").is(":checked");
     var wellKnownPorts = $("#wellKnownPorts").is(":checked");
@@ -43,7 +45,7 @@
                 window.antGlobal.showNotification(error, "error");
             }
             else {
-                window.location.href = "portscan?id=" + id;     
+                window.location.href = "/portscan?id=" + id;     
             }
 
 

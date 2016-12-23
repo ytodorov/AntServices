@@ -36,6 +36,8 @@
 "<div>")))
 }
 
+
+
 @Html.Partial("_Addresses", new AddressViewModel()
 {
     ButtonId = "btnPortScan",
@@ -121,6 +123,15 @@ Html.Kendo().Grid<PortPermalinkViewModel>().CreatePortscanPermalinkGrid(Url, "ge
 
         <script src="~/scripts/viewsjs/portscanindex.js"></script>
 
+@if (Model?.ForcePortScan == true)
+{
+    <script>
+        setTimeout(function f() {
+            $("#btnPortScan").click();
+        }, 1000);
+        
+    </script>
+}
     }
 
 

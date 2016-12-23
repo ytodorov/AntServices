@@ -76,6 +76,39 @@ namespace SmartAdminMvc.Infrastructure
                 WellKnowPortStringList.Add(wellKnownPortsResultString);
             }
 
+            string portPath = HostingEnvironment.MapPath(virtualPath: "~/Misc/NmapTcpPorts.txt");
+            var portWithRelevance = ParsePortRelevance(portPath);
+
+            foreach (var portVM in WellKnownPorts)
+            {
+                double? frq = portWithRelevance.FirstOrDefault(t => t.Item1 == portVM.PortNumber)?.Item2;
+                if (frq.HasValue)
+                {
+                    portVM.Frequency = frq.GetValueOrDefault();
+                }
+            }
+
+
+            WellKnowPortStringListTop1000 = new List<string>();
+            portCountInGroup = WellKnownPorts.OrderByDescending(a => a.Frequency).Take(1000).ToList().Count /
+                GetDeployedServicesUrlAddresses.Count + 1;
+            for (int i = 0; i < GetDeployedServicesUrlAddresses.Count; i++)
+            {
+                var portsInGroup = WellKnownPorts.OrderByDescending(a => a.Frequency).Take(1000).ToList().Skip(i * portCountInGroup).Take(portCountInGroup);
+                sb = new StringBuilder();
+                foreach (var wp in portsInGroup)
+                {
+                    sb.Append($"{wp.PortNumber},");
+                }
+                wellKnownPortsResultString = sb.ToString();
+                if (wellKnownPortsResultString.EndsWith(","))
+                {
+                    wellKnownPortsResultString = wellKnownPortsResultString.Substring(0, wellKnownPortsResultString.LastIndexOf(','));
+                }
+                WellKnowPortStringListTop1000.Add(wellKnownPortsResultString);
+            }
+
+
             AllPortStringList = new List<string>();
             List<int> allPorts = Enumerable.Range(1, 65535).ToList();
             portCountInGroup = allPorts.Count / GetDeployedServicesUrlAddresses.Count + 1;
@@ -121,18 +154,7 @@ namespace SmartAdminMvc.Infrastructure
 
             TopSitesGlobal = ParseTopSites(path).Where(r => r != null).ToList();
 
-            string portPath = HostingEnvironment.MapPath(virtualPath: "~/Misc/NmapTcpPorts.txt");
-            var portWithRelevance = ParsePortRelevance(portPath);
-
-            foreach (var portVM in WellKnownPorts)
-            {
-                double? frq = portWithRelevance.FirstOrDefault(t => t.Item1 == portVM.PortNumber)?.Item2;
-                if (frq.HasValue)
-                {
-                    portVM.Frequency = frq.GetValueOrDefault();
-                }
-            }
-
+      
             
 
             // Това е защото гасим и палим виртуалните машини през нощта за да спестим някой лев
@@ -221,6 +243,8 @@ namespace SmartAdminMvc.Infrastructure
         public static string WellKnownPortsString { get; set; }
 
         public static List<string> WellKnowPortStringList { get; set; }
+
+        public static List<string> WellKnowPortStringListTop1000 { get; set; }
 
         public static List<string> AllPortStringList { get; set; }
 
@@ -333,12 +357,14 @@ namespace SmartAdminMvc.Infrastructure
                 uint helper;
                 string[] rowsSplits = line.Split(new char[] { ',' });
                 if (rowsSplits.Count() > 3)
-                wkpvm.ServiceName = rowsSplits[0];
-                uint.TryParse(rowsSplits[1], out helper);
-                wkpvm.PortNumber = helper;
-                wkpvm.TransportProtocol = rowsSplits[2];
-                wkpvm.Description = rowsSplits[3];
-                
+                {
+                    wkpvm.ServiceName = rowsSplits[0];
+                    uint.TryParse(rowsSplits[1], out helper);
+                    wkpvm.PortNumber = helper;
+                    wkpvm.TransportProtocol = rowsSplits[2];
+                    wkpvm.Description = rowsSplits[3];
+
+                }
                 //wkpvm.Assignee = rowsSplits[4];
                 //wkpvm.Contact = rowsSplits[5];
                 //DateTime.TryParse(rowsSplits[6], out help);
