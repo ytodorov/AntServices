@@ -49,48 +49,51 @@ namespace SmartAdminMvc.Controllers
         [HttpPost]
         public string GoogleMapFromIps(int? permalinkId, AntDbContext context, string permalinkType)
         {
-            if (permalinkType.Equals(typeof(PingPermalink).Name, StringComparison.CurrentCultureIgnoreCase))
+            if (permalinkId.GetValueOrDefault() != 0)
             {
-                PingPermalink pingPermalink = context.PingPermalinks.Include(path => path.PingResponseSummaries)
-                    .FirstOrDefault(p => p.Id == permalinkId);
-
-                var ipAddresses = new List<string>();
-                foreach (var prs in pingPermalink.PingResponseSummaries)
+                if (permalinkType.Equals(typeof(PingPermalink).Name, StringComparison.CurrentCultureIgnoreCase))
                 {
-                    ipAddresses.Add(prs.SourceIpAddress);
-                    ipAddresses.Add(prs.DestinationIpAddress);
-                }
-                Response.ContentType = "text/plain; charset=utf-8";
-                string gmString = Utils.GetGoogleMapsString(ipAddresses, pingPermalink.PingResponseSummaries, starLine: true);
-                return gmString;
-            }
-            else if (permalinkType.Equals(typeof(TraceroutePermalink).Name, StringComparison.CurrentCultureIgnoreCase))
-            {
-                TraceroutePermalink pingPermalink = context.TraceroutePermalinks.Include(path =>
-                path.TracerouteResponseSummaries.Select(t => t.TracerouteResponseDetails))
-                    .FirstOrDefault(p => p.Id == permalinkId);
+                    PingPermalink pingPermalink = context.PingPermalinks.Include(path => path.PingResponseSummaries)
+                        .FirstOrDefault(p => p.Id == permalinkId);
 
-                var ipAddresses = new List<string>();
-                foreach (var prs in pingPermalink.TracerouteResponseSummaries)
-                {
-                    var orderedTRDs = prs.TracerouteResponseDetails.OrderBy(o => o.Hop).ToList();
-                    ipAddresses.Add(prs.SourceIpAddress);
-                    foreach (var t in orderedTRDs)
+                    var ipAddresses = new List<string>();
+                    foreach (var prs in pingPermalink.PingResponseSummaries)
                     {
-                        IPAddress ipAddress;
-                        if (IPAddress.TryParse(t.Ip, out ipAddress))
+                        ipAddresses.Add(prs.SourceIpAddress);
+                        ipAddresses.Add(prs.DestinationIpAddress);
+                    }
+                    Response.ContentType = "text/plain; charset=utf-8";
+                    string gmString = Utils.GetGoogleMapsString(ipAddresses, pingPermalink.PingResponseSummaries, starLine: true);
+                    return gmString;
+                }
+                else if (permalinkType.Equals(typeof(TraceroutePermalink).Name, StringComparison.CurrentCultureIgnoreCase))
+                {
+                    TraceroutePermalink pingPermalink = context.TraceroutePermalinks.Include(path =>
+                    path.TracerouteResponseSummaries.Select(t => t.TracerouteResponseDetails))
+                        .FirstOrDefault(p => p.Id == permalinkId);
+
+                    var ipAddresses = new List<string>();
+                    foreach (var prs in pingPermalink.TracerouteResponseSummaries)
+                    {
+                        var orderedTRDs = prs.TracerouteResponseDetails.OrderBy(o => o.Hop).ToList();
+                        ipAddresses.Add(prs.SourceIpAddress);
+                        foreach (var t in orderedTRDs)
                         {
-                            if (!Utils.IsIPLocal(ipAddress))
+                            IPAddress ipAddress;
+                            if (IPAddress.TryParse(t.Ip, out ipAddress))
                             {
-                                ipAddresses.Add(t.Ip);
+                                if (!Utils.IsIPLocal(ipAddress))
+                                {
+                                    ipAddresses.Add(t.Ip);
+                                }
                             }
                         }
+                        //break;
                     }
-                    //break;
+                    Response.ContentType = "text/plain; charset=utf-8";
+                    string gmString = Utils.GetGoogleMapsString(ipAddresses, null, starLine: false);
+                    return gmString;
                 }
-                Response.ContentType = "text/plain; charset=utf-8";
-                string gmString = Utils.GetGoogleMapsString(ipAddresses, null, starLine: false);
-                return gmString;
             }
             return string.Empty;
         }

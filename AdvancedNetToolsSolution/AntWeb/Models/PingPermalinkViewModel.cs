@@ -14,5 +14,6 @@ namespace SmartAdminMvc.Models
 
         public List<PingResponseSummaryViewModel> PingResponseSummaries { get; set; }
 
+        public bool ForcePing { get; set; }
     }
 }

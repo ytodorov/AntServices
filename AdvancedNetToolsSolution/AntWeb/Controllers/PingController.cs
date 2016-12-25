@@ -44,8 +44,25 @@ namespace SmartAdminMvc.Controllers
                     }
                 }
             }
+            else if (TempData["forcePing"] != null && (bool)TempData["forcePing"])
+            {
+                PingPermalinkViewModel ppvm = new PingPermalinkViewModel() {
+                    DestinationAddress = Request.UserHostAddress,
+                    ForcePing = true
+                };                
+                return View(model: ppvm);
+            }
+
             return View();
         }
+
+        public ActionResult Me()
+        {
+            var res = RedirectToAction("Index");
+            TempData["forcePing"] = true;
+            return res;
+        }
+
 
         [HttpPost]
         public ActionResult GenerateId(PingRequestViewModel prvm, AntDbContext context)

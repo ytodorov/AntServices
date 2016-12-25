@@ -140,5 +140,3 @@ Html.Kendo().Grid<PortPermalinkViewModel>().CreatePortscanPermalinkGrid(Url, "ge
 
 @Html.Raw((Html.AntCreateStandardPanel("hviolet", "<span id='wnp'>Wellknown TCP ports</span><p class='text-center'>Based on <a rel='nofollow' href='http://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml'>RFC6335</a></p>", "<p>" +
 Html.Kendo().Grid<WellKnownPortViewModel>().CreateWellKnownPortGrid(Url).ToHtmlString() + "</p>")))
-
-}
