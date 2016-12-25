@@ -14,7 +14,7 @@ $(document).ready(function readyPing() {
             else {
                 clearInterval(interval);
             }
-        }, 100);
+        }, 1000);
         var showInHistory = $("#showInHistory").is(":checked");
         $.ajax({
             method: "POST",

@@ -26,6 +26,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using SmartAdminMvc.Controllers;
 
 #endregion
 
@@ -39,7 +40,7 @@ namespace SmartAdminMvc
         {
             get
             {
-                return (IContainer) HttpContext.Current.Items["_Container"];
+                return (IContainer)HttpContext.Current.Items["_Container"];
             }
             set
             {
@@ -91,7 +92,30 @@ namespace SmartAdminMvc
                 }
             }
 
+            Timer timer = new Timer(TimeSpan.FromSeconds(10).TotalMilliseconds);
+            timer.Elapsed += Timer_Elapsed;
+            timer.Start();
+
         }
+
+        private void Timer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            var randomInt = Utils.RandomNumberGenerator.Next(1, 999);
+            string siteUrl = Utils.TopSitesGlobal[randomInt];
+            PingController pc = new PingController();
+            using (AntDbContext context = new AntDbContext())
+            {
+                var res = pc.GenerateId(new PingRequestViewModel() { ShowInHistory = true, Ip = siteUrl }, context);
+
+                TracerouteController tc = new TracerouteController();
+                var res2 = tc.GenerateId(new TracerouteRequestViewModel() { ShowInHistory = true, Ip = siteUrl }, context);
+
+                PortscanController portC = new PortscanController();
+                var res3 = portC.GenerateId(siteUrl, true, true);
+            }
+
+        }
+
         public void Application_BeginRequest()
         {
             HttpContext context = HttpContext.Current;

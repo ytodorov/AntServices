@@ -18,7 +18,7 @@
         } else {
             clearInterval(interval);
         }
-    }, 100);
+    }, 1000);
 
 
     var showInHistory = $("#showInHistory").is(":checked");

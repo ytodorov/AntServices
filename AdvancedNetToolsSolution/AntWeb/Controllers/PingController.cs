@@ -176,12 +176,12 @@ namespace SmartAdminMvc.Controllers
 
                 var pingPermalink = new PingPermalink();
                 pingPermalink.ShowInHistory = prvm.ShowInHistory;
-                pingPermalink.UserCreatedIpAddress = Request.UserHostAddress;
                 pingPermalink.DestinationAddress = prvm.Ip;
-                pingPermalink.UserCreated = Request.UserHostAddress;
-                pingPermalink.UserModified = Request.UserHostAddress;
                 pingPermalink.DateCreated = DateTime.Now;
                 pingPermalink.DateModified = DateTime.Now;
+                pingPermalink.UserCreatedIpAddress = Request?.UserHostAddress;
+                pingPermalink.UserCreated = Request?.UserHostAddress;
+                pingPermalink.UserModified = Request?.UserHostAddress;
 
                 List<PingResponseSummary> pr = Mapper.Map<List<PingResponseSummary>>(list);
 
@@ -228,13 +228,13 @@ namespace SmartAdminMvc.Controllers
         {
             var list = new List<AddressHistoryViewModel>();
 
-            if (Request.Url.ToString().ToLowerInvariant().IndexOf("/barcode/") < 0)
+            if (Request?.Url.ToString().ToLowerInvariant().IndexOf("/barcode/") < 0)
             {
                 List<PingPermalink> pingPermalinks = GetPermalinksForCurrentUser(address: null);
                 pingPermalinks = pingPermalinks.GroupBy(pp => pp.DestinationAddress).Select(group => group.First()).ToList();
 
 
-                list.Add(new AddressHistoryViewModel { Name = Request.UserHostAddress, Category = "My IP", Order = 0 });
+                list.Add(new AddressHistoryViewModel { Name = Request?.UserHostAddress, Category = "My IP", Order = 0 });
                 foreach (var pp in pingPermalinks)
                 {
                     var ahvm = new AddressHistoryViewModel() { Name = pp.DestinationAddress, Category = "History", Order = 1 };
@@ -273,7 +273,7 @@ namespace SmartAdminMvc.Controllers
         {
             using (AntDbContext context = new AntDbContext())
             {
-                string userIpAddress = Request.UserHostAddress;
+                string userIpAddress = Request?.UserHostAddress;
                 List<PingPermalink> pingPermalinks;
                 if (string.IsNullOrEmpty(address))
                 {

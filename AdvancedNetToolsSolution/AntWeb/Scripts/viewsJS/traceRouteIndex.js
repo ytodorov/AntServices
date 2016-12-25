@@ -13,7 +13,7 @@ $("#btnTraceRoute").click(function btnTraceRoute(e) {
         else {
             clearInterval(interval);
         }
-    }, 100);
+    }, 1000);
     var showInHistory = $("#showInHistory").is(":checked");
     $.ajax({
         method: "POST",
