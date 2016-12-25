@@ -62,7 +62,7 @@ namespace SmartAdminMvc.Controllers
         {
             using (AntDbContext context = new AntDbContext())
             {
-                string userIpAddress = Request.UserHostAddress;
+                string userIpAddress = Request?.UserHostAddress;
                 List<ErrorLogging> errorLoggings;
                 if (string.IsNullOrEmpty(address))
                 {

@@ -78,10 +78,10 @@ namespace SmartAdminMvc.Controllers
 
                 var traceroutePermalink = new TraceroutePermalink();
                 traceroutePermalink.ShowInHistory = prvm.ShowInHistory;
-                traceroutePermalink.UserCreatedIpAddress = Request.UserHostAddress;
+                traceroutePermalink.UserCreatedIpAddress = Request?.UserHostAddress;
                 traceroutePermalink.DestinationAddress = prvm.Ip;
-                traceroutePermalink.UserCreated = Request.UserHostAddress;
-                traceroutePermalink.UserModified = Request.UserHostAddress;
+                traceroutePermalink.UserCreated = Request?.UserHostAddress;
+                traceroutePermalink.UserModified = Request?.UserHostAddress;
                 traceroutePermalink.DateCreated = DateTime.Now;
                 traceroutePermalink.DateModified = DateTime.Now;
 
@@ -145,7 +145,7 @@ namespace SmartAdminMvc.Controllers
         {
             using (AntDbContext context = new AntDbContext())
             {
-                string userIpAddress = Request.UserHostAddress;
+                string userIpAddress = Request?.UserHostAddress;
                 List<TraceroutePermalink> pingPermalinks;
                 if (string.IsNullOrEmpty(address))
                 {

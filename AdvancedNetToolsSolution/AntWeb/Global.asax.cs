@@ -92,7 +92,7 @@ namespace SmartAdminMvc
                 }
             }
 
-            Timer timer = new Timer(TimeSpan.FromSeconds(10).TotalMilliseconds);
+            Timer timer = new Timer(TimeSpan.FromMinutes(2).TotalMilliseconds);
             timer.Elapsed += Timer_Elapsed;
             timer.Start();
 
@@ -167,8 +167,8 @@ namespace SmartAdminMvc
                 el.StackTrace = ex.StackTrace.ToString() + ex?.InnerException?.StackTrace;
                 el.Data = ex.Data.ToString();
                 el.ShowInHistory = true;
-                el.UserCreated = Request.UserHostAddress;
-                el.UserModified = Request.UserHostAddress;
+                el.UserCreated = Request?.UserHostAddress;
+                el.UserModified = Request?.UserHostAddress;
                 el.DateCreated = DateTime.Now;
                 el.DateModified = DateTime.Now;
 

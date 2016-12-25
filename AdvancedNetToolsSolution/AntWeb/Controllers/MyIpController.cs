@@ -13,7 +13,7 @@ namespace SmartAdminMvc.Controllers
         // GET: home/index
         public ActionResult Index()
         {
-            return View(model: Request.UserHostAddress);
+            return View(model: Request?.UserHostAddress);
             //using (HttpClient client = new HttpClient())
             //{
             //    string url = "http://ants-neu.cloudapp.net/home/getclientip";

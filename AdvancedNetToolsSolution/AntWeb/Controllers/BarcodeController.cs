@@ -57,8 +57,8 @@ namespace SmartAdminMvc.Controllers
             var barcodePermalink = new BarcodePermalink();
             barcodePermalink.Value = barcodeValue;
             barcodePermalink.ShowInHistory = prvm.ShowInHistory;
-            barcodePermalink.UserCreated = Request.UserHostAddress;
-            barcodePermalink.UserModified = Request.UserHostAddress;
+            barcodePermalink.UserCreated = Request?.UserHostAddress;
+            barcodePermalink.UserModified = Request?.UserHostAddress;
             barcodePermalink.DateCreated = DateTime.Now;
             barcodePermalink.DateModified = DateTime.Now;
 

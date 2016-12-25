@@ -43,7 +43,7 @@ namespace SmartAdminMvc.Controllers
             using (AntDbContext context = new AntDbContext())
             {
                 PortPermalink pp = new PortPermalink();
-                pp.DestinationAddress = Request.UserHostAddress;
+                pp.DestinationAddress = Request?.UserHostAddress;
                 pp.ShowInHistory = true;
                 //context.PortPermalinks.Add(pp);
                 //context.SaveChanges();
@@ -115,10 +115,10 @@ namespace SmartAdminMvc.Controllers
                 {
                     var pp = new PortPermalink();
                     pp.ShowInHistory = showInHistory;
-                    pp.UserCreatedIpAddress = Request.UserHostAddress;
+                    pp.UserCreatedIpAddress = Request?.UserHostAddress;
                     pp.DestinationAddress = ip;
-                    pp.UserCreated = Request.UserHostAddress;
-                    pp.UserModified = Request.UserHostAddress;
+                    pp.UserCreated = Request?.UserHostAddress;
+                    pp.UserModified = Request?.UserHostAddress;
                     pp.DateCreated = DateTime.Now;
                     pp.DateModified = DateTime.Now;
 
@@ -177,7 +177,7 @@ namespace SmartAdminMvc.Controllers
 
         private List<PortPermalink> GetPermalinksForCurrentUser(string address, AntDbContext context)
         {
-            string userIpAddress = Request.UserHostAddress;
+            string userIpAddress = Request?.UserHostAddress;
             List<PortPermalink> pingPermalinks;
             if (string.IsNullOrEmpty(address))
             {

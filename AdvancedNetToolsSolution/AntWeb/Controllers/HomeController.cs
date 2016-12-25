@@ -43,7 +43,7 @@ namespace SmartAdminMvc.Controllers
         [HttpPost]
         public string GetIp()
         {
-            return Request.UserHostAddress;
+            return Request?.UserHostAddress;
         }
 
         [HttpPost]
