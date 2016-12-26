@@ -25,7 +25,7 @@
     </div>
 </div>
 
-@if (Model != null)
+@if (Model != null && Model.Id != 0)
 {
     @Html.Raw((Html.AntCreateStandardPanel("hgreen", "Portscan report summary",
 "<div class='text-center'>" +
@@ -48,7 +48,7 @@
 }
 )
 
-@if (Model != null)
+@if (Model != null && Model.Id != 0)
 {
 
     @Html.Raw((Html.AntCreateStandardPanel("hyellow", "Portscan results", "<p>" +
@@ -90,7 +90,7 @@ e.AllPages(true).FileName("portExportHistory(www.toolsfornet.com).xlsx").ProxyUR
     @Html.Raw((Html.AntCreateStandardPanel("hviolet", "Port scan history for current user's IP", "<p>" +
 Html.Kendo().Grid<PortPermalinkViewModel>().CreatePortscanPermalinkGrid(Url).ToHtmlString() + "</p>")))
 
-    @if (Model != null)
+    @if (Model != null && Model.Id != 0)
     {
         <script>
             function getRequestedAddress() {
@@ -128,7 +128,7 @@ Html.Kendo().Grid<PortPermalinkViewModel>().CreatePortscanPermalinkGrid(Url, "ge
     <script>
         setTimeout(function f() {
             $("#btnPortScan").click();
-        }, 1000);
+        }, 500);
         
     </script>
 }

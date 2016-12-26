@@ -35,23 +35,23 @@ namespace SmartAdminMvc.Controllers
                     }
                 }
             }
+            else if (TempData["forcePortScan"] != null && (bool)TempData["forcePortScan"])
+            {
+                PortPermalinkViewModel ppvm = new PortPermalinkViewModel()
+                {
+                    DestinationAddress = Request.UserHostAddress,
+                    ForcePortScan = true
+                };
+                return View(model: ppvm);
+            }
             return View();
         }
 
-        public ActionResult MyIp()
+        public ActionResult Me()
         {
-            using (AntDbContext context = new AntDbContext())
-            {
-                PortPermalink pp = new PortPermalink();
-                pp.DestinationAddress = Request?.UserHostAddress;
-                pp.ShowInHistory = true;
-                //context.PortPermalinks.Add(pp);
-                //context.SaveChanges();
-
-                PortPermalinkViewModel ppvm = Mapper.Map<PortPermalinkViewModel>(pp);
-                ppvm.ForcePortScan = true;
-                return View("Index", model: ppvm);
-            }
+            var res = RedirectToAction("Index");
+            TempData["forcePortScan"] = true;
+            return res;
         }
 
         [HttpPost]
@@ -61,9 +61,9 @@ namespace SmartAdminMvc.Controllers
             try
             {
                 ip = Utils.GetCorrectAddressOrHost(ip);
-       
+
                 List<string> urls = Utils.GetDeployedServicesUrlAddresses.ToList();
-              
+
                 var tasksForPortscans = new List<Task<HttpResponseMessage>>();
 
                 int grLength = 6554;
@@ -77,13 +77,14 @@ namespace SmartAdminMvc.Controllers
                     string args0 = $"-T4 -Pn -p {Utils.WellKnowPortStringListTop1000[i]} {ip}";
                     if (!wellKnownPorts.GetValueOrDefault())
                     {
-                        var first = i * grLength + 1;
-                        var last = (i + 1) * grLength;
-                        if (last > 65535)
-                        {
-                            last = 65535;
-                        }
-                        args0 = $"-T4 -Pn -p {first}-{last} {ip}";
+                        args0 = $"-T4 -Pn -p {Utils.WellKnowPortStringList[i]} {ip}";
+                        //var first = i * grLength + 1;
+                        //var last = (i + 1) * grLength;
+                        //if (last > 65535)
+                        //{
+                        //    last = 65535;
+                        //}
+                        //args0 = $"-T4 -Pn -p {first}-{last} {ip}";
                     }
 
                     var content = new FormUrlEncodedContent(new[]
@@ -103,13 +104,13 @@ namespace SmartAdminMvc.Controllers
                 var portsSummary = string.Empty;
                 for (int i = 0; i < tasksForPortscans.Count; i++)
                 {
-                     portsSummary = tasksForPortscans[i]
-                  .Result.Content.ReadAsStringAsync().Result;
+                    portsSummary = tasksForPortscans[i]
+                 .Result.Content.ReadAsStringAsync().Result;
                     portSummaryResultList.Add(portsSummary);
                 }
 
 
-          
+
 
                 using (AntDbContext context = new AntDbContext())
                 {
@@ -139,7 +140,7 @@ namespace SmartAdminMvc.Controllers
                     return Json(pp.Id);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 var result = new { error = ex.Message };
                 return Json(result);
@@ -191,7 +192,7 @@ namespace SmartAdminMvc.Controllers
         }
 
         public ActionResult ReadWellKnownPorts([DataSourceRequest] DataSourceRequest request)
-        {       
+        {
             JsonResult dsResult = Json(Utils.WellKnownPorts.ToDataSourceResult(request));
             return dsResult;
         }

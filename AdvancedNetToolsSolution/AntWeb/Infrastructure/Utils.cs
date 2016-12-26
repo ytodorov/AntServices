@@ -12,6 +12,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Sockets;
 using System.Text;
 using System.Web;
 using System.Web.Caching;
@@ -914,6 +915,10 @@ namespace SmartAdminMvc.Infrastructure
         {
             try
             {
+                if (ipaddress.AddressFamily == AddressFamily.InterNetworkV6)
+                {
+                    return true;
+                }
                 String[] straryIPAddress = ipaddress.ToString().Split(new String[] { "." }, StringSplitOptions.RemoveEmptyEntries);
                 int[] iaryIPAddress = new int[] { int.Parse(straryIPAddress[0]), int.Parse(straryIPAddress[1]), int.Parse(straryIPAddress[2]), int.Parse(straryIPAddress[3]) };
                 if (iaryIPAddress[0] == 10 || (iaryIPAddress[0] == 192 && iaryIPAddress[1] == 168) || (iaryIPAddress[0] == 172 && (iaryIPAddress[1] >= 16 && iaryIPAddress[1] <= 31)))
@@ -926,7 +931,7 @@ namespace SmartAdminMvc.Infrastructure
                     return false;
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return true;
             }
