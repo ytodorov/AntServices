@@ -15,7 +15,7 @@
                     @(Html.Kendo().AutoComplete()
                     .Name("ip")
                     .DataTextField("Name")
-                    .MinLength(1)                    
+                    .MinLength(1)
                     .HtmlAttributes(new { style = "width:100%;", placeholder = !string.IsNullOrEmpty(Model.PlaceholderText) ? Model.PlaceholderText : string.Empty })
                     .Value(Model?.DefaultDestinationAddress)
                     .Filter("contains")
@@ -40,13 +40,27 @@
                 <p class="text-center">
                     <input type="checkbox" id="showInHistory" class="k-checkbox" checked="checked">
                     <label class="k-checkbox-label" title="Leave this checked if you want your request to be visible later." for="showInHistory">Save in history</label>
-                    @if (Model.OnlyWellknownPorts.GetValueOrDefault())
-                    {
-                        <input type="checkbox" id="wellKnownPorts" class="k-checkbox" checked="checked">
-                        <label class="k-checkbox-label" title="Only @(Utils.WellKnownPorts.Count) wellknown ports will be scanned, instead of all 65535 ports."
-                                for="wellKnownPorts"><a href="#wnp">Wellknown ports</a> only (recommended)</label>
-                    }
                 </p>
+                    <p class="text-center">
+                        @if (Model.OnlyWellknownPorts.GetValueOrDefault())
+                        {
+                            @*<input type="checkbox" id="wellKnownPorts" class="k-checkbox" checked="checked">
+                                <label class="k-checkbox-label" title="Only @(Utils.WellKnownPorts.Count) wellknown ports will be scanned, instead of all 65535 ports."
+                                       for="wellKnownPorts"><a href="#wnp">Wellknown ports</a>only (recommended)</label>*@
+
+
+                            <input type="radio" name="port" id="wellKnown1000" class="k-radio" checked="checked">
+                            <label class="k-radio-label" for="wellKnown1000">Top 1000 Wellknown ports only (fastest)</label>
+
+                            <input type="radio" name="port" id="wellKnown" class="k-radio">
+                            <label class="k-radio-label" for="wellKnown">All Wellknown ports only (fast)</label>
+
+                                <input type="radio" name="port" id="allPorts" class="k-radio">
+                                <label class="k-radio-label" for="allPorts">All ports (slow)</label>
+
+
+                        }
+                    </p>
             }
 
             <p>

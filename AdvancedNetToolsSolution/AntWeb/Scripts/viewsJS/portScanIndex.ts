@@ -23,7 +23,9 @@
     }
 
     var showInHistory = $("#showInHistory").is(":checked");
-    var wellKnownPorts = $("#wellKnownPorts").is(":checked");
+    var wellKnown1000 = $("#wellKnown1000").is(":checked");
+    var wellKnown = $("#wellKnown").is(":checked");
+    var allPorts = $("#allPorts").is(":checked");
 
     var ip = $("#ip").val();
     $.ajax({
@@ -33,7 +35,9 @@
         data: {
             ip: ip,
             showInHistory: showInHistory,
-            wellKnownPorts: wellKnownPorts
+            wellKnown1000: wellKnown1000,
+            wellKnown: wellKnown,
+            allPorts: allPorts
         },
         success: function f(id) {
             var error = id.error;

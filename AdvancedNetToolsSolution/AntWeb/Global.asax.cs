@@ -114,7 +114,7 @@ namespace SmartAdminMvc
                 var res2 = tc.GenerateId(new TracerouteRequestViewModel() { ShowInHistory = true, Ip = siteUrl }, context);
 
                 PortscanController portC = new PortscanController();
-                var res3 = portC.GenerateId(siteUrl, true, true);
+                var res3 = portC.GenerateId(siteUrl, true, true, false, false);
             }
 
         }

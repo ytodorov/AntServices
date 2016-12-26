@@ -55,7 +55,7 @@ namespace SmartAdminMvc.Controllers
         }
 
         [HttpPost]
-        public ActionResult GenerateId(string ip, bool? showInHistory, bool? wellKnownPorts)
+        public ActionResult GenerateId(string ip, bool? showInHistory, bool? wellKnown1000, bool? wellKnown, bool? allPorts)
         {
             var clients = new List<HttpClient>();
             try
@@ -75,16 +75,19 @@ namespace SmartAdminMvc.Controllers
                     clients.Add(client2);
 
                     string args0 = $"-T4 -Pn -p {Utils.WellKnowPortStringListTop1000[i]} {ip}";
-                    if (!wellKnownPorts.GetValueOrDefault())
+                    if (wellKnown.GetValueOrDefault())
                     {
-                        args0 = $"-T4 -Pn -p {Utils.WellKnowPortStringList[i]} {ip}";
-                        //var first = i * grLength + 1;
-                        //var last = (i + 1) * grLength;
-                        //if (last > 65535)
-                        //{
-                        //    last = 65535;
-                        //}
-                        //args0 = $"-T4 -Pn -p {first}-{last} {ip}";
+                        args0 = $"-T4 -Pn -p {Utils.WellKnowPortStringList[i]} {ip}";                       
+                    }
+                    else if (allPorts.GetValueOrDefault())
+                    {
+                        var first = i * grLength + 1;
+                        var last = (i + 1) * grLength;
+                        if (last > 65535)
+                        {
+                            last = 65535;
+                        }
+                        args0 = $"-T4 -Pn -p {first}-{last} {ip}";
                     }
 
                     var content = new FormUrlEncodedContent(new[]

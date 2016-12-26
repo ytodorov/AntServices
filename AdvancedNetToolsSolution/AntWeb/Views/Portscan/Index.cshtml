@@ -54,6 +54,7 @@
     @Html.Raw((Html.AntCreateStandardPanel("hyellow", "Portscan results", "<p>" +
 Html.Kendo().Grid<PortResponseSummaryViewModel>()
 .Name("portResultsGrid")
+.NoRecords("No open ports have been found!")
 .Columns(columns =>
 {
     columns.Bound(c => c.PortNumber).Title("TCP port");
