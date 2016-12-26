@@ -92,9 +92,12 @@ namespace SmartAdminMvc
                 }
             }
 
-            Timer timer = new Timer(TimeSpan.FromMinutes(2).TotalMilliseconds);
-            timer.Elapsed += Timer_Elapsed;
-            timer.Start();
+            if (Environment.MachineName != "YORDAN-PC")
+            {
+                Timer timer = new Timer(TimeSpan.FromMinutes(2).TotalMilliseconds);
+                timer.Elapsed += Timer_Elapsed;
+                timer.Start();
+            }
 
         }
 

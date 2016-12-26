@@ -17,11 +17,12 @@ $("#btnPortScan").click(function btnPingClick(e) {
     }
     var showInHistory = $("#showInHistory").is(":checked");
     var wellKnownPorts = $("#wellKnownPorts").is(":checked");
+    var ip = $("#ip").val();
     $.ajax({
         method: "POST",
         url: "/portscan/generateid",
         data: {
-            ip: $("#ip").val(),
+            ip: ip,
             showInHistory: showInHistory,
             wellKnownPorts: wellKnownPorts
         },
@@ -35,7 +36,7 @@ $("#btnPortScan").click(function btnPingClick(e) {
                 window.antGlobal.showNotification(error, "error");
             }
             else {
-                window.location.href = "/portscan?id=" + id;
+                window.location.href = "/portscan?url=" + ip + "&" + "id=" + id;
             }
             //window.location.href = "portscan?id=" + id;
         }

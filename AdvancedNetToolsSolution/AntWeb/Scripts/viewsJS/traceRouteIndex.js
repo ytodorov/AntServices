@@ -15,11 +15,12 @@ $("#btnTraceRoute").click(function btnTraceRoute(e) {
         }
     }, 1000);
     var showInHistory = $("#showInHistory").is(":checked");
+    var ip = $("#ip").val();
     $.ajax({
         method: "POST",
         url: "/traceroute/generateid",
         data: {
-            ip: $("#ip").val(),
+            ip: ip,
             showInHistory: showInHistory,
         },
         success: function f(id) {
@@ -32,7 +33,7 @@ $("#btnTraceRoute").click(function btnTraceRoute(e) {
                 window.antGlobal.showNotification(error, "error");
             }
             else {
-                window.location.href = "traceroute?id=" + id;
+                window.location.href = "traceroute?url=" + ip + "&" + "id=" + id;
             }
         }
     });

@@ -25,13 +25,13 @@
 
 
         var showInHistory = $("#showInHistory").is(":checked");
-
+        var ip = $("#ip").val();
         $.ajax({
             method: "POST",
             url: "/ping/generateid",
 
             data: {
-                ip: $("#ip").val(),
+                ip: ip,
                 showInHistory: showInHistory,
                 packetsCount: $("#tbPacketsCount").val(),
                 packetsSize: $("#tbPacketsSize").val(),
@@ -50,7 +50,7 @@
                     window.antGlobal.showNotification(error, "error");
                 }
                 else {
-                    window.location.href = "ping?id=" + id;
+                    window.location.href = "ping?url=" + ip + "&" + "id=" + id;
                 }
 
             }
