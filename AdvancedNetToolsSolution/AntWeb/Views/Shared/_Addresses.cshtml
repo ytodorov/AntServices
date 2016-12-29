@@ -1,5 +1,29 @@
 ﻿@model AddressViewModel
+<script id="templateDummy" type="text/x-kendo-template">
+   <span>test</span>
+</script>
+<style>
+    .k-nodata
+    {
+        display:none !important;
+    }
+   
+</style>
+<script>
+    
+    function dataBound(d) {
+        var total = d.sender.dataSource.total()
+        if (total == 0)
+        {
+            $("#ip-list").parent().hide();
+        }
+        else
+        {
+            $("#ip-list").parent().show();
+        }
 
+    }
+</script>
 <div>
     <div class="hpanel hgreen">
         <div class="panel-heading">
@@ -19,18 +43,25 @@
                     .HtmlAttributes(new { style = "width:100%;", placeholder = !string.IsNullOrEmpty(Model.PlaceholderText) ? Model.PlaceholderText : string.Empty })
                     .Value(Model?.DefaultDestinationAddress)
                     .Filter("contains")
+                    .IgnoreCase(true)
+                    .Animation(false)
+                    .Delay(1)                    
+                    //.NoDataTemplateId("templateDummy")
                     .DataSource(source => source
                     .Custom()
-                    .Group(g => g.Add("Category", typeof(string)))
+                    //.Group(g => g.Add("Category", typeof(string)))
                     .Transport(transport => transport
                     .Read(read =>
                     {
                         var action = Model.Action != null ? Model.Action : "ReadAddressesToPing";
                         var controller = Model.Controller != null ? Model.Controller : "Ping";
                         read.Action(action, controller);
-                    }))
+                    }))              
+                
                 .ServerFiltering(false)
-                ).Deferred()
+                )
+                .Events(a => a.DataBound("dataBound")) // Защото noDataTemplate не работи
+                .Deferred()
                     )
 
                 </p>
