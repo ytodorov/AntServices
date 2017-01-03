@@ -48,7 +48,9 @@ namespace SmartAdminMvc.Extensions
             builder.Name("gridName" + Utils.RandomString(length: 10))
 .Columns(columns =>
 {
-    columns.Bound(c => c.DestinationAddress).Title(text: "Address");
+    columns.Bound(c => c.DestinationAddress).Title(text: "Url");
+    columns.Bound(c => c.DestinationIpAddress).Title(text: "IP");
+    columns.Bound(c => c.OpenPortsCount).Title(text: "Open ports");
     columns.Bound(c => c.PermalinkAddress).Title(text: "Permalink").ClientTemplate(value: "<a href='#: data.PermalinkAddress #'>#: data.PermalinkAddress #</a>");
     columns.Bound(c => c.DateCreatedTimeAgo).Title(text: "Created on");//.Format("{0:u}");
 })

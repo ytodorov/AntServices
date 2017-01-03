@@ -12,7 +12,8 @@
 <script>
     
     function dataBound(d) {
-        var total = d.sender.dataSource.total()
+       
+        var total = d.sender.dataSource.total();
         if (total == 0)
         {
             $("#ip-list").parent().hide();

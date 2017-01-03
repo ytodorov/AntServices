@@ -1,4 +1,5 @@
 ﻿using SmartAdminMvc.Infrastructure;
+using SmartAdminMvc.Infrastructure.Jobs;
 using SmartAdminMvc.Models;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ using Xunit;
 
 namespace UnitTests
 {
-    public class PortTests
+    public class PortTests : UnitTestBase
     {
 
         [Fact]
@@ -113,11 +114,14 @@ namespace UnitTests
                 List<PortResponseSummaryViewModel> portViewModels = PortParser.ParseSummary(task.Result);
                 resultPortResponseSummaryViewModel.AddRange(portViewModels);
             }
-            clients.ForEach((action) => action.Dispose());
+            clients.ForEach((action) => action.Dispose());            
+        }
 
-
-
-
+        [Fact]
+        public void PortScanAddressesJobTest()
+        {
+            PortScanAddressesJob pj = new PortScanAddressesJob();
+            pj.Execute(null);
         }
     }
 }

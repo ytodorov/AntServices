@@ -18,7 +18,7 @@ namespace SmartAdminMvc.Models
             }
         }
 
-        public string PermalinkAddress
+        public virtual string PermalinkAddress
         {
             get
             {
@@ -49,7 +49,8 @@ namespace SmartAdminMvc.Models
                         controllerName = HttpContext.Current.Request.Url.Segments[1].Replace("/", string.Empty);
                     }
 
-                    result = $"{fullRootUrl}/{controllerName}?{urlOrIpString}={DestinationAddress}&id={Id}";
+                    result = $"{fullRootUrl}/{controllerName}?{urlOrIpString}={DestinationAddress}&id={Id}";                  
+
                     return result;
                 }
                 return string.Empty;

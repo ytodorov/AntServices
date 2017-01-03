@@ -13,6 +13,10 @@ namespace AntDal.Entities
             PortResponseSummaries = new List<PortResponseSummary>();
         }
 
+        public string DestinationIpAddress { get; set; }
+
+        public int? OpenPortsCount { get; set; }
+
         public virtual List<PortResponseSummary> PortResponseSummaries { get; set; }
     }
 }

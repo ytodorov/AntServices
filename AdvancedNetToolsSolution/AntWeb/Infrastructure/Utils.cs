@@ -34,13 +34,13 @@ namespace SmartAdminMvc.Infrastructure
 
             GetDeployedServicesUrlAddresses = new List<string>()
             {
+                "http://ants-neu.cloudapp.net", // "13.74.188.161"
                 "http://ants-ea.cloudapp.net", // "40.83.125.9",
                 "http://ants-je.cloudapp.net", // "13.71.155.140"
                 "http://ants-sea2.cloudapp.net", // "13.76.100.42"
                 "http://ants-cus2-83p25urt.cloudapp.net", // "52.165.26.10"
                 "http://ant-jw.cloudapp.net", // "40.74.137.95"
-                "http://ants-eus2-5223is65.cloudapp.net", // "13.90.212.72"
-                "http://ants-neu.cloudapp.net", // "13.74.188.161"
+                "http://ants-eus2-5223is65.cloudapp.net", // "13.90.212.72"              
                 "http://ants-scus2.cloudapp.net", // "104.214.70.79"
                 "http://ants-weu.cloudapp.net", // "104.46.38.89"
                 "http://ants-wus2.cloudapp.net" // "13.93.211.38"
@@ -49,6 +49,12 @@ namespace SmartAdminMvc.Infrastructure
 
             WellKnownPorts = new List<WellKnownPortViewModel>();
             string pathPorts = HostingEnvironment.MapPath(virtualPath: "~/Misc/service-names-port-numbers.csv");
+
+            if (string.IsNullOrEmpty(pathPorts))
+            {
+                var sitePath = new DirectoryInfo(Environment.CurrentDirectory);
+                pathPorts = Path.Combine(sitePath.Parent.Parent.Parent.FullName, "AntWeb", "Misc", "service-names-port-numbers.csv");
+            }
             WellKnownPorts = ParsePorts(pathPorts).Where(r => r != null).ToList();
 
             StringBuilder sb = new StringBuilder();
@@ -78,6 +84,13 @@ namespace SmartAdminMvc.Infrastructure
             }
 
             string portPath = HostingEnvironment.MapPath(virtualPath: "~/Misc/NmapTcpPorts.txt");
+
+            if (string.IsNullOrEmpty(portPath))
+            {
+                var sitePath = new DirectoryInfo(Environment.CurrentDirectory);
+                portPath = Path.Combine(sitePath.Parent.Parent.Parent.FullName, "AntWeb", "Misc", "NmapTcpPorts.txt");
+            }
+
             var portWithRelevance = ParsePortRelevance(portPath);
 
             foreach (var portVM in WellKnownPorts)
@@ -147,16 +160,24 @@ namespace SmartAdminMvc.Infrastructure
             string xmlPath = HostingEnvironment.MapPath(virtualPath: "~/sitemap.xml");
 
 
-
-            SitesFromXml = ParseXmlFromUrl(xmlPath).Where(r => r != null).ToList();
+            if (!string.IsNullOrEmpty(xmlPath))
+            {
+                SitesFromXml = ParseXmlFromUrl(xmlPath).Where(r => r != null).ToList();
+            }
 
             TopSitesGlobal = new List<string>();
             string path = HostingEnvironment.MapPath(virtualPath: "~/Misc/TopSites.txt");
 
+            if (string.IsNullOrEmpty(path))
+            {
+                var sitePath = new DirectoryInfo(Environment.CurrentDirectory);
+                path = Path.Combine(sitePath.Parent.Parent.Parent.FullName, "AntWeb", "Misc", "TopSites.txt");
+            }
+
             TopSitesGlobal = ParseTopSites(path).Where(r => r != null).ToList();
 
-      
-            
+
+
 
             // Това е защото гасим и палим виртуалните машини през нощта за да спестим някой лев
             HotstNameToIp = new Dictionary<string, string>();
@@ -378,7 +399,7 @@ namespace SmartAdminMvc.Infrastructure
                 //wkpvm.KnownUnauthorizedUses = rowsSplits[10];
                 //wkpvm.AssignmentNotes = rowsSplits[11];
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
             }
@@ -969,13 +990,29 @@ namespace SmartAdminMvc.Infrastructure
                 }
                 return result;
             }
-            catch(Exception)
+            catch (Exception)
             {
 
             }
-          
+
 
             throw new Exception($"'{ipAddressOrHost}' is not a valid IP address nor a valid host name!");
+        }
+
+        public static bool IsUrl(string ipAddressOrHost)
+        {
+            IPAddress ipAddress;
+            if (IPAddress.TryParse(ipAddressOrHost, out ipAddress))
+            {
+                return false;
+            }
+
+            Uri test;
+            if (Uri.TryCreate(ipAddressOrHost, UriKind.RelativeOrAbsolute, out test))
+            {
+                return true;
+            }
+            return false;
         }
 
 

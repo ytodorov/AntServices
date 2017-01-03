@@ -27,6 +27,9 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using SmartAdminMvc.Controllers;
+using Quartz;
+using SmartAdminMvc.Infrastructure.Jobs;
+using Quartz.Impl;
 
 #endregion
 
@@ -98,6 +101,29 @@ namespace SmartAdminMvc
                 timer.Elapsed += Timer_Elapsed;
                 timer.Start();
             }
+
+            // construct a scheduler factory
+            ISchedulerFactory schedFact = new StdSchedulerFactory();
+
+            // get a scheduler
+            IScheduler sched = schedFact.GetScheduler();
+            sched.Start();
+            // define the job and tie it to our HelloJob class
+            IJobDetail job = JobBuilder.Create<PortScanAddressesJob>()
+                .WithIdentity("myJob", "group1")
+                .Build();
+
+
+            // Trigger the job to run now, and then every 40 seconds
+            ITrigger trigger = TriggerBuilder.Create()
+              .WithIdentity("myTrigger", "group1")
+              .StartNow()
+                .WithSchedule(CronScheduleBuilder.DailyAtHourAndMinute(0, 0).InTimeZone(TimeZoneInfo.Utc))
+              .Build();
+
+           
+
+            sched.ScheduleJob(job, trigger);
 
         }
 

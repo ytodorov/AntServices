@@ -8,6 +8,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
+using System.Data.Entity;
 
 namespace SmartAdminMvc.Controllers
 {
@@ -30,6 +31,25 @@ namespace SmartAdminMvc.Controllers
         public ActionResult Error500()
         {
             return View();
+        }
+
+        public void FixOpenPortsCount(AntDbContext context)
+        {
+            var pps = context.PortPermalinks.Include(path => path.PortResponseSummaries).ToList();
+            foreach (var pp in pps)
+            {
+                pp.OpenPortsCount = pp.PortResponseSummaries.Count(p => p.State.Equals("open", StringComparison.InvariantCultureIgnoreCase));
+                if (Utils.IsUrl(pp.DestinationAddress))
+                {
+                    pp.DestinationIpAddress = Utils.GetIpAddressFromHostName(pp.DestinationAddress, Utils.GetDeployedServicesUrlAddresses[0]);
+                }
+                else
+                {
+                    pp.DestinationIpAddress = pp.DestinationAddress;
+                    pp.DestinationAddress = null;
+                }
+            }
+            context.SaveChanges();
         }
 
         [HttpPost]

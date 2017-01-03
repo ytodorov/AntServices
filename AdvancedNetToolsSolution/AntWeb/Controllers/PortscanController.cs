@@ -60,7 +60,15 @@ namespace SmartAdminMvc.Controllers
             var clients = new List<HttpClient>();
             try
             {
+
+
                 ip = Utils.GetCorrectAddressOrHost(ip);
+                string url = null;
+                if (Utils.IsUrl(ip))
+                {
+                    url = ip;
+                    ip = Utils.GetIpAddressFromHostName(url, Utils.GetDeployedServicesUrlAddresses[0]);
+                }
 
                 List<string> urls = Utils.GetDeployedServicesUrlAddresses.ToList();
 
@@ -77,7 +85,7 @@ namespace SmartAdminMvc.Controllers
                     string args0 = $"-T4 -Pn -p {Utils.WellKnowPortStringListTop1000[i]} {ip}";
                     if (wellKnown.GetValueOrDefault())
                     {
-                        args0 = $"-T4 -Pn -p {Utils.WellKnowPortStringList[i]} {ip}";                       
+                        args0 = $"-T4 -Pn -p {Utils.WellKnowPortStringList[i]} {ip}";
                     }
                     else if (allPorts.GetValueOrDefault())
                     {
@@ -121,6 +129,15 @@ namespace SmartAdminMvc.Controllers
                     pp.ShowInHistory = showInHistory;
                     pp.UserCreatedIpAddress = Request?.UserHostAddress;
                     pp.DestinationAddress = ip;
+
+                    if (!string.IsNullOrEmpty(url))
+                    {
+                        pp.DestinationIpAddress = ip;
+                        pp.DestinationAddress = url;
+                    }
+
+
+
                     pp.UserCreated = Request?.UserHostAddress;
                     pp.UserModified = Request?.UserHostAddress;
                     pp.DateCreated = DateTime.Now;
@@ -135,7 +152,7 @@ namespace SmartAdminMvc.Controllers
                     //List<PortResponseSummaryViewModel> portViewModels = PortParser.ParseSummary(portsSummary);
 
                     List<PortResponseSummary> pr = Mapper.Map<List<PortResponseSummary>>(allPortViewModels);
-
+                    pp.OpenPortsCount = allPortViewModels.Count(a => a.State.IsCaseInsensitiveEqual("open"));
                     pp.PortResponseSummaries.AddRange(pr);
                     context.PortPermalinks.Add(pp);
                     context.SaveChanges();
