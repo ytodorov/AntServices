@@ -9,6 +9,7 @@ using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using System.Data.Entity;
+using System.Threading.Tasks;
 
 namespace SmartAdminMvc.Controllers
 {
@@ -33,23 +34,30 @@ namespace SmartAdminMvc.Controllers
             return View();
         }
 
-        public void FixOpenPortsCount(AntDbContext context)
+        public void FixOpenPortsCount()
         {
-            var pps = context.PortPermalinks.Include(path => path.PortResponseSummaries).ToList();
-            foreach (var pp in pps)
+            Task.Factory.StartNew(() =>
             {
-                pp.OpenPortsCount = pp.PortResponseSummaries.Count(p => p.State.Equals("open", StringComparison.InvariantCultureIgnoreCase));
-                if (Utils.IsUrl(pp.DestinationAddress))
+                using (AntDbContext context = new AntDbContext())
                 {
-                    pp.DestinationIpAddress = Utils.GetIpAddressFromHostName(pp.DestinationAddress, Utils.GetDeployedServicesUrlAddresses[0]);
+                    var pps = context.PortPermalinks.Include(path => path.PortResponseSummaries).ToList();
+                    foreach (var pp in pps)
+                    {
+                        pp.OpenPortsCount = pp.PortResponseSummaries.Count(p => p.State.Equals("open", StringComparison.InvariantCultureIgnoreCase));
+                        if (Utils.IsUrl(pp.DestinationAddress))
+                        {
+                            pp.DestinationIpAddress = Utils.GetIpAddressFromHostName(pp.DestinationAddress, Utils.GetDeployedServicesUrlAddresses[0]);
+                        }
+                        else
+                        {
+                            pp.DestinationIpAddress = pp.DestinationAddress;
+                            pp.DestinationAddress = null;
+                        }
+                        context.SaveChanges();
+                    }
+                   
                 }
-                else
-                {
-                    pp.DestinationIpAddress = pp.DestinationAddress;
-                    pp.DestinationAddress = null;
-                }
-            }
-            context.SaveChanges();
+            });
         }
 
         [HttpPost]
