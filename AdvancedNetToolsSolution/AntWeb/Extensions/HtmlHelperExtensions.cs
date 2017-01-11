@@ -11,7 +11,8 @@ namespace SmartAdminMvc.Extensions
 {
     public static class HtmlHelperExtensions
     {
-        public static string AntCreateStandardPanel(this HtmlHelper htmlHelper, string headerColorClass = null, string headerText = null, string body = null)
+        public static string AntCreateStandardPanel(this HtmlHelper htmlHelper,
+            string headerColorClass = null, string headerText = null, string body = null)
         {
             if (headerColorClass == null)
             {
@@ -43,7 +44,9 @@ namespace SmartAdminMvc.Extensions
 
 
         public static GridBuilder<PortPermalinkViewModel> CreatePortscanPermalinkGrid
-            (this GridBuilder<PortPermalinkViewModel> builder, UrlHelper urlHelper, string readDataJavascriptMethodName = null)
+            (this GridBuilder<PortPermalinkViewModel> builder, UrlHelper urlHelper,
+            string readDataJavascriptMethodName = null,
+            bool serverOperations = false)
         {
             builder.Name("gridName" + Utils.RandomString(length: 10))
 .Columns(columns =>
@@ -70,11 +73,16 @@ namespace SmartAdminMvc.Extensions
     AjaxDataSourceBuilder<PortPermalinkViewModel> ajaxDatasource = dataSource
       .Ajax()
       .Sort(s => s.Add(ss => ss.DateCreated).Descending())
-      .ServerOperation(enabled: false)
+      .ServerOperation(enabled: serverOperations)
 
       .Read(r =>
       {
-          CrudOperationBuilder cub = r.Action(actionName: "ReadPortPermalinks", controllerName: "Portscan");
+          object routeValues = null;
+          if (serverOperations)
+          {
+              routeValues = new { maxResults = 100000 };
+          }
+          CrudOperationBuilder cub = r.Action("ReadPortPermalinks", "Portscan", routeValues);
           if (!string.IsNullOrEmpty(readDataJavascriptMethodName))
           {
               cub.Data(readDataJavascriptMethodName);

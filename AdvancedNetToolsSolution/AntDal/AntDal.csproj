@@ -55,6 +55,7 @@
     <Compile Include="AntDbContext.cs" />
     <Compile Include="Entities\EntityBase.cs" />
     <Compile Include="Entities\ErrorLogging.cs" />
+    <Compile Include="Entities\FollowedAddress.cs" />
     <Compile Include="Entities\IpLocation.cs" />
     <Compile Include="Entities\MelissaIpLocation.cs" />
     <Compile Include="Entities\PermalinkBase.cs" />

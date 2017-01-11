@@ -117,6 +117,12 @@ Html.Kendo().Grid<PortPermalinkViewModel>().CreatePortscanPermalinkGrid(Url, "ge
     </script>
     @Html.Raw((Html.AntCreateStandardPanel("hviolet", "Port scan for the last 100 addresses", "<p>" +
 Html.Kendo().Grid<PortPermalinkViewModel>().CreatePortscanPermalinkGrid(Url, "getAllPermalinks").ToHtmlString() + "</p>")))
+
+<div id="all">
+    @Html.Raw((Html.AntCreateStandardPanel("hviolet", "Port scan for all addresses", "<p>" +
+Html.Kendo().Grid<PortPermalinkViewModel>().CreatePortscanPermalinkGrid(Url, "getAllPermalinks", true)
+.ToHtmlString() + "</p>")))
+</div>
     <div class="normalheader transition animated fadeIn">
     </div>
 

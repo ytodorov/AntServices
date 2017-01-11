@@ -174,7 +174,8 @@ namespace SmartAdminMvc.Controllers
             }
         }
 
-        public ActionResult ReadPortPermalinks([DataSourceRequest] DataSourceRequest request, AntDbContext context, string address, bool? allPermalinks = false)
+        public ActionResult ReadPortPermalinks([DataSourceRequest] DataSourceRequest request, AntDbContext context,
+            string address, bool? allPermalinks = false, int maxResults = 100)
         {
             List<PortPermalink> portPermalinks;
             if (!allPermalinks.GetValueOrDefault())
@@ -183,7 +184,8 @@ namespace SmartAdminMvc.Controllers
             }
             else
             {
-                portPermalinks = context.PortPermalinks.Where(p => p.ShowInHistory == true).OrderByDescending(k => k.Id).Take(count: 100).ToList();
+                portPermalinks = context.PortPermalinks.Where(p => p.ShowInHistory == true).OrderByDescending(k => k.Id)
+                    .Take(count: maxResults).ToList();
             }
 
             List<PortPermalinkViewModel> portPermalinksViewModels = Mapper.Map<List<PortPermalinkViewModel>>(portPermalinks);
