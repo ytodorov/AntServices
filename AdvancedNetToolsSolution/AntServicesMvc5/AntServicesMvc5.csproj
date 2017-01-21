@@ -180,6 +180,9 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Misc\TopSites.txt" />
+    <Content Include="programs\ffmpeg\ffmpeg.exe" />
+    <Content Include="programs\ffmpeg\ffplay.exe" />
+    <Content Include="programs\ffmpeg\ffprobe.exe" />
     <Content Include="programs\Nmap\3rd-party-licenses.txt" />
     <Content Include="programs\Nmap\icon1.ico" />
     <Content Include="programs\Nmap\libeay32.dll" />

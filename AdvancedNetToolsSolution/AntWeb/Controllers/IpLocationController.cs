@@ -10,7 +10,7 @@ using System.Web.Mvc;
 namespace SmartAdminMvc.Controllers
 {
 
-    public class IpLocationController : Controller
+    public class IpLocationController : BaseController
     {
         //[OutputCache(Duration = 3600, Location = System.Web.UI.OutputCacheLocation.Server, VaryByParam = "ip")]
         public ActionResult Index(string ip)
@@ -34,5 +34,13 @@ namespace SmartAdminMvc.Controllers
         {
             return View();
         }
+
+        public ContentResult GetIpCountryCode(string ip)
+        {
+            var res = Utils.GetLocationDataForIp(ip);
+            return Content(res?.CountryAbbreviation);
+        }
+
+
     }
 }
