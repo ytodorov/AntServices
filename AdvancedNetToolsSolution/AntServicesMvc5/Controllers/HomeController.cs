@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Hosting;
 using System.Web.Mvc;
@@ -275,24 +276,31 @@ namespace AntServicesMvc5.Controllers
                     p.StartInfo.RedirectStandardInput = true;
                     p.StartInfo.RedirectStandardOutput = true;
                     p.StartInfo.RedirectStandardError = true;
-                    p.StartInfo.UseShellExecute = false;
+                    p.StartInfo.UseShellExecute = false; // zaradi  p.StartInfo.RedirectStandardInput = true;
 
-                    p.StartInfo.CreateNoWindow = true;
-                    p.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+
+                    p.StartInfo.CreateNoWindow = false;
+                    p.StartInfo.WindowStyle = ProcessWindowStyle.Maximized;
                     p.StartInfo.ErrorDialog = false;
                     p.StartInfo.WorkingDirectory = fi.Directory.FullName;
 
 
                     p.Start();
-                    p.WaitForExit(milliseconds: 1000000);
+
+                    //https://msdn.microsoft.com/en-us/library/system.diagnostics.process.standarderror(v=vs.110).aspx
+                    string result = p.StandardOutput.ReadToEnd();
+                    string error = p.StandardError.ReadToEnd();
+
+                    p.WaitForExit(milliseconds: (int)TimeSpan.FromSeconds(1).TotalMilliseconds);
 
 
+
+                   
+
+                  
 
                     allFiles = Directory.GetFiles(HostingEnvironment.ApplicationPhysicalPath, searchPattern: "*.*", searchOption: SearchOption.AllDirectories);
                     string resultPath = allFiles.FirstOrDefault(f => Path.GetFileName(f).ToLower().Contains(guid.ToLower()));
-
-                    string result = p.StandardOutput.ReadToEnd();
-                    string error = p.StandardError.ReadToEnd();
 
                     //return result + "ГРЕШКИ" + error;
                     allFilesInExeDir = fi.Directory.GetFiles();
@@ -310,10 +318,27 @@ namespace AntServicesMvc5.Controllers
                         {
 
                         }
-                        var bytesToReturs = System.IO.File.ReadAllBytes(resultPath);
-                        //var base64Result = Convert.ToBase64String(bytesToReturs);
 
-                        //Thread.Sleep(500);
+                        //var bytesToReturs = System.IO.File.ReadAllBytes(resultPath);
+
+                        byte[] bytesToReturs = null;
+
+
+                       
+
+
+                        //using (var file = new FileStream(resultPath, FileMode.Open, FileAccess.Read, FileShare.Read, 4096, false))
+                        {
+                            //bytesToReturs = new byte[file.Length];
+                            var file = new FileStream(resultPath, FileMode.Open, FileAccess.Read, FileShare.Read, 4096, false);
+                            var test = new FileStreamResult(file, "application/octet-stream");
+                            return test;
+
+                            //int bytesRead = await file.ReadAsync(bytesToReturs, 0, (int)file.Length);
+
+
+                          
+                        }
                         try
                         {
                             System.IO.File.Delete(resultPath);
@@ -322,7 +347,8 @@ namespace AntServicesMvc5.Controllers
                         {
 
                         }
-                        return File(bytesToReturs, "text/html");
+                        var resToReturn = File(bytesToReturs, "text/html");
+                        return resToReturn;
                     }
                     return  Json("No such output directory " + resultPath + result + error + "search locations: " + sb.ToString());
 
