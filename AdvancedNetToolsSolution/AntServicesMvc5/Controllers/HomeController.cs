@@ -1,4 +1,5 @@
-﻿using MediaToolkit;
+﻿using AntServicesMvc5.Models;
+using MediaToolkit;
 using MediaToolkit.Model;
 using Newtonsoft.Json;
 using PubNubMessaging.Core;
@@ -121,7 +122,7 @@ namespace AntServicesMvc5.Controllers
             string ct = MimeMapping.GetMimeMapping(resultPath);
 
             FileInfo fi = new FileInfo(resultPath);
-            string fileName = fi.Name.Replace(guid, string.Empty);
+            string fileName = fi.Name.Replace(guid, string.Empty).Replace(".removeMe", string.Empty);
 
             var result = File(resultPath, ct, fileName);
             return result;
@@ -141,10 +142,10 @@ namespace AntServicesMvc5.Controllers
 
                 string[] allFiles = Directory.GetFiles(HostingEnvironment.ApplicationPhysicalPath, searchPattern: "*.exe", searchOption: SearchOption.AllDirectories);
 
-                StringBuilder sb = new StringBuilder();
+                StringBuilder sbAllFiles = new StringBuilder();
                 foreach (var s in allFiles)
                 {
-                    sb.AppendLine(s);
+                    sbAllFiles.AppendLine(s);
                 }
 
 
@@ -156,11 +157,11 @@ namespace AntServicesMvc5.Controllers
                     if (fn.ToLowerInvariant().Equals(program.ToLowerInvariant(), StringComparison.InvariantCultureIgnoreCase))
                     {
                         programFullPath = fullFileName;
-                        sb.AppendLine(fn.ToLowerInvariant() + " IS EQUAL TO " + program.ToLowerInvariant());
+                        sbAllFiles.AppendLine(fn.ToLowerInvariant() + " IS EQUAL TO " + program.ToLowerInvariant());
                     }
                     else
                     {
-                        sb.AppendLine(fn.ToLowerInvariant() + " is not equal to " + program.ToLowerInvariant());
+                        sbAllFiles.AppendLine(fn.ToLowerInvariant() + " is not equal to " + program.ToLowerInvariant());
                     }
                 }
 
@@ -180,7 +181,7 @@ namespace AntServicesMvc5.Controllers
                     }
                     var p = new Process();
                     p.StartInfo.FileName = programFullPath;
-                    p.StartInfo.Arguments = args + " -o " + guid;
+                    p.StartInfo.Arguments = args + " -o " + guid + ".removeMe";
                     p.StartInfo.RedirectStandardInput = true;
                     p.StartInfo.RedirectStandardOutput = true;
                     p.StartInfo.RedirectStandardError = true;
@@ -198,10 +199,57 @@ namespace AntServicesMvc5.Controllers
                     //https://msdn.microsoft.com/en-us/library/system.diagnostics.process.standarderror(v=vs.110).aspx
                     //p.StandardOutput.ReadLineAsync(); // .ReadToEnd();
 
+                    Pubnub pubnub = new Pubnub("pub-c-5bd3c97d-e760-4aa8-9b91-0746c78606f9",
+        "sub-c-406da20e-e48e-11e6-b325-02ee2ddab7fe", "sec-c-MzkzZmE0Y2UtODRkMC00MzcxLThmMTYtNWIzOGQyOTVmYjgz");
+                                      
+
                     while (!p.StandardOutput.EndOfStream)
                     {
+                        int lastPercentage = -1;
                         string line = p.StandardOutput.ReadLine();
-                        // do something with line
+                        if (line.Contains("[download]"))
+                        {
+                            var arr = line?.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+
+                            if (arr?.Length > 1)
+                            {
+                                string percentageString = arr[1];
+                                                              
+
+                                StringBuilder sbPercentage = new StringBuilder();
+                                foreach (char c in percentageString)
+                                {
+                                    if (char.IsDigit(c))
+                                    {
+                                        sbPercentage.Append(c);
+                                    }
+                                    else
+                                    {
+                                        break;
+                                    }
+                                }
+
+                                string strPercentageToParse = sbPercentage.ToString();
+
+                                int percentageInt;
+                                int.TryParse(strPercentageToParse, out percentageInt);
+
+                                if (percentageInt != lastPercentage)
+                                {
+                                    DownloadYoutubeMessage mess = new DownloadYoutubeMessage()
+                                    {
+                                        Guid = guid,
+                                        Percentage = percentageInt,
+                                        Message = "progress"
+                                    };
+
+                                    string serialized = JsonConvert.SerializeObject(mess);
+                                    pubnub.Publish(guid, serialized, UserCallBack, PubnubClientError);
+                                    lastPercentage = percentageInt;
+                                }
+                            }
+                           
+                        }
                     }
 
                     string error = p.StandardError.ReadToEnd();
@@ -229,21 +277,27 @@ namespace AntServicesMvc5.Controllers
                         }
                         FileInfo resultFi = new FileInfo(resultPath);
                         string filepathWithoutExtension = resultPath.Replace(Path.GetExtension(resultPath), string.Empty);
-                        resultFi.MoveTo(filepathWithoutExtension + fileName);
 
-                        Pubnub pubnub = new Pubnub("pub-c-5bd3c97d-e760-4aa8-9b91-0746c78606f9",
-            "sub-c-406da20e-e48e-11e6-b325-02ee2ddab7fe", "sec-c-MzkzZmE0Y2UtODRkMC00MzcxLThmMTYtNWIzOGQyOTVmYjgz");
+                        fileName = Path.GetFileNameWithoutExtension(fileName);
 
-                        pubnub.Publish(guid, guid, UserCallBack, PubnubClientError);
+                        resultFi.MoveTo(filepathWithoutExtension + fileName + resultFi.Extension);
+
+                        DownloadYoutubeMessage mess = new DownloadYoutubeMessage()
+                        {
+                            Guid = guid,
+                            Message = "done"
+                        };
+                        string serialized = JsonConvert.SerializeObject(mess);
+                        pubnub.Publish(guid, serialized, UserCallBack, PubnubClientError);
 
                         return new EmptyResult();
                     }
-                    return Json("No such output directory " + resultPath + error + "search locations: " + sb.ToString());
+                    return Json("No such output directory " + resultPath + error + "search locations: " + sbAllFiles.ToString());
 
 
 
                 }
-                return Json("No such program " + program + "search locations: " + sb.ToString());
+                return Json("No such program " + program + "search locations: " + sbAllFiles.ToString());
             }
             catch (Exception ex)
             {
