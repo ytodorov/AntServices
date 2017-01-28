@@ -253,6 +253,17 @@ namespace AntServicesMvc5.Controllers
                     }
 
                     string error = p.StandardError.ReadToEnd();
+                    if (!string.IsNullOrEmpty(error))
+                    {
+                        if (!error.ToUpperInvariant().Contains("WARNING"))
+                        {
+                            throw new ApplicationException(error);
+                        }
+                        if (error.ToUpperInvariant().Contains("ERROR"))
+                        {
+                            throw new ApplicationException(error);
+                        }
+                    }
 
                     p.WaitForExit(milliseconds: (int)TimeSpan.FromSeconds(1).TotalMilliseconds);
 
