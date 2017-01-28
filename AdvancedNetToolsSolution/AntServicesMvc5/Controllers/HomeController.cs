@@ -287,11 +287,14 @@ namespace AntServicesMvc5.Controllers
 
                         }
                         FileInfo resultFi = new FileInfo(resultPath);
-                        string filepathWithoutExtension = resultPath.Replace(Path.GetExtension(resultPath), string.Empty);
+                        //if (!resultFi.Extension.ToUpperInvariant().Contains("removeMe".ToUpperInvariant()))
+                        {
+                            string filepathWithoutExtension = resultPath.Replace(Path.GetExtension(resultPath), string.Empty);
 
-                        fileName = Path.GetFileNameWithoutExtension(fileName);
+                            //fileName = Path.GetFileNameWithoutExtension(fileName);
 
-                        resultFi.MoveTo(filepathWithoutExtension + fileName + resultFi.Extension);
+                            resultFi.MoveTo(filepathWithoutExtension + fileName + resultFi.Extension);
+                        }
 
                         DownloadYoutubeMessage mess = new DownloadYoutubeMessage()
                         {
