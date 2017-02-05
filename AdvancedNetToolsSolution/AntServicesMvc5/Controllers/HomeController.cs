@@ -127,14 +127,25 @@ namespace AntServicesMvc5.Controllers
             var result = File(resultPath, ct, fileName);
             return result;
         }
+        Pubnub pubnub = null;
 
         public ActionResult YoutubeDownload(string program, string args, string guid, string fileName)
         {
+            if (ProcessHolder.Instance.ContainsKey(guid))
+            {
+                return new EmptyResult();
+            }
+
             Response.ContentType = "text/plain; charset=utf-8";
             if (!program.EndsWith(value: ".exe"))
             {
                 program += ".exe";
             }
+            pubnub = new Pubnub("pub-c-5bd3c97d-e760-4aa8-9b91-0746c78606f9",
+      "sub-c-406da20e-e48e-11e6-b325-02ee2ddab7fe", "sec-c-MzkzZmE0Y2UtODRkMC00MzcxLThmMTYtNWIzOGQyOTVmYjgz");
+
+            pubnub.Subscribe<string>(guid, SubscribeCallback, ConnectCallback, ErrorCallback);
+                
 
             try
             {
@@ -192,16 +203,9 @@ namespace AntServicesMvc5.Controllers
                     p.StartInfo.ErrorDialog = false;
                     p.StartInfo.WorkingDirectory = fi.Directory.FullName;
 
-                 
+                    ProcessHolder.Instance.Add(guid, p);
 
                     p.Start();
-
-                    //https://msdn.microsoft.com/en-us/library/system.diagnostics.process.standarderror(v=vs.110).aspx
-                    //p.StandardOutput.ReadLineAsync(); // .ReadToEnd();
-
-                    Pubnub pubnub = new Pubnub("pub-c-5bd3c97d-e760-4aa8-9b91-0746c78606f9",
-        "sub-c-406da20e-e48e-11e6-b325-02ee2ddab7fe", "sec-c-MzkzZmE0Y2UtODRkMC00MzcxLThmMTYtNWIzOGQyOTVmYjgz");
-                                      
 
                     while (!p.StandardOutput.EndOfStream)
                     {
@@ -254,13 +258,17 @@ namespace AntServicesMvc5.Controllers
 
                     string error = p.StandardError.ReadToEnd();
                     if (!string.IsNullOrEmpty(error))
-                    {
-                        if (!error.ToUpperInvariant().Contains("WARNING"))
-                        {
-                            throw new ApplicationException(error);
-                        }
+                    {                        
                         if (error.ToUpperInvariant().Contains("ERROR"))
                         {
+                            DownloadYoutubeMessage mess = new DownloadYoutubeMessage()
+                            {
+                                Guid = guid,
+                                Message = "error"
+                            };
+
+                            string serialized = JsonConvert.SerializeObject(mess);
+                            pubnub.Publish(guid, serialized, UserCallBack, PubnubClientError);
                             throw new ApplicationException(error);
                         }
                     }
@@ -292,8 +300,12 @@ namespace AntServicesMvc5.Controllers
                             string filepathWithoutExtension = resultPath.Replace(Path.GetExtension(resultPath), string.Empty);
 
                             //fileName = Path.GetFileNameWithoutExtension(fileName);
-
-                            resultFi.MoveTo(filepathWithoutExtension + fileName + resultFi.Extension);
+                            string pathToMoveTo = filepathWithoutExtension + fileName + resultFi.Extension;
+                            if (resultFi.Extension != ".removeMe")
+                            {
+                                pathToMoveTo = filepathWithoutExtension + Path.GetFileNameWithoutExtension(fileName) + resultFi.Extension;
+                            }
+                            resultFi.MoveTo(pathToMoveTo);
                         }
 
                         DownloadYoutubeMessage mess = new DownloadYoutubeMessage()
@@ -303,6 +315,11 @@ namespace AntServicesMvc5.Controllers
                         };
                         string serialized = JsonConvert.SerializeObject(mess);
                         pubnub.Publish(guid, serialized, UserCallBack, PubnubClientError);
+
+                        if (ProcessHolder.Instance.ContainsKey(guid))
+                        {
+                            ProcessHolder.Instance.Remove(guid);
+                        }
 
                         return new EmptyResult();
                     }
@@ -315,6 +332,14 @@ namespace AntServicesMvc5.Controllers
             }
             catch (Exception ex)
             {
+                DownloadYoutubeMessage mess = new DownloadYoutubeMessage()
+                {
+                    Guid = guid,
+                    Message = "error"
+                };
+                string serialized = JsonConvert.SerializeObject(mess);
+                pubnub.Publish(guid, serialized, UserCallBack, PubnubClientError);
+
                 string json = JsonConvert.SerializeObject(ex, Formatting.Indented);
                 return Json(json);
             }
@@ -336,6 +361,73 @@ namespace AntServicesMvc5.Controllers
         }
 
         public void PubnubClientError(PubnubClientError error)
+        {
+
+        }
+
+
+        public void SubscribeCallback(string result)
+        {
+
+            if (!string.IsNullOrEmpty(result) && !string.IsNullOrEmpty(result.Trim()))
+            {
+                List<object> deserializedMessage = pubnub.JsonPluggableLibrary.DeserializeToListOfObject(result);
+                if (deserializedMessage != null && deserializedMessage.Count > 0)
+                {
+                    string subscribedObject = (string)deserializedMessage[0];
+                    if (subscribedObject != null)
+                    {
+                        DownloadYoutubeMessage dym = JsonConvert.DeserializeObject<DownloadYoutubeMessage>(subscribedObject);
+
+                        if (dym != null && "stop".Equals(dym.Message, StringComparison.InvariantCultureIgnoreCase))
+                        {
+                            if (ProcessHolder.Instance.ContainsKey(dym.Guid))
+                            {
+                                Process currProcess = ProcessHolder.Instance[dym.Guid];
+                                try
+                                {
+                                    if (!currProcess.HasExited)
+                                    {
+                                        ProcessHolder.Instance.Remove(dym.Guid);
+                                        currProcess.Kill();                                        
+                                    }
+                                }
+                                catch (Exception)
+                                {
+
+                                }
+                            }
+                        }
+
+                    }
+                }
+            }
+
+
+            //var str = o.ToString();
+            //DownloadYoutubeMessage dym = JsonConvert.DeserializeObject<DownloadYoutubeMessage>(str);
+            //if (dym != null)
+            //{
+            //    Process currProcess = ProcessHolder.Instance[dym.Guid];
+            //    try
+            //    {
+            //        currProcess.Kill();
+            //        ProcessHolder.Instance.Remove(dym.Guid);
+            //    }
+            //    catch (Exception)
+            //    {
+
+            //    }
+            //}
+
+        }
+
+        public void ConnectCallback(object o)
+        {
+
+        }
+
+        public void ErrorCallback(PubnubClientError error)
         {
 
         }
