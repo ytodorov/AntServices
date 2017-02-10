@@ -22,3 +22,9 @@ select,
 textarea {
     max-width: 280px;
 }
+
+
+/*span[data-pin-log]
+{
+    vertical-align: top !important;
+}*/

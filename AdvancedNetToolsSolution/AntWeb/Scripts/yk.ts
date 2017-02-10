@@ -63,8 +63,20 @@ $(document).ready(function docReady() {
     })
     //$("#trustLogoLi").append('<script type="text/javascript" >TrustLogo("https://toolsfornet.com/content/img/comodo/comodo_secure_seal_76x26_transp.png", "CL1", "none");</script>');
 
-    
+    var intervalCounter = 0;
+    var interval = setInterval(function alignGoogle() {
 
+        var g = $("span[data-pin-log]");
+        var c = g.length;
+        g.each(function () {
+            this.style.setProperty('vertical-align', 'top', 'important');
+        });
+
+        intervalCounter++;
+        if (intervalCounter > 5) {
+            clearInterval(interval);
+        }
+    }, 500);
 
 });
 
