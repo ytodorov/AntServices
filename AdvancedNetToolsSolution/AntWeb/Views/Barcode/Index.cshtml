@@ -216,9 +216,10 @@
             </tr>
         </tbody>
     </table>
-
+    
 </div>
 <br />
+<button class="k-button">test</button>
 @section scripts {
     <script src="~/scripts/viewsjs/barcodeindex.js"></script>
     @if (!string.IsNullOrEmpty(Model?.Value))
@@ -238,7 +239,7 @@
                         type: type,
                         background: "transparent"
                     });
-                    $(this).append('<a href="JavaScript:Void(0)" onclick="exportPdf(this)">Export pdf | </a><a href="JavaScript:Void(0)" onclick="exportImage(this)"> Export image | </a><a href="JavaScript:Void(0)" onclick="exportSvg(this)"> Export SVG </a>');
+                    $(this).append('<div style="min-width: 300px;"><button class="k-button" onclick="exportPdf(this)">Export pdf</button>&nbsp;<button class="k-button" onclick="exportImage(this)">Export image</button>&nbsp;<button class="k-button" onclick="exportSvg(this)">Export SVG</button></div>');
                 }
                 catch (e) {
                     console.log(e.message);
@@ -251,7 +252,7 @@
     }
     <script>            
             function exportPdf(sender) {
-                event.preventDefault();
+                debugger;
                 var bc = $(sender).parents(".barcodeDiv").first();
                 if (bc.length > 0) {
                     kendo.drawing.drawDOM(bc)
@@ -271,7 +272,6 @@
                 }
             }
             function exportImage(sender) {
-                event.preventDefault();
                 var bc = $(sender).parents(".barcodeDiv").first();
                 if (bc.length > 0) {
                     kendo.drawing.drawDOM(bc)
@@ -290,7 +290,6 @@
             }
 
             function exportSvg(sender) {
-                event.preventDefault();
                 var bc = $(sender).parents(".barcodeDiv").first();
                 if (bc.length > 0) {
                     kendo.drawing.drawDOM(bc)
