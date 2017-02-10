@@ -28,9 +28,10 @@
     <meta property="og:type" content="website" />
     <meta property="og:title" content='@(ViewBag.Title + (Request.Url.LocalPath == "/" ? "" : " | Tools for Net"))' />
     <meta property="og:description" content="@ViewBag.MetaDescription" />
-    <meta property="og:image" content="https://toolsfornet.com/images/toolsfornetCover.png" />
+    <meta property="og:image" content="@(ViewBag.OgImage == null ? "https://toolsfornet.com/images/toolsfornetcover.png" : ViewBag.OgImage)" />
     <meta property="og:site_name" content="@ViewBag.Title" />
     <meta property="fb:admins" content="1039783075" />
+    <meta property="fb:app_id" content="1862741693984333" />
 
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="@ViewBag.Title">
