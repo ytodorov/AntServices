@@ -16,11 +16,46 @@
     }
 </style>*@
 
+@Html.Raw((Html.AntCreateStandardPanel("hgreen", "Locate IP address", "<div class='text-center'>" +
+"<p>" + "<input type='text' id='tbIp' name='tbIp' placeholder='Enter IP address' class='k-textbox' />" + "</p>" +
+"<p>" + "<input type='button' id='btnLocateIp' value='Locate' class='k-button' />" + "</p>" +
+"<div>")))
+
+@if (!string.IsNullOrWhiteSpace(Model))
+{
+    @Html.Raw((Html.AntCreateStandardPanel("hgreen", "Ping report summary",
+"<div class='text-center'>" +
+"<a style='display:none' class='pdfexportpage'>Download as PDF" + "</a>" +
+"<p>" + "Share this permalink: <a href='" + Context.Request.Url.ToString() + "' target='_blank'>" + Context.Request.Url.ToString() + "</a></p>" +
+"<p>" + "<div class='addthis_sharing_toolbox'></div></p>" +
+"<div>")))
+
+}
+
 <div id="map" style="width:100px;height: 10px"></div>
 @section scripts {
+
+
     <script>
-        $("#map").height($(window).height() - 70);
-        $("#map").width($(window).width() - 70);
+        $("#tbIp").keyup(function myfunction(eventData) {
+            if (eventData.keyCode == 13) {
+                $("#btnLocateIp").click();
+            }
+
+        });
+
+        $("#btnLocateIp").click(function f() {
+            var ip = $("#tbIp").val();
+            window.location = window.location.origin + '/iplocation?ip=' + ip;
+        });
+        var currIp = "@Model";
+        if (currIp.length > 0)
+        {
+            $("#tbIp").val(currIp);
+        }
+
+        $("#map").height($(window).height() - 470);
+        $("#map").width($(window).width() - 470);
         if ('@Model'.length > 0) {
             setTimeout(function f() {
                 $.ajax({
@@ -38,8 +73,8 @@
         };
 
         $(window).resize(function () {
-            $("#map").height($(window).height() - 70);
-            $("#map").width($(window).width() - 70);
+            $("#map").height($(window).height() - 470);
+            $("#map").width($(window).width() - 470);
         });
       
     </script>

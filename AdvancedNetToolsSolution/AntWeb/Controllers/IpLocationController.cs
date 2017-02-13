@@ -17,7 +17,9 @@ namespace SmartAdminMvc.Controllers
         {
             if (string.IsNullOrEmpty(ip))
             {
-                return View(nameof(IpLocationController.Find));
+                //return View(nameof(IpLocationController.Find));
+                return View();
+
             }
 
             bool isUserRequestedAddressIp = false;
