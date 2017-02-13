@@ -55,7 +55,8 @@
         }
 
         $("#map").height($(window).height() - 470);
-        $("#map").width($(window).width() - 470);
+        var w = $(".panel-heading").first().width();
+        $("#map").width(w);
         if ('@Model'.length > 0) {
             setTimeout(function f() {
                 $.ajax({
@@ -74,7 +75,8 @@
 
         $(window).resize(function () {
             $("#map").height($(window).height() - 470);
-            $("#map").width($(window).width() - 470);
+            var w = $(".panel-heading").first().width();
+            $("#map").width(w);
         });
       
     </script>
