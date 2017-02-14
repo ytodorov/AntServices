@@ -109,6 +109,24 @@ function resizeGrids() {
         });
     }
 }
+$(window).load(function () {
+    setTimeout(function asd() {
+        var theDiv = $("#outerHeader");
+        theDiv.html('<div id="divInnerSocial" style="display:none"  class="normalheader transition animate-panel animated fadeIn small-header right">                <div class="hpanel">                    <div id="divSocial" class="panel-body">                        <div class="pull-left fb-like"                             data-href="https://www.facebook.com/toolsfornet"                             data-colorscheme="light"                             data-layout="button_count"                             data-action="like"                             data-size="small"                             data-show-faces="false"                             data-share="true">                        </div>                        <a class="pull-right twitter-share-button"                           href="https://twitter.com/intent/tweet?url=https://toolsfornet.com"                           data-show-screen-name="false">                            Tweet                        </a>                        <div id="divPlusOne" class="pull-left g-plusone" data-size="medium" data-annotation="none" data-width="200"></div>                        <a id="aPinterest" style="vertical-align:top !important" data-pin-do="buttonBookmark" data-pin-save="true" href="https://www.pinterest.com/pin/create/button/"></a>                        <a class="tumblr-share-button" href="https://www.tumblr.com/share"></a>                        <script id="tumblr-js" async src="https://assets.tumblr.com/share-button.js"></script>                        <script src="https://platform.linkedin.com/in.js" type="text/javascript"> lang: en_US                        </script>                        <script type="IN/Share" data-url="https://toolsfornet.com" data-counter="right">                        </script>                    </div>                              </div>            </div>');
+        FB.XFBML.parse(document.getElementById('divSocial'));
+        twttr.widgets.load();
+        var w = window;
+        //w.onLoadCallback = function () {
+        //    gapi.plusone.render("divPlusOne");
+        //}
+        // render buttons inside a scoped DOM element
+        w.parsePins(document.getElementById('aPinterest'));
+        // render the whole page
+        w.parsePins();
+        //var animation: JQueryAnimationOptions;
+        $("#divInnerSocial").show("slow");
+    }, 10);
+});
 $(document).ready(function docReady() {
     var isMenuVisible = $.cookie('isMenuVisible');
     if (isMenuVisible != null) {
