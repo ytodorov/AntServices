@@ -279,6 +279,44 @@
                 .Deferred()
                 )
             </div>
+            <div class="col-sm-3 col-xs-6">
+                Text color
+            </div>
+            <div class="col-sm-3 col-xs-6">
+                @(Html.Kendo().ColorPicker()
+                .Name("textColorPicker")
+                .Value("#000000")
+                .Deferred()
+                )
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3 col-xs-6">
+                Text font
+            </div>
+            <div class="col-sm-3 col-xs-6">
+                @(Html.Kendo().TextBox().Value("16px Consolas, Monaco, Sans Mono, monospace, sans-serif")
+                .Name("tbTextFont")
+                .Deferred()
+                )
+            </div>
+            <div class="col-sm-3 col-xs-6">
+                Text visible
+            </div>
+            <div class="col-sm-3 col-xs-6">
+                @(Html.Kendo().CheckBox().Name("textVisible").Label("Yes").Deferred().Checked(true))
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3 col-xs-6">
+                Width
+            </div>
+            <div class="col-sm-3 col-xs-6">
+                @(Html.Kendo().IntegerTextBox().Min(0).Max(1000).Value(300)
+                .Name("tbWidth")
+                .Deferred()
+                )
+            </div>        
         </div>
         <div class="row">
             <div class="col-sm-12 text-center">
@@ -475,9 +513,12 @@
                     var selectedMarginTop = $("#tbMarginTop").data("kendoNumericTextBox").value();
 
                     var selectedHeight = $("#tbHeight").data("kendoNumericTextBox").value();
-                    
-
+                    var selectedTextColor = $("#textColorPicker").data("kendoColorPicker").value().toLowerCase();
+                    var selectedFont = $("#tbTextFont").val();
+                    var isTextVisible = $("#textVisible").is(':checked');
                     var isCheckSumVisible = $("#checksum").is(':checked');
+
+                    var selectedWidth = $("#tbWidth").data("kendoNumericTextBox").value();
                     debugger;
                     $(this).kendoBarcode({
                         width: 280,
@@ -493,6 +534,9 @@
                             bottom: selectedPaddingTop
                         },
                         text: {
+                            font: selectedFont,
+                            visible: isTextVisible,
+                            color: selectedTextColor,
                             margin: {
                                 top: selectedMarginTop,
                                 left: selectedMarginLeft,
@@ -506,7 +550,9 @@
                             width: selectedBorderWidth,
                             dashType: selectedBorderDashType,
                             color: selectedBorderColor
-                        }
+                        },
+                        width: selectedWidth
+
                     });
                     $(this).append('<div style="min-width: 300px;"><button class="k-button" onclick="exportPdf(this)">PDF</button>&nbsp;<button class="k-button" onclick="exportImage(this)">Image</button>&nbsp;<button class="k-button" onclick="exportSvg(this)">SVG</button></div>');
                 }
@@ -525,7 +571,7 @@
                 try {
                     var type = $(this).attr("data-type")
                     $(this).kendoBarcode({
-                        width: 280,
+                        width: 300,
                         height: 100,
                         value: "@Model.Value",
                         type: type,
