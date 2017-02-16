@@ -6,10 +6,7 @@
 }
 
 <style type="text/css">
-    .barcodeDiv {
-        width: 250px;
-        margin: 5px auto;
-    }
+    .barcodeDiv { width: 250px; margin: 5px auto; }
 </style>
 
 <div class="normalheader transition animated fadeIn small-header">
@@ -55,9 +52,10 @@
     Action = nameof(BarcodeController.ReadBarcodePermalinkValues),
     PlaceholderText = "Enter text ..."
 })
+@*@(Html.Kendo().Barcode().Border(v =>v.DashType(ChartDashType.Solid))*@
 
 @*премахни display: none;*@
-<div class="hpanel hgreen panel-collapse" style="display: none;">
+<div class="hpanel hgreen panel-collapse">
     <div class="panel-heading text-center">
         <div class="panel-tools">
             <a class="showhide"><i class="fa fa-chevron-down"></i></a>
@@ -65,9 +63,229 @@
         Advanced options
     </div>
     <div class="panel-body" style="display: none;">
-        <p>          
-        </p>
-    </div>  
+        <div class="row">
+            <div class="col-sm-3 col-xs-6">
+                Background
+            </div>
+            <div class="col-sm-3 col-xs-6">
+                @(Html.Kendo().ColorPicker()
+                .Name("backgroundColorPicker")
+                .Value("#ffffff")
+                .Deferred()
+                )
+            </div>
+            <div class="col-sm-3 col-xs-6">
+                Border color
+            </div>
+            <div class="col-sm-3 col-xs-6">
+                @(Html.Kendo().ColorPicker()
+                .Name("borderColorPicker")
+                .Value("#000000")
+                .Deferred()
+                )
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3 col-xs-6">
+                Border Dash type
+            </div>
+            <div class="col-sm-3 col-xs-6">
+                @(Html.Kendo().DropDownList()
+          .Name("ddlBorderDashType")
+          .DataTextField("Text")
+          .DataValueField("Value")
+          .BindTo(new List<SelectListItem>() {
+              new SelectListItem() {
+                  Text = "Dash",
+                  Value = "Dash"
+              },
+              new SelectListItem() {
+                  Text = "DashDot",
+                  Value = "DashDot"
+              },
+              new SelectListItem() {
+                  Text = "Dot",
+                  Value = "Dot"
+              },
+               new SelectListItem() {
+                  Text = "LongDash",
+                  Value = "LongDash"
+              },
+              new SelectListItem() {
+                  Text = "LongDashDot",
+                  Value = "LongDashDot"
+              }, new SelectListItem() {
+                  Text = "LongDashDotDot",
+                  Value = "LongDashDotDot"
+              },
+              new SelectListItem() {
+                  Text = "Solid",
+                  Value = "Solid"
+              },
+          })
+          .Value("Solid")
+          .HtmlAttributes(new { style = "width: 100%" }).Deferred()
+                )
+            </div>
+            <div class="col-sm-3 col-xs-6">
+                Display checksum
+            </div>
+            <div class="col-sm-3 col-xs-6">
+                @(Html.Kendo().CheckBox().Name("checksum").Label("Yes").Deferred())
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3 col-xs-6">
+                Border width
+            </div>
+            <div class="col-sm-3 col-xs-6">
+                @(Html.Kendo().DropDownList()
+          .Name("ddlBorderWidth")
+          .DataTextField("Text")
+          .DataValueField("Value")
+          .BindTo(new List<SelectListItem>() {
+              new SelectListItem() {
+                  Text = "0",
+                  Value = "0"
+              },
+              new SelectListItem() {
+                  Text = "1",
+                  Value = "1"
+              },
+              new SelectListItem() {
+                  Text = "2",
+                  Value = "2"
+              },
+               new SelectListItem() {
+                  Text = "3",
+                  Value = "3"
+              },
+              new SelectListItem() {
+                  Text = "4",
+                  Value = "4"
+              }, new SelectListItem() {
+                  Text = "5",
+                  Value = "5"
+              },
+              new SelectListItem() {
+                  Text = "6",
+                  Value = "6"
+              },
+          })
+          .Value("0")
+          .HtmlAttributes(new { style = "width: 100%" }).Deferred()
+                )
+            </div>
+            <div class="col-sm-3 col-xs-6">
+                Color
+            </div>
+            <div class="col-sm-3 col-xs-6">
+                @(Html.Kendo().ColorPicker()
+                .Name("colorColorPicker")
+                .Value("#000000")
+                .Deferred()
+                )
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3 col-xs-6">
+                Padding bottom
+            </div>
+            <div class="col-sm-3 col-xs-6">
+                @(Html.Kendo().IntegerTextBox().Min(0).Max(100).Value(0)
+                .Name("tbPaddingBottom")
+                .Deferred()
+                )
+            </div>
+            <div class="col-sm-3 col-xs-6">
+                Padding left
+            </div>
+            <div class="col-sm-3 col-xs-6">
+                @(Html.Kendo().IntegerTextBox().Min(0).Max(100).Value(0)
+                  .Name("tbPaddingLeft")
+                .Deferred()
+                )
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3 col-xs-6">
+                Padding right
+            </div>
+            <div class="col-sm-3 col-xs-6">
+                @(Html.Kendo().IntegerTextBox().Min(0).Max(100).Value(0)
+                .Name("tbPaddingRight")
+                .Deferred()
+                )
+            </div>
+            <div class="col-sm-3 col-xs-6">
+                Padding top
+            </div>
+            <div class="col-sm-3 col-xs-6">
+                @(Html.Kendo().IntegerTextBox().Min(0).Max(100).Value(0)
+                  .Name("tbPaddingTop")
+                .Deferred()
+                )
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-3 col-xs-6">
+                Margin bottom
+            </div>
+            <div class="col-sm-3 col-xs-6">
+                @(Html.Kendo().IntegerTextBox().Min(0).Max(100).Value(0)
+                .Name("tbMarginBottom")
+                .Deferred()
+                )
+            </div>
+            <div class="col-sm-3 col-xs-6">
+                Margin left
+            </div>
+            <div class="col-sm-3 col-xs-6">
+                @(Html.Kendo().IntegerTextBox().Min(0).Max(100).Value(0)
+                  .Name("tbMarginLeft")
+                .Deferred()
+                )
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3 col-xs-6">
+                Margin right
+            </div>
+            <div class="col-sm-3 col-xs-6">
+                @(Html.Kendo().IntegerTextBox().Min(0).Max(100).Value(0)
+                .Name("tbMarginRight")
+                .Deferred()
+                )
+            </div>
+            <div class="col-sm-3 col-xs-6">
+                Margin top
+            </div>
+            <div class="col-sm-3 col-xs-6">
+                @(Html.Kendo().IntegerTextBox().Min(0).Max(100).Value(0)
+                  .Name("tbMarginTop")
+                .Deferred()
+                )
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-3 col-xs-6">
+               Height
+            </div>
+            <div class="col-sm-3 col-xs-6">
+                @(Html.Kendo().IntegerTextBox().Min(1).Max(1000).Value(100)
+                .Name("tbHeight")
+                .Deferred()
+                )
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 text-center">
+                <button class="k-button" onclick="btnApply()">Apply</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div id="result" class="container-fluid">
@@ -216,16 +434,90 @@
             </tr>
         </tbody>
     </table>
-    
+
 </div>
 <br />
 <button class="k-button">test</button>
 @section scripts {
+
+
+
     <script src="~/scripts/viewsjs/barcodeindex.js"></script>
     @if (!string.IsNullOrEmpty(Model?.Value))
     {
         <script>
+            function btnApply() {
 
+                var barcodeDivs = $(".barcodeDiv");
+                barcodeDivs.html("");
+                barcodeDivs.each(function (index) {
+
+
+                var valToSet = $("#tbBarcodeValue").val();
+                try {
+                    var type = $(this).attr("data-type")
+
+
+                    var selectedBackgroundColor = $("#backgroundColorPicker").data("kendoColorPicker").value().toLowerCase();
+                    var selectedBorderColor = $("#borderColorPicker").data("kendoColorPicker").value().toLowerCase();
+                    var selectedBorderWidth = $("#ddlBorderWidth").data("kendoDropDownList").value().toLowerCase();
+                    var selectedBorderDashType = $("#ddlBorderDashType").data("kendoDropDownList").value().toLowerCase();
+                    var selectedColor = $("#colorColorPicker").data("kendoColorPicker").value().toLowerCase();
+
+                    var selectedPaddingBottom = $("#tbPaddingBottom").data("kendoNumericTextBox").value();
+                    var selectedPaddingLeft = $("#tbPaddingLeft").data("kendoNumericTextBox").value();
+                    var selectedPaddingRight = $("#tbPaddingRight").data("kendoNumericTextBox").value();
+                    var selectedPaddingTop = $("#tbPaddingTop").data("kendoNumericTextBox").value();
+
+                    var selectedMarginBottom = $("#tbMarginBottom").data("kendoNumericTextBox").value();
+                    var selectedMarginLeft = $("#tbMarginLeft").data("kendoNumericTextBox").value();
+                    var selectedMarginRight = $("#tbMarginRight").data("kendoNumericTextBox").value();
+                    var selectedMarginTop = $("#tbMarginTop").data("kendoNumericTextBox").value();
+
+                    var selectedHeight = $("#tbHeight").data("kendoNumericTextBox").value();
+                    
+
+                    var isCheckSumVisible = $("#checksum").is(':checked');
+                    debugger;
+                    $(this).kendoBarcode({
+                        width: 280,
+                        height: selectedHeight,
+                        checksum: isCheckSumVisible,
+                        color: selectedColor,
+                        value: "@Model.Value",
+
+                        padding: {
+                            top: selectedPaddingTop,
+                            left: selectedPaddingLeft,
+                            right: selectedPaddingRight,
+                            bottom: selectedPaddingTop
+                        },
+                        text: {
+                            margin: {
+                                top: selectedMarginTop,
+                                left: selectedMarginLeft,
+                                right: selectedMarginRight,
+                                bottom: selectedMarginBottom
+                            }
+                        },
+                        type: type,
+                        background: selectedBackgroundColor,
+                        border: {
+                            width: selectedBorderWidth,
+                            dashType: selectedBorderDashType,
+                            color: selectedBorderColor
+                        }
+                    });
+                    $(this).append('<div style="min-width: 300px;"><button class="k-button" onclick="exportPdf(this)">PDF</button>&nbsp;<button class="k-button" onclick="exportImage(this)">Image</button>&nbsp;<button class="k-button" onclick="exportSvg(this)">SVG</button></div>');
+                }
+                catch (e) {
+                    console.log(e.message);
+                    $(this).html('<p class="k-error-colored">' + e.message + '</p>');
+
+                }
+
+            });
+            }
 
             var barcodeDivs = $(".barcodeDiv");
             barcodeDivs.each(function (index) {
@@ -250,7 +542,8 @@
             });
         </script>
     }
-    <script>            
+    <script>
+
             function exportPdf(sender) {
                 var bc = $(sender).parents(".barcodeDiv").first();
                 if (bc.length > 0) {
