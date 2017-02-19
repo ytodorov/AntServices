@@ -81,16 +81,15 @@
             return t;
         }(document, "script", "twitter-wjs"));</script>
 
-    <script>
+    @*<script>
          window.___gcfg = {
              lang: 'en-US',
              parsetags: 'explicit'
          };
-    </script>
-    @*<script src="//apis.google.com/js/platform.js?onload=onLoadCallback" async defer></script>*@
-    @*<script async defer src="//assets.pinterest.com/js/pinit.js"></script>*@
+    </script>*@
 
-    <script defer="defer" src="//assets.pinterest.com/js/pinit.js" data-pin-build="parsePins"></script>
+
+    @*<script defer="defer" src="//assets.pinterest.com/js/pinit.js" data-pin-build="parsePins"></script>*@
 
     <div class="splash" style="z-index:3">
         <div class="color-line"></div>
@@ -126,7 +125,7 @@
     <div id="wrapper" style="z-index:1">
 
         <div id="divbody">
-            <div id="outerHeader"></div>
+            <div id="outerHeader" style="height:36px"></div>
             @*<div class="normalheader transition animated fadeIn small-header right">
                 <div class="hpanel">
                     <div class="panel-body">
@@ -189,7 +188,7 @@
     <script async defer src="~/scripts/googleanalytics.min.js"></script>
     }
 
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDoER6oaWJAUFMNCCE8IkCGsIyHsbTE0Zw"></script>
+  
     @RenderSection(name: "scripts", required: false)
 </body>
 </html>

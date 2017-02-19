@@ -150,7 +150,7 @@ Html.Kendo().Chart(Model.PingResponseSummaries?.OrderBy(s => s.AvgRtt)).Theme("m
 }
 
 @section scripts {
-
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDoER6oaWJAUFMNCCE8IkCGsIyHsbTE0Zw"></script>
     @if (Model != null && Model.Id != 0)
     {
         <script>

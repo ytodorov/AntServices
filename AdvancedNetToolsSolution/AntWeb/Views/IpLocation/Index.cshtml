@@ -23,7 +23,7 @@
 
 @if (!string.IsNullOrWhiteSpace(Model))
 {
-    @Html.Raw((Html.AntCreateStandardPanel("hgreen", "Ping report summary",
+    @Html.Raw((Html.AntCreateStandardPanel("hgreen", "IP location",
 "<div class='text-center'>" +
 "<a style='display:none' class='pdfexportpage'>Download as PDF" + "</a>" +
 "<p>" + "Share this permalink: <a href='" + Context.Request.Url.ToString() + "' target='_blank'>" + Context.Request.Url.ToString() + "</a></p>" +
@@ -34,7 +34,7 @@
 
 <div id="map" style="width:100px;height: 10px"></div>
 @section scripts {
-
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDoER6oaWJAUFMNCCE8IkCGsIyHsbTE0Zw"></script>
 
     <script>
         $("#tbIp").keyup(function myfunction(eventData) {
