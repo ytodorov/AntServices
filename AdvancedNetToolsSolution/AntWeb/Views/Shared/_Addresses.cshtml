@@ -46,26 +46,39 @@
                     .Filter("contains")
                     .IgnoreCase(true)
                     .Animation(false)
-                    .Delay(1)                    
+                    .Delay(1)
                     //.NoDataTemplateId("templateDummy")
                     .DataSource(source => source
-                    .Custom()
+
                     //.Group(g => g.Add("Category", typeof(string)))
-                    .Transport(transport => transport
+
+
                     .Read(read =>
                     {
                         var action = Model.Action != null ? Model.Action : "ReadAddressesToPing";
                         var controller = Model.Controller != null ? Model.Controller : "Ping";
-                        read.Action(action, controller);
-                    }))              
-                
-                .ServerFiltering(false)
-                )
+                        read.Action(action, controller).Data("onAdditionalData");
+
+                        ;
+                    })
+                             .ServerFiltering(false)
+                    )
+
+
+
                 .Events(a => a.DataBound("dataBound")) // Защото noDataTemplate не работи
                 .Deferred()
                     )
 
                 </p>
+                <script>
+                    function onAdditionalData() {
+                     
+        return {
+            text: $("#ip").val()
+        };
+    }
+                </script>
             }
             @if (Model.ShowSaveInHistory)
             {

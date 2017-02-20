@@ -97,9 +97,9 @@ namespace SmartAdminMvc
 
             if (Environment.MachineName != "YORDAN-PC")
             {
-                Timer timer = new Timer(TimeSpan.FromMinutes(2).TotalMilliseconds);
+                Timer timer = new Timer(TimeSpan.FromMinutes(1).TotalMilliseconds);
                 timer.Elapsed += Timer_Elapsed;
-                //timer.Start();
+                timer.Start();
             }
 
             // construct a scheduler factory
@@ -129,15 +129,15 @@ namespace SmartAdminMvc
 
         private void Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            var randomInt = Utils.RandomNumberGenerator.Next(1, 999);
+            var randomInt = Utils.RandomNumberGenerator.Next(1, 9999);
             string siteUrl = Utils.TopSitesGlobal[randomInt];
             PingController pc = new PingController();
             using (AntDbContext context = new AntDbContext())
             {
-                var res = pc.GenerateId(new PingRequestViewModel() { ShowInHistory = true, Ip = siteUrl }, context);
+                //var res = pc.GenerateId(new PingRequestViewModel() { ShowInHistory = true, Ip = siteUrl }, context);
 
-                TracerouteController tc = new TracerouteController();
-                var res2 = tc.GenerateId(new TracerouteRequestViewModel() { ShowInHistory = true, Ip = siteUrl }, context);
+                //TracerouteController tc = new TracerouteController();
+                //var res2 = tc.GenerateId(new TracerouteRequestViewModel() { ShowInHistory = true, Ip = siteUrl }, context);
 
                 PortscanController portC = new PortscanController();
                 var res3 = portC.GenerateId(siteUrl, true, true, false, false);

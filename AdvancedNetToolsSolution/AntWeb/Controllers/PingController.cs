@@ -277,7 +277,7 @@ namespace SmartAdminMvc.Controllers
             foreach (string topSite in Utils.TopSitesGlobal)
             {
                 var ahvm = new AddressHistoryViewModel() { Name = topSite, Category = "Top sites", Order = 2 };
-                if (!list.Any(l => l.Name.Equals(ahvm.Name, StringComparison.InvariantCultureIgnoreCase)))
+                //if (!list.Any(l => l.Name.Equals(ahvm.Name, StringComparison.InvariantCultureIgnoreCase)))
                 {
                     list.Add(ahvm);
                 }
