@@ -44,7 +44,7 @@ $(window).load(function () {
         //w.parsePins(document.getElementById('aPinterest'));
         //w.parsePins();
         $("#divInnerSocial").show("slow");
-    }, 100);
+    }, 30);
 });
 $(document).ready(function docReady() {
     var isMenuVisible = $.cookie('isMenuVisible');

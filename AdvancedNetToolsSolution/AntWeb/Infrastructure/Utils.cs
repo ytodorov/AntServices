@@ -14,6 +14,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 using System.Web;
 using System.Web.Caching;
 using System.Web.Helpers;
@@ -493,58 +494,63 @@ namespace SmartAdminMvc.Infrastructure
 
         public static MelissaIpLocationViewModel GetLocationDataForIp(string ipOrHostName)
         {
-            try
+            for (int i = 0; i < 3; i++)
             {
-                using (AntDbContext context = new AntDbContext())
+
+
+                try
                 {
-                    var mipl = context.MelissaIpLocations.FirstOrDefault(m => m.IpAddress == ipOrHostName);
-                    MelissaIpLocationViewModel res = Mapper.Map<MelissaIpLocationViewModel>(mipl);
-                    if (mipl != null)
+                    using (AntDbContext context = new AntDbContext())
                     {
-                        res = Mapper.Map<MelissaIpLocationViewModel>(mipl);
-                    }
-                    else
-                    {
-
-                        using (HttpClient client = new HttpClient())
+                        var mipl = context.MelissaIpLocations.FirstOrDefault(m => m.IpAddress == ipOrHostName);
+                        MelissaIpLocationViewModel res = Mapper.Map<MelissaIpLocationViewModel>(mipl);
+                        if (mipl != null)
                         {
-                            var json = client.GetStringAsync($"http://ipinfo.io/{ipOrHostName}/json").Result;
-
-                            IpInfo ipInfo = JsonConvert.DeserializeObject<IpInfo>(json);
-                            mipl = new MelissaIpLocation();
-                            mipl.AS = ipInfo.AS;
-                            mipl.IpAddress = ipOrHostName;
-                            mipl.City = ipInfo.City;
-                            mipl.Country = ipInfo.Country;
-                            mipl.CountryAbbreviation = ipInfo.Country;
-                            mipl.Domain = ipInfo.Hostname;
-                            mipl.ISP = ipInfo.Organisation;
-                            mipl.Latitude = ipInfo.Latitude;
-                            mipl.Longitude = ipInfo.Longitude;
-                            mipl.Region = ipInfo.Region;
-                            mipl.ZipCode = ipInfo.Postal;
-
-                            mipl.DateCreated = DateTime.Now;
-                            mipl.DateModified = DateTime.Now;
-                            mipl.UserCreated = HttpContext.Current?.Request?.UserHostAddress;
-                            mipl.UserModified = HttpContext.Current?.Request?.UserHostAddress;
-
-                            context.MelissaIpLocations.Add(mipl);
-                            context.SaveChanges();
                             res = Mapper.Map<MelissaIpLocationViewModel>(mipl);
-
                         }
-                    }
+                        else
+                        {
 
-                    return res;
+                            using (HttpClient client = new HttpClient())
+                            {
+                                var json = client.GetStringAsync($"http://ipinfo.io/{ipOrHostName}/json").Result;
+
+                                IpInfo ipInfo = JsonConvert.DeserializeObject<IpInfo>(json);
+                                mipl = new MelissaIpLocation();
+                                mipl.AS = ipInfo.AS;
+                                mipl.IpAddress = ipOrHostName;
+                                mipl.City = ipInfo.City;
+                                mipl.Country = ipInfo.Country;
+                                mipl.CountryAbbreviation = ipInfo.Country;
+                                mipl.Domain = ipInfo.Hostname;
+                                mipl.ISP = ipInfo.Organisation;
+                                mipl.Latitude = ipInfo.Latitude;
+                                mipl.Longitude = ipInfo.Longitude;
+                                mipl.Region = ipInfo.Region;
+                                mipl.ZipCode = ipInfo.Postal;
+
+                                mipl.DateCreated = DateTime.Now;
+                                mipl.DateModified = DateTime.Now;
+                                mipl.UserCreated = HttpContext.Current?.Request?.UserHostAddress;
+                                mipl.UserModified = HttpContext.Current?.Request?.UserHostAddress;
+
+                                context.MelissaIpLocations.Add(mipl);
+                                context.SaveChanges();
+                                res = Mapper.Map<MelissaIpLocationViewModel>(mipl);
+
+                            }
+                        }
+
+                        return res;
+                    }
+                }
+                catch (Exception)
+                {
+                    Thread.Sleep(1000);
+                    //return new MelissaIpLocationViewModel();
                 }
             }
-            catch(Exception e)
-            {
-                return new MelissaIpLocationViewModel();
-            }
-                 
-
+            return new MelissaIpLocationViewModel();
         }
 
         public static string RandomString(int length)

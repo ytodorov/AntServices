@@ -63,7 +63,7 @@ $(window).load(function () {
 
         $("#divInnerSocial").show("slow");
 
-    }, 100);
+    }, 30);
 
 });
 

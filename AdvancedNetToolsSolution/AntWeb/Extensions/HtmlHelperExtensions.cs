@@ -271,6 +271,7 @@ namespace SmartAdminMvc.Extensions
     columns.Bound(c => c.Message).Title(text: "Message");
     columns.Bound(c => c.StackTrace).Title(text: "Stacktrace");
     columns.Bound(c => c.Data).Title(text: "Data");//.Format("{0:u}");
+    columns.Bound(c => c.DateCreatedTimeAgo).Title(text: "Date");//.Format("{0:u}");
 })
 .Scrollable(s => s.Enabled(value: false))
 .ToolBar(t =>
@@ -304,7 +305,7 @@ namespace SmartAdminMvc.Extensions
     }
     else
     {
-        ajaxDatasource.PageSize(pageSize: 10);
+        ajaxDatasource.PageSize(pageSize: 100);
     }
 }
 );
