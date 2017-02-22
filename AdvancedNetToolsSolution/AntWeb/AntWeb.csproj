@@ -917,9 +917,11 @@
     <Content Include="Images\loading-bars.svg" />
     <Content Include="Images\p1.jpg" />
     <Content Include="Images\p2.jpg" />
+    <Content Include="Images\PingImage.png" />
     <Content Include="Images\profile.jpg" />
     <Content Include="Images\toolsfornetCover.png" />
     <Content Include="Images\toolsfornetPingCoverImage.png" />
+    <Content Include="Images\TracerouteImage.png" />
     <Content Include="Images\WordProcessingImage.png" />
     <Content Include="libs\Kendo.Mvc.dll" />
     <Content Include="libs\Kendo.Mvc.xml" />
