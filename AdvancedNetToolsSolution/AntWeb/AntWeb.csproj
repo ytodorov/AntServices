@@ -920,6 +920,7 @@
     <Content Include="Images\profile.jpg" />
     <Content Include="Images\toolsfornetCover.png" />
     <Content Include="Images\toolsfornetPingCoverImage.png" />
+    <Content Include="Images\WordProcessingOggImage.png" />
     <Content Include="libs\Kendo.Mvc.dll" />
     <Content Include="libs\Kendo.Mvc.xml" />
     <Content Include="Misc\NmapTcpPorts.txt" />
