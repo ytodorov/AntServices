@@ -261,6 +261,7 @@
     <Content Include="404.aspx" />
     <Content Include="404.html" />
     <Content Include="A9DABAA0572B3BC1BB9D025B2A82D391.txt" />
+    <Content Include="BingSiteAuth.xml" />
     <Content Include="Content\ajax\email-compose.html" />
     <Content Include="Content\ajax\email-opened.html" />
     <Content Include="Content\ajax\email-reply.html" />
