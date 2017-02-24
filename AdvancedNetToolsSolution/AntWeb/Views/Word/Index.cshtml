@@ -28,6 +28,16 @@
 
 
 <script src="~/scripts/word/index.js"></script>
+<script>
+    function onSelect(e) {
+        $.each(e.files, function (index, value) {       
+            var ext = value.extension.toLowerCase();
+            if (!(ext == ".docx" || ext == ".rtf" || ext == ".html" || ext == ".txt")) {
+                e.preventDefault();
+            }
+        });
+    };
+</script>
 
 @using (Html.BeginForm("Download_Document", "word"))
 {
@@ -37,6 +47,7 @@
                         .Multiple(true)
                         .ShowFileList(true)
                         .DropZone("#wrapper")
+                        .Events(e => e.Select("onSelect"))
                         .Validation(v => v.AllowedExtensions(new string[] {"docx", "rtf", "html", "txt" }).MaxFileSize(10 * 1024 * 1024))
                         .Deferred().ToHtmlString()                        
     )))

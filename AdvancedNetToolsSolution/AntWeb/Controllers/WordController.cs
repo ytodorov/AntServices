@@ -54,7 +54,8 @@ namespace SmartAdminMvc.Controllers
         {
             if (wordUploads == null)
             {
-                return new EmptyResult();
+                return File(new byte[1], "application/zip", "NoUploadsDetected.zip");
+                //return new EmptyResult();
             }
 
             if ("on".Equals(docx, StringComparison.InvariantCultureIgnoreCase))
