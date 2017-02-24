@@ -35,22 +35,28 @@ namespace SmartAdminMvc.Controllers
                     }
                 }
             }
-            else if (TempData["forcePortScan"] != null && (bool)TempData["forcePortScan"])
-            {
-                PortPermalinkViewModel ppvm = new PortPermalinkViewModel()
-                {
-                    DestinationAddress = Request.UserHostAddress,
-                    ForcePortScan = true
-                };
-                return View(model: ppvm);
-            }
+            //else if (TempData["forcePortScan"] != null && (bool)TempData["forcePortScan"])
+            //{
+            //    PortPermalinkViewModel ppvm = new PortPermalinkViewModel()
+            //    {
+            //        DestinationAddress = Request.UserHostAddress,
+            //        ForcePortScan = true
+            //    };
+            //    return View(model: ppvm);
+            //}
             return View();
         }
 
         public ActionResult Me()
         {
-            var res = RedirectToAction("Index");
-            TempData["forcePortScan"] = true;
+            PortPermalinkViewModel ppvm = new PortPermalinkViewModel()
+            {
+                DestinationAddress = Request.UserHostAddress,
+                ForcePortScan = true
+            };
+         
+            var res = View("Index", ppvm);
+            //TempData["forcePortScan"] = true;
             return res;
         }
 
