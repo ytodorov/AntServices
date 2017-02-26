@@ -213,12 +213,12 @@ namespace SmartAdminMvc.Controllers
                 if ("alexatop1000".Equals(info, StringComparison.InvariantCultureIgnoreCase))
                 {
                     var alexatop1000 = Utils.TopSitesGlobal.Take(1000).ToList();
-                    portPermalinks = context.PortPermalinks.Where(p => alexatop1000.Contains(p.DestinationAddress)).ToList();
+                    portPermalinks = context.PortPermalinks.Where(p => alexatop1000.Contains(p.DestinationAddress)).Take(1000).ToList();
                 }
                 else if ("alexatop10000".Equals(info, StringComparison.InvariantCultureIgnoreCase))
                 {
                     var alexatop10000 = Utils.TopSitesGlobal.Take(10000).ToList();
-                    portPermalinks = context.PortPermalinks.Where(p => alexatop10000.Contains(p.DestinationAddress)).ToList();
+                    portPermalinks = context.PortPermalinks.Where(p => alexatop10000.Contains(p.DestinationAddress)).Take(10000).ToList();
                 }
 
 
