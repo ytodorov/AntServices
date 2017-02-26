@@ -181,7 +181,7 @@ namespace SmartAdminMvc.Controllers
         }
 
         public ActionResult ReadPortPermalinks([DataSourceRequest] DataSourceRequest request, AntDbContext context,
-            string address, bool? allPermalinks = false, int maxResults = 100)
+            string address, bool? allPermalinks = false, int maxResults = 1000)
         {
             List<PortPermalink> portPermalinks;
             if (!allPermalinks.GetValueOrDefault())

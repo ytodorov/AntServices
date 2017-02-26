@@ -78,10 +78,10 @@ namespace SmartAdminMvc.Extensions
       .Read(r =>
       {
           object routeValues = null;
-          if (serverOperations)
-          {
-              routeValues = new { maxResults = 100000 };
-          }
+          //if (serverOperations)
+          //{
+          //    routeValues = new { maxResults = 100000 };
+          //}
           CrudOperationBuilder cub = r.Action("ReadPortPermalinks", "Portscan", routeValues);
           if (!string.IsNullOrEmpty(readDataJavascriptMethodName))
           {

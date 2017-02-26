@@ -26,7 +26,9 @@ namespace SmartAdminMvc.Models
 
                 if (HttpContext.Current?.Request != null)
                 {
-                    string fullRootUrl = HttpContext.Current?.Request.Url.OriginalString.Replace(HttpContext.Current?.Request.Url.LocalPath, string.Empty);
+                 
+                    string fullRootUrl = HttpContext.Current?.Request.Url.OriginalString.Replace
+                        (HttpContext.Current?.Request.Url.PathAndQuery, string.Empty);
                     if (!HttpContext.Current.Request.Url.ToString().Contains(value: "localhost"))
                     {
                         fullRootUrl = fullRootUrl.Replace(":" + HttpContext.Current?.Request.Url.Port, string.Empty);
