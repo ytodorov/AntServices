@@ -213,15 +213,21 @@ namespace SmartAdminMvc.Controllers
                 if ("alexatop1000".Equals(info, StringComparison.InvariantCultureIgnoreCase))
                 {
                     var alexatop1000 = Utils.TopSitesGlobal.Take(1000).ToList();
-                    portPermalinks = context.PortPermalinks.Where(p => alexatop1000.Contains(p.DestinationAddress))
-                        .GroupBy(f => f.DestinationIpAddress).Select(s => s.FirstOrDefault())
+
+                    var entities = context.PortPermalinks.Where(p => alexatop1000.Contains(p.DestinationAddress)).Select(s => new { s.Id, s.DestinationAddress }).ToList();
+                    var uniqueIds = entities.GroupBy(f => f.DestinationAddress).Select(s => s.FirstOrDefault().Id).ToList();
+
+                    portPermalinks = context.PortPermalinks.Where(p => uniqueIds.Contains(p.Id))
                         .Take(1000).ToList();
                 }
                 else if ("alexatop10000".Equals(info, StringComparison.InvariantCultureIgnoreCase))
                 {
                     var alexatop10000 = Utils.TopSitesGlobal.Take(10000).ToList();
-                    portPermalinks = context.PortPermalinks.Where(p => alexatop10000.Contains(p.DestinationAddress))
-                         .GroupBy(f => f.DestinationIpAddress).Select(s => s.FirstOrDefault())
+
+                    var entities = context.PortPermalinks.Where(p => alexatop10000.Contains(p.DestinationAddress)).Select(s => new { s.Id, s.DestinationAddress }).ToList();
+                    var uniqueIds = entities.GroupBy(f => f.DestinationAddress).Select(s => s.FirstOrDefault().Id).ToList();
+
+                    portPermalinks = context.PortPermalinks.Where(p => uniqueIds.Contains(p.Id))
                         .Take(10000).ToList();
                 }
 
