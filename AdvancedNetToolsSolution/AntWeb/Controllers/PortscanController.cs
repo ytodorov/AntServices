@@ -213,12 +213,16 @@ namespace SmartAdminMvc.Controllers
                 if ("alexatop1000".Equals(info, StringComparison.InvariantCultureIgnoreCase))
                 {
                     var alexatop1000 = Utils.TopSitesGlobal.Take(1000).ToList();
-                    portPermalinks = context.PortPermalinks.Where(p => alexatop1000.Contains(p.DestinationAddress)).Take(1000).ToList();
+                    portPermalinks = context.PortPermalinks.Where(p => alexatop1000.Contains(p.DestinationAddress))
+                        .GroupBy(f => f.DestinationIpAddress).Select(s => s.FirstOrDefault())
+                        .Take(1000).ToList();
                 }
                 else if ("alexatop10000".Equals(info, StringComparison.InvariantCultureIgnoreCase))
                 {
                     var alexatop10000 = Utils.TopSitesGlobal.Take(10000).ToList();
-                    portPermalinks = context.PortPermalinks.Where(p => alexatop10000.Contains(p.DestinationAddress)).Take(10000).ToList();
+                    portPermalinks = context.PortPermalinks.Where(p => alexatop10000.Contains(p.DestinationAddress))
+                         .GroupBy(f => f.DestinationIpAddress).Select(s => s.FirstOrDefault())
+                        .Take(10000).ToList();
                 }
 
 
@@ -233,6 +237,7 @@ namespace SmartAdminMvc.Controllers
             JsonResult dsResult = Json(portPermalinksViewModels.ToDataSourceResult(request));
             return dsResult;
         }
+
 
         private List<PortPermalink> GetPermalinksForCurrentUser(string address, AntDbContext context)
         {
@@ -253,6 +258,30 @@ namespace SmartAdminMvc.Controllers
         {
             JsonResult dsResult = Json(Utils.WellKnownPorts.ToDataSourceResult(request));
             return dsResult;
+        }
+    }
+    public class PortPermalinkEquality : IEqualityComparer<PortPermalink>
+    {
+        public PortPermalinkEquality()
+        {
+
+        }
+
+        public bool Equals(PortPermalink x, PortPermalink y)
+        {
+            if (x == null && x == null)
+                return true;
+            else if (x == null || y == null)
+                return false;
+            else if (x.DestinationIpAddress == y.DestinationIpAddress)
+                return true;
+            else
+                return false;
+        }
+
+        public int GetHashCode(PortPermalink obj)
+        {
+            return obj.Id.GetHashCode();
         }
     }
 }
