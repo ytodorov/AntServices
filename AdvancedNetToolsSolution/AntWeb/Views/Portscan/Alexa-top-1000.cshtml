@@ -1,0 +1,53 @@
+﻿@model PortPermalinkViewModel
+
+@{
+    ViewBag.Title = "Port scan";
+    ViewBag.MetaDescription = "Free distributed online port scan service. Probe a server or host for open ports.";
+}
+<div class="normalheader transition animated fadeIn small-header">
+    <div class="hpanel">
+        <div class="panel-body">
+            <div id="hbreadcrumb" class="pull-right">
+                <ol class="hbreadcrumb breadcrumb">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    <li>
+                        <a href="/portscan">Port scan</a>
+                    </li>
+                </ol>
+            </div>
+            <h2 class="font-light m-b-xs">
+                Port scan
+            </h2>
+            <small>Probe a server or host for open ports.</small>
+        </div>
+    </div>
+</div>
+
+@if (Model != null && Model.Id != 0)
+{
+    @Html.Raw((Html.AntCreateStandardPanel("hgreen", "Portscan report summary",
+"<div class='text-center'>" +
+"<a style='display:none' class='pdfexportpage'>Download as PDF" + "</a>" +
+"<p>" + "Created on: " + Model.DateCreated + "</p>" +
+"<p>" + "Share this permalink: <a href='" + Context.Request.Url.ToString() + "' target='_blank'>" + Context.Request.Url.ToString() + "</a></p>" +
+"<p>" + "<div class='addthis_sharing_toolbox'></div></p>" +
+"<div>")))
+}
+
+
+     <script>
+         function getalexatop1000() {
+            var data = {
+                info: "alexatop1000"
+            };
+            return data;
+        }
+</script>
+
+<div id="all">
+    @Html.Raw((Html.AntCreateStandardPanel("hviolet", "Port scan for top 1000 alexa sites", "<p>" +
+Html.Kendo().Grid<PortPermalinkViewModel>().CreatePortscanPermalinkGrid(Url, readDataJavascriptMethodName: "getalexatop1000")
+.ToHtmlString() + "</p>")))
+</div>

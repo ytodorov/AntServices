@@ -47,6 +47,18 @@ namespace SmartAdminMvc.Controllers
             return View();
         }
 
+        [Route("alexa-top-1000")]
+        public ActionResult AlexaTop1000()
+        {
+            return View(viewName: "alexa-top-1000");
+        }
+
+        [Route("alexa-top-10000")]
+        public ActionResult AlexaTop10000()
+        {
+            return View(viewName: "alexa-top-10000");
+        }
+
         public ActionResult Me()
         {
             PortPermalinkViewModel ppvm = new PortPermalinkViewModel()
@@ -54,7 +66,7 @@ namespace SmartAdminMvc.Controllers
                 DestinationAddress = Request.UserHostAddress,
                 ForcePortScan = true
             };
-         
+
             var res = View("Index", ppvm);
             //TempData["forcePortScan"] = true;
             return res;
@@ -181,17 +193,35 @@ namespace SmartAdminMvc.Controllers
         }
 
         public ActionResult ReadPortPermalinks([DataSourceRequest] DataSourceRequest request, AntDbContext context,
-            string address, bool? allPermalinks = false, int maxResults = 1000)
+            string address, bool? allPermalinks = false, int maxResults = 1000, string info = null)
         {
-            List<PortPermalink> portPermalinks;
-            if (!allPermalinks.GetValueOrDefault())
+            List<PortPermalink> portPermalinks = new List<PortPermalink>();
+            if (string.IsNullOrEmpty(info))
             {
-                portPermalinks = GetPermalinksForCurrentUser(address, context);
+                if (!allPermalinks.GetValueOrDefault())
+                {
+                    portPermalinks = GetPermalinksForCurrentUser(address, context);
+                }
+                else
+                {
+                    portPermalinks = context.PortPermalinks.Where(p => p.ShowInHistory == true).OrderByDescending(k => k.Id)
+                        .Take(count: maxResults).ToList();
+                }
             }
             else
             {
-                portPermalinks = context.PortPermalinks.Where(p => p.ShowInHistory == true).OrderByDescending(k => k.Id)
-                    .Take(count: maxResults).ToList();
+                if ("alexatop1000".Equals(info, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    var alexatop1000 = Utils.TopSitesGlobal.Take(1000).ToList();
+                    portPermalinks = context.PortPermalinks.Where(p => alexatop1000.Contains(p.DestinationAddress)).ToList();
+                }
+                else if ("alexatop10000".Equals(info, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    var alexatop10000 = Utils.TopSitesGlobal.Take(10000).ToList();
+                    portPermalinks = context.PortPermalinks.Where(p => alexatop10000.Contains(p.DestinationAddress)).ToList();
+                }
+
+
             }
 
             List<PortPermalinkViewModel> portPermalinksViewModels = Mapper.Map<List<PortPermalinkViewModel>>(portPermalinks);

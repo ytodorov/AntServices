@@ -2073,6 +2073,8 @@
     <Content Include="Views\IpLocation\Find.cshtml" />
     <Content Include="Views\WebSiteMonitoring\Index.cshtml" />
     <Content Include="Views\Barcode\Index.cshtml" />
+    <Content Include="Views\Portscan\Alexa-top-1000.cshtml" />
+    <Content Include="Views\Portscan\Alexa-top-10000.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
