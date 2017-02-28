@@ -45,27 +45,20 @@ function resizeGrids() {
     }
 }
 
-$(window).load(function () {
-    setTimeout(function asd() {
+//$(window).load(function () {
+//    setTimeout(function asd() {
 
-        var theDiv = $("#outerHeader");
-        //theDiv.html('<div id="divInnerSocial" style="display:none"  class="normalheader transition animate-panel animated fadeIn small-header right">                <div class="hpanel">                    <div id="divSocial" class="panel-body">                        <div class="pull-left fb-like"                             data-href="https://www.facebook.com/toolsfornet"                             data-colorscheme="light"                             data-layout="button_count"                             data-action="like"                             data-size="small"                             data-show-faces="false"                             data-share="true">                        </div>                        &nbsp;<a class="pull-right twitter-share-button"                           href="https://twitter.com/intent/tweet?url=https://toolsfornet.com"                           data-show-screen-name="false">                            Tweet                        </a>                        <div id="divPlusOne" class="pull-left g-plusone" data-size="medium" data-annotation="none" data-width="200"></div>                        <a id="aPinterest" style="vertical-align:top !important" data-pin-do="buttonBookmark" data-pin-save="true" href="https://www.pinterest.com/pin/create/button/"></a>                        <a class="tumblr-share-button" href="https://www.tumblr.com/share"></a>                        <script id="tumblr-js" async src="https://assets.tumblr.com/share-button.js"></script>                        <script src="https://platform.linkedin.com/in.js" type="text/javascript"> lang: en_US                        </script>                        <script type="IN/Share" data-url="https://toolsfornet.com" data-counter="right">                        </script>                    </div>                              </div>            </div>');
-        theDiv.html('<div id="divInnerSocial" style="display:none"  class="normalheader transition animate-panel animated fadeIn small-header right"><div class="hpanel"><div id="divSocial" class="panel-body"><div class="pull-left fb-like" data-href="https://www.facebook.com/toolsfornet" data-colorscheme="light" data-layout="button_count" data-action="like" data-size="small" data-show-faces="false" data-share="true"> </div> &nbsp;<a class="pull-right twitter-share-button" href="https://twitter.com/intent/tweet?url=https://toolsfornet.com" data-show-screen-name="false"> Tweet </a></div>');
+//        var theDiv = $("#outerHeader");
+//        theDiv.html('<div id="divInnerSocial" style="display:none"  class="normalheader transition animate-panel animated fadeIn small-header right"><div class="hpanel"><div id="divSocial" class="panel-body"><div class="pull-left fb-like" data-href="https://www.facebook.com/toolsfornet" data-colorscheme="light" data-layout="button_count" data-action="like" data-size="small" data-show-faces="false" data-share="true"> </div> &nbsp;<a class="pull-right twitter-share-button" href="https://twitter.com/intent/tweet?url=https://toolsfornet.com" data-show-screen-name="false"> Tweet </a></div>');
 
-        FB.XFBML.parse(document.getElementById('divSocial'));
-        twttr.widgets.load();
+//        FB.XFBML.parse(document.getElementById('divSocial'));
+//        twttr.widgets.load();
 
-        //var w: any = window;
-     
-        //w.parsePins(document.getElementById('aPinterest'));
+//        $("#divInnerSocial").show("slow");
 
-        //w.parsePins();
+//    }, 30);
 
-        $("#divInnerSocial").show("slow");
-
-    }, 30);
-
-});
+//});
 
 $(document).ready(function docReady() {
 
@@ -93,11 +86,14 @@ $(document).ready(function docReady() {
     var intervalCounter = 0;
     var interval = setInterval(function alignGoogle() {
 
-        var g = $("span[data-pin-log]");
-        var c = g.length;
-        g.each(function () {
-            this.style.setProperty('vertical-align', 'top', 'important');
-        });
+        $(".addthis_toolbox").prev().remove();
+
+        $("a.at-follow-btn").css("padding-bottom", "0px");
+        //var g = $("span[data-pin-log]");
+        //var c = g.length;
+        //g.each(function () {
+        //    this.style.setProperty('vertical-align', 'top', 'important');
+        //});
 
         intervalCounter++;
         if (intervalCounter > 5) {
