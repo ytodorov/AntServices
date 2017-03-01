@@ -111,10 +111,10 @@ function resizeGrids() {
 }
 //$(window).load(function () {
 //    setTimeout(function asd() {
-//        var theDiv = $("#outerHeader");
-//        theDiv.html('<div id="divInnerSocial" style="display:none"  class="normalheader transition animate-panel animated fadeIn small-header right"><div class="hpanel"><div id="divSocial" class="panel-body"><div class="pull-left fb-like" data-href="https://www.facebook.com/toolsfornet" data-colorscheme="light" data-layout="button_count" data-action="like" data-size="small" data-show-faces="false" data-share="true"> </div> &nbsp;<a class="pull-right twitter-share-button" href="https://twitter.com/intent/tweet?url=https://toolsfornet.com" data-show-screen-name="false"> Tweet </a></div>');
+//        //var theDiv = $("#outerHeader");
+//        //theDiv.html('<div id="divInnerSocial" style="display:none"  class="normalheader transition animate-panel animated fadeIn small-header right"><div class="hpanel"><div id="divSocial" class="panel-body"><div class="pull-left fb-like" data-href="https://www.facebook.com/toolsfornet" data-colorscheme="light" data-layout="button_count" data-action="like" data-size="small" data-show-faces="false" data-share="true"> </div> &nbsp;<a class="pull-right twitter-share-button" href="https://twitter.com/intent/tweet?url=https://toolsfornet.com" data-show-screen-name="false"> Tweet </a></div>');
 //        FB.XFBML.parse(document.getElementById('divSocial'));
-//        $("#divInnerSocial").show("slow");
+//        //$("#divInnerSocial").show("slow");
 //    }, 30);
 //});
 $(document).ready(function docReady() {
