@@ -53,10 +53,10 @@ namespace SmartAdminMvc.Controllers
             return View(viewName: "alexa-top-1000");
         }
 
-        [Route("alexa-top-10000")]
-        public ActionResult AlexaTop10000()
+        [Route("alexa-top-3000")]
+        public ActionResult AlexaTop3000()
         {
-            return View(viewName: "alexa-top-10000");
+            return View(viewName: "alexa-top-3000");
         }
 
         public ActionResult Me()
@@ -221,15 +221,15 @@ namespace SmartAdminMvc.Controllers
                     portPermalinks = context.PortPermalinks.Where(p => uniqueIds.Contains(p.Id))
                         .Take(1000).ToList();
                 }
-                else if ("alexatop10000".Equals(info, StringComparison.InvariantCultureIgnoreCase))
+                else if ("alexatop3000".Equals(info, StringComparison.InvariantCultureIgnoreCase))
                 {
-                    var alexatop10000 = Utils.TopSitesGlobal.Take(10000).ToList();
+                    var alexatop3000 = Utils.TopSitesGlobal.Take(3000).ToList();
 
-                    var entities = context.PortPermalinks.OrderByDescending(d => d.Id).Where(p => alexatop10000.Contains(p.DestinationAddress)).Select(s => new { s.Id, s.DestinationAddress }).ToList();
+                    var entities = context.PortPermalinks.OrderByDescending(d => d.Id).Where(p => alexatop3000.Contains(p.DestinationAddress)).Select(s => new { s.Id, s.DestinationAddress }).ToList();
                     var uniqueIds = entities.GroupBy(f => f.DestinationAddress).Select(s => s.FirstOrDefault().Id).ToList();
 
                     portPermalinks = context.PortPermalinks.Where(p => uniqueIds.Contains(p.Id))
-                        .Take(10000).ToList();
+                        .Take(3000).ToList();
                 }
 
 

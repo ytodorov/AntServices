@@ -37,16 +37,16 @@
 
 
      <script>
-         function getalexatop1000() {
+         function getalexatop3000() {
             var data = {
-                info: "alexatop10000"
+                info: "alexatop3000"
             };
             return data;
         }
 </script>
 
 <div id="all">
-    @Html.Raw((Html.AntCreateStandardPanel("hviolet", "Port scan for top 10000 alexa sites", "<p>" +
-Html.Kendo().Grid<PortPermalinkViewModel>().CreatePortscanPermalinkGrid(Url, readDataJavascriptMethodName: "getalexatop1000")
+    @Html.Raw((Html.AntCreateStandardPanel("hviolet", "Port scan for top 3000 alexa sites", "<p>" +
+Html.Kendo().Grid<PortPermalinkViewModel>().CreatePortscanPermalinkGrid(Url, readDataJavascriptMethodName: "getalexatop3000")
 .ToHtmlString() + "</p>")))
 </div>
