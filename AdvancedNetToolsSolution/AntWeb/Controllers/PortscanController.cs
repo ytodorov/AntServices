@@ -192,7 +192,7 @@ namespace SmartAdminMvc.Controllers
             }
         }
 
-        [OutputCache(Duration = 180, VaryByParam = "*")]
+        [OutputCache(Duration = 36000, VaryByParam = "*")]
         public ActionResult ReadPortPermalinks([DataSourceRequest] DataSourceRequest request, AntDbContext context,
             string address, bool? allPermalinks = false, int maxResults = 1000, string info = null)
         {
