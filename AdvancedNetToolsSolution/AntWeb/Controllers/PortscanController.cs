@@ -192,6 +192,7 @@ namespace SmartAdminMvc.Controllers
             }
         }
 
+        [OutputCache(Duration = 180, VaryByParam = "*")]
         public ActionResult ReadPortPermalinks([DataSourceRequest] DataSourceRequest request, AntDbContext context,
             string address, bool? allPermalinks = false, int maxResults = 1000, string info = null)
         {
@@ -214,7 +215,7 @@ namespace SmartAdminMvc.Controllers
                 {
                     var alexatop1000 = Utils.TopSitesGlobal.Take(1000).ToList();
 
-                    var entities = context.PortPermalinks.Where(p => alexatop1000.Contains(p.DestinationAddress)).Select(s => new { s.Id, s.DestinationAddress }).ToList();
+                    var entities = context.PortPermalinks.OrderByDescending(d => d.Id).Where(p => alexatop1000.Contains(p.DestinationAddress)).Select(s => new { s.Id, s.DestinationAddress }).ToList();
                     var uniqueIds = entities.GroupBy(f => f.DestinationAddress).Select(s => s.FirstOrDefault().Id).ToList();
 
                     portPermalinks = context.PortPermalinks.Where(p => uniqueIds.Contains(p.Id))
@@ -224,7 +225,7 @@ namespace SmartAdminMvc.Controllers
                 {
                     var alexatop10000 = Utils.TopSitesGlobal.Take(10000).ToList();
 
-                    var entities = context.PortPermalinks.Where(p => alexatop10000.Contains(p.DestinationAddress)).Select(s => new { s.Id, s.DestinationAddress }).ToList();
+                    var entities = context.PortPermalinks.OrderByDescending(d => d.Id).Where(p => alexatop10000.Contains(p.DestinationAddress)).Select(s => new { s.Id, s.DestinationAddress }).ToList();
                     var uniqueIds = entities.GroupBy(f => f.DestinationAddress).Select(s => s.FirstOrDefault().Id).ToList();
 
                     portPermalinks = context.PortPermalinks.Where(p => uniqueIds.Contains(p.Id))

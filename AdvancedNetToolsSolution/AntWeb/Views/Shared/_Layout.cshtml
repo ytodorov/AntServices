@@ -42,8 +42,8 @@
     @*<script type="text/javascript" src="//cpanel.nativeads.com/js/pixel/pixel-121590-20f19220b0209e531129f8644ec5bf75cd51877e.js"></script>*@
     <!-- nativeads pixel 121590-toolsfornet.com end -->
       
-    <script>window._epn = { campaign: 5338046611 };</script>
-    <script src="https://epnt.ebay.com/static/epn-smart-tools.js"></script>
+    @*<script>window._epn = { campaign: 5338046611 };</script>
+    <script src="https://epnt.ebay.com/static/epn-smart-tools.js"></script>*@
 </head>
 <body itemscope="" itemtype="http://schema.org/WebPage" class="@Html.PageClass() fixed-footer hide-sidebar">
     <div itemprop="name" style="display:none">@(ViewBag.Title + (Request.Url.LocalPath == "/" ? "" : " | Tools for Net"))</div>
@@ -145,7 +145,7 @@
                 <div class="row" style="min-height:25px;" id="divSocial">
                     @*<div class="col-xs-5">
                     </div>*@
-                    <div class="col-xs-12">
+                    <div style="min-height:25px;"  class="col-xs-12">
                         <div class="pull-left fb-like" style="z-index:10000000"
                              data-href="https://www.facebook.com/toolsfornet"
                              data-colorscheme="light"
@@ -159,7 +159,7 @@
                              data-title="@(ViewBag.Title + (Request.Url.LocalPath == "/" ? "" : " | Tools for Net"))"
                              data-media="@(ViewBag.OgImage == null ? "https://toolsfornet.com/images/toolsfornetcover.png" : ViewBag.OgImage)">
                         </div>*@
-                        <div>
+                        <div style="min-height:25px;">
                             <div class="addthis_sharing_toolbox"
                                  data-title="@(ViewBag.Title + (Request.Url.LocalPath == "/" ? "" : " | Tools for Net"))"
                                  data-media="@(ViewBag.OgImage == null ? "https://toolsfornet.com/images/toolsfornetcover.png" : ViewBag.OgImage)">
