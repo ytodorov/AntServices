@@ -7,7 +7,7 @@
     <link rel="canonical" href="https://toolsfornet.com@(Request.Url.LocalPath)" />
 
     <meta name="description" content="@ViewBag.MetaDescription">
-    <title>@(ViewBag.Title + (Request.Url.LocalPath == "/" ? "" : " | Tools for Net"))</title>
+    <title>@(ViewBag.Title + (Request.Url.LocalPath == "/" ? "" : " | ToolsForNet.com"))</title>
     @*<link href="~/content/googlefont.min.css" rel="stylesheet" />*@
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
     <link rel="icon" type="image/x-icon" href="~/favicon.ico">
@@ -26,7 +26,7 @@
 
     <meta property="og:url" content="https://toolsfornet.com@(Request.Url.LocalPath)" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content='@(ViewBag.Title + (Request.Url.LocalPath == "/" ? "" : " | Tools for Net"))' />
+    <meta property="og:title" content='@(ViewBag.Title + (Request.Url.LocalPath == "/" ? "" : " | ToolsForNet.com"))' />
     <meta property="og:description" content="@ViewBag.MetaDescription" />
     <meta property="og:image" content="@(ViewBag.OgImage == null ? "https://toolsfornet.com/images/toolsfornetcover.png" : ViewBag.OgImage)" />
     <meta property="og:site_name" content="@ViewBag.Title" />
@@ -46,9 +46,9 @@
     <script src="https://epnt.ebay.com/static/epn-smart-tools.js"></script>*@
 </head>
 <body itemscope="" itemtype="http://schema.org/WebPage" class="@Html.PageClass() fixed-footer hide-sidebar">
-    <div itemprop="name" style="display:none">@(ViewBag.Title + (Request.Url.LocalPath == "/" ? "" : " | Tools for Net"))</div>
+    <div itemprop="name" style="display:none">@(ViewBag.Title + (Request.Url.LocalPath == "/" ? "" : " | ToolsForNet.com"))</div>
     <div itemprop="description" style="display:none">@ViewBag.MetaDescription</div>
-    <div itemprop="headline" style="display:none">@(ViewBag.Title + (Request.Url.LocalPath == "/" ? "" : " | Tools for Net"))</div>
+    <div itemprop="headline" style="display:none">@(ViewBag.Title + (Request.Url.LocalPath == "/" ? "" : " | ToolsForNet.com"))</div>
     <div itemprop="image" style="display:none">https://toolsfornet.com/images/toolsfornetcover.png</div>
     
     @*<div itemscope itemtype="http://schema.org/WebPage">
@@ -113,7 +113,7 @@
     @*<div class="splash" style="z-index:3">
         <div class="color-line"></div>
         <div class="splash-title text-success">
-            <h1>Tools for Net</h1>
+            <h1>ToolsForNet.com</h1>
             <h4>Distributed network services</h4>
             <h4>Loading, please wait</h4>
             <div class="spinner">
@@ -156,12 +156,12 @@
                              data-share="true">
                         </div>
                         @*<div class="addthis_sharing_toolbox"
-                             data-title="@(ViewBag.Title + (Request.Url.LocalPath == "/" ? "" : " | Tools for Net"))"
-                             data-media="@(ViewBag.OgImage == null ? "https://toolsfornet.com/images/toolsfornetcover.png" : ViewBag.OgImage)">
-                        </div>*@
+         data-title="@(ViewBag.Title + (Request.Url.LocalPath == "/" ? "" : " | ToolsForNet.com"))"
+         data-media="@(ViewBag.OgImage == null ? "https://toolsfornet.com/images/toolsfornetcover.png" : ViewBag.OgImage)">
+    </div>*@
                         <div style="min-height:25px;">
                             <div class="addthis_sharing_toolbox"
-                                 data-title="@(ViewBag.Title + (Request.Url.LocalPath == "/" ? "" : " | Tools for Net"))"
+                                 data-title="@(ViewBag.Title + (Request.Url.LocalPath == "/" ? "" : " | ToolsForNet.com"))"
                                  data-media="@(ViewBag.OgImage == null ? "https://toolsfornet.com/images/toolsfornetcover.png" : ViewBag.OgImage)">
                             </div>
                         </div>
