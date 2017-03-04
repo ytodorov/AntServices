@@ -883,6 +883,8 @@
     <Content Include="Images\a8.jpg" />
     <Content Include="Images\a9.jpg" />
     <Content Include="Images\barcodeImageCover.png" />
+    <Content Include="Images\contactUsImageCover.PNG" />
+    <Content Include="Images\faqImageCover.PNG" />
     <Content Include="Images\gallery\1.jpg" />
     <Content Include="Images\gallery\10.jpg" />
     <Content Include="Images\gallery\10s.jpg" />

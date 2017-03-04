@@ -4,10 +4,15 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="canonical" href="https://toolsfornet.com@(Request.Url.LocalPath)" />
-
-    <meta name="description" content="@ViewBag.MetaDescription">
-    <title>@(ViewBag.Title + (Request.Url.LocalPath == "/" ? "" : " | ToolsForNet.com"))</title>
+    @{
+        string pageDescription = ViewBag.MetaDescription;
+        string pageTitle = ViewBag.Title + (Request.Url.LocalPath == "/" ? "" : " | ToolsForNet.com");
+        string pageImage = ViewBag.OgImage == null ? "https://toolsfornet.com/images/toolsfornetcover.png" : ViewBag.OgImage;
+        var canonicalUrl = $"https://toolsfornet.com{Request.Url.LocalPath}";
+    }
+    <link rel="canonical" href="@canonicalUrl" />   
+    <meta name="description" content="@pageDescription">
+    <title>@pageTitle</title>
     @*<link href="~/content/googlefont.min.css" rel="stylesheet" />*@
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
     <link rel="icon" type="image/x-icon" href="~/favicon.ico">
@@ -24,19 +29,19 @@
     <link rel="stylesheet" href="//kendo.cdn.telerik.com/2016.3.1028/styles/kendo.common.min.css">
     <link rel="stylesheet" href="//kendo.cdn.telerik.com/2016.3.1028/styles/kendo.metro.min.css">
 
-    <meta property="og:url" content="https://toolsfornet.com@(Request.Url.LocalPath)" />
+    <meta property="og:url" content="@canonicalUrl" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content='@(ViewBag.Title + (Request.Url.LocalPath == "/" ? "" : " | ToolsForNet.com"))' />
-    <meta property="og:description" content="@ViewBag.MetaDescription" />
-    <meta property="og:image" content="@(ViewBag.OgImage == null ? "https://toolsfornet.com/images/toolsfornetcover.png" : ViewBag.OgImage)" />
-    <meta property="og:site_name" content="@ViewBag.Title" />
+    <meta property="og:title" content='@pageTitle' />
+    <meta property="og:description" content="@pageDescription" />
+    <meta property="og:image" content="@pageImage" />
+    <meta property="og:site_name" content="@pageTitle" />
     <meta property="fb:admins" content="1039783075" />
     <meta property="fb:app_id" content="1862741693984333" />
 
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="@ViewBag.Title">
-    <meta name="twitter:description" content="@ViewBag.MetaDescription">
-    <meta name="twitter:image:src" content="@(ViewBag.OgImage == null ? "https://toolsfornet.com/images/toolsfornetcover.png" : ViewBag.OgImage)">
+    <meta name="twitter:title" content="@pageTitle">
+    <meta name="twitter:description" content="@pageDescription">
+    <meta name="twitter:image:src" content="@pageImage">
 
     <!-- PLACE THIS CODE IN WEBSITE HEADER --> <!-- nativeads pixel 121590-toolsfornet.com start -->
     @*<script type="text/javascript" src="//cpanel.nativeads.com/js/pixel/pixel-121590-20f19220b0209e531129f8644ec5bf75cd51877e.js"></script>*@
@@ -46,10 +51,10 @@
     <script src="https://epnt.ebay.com/static/epn-smart-tools.js"></script>*@
 </head>
 <body itemscope="" itemtype="http://schema.org/WebPage" class="@Html.PageClass() fixed-footer hide-sidebar">
-    <div itemprop="name" style="display:none">@(ViewBag.Title + (Request.Url.LocalPath == "/" ? "" : " | ToolsForNet.com"))</div>
-    <div itemprop="description" style="display:none">@ViewBag.MetaDescription</div>
-    <div itemprop="headline" style="display:none">@(ViewBag.Title + (Request.Url.LocalPath == "/" ? "" : " | ToolsForNet.com"))</div>
-    <div itemprop="image" style="display:none">https://toolsfornet.com/images/toolsfornetcover.png</div>
+    <div itemprop="name" style="display:none">@pageTitle</div>
+    <div itemprop="description" style="display:none">@pageDescription</div>
+    <div itemprop="headline" style="display:none">@pageTitle</div>
+    <div itemprop="image" style="display:none">@pageImage</div>
     
     @*<div itemscope itemtype="http://schema.org/WebPage">
             <link itemprop="url" href="https://toolsfornet.com"/>
@@ -142,9 +147,7 @@
             </div>
             
             <div id="divbody">
-                <div class="row" style="min-height:25px;" id="divSocial">
-                    @*<div class="col-xs-5">
-                    </div>*@
+                <div class="row" style="min-height:25px;" id="divSocial">                
                     <div style="min-height:25px;"  class="col-xs-12">
                         <div class="pull-left fb-like" style="z-index:10000000"
                              data-href="https://www.facebook.com/toolsfornet"
@@ -154,52 +157,15 @@
                              data-size="small"
                              data-show-faces="false"
                              data-share="true">
-                        </div>
-                        @*<div class="addthis_sharing_toolbox"
-         data-title="@(ViewBag.Title + (Request.Url.LocalPath == "/" ? "" : " | ToolsForNet.com"))"
-         data-media="@(ViewBag.OgImage == null ? "https://toolsfornet.com/images/toolsfornetcover.png" : ViewBag.OgImage)">
-    </div>*@
+                        </div>                       
                         <div style="min-height:25px;">
                             <div class="addthis_sharing_toolbox"
-                                 data-title="@(ViewBag.Title + (Request.Url.LocalPath == "/" ? "" : " | ToolsForNet.com"))"
-                                 data-media="@(ViewBag.OgImage == null ? "https://toolsfornet.com/images/toolsfornetcover.png" : ViewBag.OgImage)">
+                                 data-title="@pageTitle"
+                                 data-media="@pageImage">
                             </div>
                         </div>
-                    </div>
-                    @*<div class="col-xs-6">
-                    </div>*@
-                </div>
-                @*<div class="normalheader transition animated fadeIn small-header right">
-                               <div class="hpanel">
-                                   <div class="panel-body">
-                                       <div class="pull-left fb-like"
-                                            data-href="https://www.facebook.com/toolsfornet"
-                                            data-colorscheme="light"
-                                            data-layout="button_count"
-                                            data-action="like"
-                                            data-size="small"
-                                            data-show-faces="false"
-                                            data-share="true">
-                                       </div>
-                                       <a class="pull-right twitter-share-button"
-                                          href="https://twitter.com/intent/tweet?url=https://toolsfornet.com"
-                                          data-show-screen-name="false">
-                                           Tweet
-                                       </a>
-                                       <div class="pull-left g-plusone" data-size="medium" data-annotation="none" data-width="200"></div>
-                                       <a style="vertical-align:top !important" data-pin-do="buttonBookmark" data-pin-save="true" href="https://www.pinterest.com/pin/create/button/"></a>
-                                       <a class="tumblr-share-button" href="https://www.tumblr.com/share"></a>
-                                       <script id="tumblr-js" async src="https://assets.tumblr.com/share-button.js"></script>
-                                       <script src="https://platform.linkedin.com/in.js" type="text/javascript">
-                lang: en_US
-                                       </script>
-                                       <script type="IN/Share" data-url="https://toolsfornet.com" data-counter="right">
-                                       </script>
-                                   </div>
-
-                               </div>
-                           </div>*@
-
+                    </div>                 
+                </div>            
                 @RenderBody()
             </div>
             @*<div id="divFooter">
@@ -223,15 +189,12 @@
     <script src="//kendo.cdn.telerik.com/2016.3.1028/js/kendo.all.min.js"></script>
     <script src="//kendo.cdn.telerik.com/2016.3.1028/js/kendo.aspnetmvc.min.js"></script>
     <script src="//kendo.cdn.telerik.com/2016.3.1028/js/pako_deflate.min.js"></script>
-
     <script src="@Utils.Tag("/scripts/bundle.js")"></script>
     @Html.Kendo().DeferredScripts()
     @if (!Request.IsLocal)
     {
         <script async defer src="~/scripts/googleanalytics.min.js"></script>
     }
-
-
     @RenderSection(name: "scripts", required: false)
 </body>
 </html>
