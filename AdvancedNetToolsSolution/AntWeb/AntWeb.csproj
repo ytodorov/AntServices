@@ -882,6 +882,7 @@
     <Content Include="Images\a7.jpg" />
     <Content Include="Images\a8.jpg" />
     <Content Include="Images\a9.jpg" />
+    <Content Include="Images\barcodeImageCover.png" />
     <Content Include="Images\gallery\1.jpg" />
     <Content Include="Images\gallery\10.jpg" />
     <Content Include="Images\gallery\10s.jpg" />
@@ -902,6 +903,7 @@
     <Content Include="Images\gallery\8s.jpg" />
     <Content Include="Images\gallery\9.jpg" />
     <Content Include="Images\gallery\9s.jpg" />
+    <Content Include="Images\IpLocationImageCover.png" />
     <Content Include="Images\landing\c1.jpg" />
     <Content Include="Images\landing\c2.jpg" />
     <Content Include="Images\landing\c3.jpg" />
@@ -919,9 +921,10 @@
     <Content Include="Images\p1.jpg" />
     <Content Include="Images\p2.jpg" />
     <Content Include="Images\PingImage.png" />
+    <Content Include="Images\PortScanCover.png" />
     <Content Include="Images\profile.jpg" />
+    <Content Include="Images\spreadImageCover.png" />
     <Content Include="Images\toolsfornetCover.png" />
-    <Content Include="Images\toolsfornetPingCoverImage.png" />
     <Content Include="Images\TracerouteImage.png" />
     <Content Include="Images\WordProcessingImage.png" />
     <Content Include="libs\Kendo.Mvc.dll" />
