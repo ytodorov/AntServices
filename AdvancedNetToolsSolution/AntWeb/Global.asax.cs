@@ -30,6 +30,7 @@ using SmartAdminMvc.Controllers;
 using Quartz;
 using SmartAdminMvc.Infrastructure.Jobs;
 using Quartz.Impl;
+using System.Linq;
 
 #endregion
 
@@ -95,7 +96,7 @@ namespace SmartAdminMvc
                 }
             }
 
-            if (Environment.MachineName != "YORDAN-PC")
+            //if (Environment.MachineName != "YORDAN-PC")
             {
                 Timer timer = new Timer(TimeSpan.FromMinutes(1).TotalMilliseconds);
                 timer.Elapsed += Timer_Elapsed;
@@ -121,7 +122,7 @@ namespace SmartAdminMvc
                 .WithSchedule(CronScheduleBuilder.DailyAtHourAndMinute(0, 0).InTimeZone(TimeZoneInfo.Utc))
               .Build();
 
-           
+
 
             sched.ScheduleJob(job, trigger);
 
@@ -129,11 +130,34 @@ namespace SmartAdminMvc
 
         private void Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
+            var top1000Sites = Utils.TopSitesGlobal.Take(1000).ToList();
+
             var randomInt = Utils.RandomNumberGenerator.Next(1, 9999);
             string siteUrl = Utils.TopSitesGlobal[randomInt];
-            PingController pc = new PingController();
+
+
             using (AntDbContext context = new AntDbContext())
             {
+                var allPortScannSites = context.PortPermalinks.Select(p => p.DestinationAddress).ToList();
+
+                for (int i = 0; i < 10000; i++)
+                {
+                    randomInt = Utils.RandomNumberGenerator.Next(1, 9999);
+                    siteUrl = Utils.TopSitesGlobal[randomInt];
+
+                    if (top1000Sites.Contains(siteUrl))
+                    {
+                        if (!allPortScannSites.Contains(siteUrl))
+                        {
+                            break;
+                        }
+                    }
+                }
+
+
+
+                PingController pc = new PingController();
+
                 //var res = pc.GenerateId(new PingRequestViewModel() { ShowInHistory = true, Ip = siteUrl }, context);
 
                 //TracerouteController tc = new TracerouteController();
