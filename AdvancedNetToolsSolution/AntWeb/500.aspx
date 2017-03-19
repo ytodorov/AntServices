@@ -32,6 +32,13 @@
                 The server encountered something unexpected that didn't allow it to complete the request. We apologize.
             </p>
             <a href="/" class="btn btn-xs btn-success">Go back to home</a>
+
+            <p><%=  Server.GetLastError()?.Message %></p>
+            <p><%=  Server.GetLastError()?.StackTrace %></p>
+            <p><%=  Server.GetLastError()?.InnerException?.Message %></p>
+            <p><%=  Server.GetLastError()?.InnerException?.StackTrace %></p>
+
+
         </div>
 
     </body>

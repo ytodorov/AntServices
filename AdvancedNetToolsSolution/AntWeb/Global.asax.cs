@@ -53,8 +53,7 @@ namespace SmartAdminMvc
         }
 
         protected void Application_Start()
-        {
-
+        {           
 
             AreaRegistration.RegisterAllAreas();
             IdentityConfig.RegisterIdentities();
@@ -220,8 +219,13 @@ namespace SmartAdminMvc
                 el.StackTrace = ex.StackTrace.ToString() + ex?.InnerException?.StackTrace;
                 el.Data = ex.Data.ToString();
                 el.ShowInHistory = true;
-                el.UserCreated = Request?.UserHostAddress;
-                el.UserModified = Request?.UserHostAddress;
+                //'Request is not available in this context'
+                try
+                {
+                    el.UserCreated = Request?.UserHostAddress;
+                    el.UserModified = Request?.UserHostAddress;
+                }
+                catch {}
                 el.DateCreated = DateTime.Now;
                 el.DateModified = DateTime.Now;
 
