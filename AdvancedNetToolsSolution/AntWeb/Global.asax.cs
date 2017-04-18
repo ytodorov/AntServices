@@ -97,9 +97,10 @@ namespace SmartAdminMvc
 
             if (Environment.MachineName != "YORDAN-PC")
             {
-                Timer timer = new Timer(TimeSpan.FromMinutes(1).TotalMilliseconds);
-                timer.Elapsed += Timer_Elapsed;
-                timer.Start();
+                //This message is to notify you that the Microsoft Azure Safeguards Team received a complaint of malicious activity originating from your Azure deployment(s).Details of the complaint and results of our initial investigation are included below. Failure to respond to this complaint within two business days or continued violation of the Microsoft Azure Acceptable Use Policy may result in the suspension of your deployment(s).
+                //Timer timer = new Timer(TimeSpan.FromMinutes(1).TotalMilliseconds);
+                //timer.Elapsed += Timer_Elapsed;
+                //timer.Start();
             }
 
             // construct a scheduler factory
